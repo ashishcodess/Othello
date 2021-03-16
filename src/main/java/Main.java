@@ -1,14 +1,17 @@
+package src;
+
 import java.util.*;
 
 
 public class Main {
     static int code;
-    public static void main(String[] args) {
-        System.out.println("Quieres crear un usuario? Si/No");
-        Scanner scan = new Scanner(System.in);
+    static Scanner scan = new Scanner(System.in);
+
+    public static void entrar() {
+        System.out.println("Quieres crear un usuario? Si/No ");
         String in = scan.next();
-        if(in.equals("Si")){
-            System.out.println("En   tra tu nombre de usuario");
+        if(in.toLowerCase().equals("si")){
+            System.out.println("Entra tu nombre de usuario");
             String nombre = scan.next();
             code = 1;                           // de momento
             System.out.println("Creado usiario " + nombre + " con codigo " + code);
@@ -16,6 +19,23 @@ public class Main {
         else{
             System.out.println("Entra tu código");
             code = scan.nextInt();
+        }
+    }
+
+    public static void partida(){
+
+    }
+
+    public static void main(String[] args) {
+        entrar();
+        boolean salir = false;
+        while(!salir){
+            partida();
+            System.out.println("Quieres sailr? Si/No");
+            String quit = scan.next();
+            if(quit.toLowerCase().equals("si")){
+                salir = true;
+            }
         }
     }
 }
