@@ -2,19 +2,19 @@ package jugador;
 public class Jugador {
 
     /*Atributos*/
-    private String id;
+    private int id;
 
     /*Constructora*/
-    public Jugador (String idJugador) {
+    public Jugador (int idJugador) {
         this.id = idJugador;
     }
 
     /*Sets y Gets*/
-    public void modificar_id(String nuevoID) {
+    public void modificar_id(int nuevoID) {
         this.id = nuevoID;
     }
 
-    public String getID() {
+    public int getID() {
         return id;
     }
 

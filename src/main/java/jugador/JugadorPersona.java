@@ -2,30 +2,36 @@ package jugador;
 
 public class JugadorPersona extends Jugador {
     /*Atributos*/
-    private int TAG;
+    private String nickname;
 
     /*Constructora*/
-    public JugadorPersona (String idJugador,int TAG_jugador) {
+    public JugadorPersona (int idJugador,String nicknameJugador) {
         super(idJugador);
-        this.TAG = TAG_jugador;
+        this.nickname = nicknameJugador;
     }
 
     /*Sets y Gets*/
-    public void modificar_id_persona(String nuevoID) {
+
+
+    public void modificar_IDJugador(int nuevoID) {
         super.modificar_id(nuevoID);
     }
 
-    public int getTAG_persona() {
-        return this.TAG;
+    public void modificar_nickname(String nuevoNick) {
+        this.nickname = nuevoNick;
     }
 
-    public String getID_persona() {
+    public String get_Nickname() {
+        return this.nickname;
+    }
+
+    public int get_PersonaID() {
         return super.getID();
     }
 
-    /*Devuelve el conjunto formado por ID y TAG -> id#TAG */
+    /*Devuelve el conjunto formado por nickname y ID -> nickname#ID */
     public String get_ID_TAG_persona() {
-        return (super.getID() + "#" + String.valueOf(this.TAG));
+        return (this.nickname + "#" + String.valueOf(super.getID()));
     }
 
 
