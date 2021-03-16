@@ -15,8 +15,8 @@ public class Casilla {
         return map_fichas_negra.size();
     }
 
-    public bool es_posssible (int x , int y){// cuando quiere hacer un movimeinto pasamos pos para chequear
-        if(Marcar[x][y] = 1) return true;
+    public boolean es_posssible (int x , int y){// cuando quiere hacer un movimeinto pasamos pos para chequear
+        if(Marcar[x][y] == 1) return true;
         else return false;
     }
 
