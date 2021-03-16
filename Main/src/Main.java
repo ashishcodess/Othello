@@ -8,7 +8,7 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         String in = scan.next();
         if(in.equals("Si")){
-            System.out.println("Entra tu nombre de usuario");
+            System.out.println("En   tra tu nombre de usuario");
             String nombre = scan.next();
             code = 1;                           // de momento
             System.out.println("Creado usiario " + nombre + " con codigo " + code);
