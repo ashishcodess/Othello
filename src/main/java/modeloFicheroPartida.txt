@@ -1,0 +1,4 @@
+idJugador1 idJugador2
+reglas [vertical, horizontal, diagonal]
+
+Matriz (tablero)

@@ -1,4 +1,11 @@
+
+
 package jugador;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 
 public class JugadorPersona extends Jugador {
     /*Atributos*/
@@ -38,8 +45,10 @@ public class JugadorPersona extends Jugador {
     /*crea un objeto juego.Partida con las reglas y el contricante establecidos
     Englobaria a los casos de uso: Iniciar juego.Partida y Configurar juego.Partida
     */
-    public void Crear_partida(int idContrincante, String reglas) {
+    public void Crear_partida(int idPartida, int idContrincante, String reglas) {
         /*Comprobar si contrincante es maquina o jugador (en caso de ser jugador crear Objecto jugador,...)*/
+
+        //Partida(idPartida,idContrincante, reglas, );
 
 
         //CONFIGURAR PARTIDA
@@ -52,17 +61,22 @@ public class JugadorPersona extends Jugador {
 
     }
 
-    public void Guardar_partida() {
 
+    public void Cargar_partida(String fichero) throws FileNotFoundException {
+        //FileReader fr = new FileReader (fichero);
+        //BufferedReader contenido=new BufferedReader(fr);
+
+    }
+
+    public void Guardar_partida(int idPartida) {
+        //String path = "./" + "partida" + String.valueOf(idPartida);
+        //FileWriter fw = new FileWriter(path);
     }
 
     public void Finalizar_partida() {
 
     }
 
-    public void Finalizar_sinGuardar_partida() {
-
-    }
 
 
 }
