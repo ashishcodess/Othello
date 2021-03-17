@@ -38,7 +38,7 @@ public class JugadorPersona extends Jugador {
     /*crea un objeto juego.Partida con las reglas y el contricante establecidos
     Englobaria a los casos de uso: Iniciar juego.Partida y Configurar juego.Partida
     */
-    public void Crear_partida(String idContrincante, String reglas) {
+    public void Crear_partida(int idContrincante, String reglas) {
         /*Comprobar si contrincante es maquina o jugador (en caso de ser jugador crear Objecto jugador,...)*/
 
 
