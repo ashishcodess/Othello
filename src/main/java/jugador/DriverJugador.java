@@ -12,21 +12,38 @@ public class DriverJugador {
 
     static Scanner scan = new Scanner(System.in);
 
-
-    public static Jugador test_crear_jugador(int iDJugador) {
-        Jugador res = new Jugador(iDJugador);
-        return res;
+    public static Boolean test_crear_jugador(int IDJugador) {
+        Boolean b = true; //para control de errores
+        Jugador res = new Jugador(IDJugador);
+        System.out.println("Jugador creado con ID:" + String.valueOf(IDJugador));
+        System.out.println("Prueba getID: " + String.valueOf(res.getID()));
+        System.out.println("Probando modificarID (-1)");
+        if (IDJugador != -1 ) {
+            res.modificar_id(-1);
+            System.out.println("Nuevo ID jugador (getID): " + String.valueOf(res.getID()));
+        } else System.out.println("ID del jugador ya es -1");
+        return b;
     }
 
-    public static JugadorMaquina test_crear_jugadorMaquina(int idMaquina, int profundidad){
+    public static Boolean test_crear_jugadorMaquina(int idMaquina, int profundidad){
+        Boolean b = true; //para control de errores
         JugadorMaquina res = new JugadorMaquina(idMaquina,profundidad);
-        return res;
+        System.out.println("Maquina creada con ID:" + String.valueOf(idMaquina));
+        System.out.println("Prueba get_MaquinaID : " + String.valueOf(res.get_MaquinaID()));
+        System.out.println("Prueba get_Profundidad : " + String.valueOf(res.get_profundidadMaquina()));
+        System.out.println("Probando modificarID (-1)");
+        if (idMaquina != -1 ) {
+            res.modificar_id_maquina(-1);
+            System.out.println("NUEVO get_MaquinaID : " + String.valueOf(res.get_MaquinaID()));
+        } else System.out.println("ID de MAQUINA ya es -1");
+
+        return b;
     }
 
-    public static JugadorPersona test_crear_jugadorPersona(int idPersona, String nick){
-
+    public static Boolean test_crear_jugadorPersona(int idPersona, String nick){
+        Boolean b = true; //para control de errores
         JugadorPersona res = new JugadorPersona(idPersona,nick);
-        return res;
+        return b;
     }
 
     public static void main(String[] args) {
@@ -38,7 +55,7 @@ public class DriverJugador {
         int i_entrada = Integer.parseInt(scan.next());
         switch(i_entrada) {
             case 1:
-                Jugador prueba = test_crear_jugador(2);
+                test_crear_jugador(2);
                 break;
             case 2:
                 test_crear_jugadorMaquina(0,1);
