@@ -2,6 +2,9 @@
 
 package jugador;
 
+import juego.Partida;
+import juego.Tablero;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -45,8 +48,23 @@ public class JugadorPersona extends Jugador {
     /*crea un objeto juego.Partida con las reglas y el contricante establecidos
     Englobaria a los casos de uso: Iniciar juego.Partida y Configurar juego.Partida
     */
-    public void Crear_partida(int idPartida, int idContrincante, String reglas) {
+    public Partida Crear_partida(int idPartida, String reglas, int idContrincante, String nickContricante, Tablero tab) {
         /*Comprobar si contrincante es maquina o jugador (en caso de ser jugador crear Objecto jugador,...)*/
+
+
+        Partida par = new Partida(idPartida);
+        if (idContrincante > 5) { //es una persona
+
+            /*if (Ranking.existe_Persona(idContrincante,nickContricante)) {
+
+            }
+            else { //Crear nuevo contrincante
+
+            }*/
+
+        } else { //es una maquina
+            //PROBLEMA: COMO BUSCAR EN CASO DE SER MAQUINA LA MAQUINA CORRESPONDIENTE: NOS HACE FALTA CLASE CONJUNTO_MAQUINAS??? para poder acceder a ello???
+        }
 
         //Partida(idPartida,idContrincante, reglas, );
 
@@ -55,6 +73,7 @@ public class JugadorPersona extends Jugador {
 
 
         //INICIAR PARTIDA
+        return par;
     }
 
     public void consultar_ranking() {
@@ -62,21 +81,19 @@ public class JugadorPersona extends Jugador {
     }
 
 
-    public void Cargar_partida(String fichero) throws FileNotFoundException {
-        //FileReader fr = new FileReader (fichero);
+    public void Cargar_partida(String path_fichero) throws FileNotFoundException {
+        //FileReader fr = new FileReader (path_fichero);
         //BufferedReader contenido=new BufferedReader(fr);
 
     }
 
-    public void Guardar_partida(int idPartida) {
+    public void Guardar_partida(Partida par_guardar) {
         //String path = "./" + "partida" + String.valueOf(idPartida);
         //FileWriter fw = new FileWriter(path);
     }
 
-    public void Finalizar_partida() {
+    public void Finalizar_partida(Partida par) {
 
     }
-
-
 
 }

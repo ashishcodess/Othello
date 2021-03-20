@@ -1,4 +1,7 @@
 package jugador;
+
+import juego.Partida;
+
 public class Jugador {
 
     /*Atributos*/
@@ -19,13 +22,13 @@ public class Jugador {
     }
 
     /*idPartida tendria que ser objeto juego.Partida, */
-    public void Mover_pieza_en_partida(String idPartida, int x, int y) {
+    public void Mover_pieza_en_partida(Partida par, int x, int y) {
         //Comprobar que jugador existe en partida y que la casilla esta vacia
 
     }
 
     /*idPartida tendria que ser objeto juego.Partida, */
-    public void Pasar_turno_en_partida(String idPartida) {
+    public void Pasar_turno_en_partida(Partida par) {
 
     }
 

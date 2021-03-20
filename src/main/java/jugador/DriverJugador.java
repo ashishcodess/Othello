@@ -12,38 +12,56 @@ public class DriverJugador {
 
     static Scanner scan = new Scanner(System.in);
 
-    public static Boolean test_crear_jugador(int IDJugador) {
-        Boolean b = true; //para control de errores
+    public static void test_crear_jugador(int IDJugador) {
+        //Boolean b = false; //para control de errores
         Jugador res = new Jugador(IDJugador);
-        System.out.println("Jugador creado con ID:" + String.valueOf(IDJugador));
-        System.out.println("Prueba getID: " + String.valueOf(res.getID()));
+        System.out.println("Jugador creado con ID:" + IDJugador);
+        System.out.println("Prueba getID: " + res.getID());
         System.out.println("Probando modificarID (-1)");
         if (IDJugador != -1 ) {
             res.modificar_id(-1);
-            System.out.println("Nuevo ID jugador (getID): " + String.valueOf(res.getID()));
+            System.out.println("Nuevo ID jugador (getID): " + res.getID());
+            //b = true;
         } else System.out.println("ID del jugador ya es -1");
-        return b;
+        //return b;
     }
 
-    public static Boolean test_crear_jugadorMaquina(int idMaquina, int profundidad){
-        Boolean b = true; //para control de errores
+    public static void test_crear_jugadorMaquina(int idMaquina, int profundidad){
+        //Boolean b = false; //para control de errores
         JugadorMaquina res = new JugadorMaquina(idMaquina,profundidad);
-        System.out.println("Maquina creada con ID:" + String.valueOf(idMaquina));
-        System.out.println("Prueba get_MaquinaID : " + String.valueOf(res.get_MaquinaID()));
-        System.out.println("Prueba get_Profundidad : " + String.valueOf(res.get_profundidadMaquina()));
+        System.out.println("Maquina creada con ID:" + idMaquina);
+        System.out.println("Prueba get_MaquinaID : " + res.get_MaquinaID());
+        System.out.println("Prueba get_Profundidad : " + res.get_profundidadMaquina());
         System.out.println("Probando modificarID (-1)");
         if (idMaquina != -1 ) {
             res.modificar_id_maquina(-1);
-            System.out.println("NUEVO get_MaquinaID : " + String.valueOf(res.get_MaquinaID()));
+            System.out.println("NUEVO get_MaquinaID : " + res.get_MaquinaID());
+            //b = true;
         } else System.out.println("ID de MAQUINA ya es -1");
 
-        return b;
+        //return b;
     }
 
-    public static Boolean test_crear_jugadorPersona(int idPersona, String nick){
-        Boolean b = true; //para control de errores
+    public static void test_crear_jugadorPersona(int idPersona, String nick){
+        //Boolean b = true; //para control de errores
         JugadorPersona res = new JugadorPersona(idPersona,nick);
-        return b;
+        System.out.println("Maquina creada con ID:" + idPersona);
+        System.out.println("Prueba get_MaquinaID : " + res.get_PersonaID());
+        System.out.println("Prueba get_Nickname : " + res.get_Nickname());
+        //return b;
+    }
+
+    public static void test_varias_maquinas() {
+        Vector <JugadorMaquina>Maquinas = new Vector<JugadorMaquina>(6);
+        for (int i = 0; i < 6; ++i) {
+            JugadorMaquina res = new JugadorMaquina(i,i);
+            Maquinas.addElement(res);
+        }
+        System.out.println("Listar elementos");
+        for (int i = 0; i < 6; ++i) {
+            JugadorMaquina res = Maquinas.elementAt(i);
+            System.out.println("Maquina " + res.get_MaquinaID() + " , " + res.get_profundidadMaquina());
+        }
     }
 
     public static void main(String[] args) {
@@ -64,7 +82,7 @@ public class DriverJugador {
                 test_crear_jugadorPersona(6,"aaaa");
                 break;
             case 4:
-                Vector<JugadorMaquina> Maquinas = new Vector(6);
+                test_varias_maquinas();
                 break;
             default:
         }
