@@ -5,10 +5,7 @@ package jugador;
 import juego.Partida;
 import juego.Tablero;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 
 public class JugadorPersona extends Jugador {
     /*Atributos*/
@@ -82,14 +79,18 @@ public class JugadorPersona extends Jugador {
 
 
     public void Cargar_partida(String path_fichero) throws FileNotFoundException {
-        //FileReader fr = new FileReader (path_fichero);
-        //BufferedReader contenido=new BufferedReader(fr);
+        FileReader fr = new FileReader (path_fichero);
+        BufferedReader contenido=new BufferedReader(fr);
+
+        //AQUI HARIA FALTA CREAR UNA PARTIDA CON LO QUE HAYA QUE LEER DEL FICHERO
 
     }
 
-    public void Guardar_partida(Partida par_guardar) {
-        //String path = "./" + "partida" + String.valueOf(idPartida);
-        //FileWriter fw = new FileWriter(path);
+    public void Guardar_partida(Partida par_guardar) throws IOException {
+        int idPartida = par_guardar.getIdPartida();
+        String path = "./" + "partida" + String.valueOf(idPartida);
+        FileWriter fw = new FileWriter(path);
+
     }
 
     public void Finalizar_partida(Partida par) {

@@ -25,10 +25,15 @@ public class Jugador {
     public void Mover_pieza_en_partida(Partida par, int x, int y) {
         //Comprobar que jugador existe en partida y que la casilla esta vacia
 
+        //asegurarse que el jugador esta en la partida
+        Boolean b = (par.existeJugador(this.id));
+        if (b && par.es_movimiento_posible(x,y)) {
+            par.colocar_ficha(this.id,x,y);
+        }
     }
 
-    /*idPartida tendria que ser objeto juego.Partida, */
     public void Pasar_turno_en_partida(Partida par) {
+        //??? ES NECESARIA ESTA FUNCION O SE PASA AUTOMATICAMENTE EL TURNO CUANDO NO SE PUEDE HACER NINGUN MOVIMIENTO
 
     }
 

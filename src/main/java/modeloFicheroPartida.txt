@@ -1,4 +1,5 @@
 idJugador1 idJugador2
 reglas [vertical, horizontal, diagonal]
+turno
 
 Matriz (tablero)
