@@ -63,7 +63,7 @@ public class JugadorPersona extends Jugador {
             }*/
 
         } else { //es una maquina
-            //PROBLEMA: COMO BUSCAR EN CASO DE SER MAQUINA LA MAQUINA CORRESPONDIENTE: NOS HACE FALTA CLASE CONJUNTO_MAQUINAS??? para poder acceder a ello???
+            //JugadorMaquina contrincante= conjuntoMaquinas.getMaquina_i(idContrincante);
         }
 
         //Partida(idPartida,idContrincante, reglas, );
