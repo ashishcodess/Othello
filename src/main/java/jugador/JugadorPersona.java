@@ -43,8 +43,8 @@ public class JugadorPersona extends Jugador {
 
 
     /*crea un objeto juego.Partida con las reglas y el contricante establecidos
-    Englobaria a los casos de uso: Iniciar juego.Partida y Configurar juego.Partida
-    */
+       Englobaria a los casos de uso: Iniciar juego.Partida y Configurar juego.Partida
+       */
     public Partida Crear_partida(int idPartida, String reglas, int idContrincante, String nickContricante, Tablero tab) {
         /*Comprobar si contrincante es maquina o jugador (en caso de ser jugador crear Objecto jugador,...)*/
 
@@ -73,11 +73,13 @@ public class JugadorPersona extends Jugador {
         return par;
     }
 
+
     public void consultar_ranking() {
 
     }
 
 
+    //Estas cosas tendrian que ir en la capa de persistencia
     public void Cargar_partida(String path_fichero) throws FileNotFoundException {
         FileReader fr = new FileReader (path_fichero);
         BufferedReader contenido=new BufferedReader(fr);
@@ -86,6 +88,7 @@ public class JugadorPersona extends Jugador {
 
     }
 
+    //Estas cosas tendrian que ir en la capa de persistencia
     public void Guardar_partida(Partida par_guardar) throws IOException {
         int idPartida = par_guardar.getIdPartida();
         String path = "./" + "partida" + String.valueOf(idPartida);
