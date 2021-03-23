@@ -7,10 +7,18 @@ public class Partida {
     private int turno;
     private String jugador1;
     private String jugador2;
-    private Tablero tablero;
+    private Casilla[][] tablero;
     private Resultado resultado;
 
-    public Partida (int id) {this.id = id;}
+    //Creadora - Configuración de los parámetros de una partida
+    public Partida (int id, String modoJuego, String r, int turn, String j1, String j2) {
+        this.id = id;
+        this.modoDeJuego = modoJuego;
+        this.reglas = r;
+        this.turno = turn;
+        this.jugador1 = j1;
+        this.jugador2 = j2;
+    }
 
     public int getIdPartida() {return this.id;}
 
@@ -37,12 +45,19 @@ public class Partida {
         if (this.id == idPartida) return this.jugador2;
         return null;
     }
-    //Configuración de los parámetros de una partida
-    public void setPartida(String modoJuego, String r, int turn, String j1, String j2){
-        modoDeJuego = modoJuego;
-        reglas = r;
-        turno = turn;
-        jugador1 = j1;
-        jugador2 = j2;
+
+    //Guarda la partida actual y todos sus datos en un fichero
+    public void guardarPartida(){
+
+    }
+
+    //Imprime el tablero con las casillas disponibles marcadas
+    public void generarCasillesDisponibles(){
+
+    }
+
+    //Actualiza el tablero de la partida
+    public void actualizarTablero() {
+        this.tablero = Tablero::getTablero();
     }
 }

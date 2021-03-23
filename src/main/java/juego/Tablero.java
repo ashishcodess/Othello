@@ -4,10 +4,25 @@ import java.util.*;
 
 public class Tablero {
 
-    int[][] Marcar = new int[8][8];
+    Casilla[][] tablero = new Casilla[8][8];
     Map<Integer, Casilla> map_fichas_blanca = new HashMap<Integer, Casilla>();
     Map<Integer, Casilla> map_fichas_negra = new HashMap<Integer, Casilla>();
 
+    public Casilla[][] getTablero() {
+        return tablero;
+    }
+
+    public Casilla getCasilla(int x, int y){
+        return Casilla[]
+    }
+
+    public int getNumCasillasBlancas(){
+        return map_fichas_blanca.size();
+    }
+
+    public int getNumCasillasNegras(){
+        return map_fichas_negra.size();
+    }
 
     public int colocada_blancas() {
         return map_fichas_blanca.size();
@@ -19,8 +34,21 @@ public class Tablero {
 
     }
 
-    public boolean es_posssible(int x, int y) {// cuando quiere hacer un movimeinto pasamos pos para chequear
-        if (Marcar[x][y] == 1) return true;
+    //Devuelve todas las casillas disponibles donde poder colocar una ficha
+    public void calcularCasillasDisponiblesVertical(){
+
+    }
+
+    public void calcularCasillasDisponiblesHorizontal(){
+
+    }
+
+    public void calcularCasillasDisponiblesDiagonales(){
+
+    }
+
+    public boolean es_possible(int x, int y) {// cuando quiere hacer un movimeinto pasamos pos para chequear
+        if (tablero[x][y] == 1) return true;
         else return false;
     }
 
@@ -44,4 +72,17 @@ public class Tablero {
             //estan en negras borramos de ahí y añadimos a blancas ya que fichas afectadas cambian de color.
         }
     }
+
+    public void modificarCasillasVertical(){
+
+    }
+
+    public void modificarCasillasHorizontal(){
+
+    }
+
+    public void modificarCasillasDiagonales(){
+
+    }
+
 }

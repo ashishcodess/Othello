@@ -20,9 +20,23 @@ public class Main {
         }
     }
 
-    public static void partida(){
+    public void iniciarPartida(){
 
     }
+
+    public void cargarPartida(){
+
+    }
+
+    public void consultarRanking(){
+
+    }
+
+    public void consultarEstadístiques(int id){
+
+    }
+
+
 
     public static void main(String[] args) {
         entrar();
