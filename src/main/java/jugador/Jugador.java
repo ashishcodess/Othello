@@ -32,9 +32,4 @@ public class Jugador {
         }
     }
 
-    public void Pasar_turno_en_partida(Partida par) {
-        //??? ES NECESARIA ESTA FUNCION O SE PASA AUTOMATICAMENTE EL TURNO CUANDO NO SE PUEDE HACER NINGUN MOVIMIENTO
-
-    }
-
 }

@@ -5,19 +5,24 @@ public class Partida {
     private String modoDeJuego;
     private String reglas;
     private int turno;
-    private String jugador1;
-    private String jugador2;
+    private int idJugador1;
+    private int idJugador2;
     private Casilla[][] tablero;
     //private Resultado resultado;
 
     //Creadora - Configuración de los parámetros de una partida
-    public Partida (int id, String modoJuego, String r, int turn, String j1, String j2) {
+    public Partida (int id, String modoJuego, String r, int turn, int idj1, int idj2) {
         this.id = id;
         this.modoDeJuego = modoJuego;
         this.reglas = r;
         this.turno = turn;
-        this.jugador1 = j1;
-        this.jugador2 = j2;
+        this.idJugador1 = idj1;
+        this.idJugador2 = idj2;
+    }
+    
+    //Devuelve un boleano indicando si el jugador está en la partida
+    public Boolean existeJugador(int id){
+        return idJugador1 == id or idJugador2 == id;
     }
 
     public int getIdPartida() {return this.id;}
@@ -37,12 +42,12 @@ public class Partida {
         return idPartida;
     }
 
-    public String getJugador1Partida(int idPartida) {
-        if (this.id == idPartida) return this.jugador1;
+    public int getIDJugador1Partida(int idPartida) {
+        if (this.id == idPartida) return this.idJugador1;
         return null;
     }
-    public String getJugador2Partida(int idPartida) {
-        if (this.id == idPartida) return this.jugador2;
+    public int getIDJugador2Partida(int idPartida) {
+        if (this.id == idPartida) return this.idJugador2;
         return null;
     }
 
