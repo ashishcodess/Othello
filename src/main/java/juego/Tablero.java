@@ -4,16 +4,16 @@ import java.util.*;
 
 public class Tablero {
 
-    Casilla[][] tablero = new Casilla[8][8];
-    Map<Integer, Casilla> map_fichas_blanca = new HashMap<Integer, Casilla>();
-    Map<Integer, Casilla> map_fichas_negra = new HashMap<Integer, Casilla>();
+    private Casilla[][] tablero = new Casilla[8][8];
+    private Map<Integer, Casilla> map_fichas_blanca = new HashMap<Integer, Casilla>();
+    private Map<Integer, Casilla> map_fichas_negra = new HashMap<Integer, Casilla>();
 
     public Casilla[][] getTablero() {
         return tablero;
     }
 
     public Casilla getCasilla(int x, int y){
-        return Casilla[]
+        return this.Casilla[x][y];
     }
 
     public int getNumCasillasBlancas(){

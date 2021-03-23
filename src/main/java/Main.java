@@ -1,12 +1,13 @@
 import java.util.*;
 
 
+
 public class Main {
     static int code;
     static Scanner scan = new Scanner(System.in);
 
     public static void entrar() {
-        System.out.println("Quieres crear un usuario? Si/No ");
+        System.out.println("Estas Registrado/a? Si/No ");
         String in = scan.next();
         if(in.toLowerCase().equals("si")){
             System.out.println("Entra tu nombre de usuario");
@@ -45,9 +46,7 @@ public class Main {
             partida();
             System.out.println("Quieres sailr? Si/No");
             String quit = scan.next();
-            if(quit.toLowerCase().equals("si")){
-                salir = true;
-            }
+            if(quit.toLowerCase().equals("si"))salir = true;
         }
     }
 }

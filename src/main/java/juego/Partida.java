@@ -8,7 +8,7 @@ public class Partida {
     private String jugador1;
     private String jugador2;
     private Casilla[][] tablero;
-    private Resultado resultado;
+    //private Resultado resultado;
 
     //Creadora - Configuración de los parámetros de una partida
     public Partida (int id, String modoJuego, String r, int turn, String j1, String j2) {
