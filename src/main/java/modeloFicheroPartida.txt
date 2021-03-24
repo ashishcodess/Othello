@@ -1,4 +1,6 @@
-idJugador1 idJugador2
+idJugador1 nickJugador1
+idJugador2 nickJugador2
+modo
 reglas [vertical, horizontal, diagonal]
 turno
 

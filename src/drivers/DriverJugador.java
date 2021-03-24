@@ -1,6 +1,11 @@
+package drivers;
 
-package jugador;
+import jugador.Jugador;
+import jugador.JugadorMaquina;
+import jugador.JugadorPersona;
+import jugador.ConjuntoMaquinas;
 
+import java.io.IOException;
 import java.util.*;
 
 /*
@@ -42,7 +47,7 @@ public class DriverJugador {
         //return b;
     }
 
-    public static void test_crear_jugadorPersona(int idPersona, String nick){
+    public static void test_crear_jugadorPersona(int idPersona, String nick) throws IOException {
         //Boolean b = true; //para control de errores
         JugadorPersona res = new JugadorPersona(idPersona,nick);
         System.out.println("Maquina creada con ID:" + idPersona);
@@ -64,27 +69,35 @@ public class DriverJugador {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println("OPCIONES:");
-        System.out.println("1 - Crear Jugador");
-        System.out.println("2 - Crear Jugador Maquina");
-        System.out.println("3 - Crear Jugador Persona");
-        System.out.println("4 - Crear varias maquinas(6) y jugador ");
-        int i_entrada = Integer.parseInt(scan.next());
-        switch(i_entrada) {
-            case 1:
-                test_crear_jugador(2);
-                break;
-            case 2:
-                test_crear_jugadorMaquina(0,1);
-                break;
-            case 3:
-                test_crear_jugadorPersona(6,"aaaa");
-                break;
-            case 4:
-                test_varias_maquinas();
-                break;
-            default:
+    public static void main(String[] args) throws IOException {
+        boolean b = true;
+        while (b) {
+            System.out.println("OPCIONES:");
+            System.out.println("-1 - SALIR DEL DRIVER");
+            System.out.println("1 - Crear Jugador");
+            System.out.println("2 - Crear Jugador Maquina");
+            System.out.println("3 - Crear Jugador Persona");
+            System.out.println("4 - Crear varias maquinas(6) y jugador ");
+            int i_entrada = Integer.parseInt(scan.next());
+            switch(i_entrada) {
+                case -1:
+                    b = false;
+                    break;
+                case 1:
+                    test_crear_jugador(2);
+                    break;
+                case 2:
+                    test_crear_jugadorMaquina(0,1);
+                    break;
+                case 3:
+                    test_crear_jugadorPersona(6,"aaaa");
+                    break;
+                case 4:
+                    test_varias_maquinas();
+                    break;
+                default:
+            }
+            System.out.println("");
         }
     }
 }
