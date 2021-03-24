@@ -1,8 +1,6 @@
 
-
 package jugador;
 
-import main.java.juego.Partida;
 
 import java.io.*;
 
@@ -49,7 +47,7 @@ public class JugadorPersona extends Jugador {
         return (this.nickname + "#" + String.valueOf(super.getID()));
     }
 
-    
+
     /*public Partida Crear_partida(int idPartida, String reglas, int idContrincante, String nickContricante, Tablero tab) {
         //Comprobar si contrincante es maquina o jugador (en caso de ser jugador crear Objecto jugador,...)
 
@@ -101,9 +99,28 @@ public class JugadorPersona extends Jugador {
     //Estas cosas tendrian que ir en la capa de persistencia
     public void Guardar_partida(Partida par_guardar) throws IOException {
         int idPartida = par_guardar.getIdPartida();
-        String path = "./files/partidas/" + "partida" + String.valueOf(idPartida);
-        FileWriter fw = new FileWriter(path);
+        String path = "./files/partidas/" + "partida" + String.valueOf(idPartida) + ".txt";
+        File f = new File(path);
+        if (!f.exists()) {
+            f.createNewFile();
+            FileWriter fw = new FileWriter(f);
+            fw.write(par_guardar.getID_J1() + " " + par_guardar.getNickJugador1() + "\n");
+            fw.write(par_guardar.getID_J2() + " " + par_guardar.getNickJugador2() + "\n");
+            fw.write(par_guardar.getModoDeJuegoPartida() + "\n");
+            fw.write(par_guardar.getReglasPartida()  + "\n");
+            fw.write(par_guardar.getTurnoPartida()+ "\n");
+            fw.write("\n");
 
+            //ESTO ES UN EJEMPLO HABRIA QUE PASAR EL TABLERO DE LA PARTIDA Y TRADUCIRLO A STRING
+            for (int i = 0; i < 8; ++i) {
+                String sbuff = new String();
+                for (int j = 0; j < 8; ++j) {
+                    sbuff = sbuff + '0';
+                }
+                fw.write(sbuff + "\n");
+            }
+            fw.close();
+        }
     }
 
     public void Finalizar_partida(Partida par) {
