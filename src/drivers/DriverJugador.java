@@ -4,14 +4,15 @@ import jugador.Jugador;
 import jugador.JugadorMaquina;
 import jugador.JugadorPersona;
 import jugador.ConjuntoMaquinas;
+import main.java.juego.Partida;
 
 import java.io.IOException;
 import java.util.*;
 
 /*
-* PARA VER QUE FUNCIONE CORRECTAMENTE
-*
-* */
+ * PARA VER QUE FUNCIONE CORRECTAMENTE
+ *
+ * */
 
 public class DriverJugador {
 
@@ -69,6 +70,18 @@ public class DriverJugador {
         }
     }
 
+    public static void test_guardar_partida() throws IOException {
+        JugadorPersona res = new JugadorPersona(6,"as");
+        Partida par = new Partida(0,3,"1 1 1" + "",0,6,"as",7,"as2");
+        res.Guardar_partida(par);
+    }
+
+    public static void test_cargar_partida() throws IOException {
+        JugadorPersona res = new JugadorPersona(6,"as");
+        String f = "./files/partidas/partida0.txt";
+        res.Cargar_partida(f);
+    }
+
     public static void main(String[] args) throws IOException {
         boolean b = true;
         while (b) {
@@ -78,6 +91,9 @@ public class DriverJugador {
             System.out.println("2 - Crear Jugador Maquina");
             System.out.println("3 - Crear Jugador Persona");
             System.out.println("4 - Crear varias maquinas(6) y jugador ");
+            System.out.println("5 - Guardar Partida (fichero) ");
+            System.out.println("6 - Cargar Partida (fichero) ");
+            System.out.println("");
             int i_entrada = Integer.parseInt(scan.next());
             switch(i_entrada) {
                 case -1:
@@ -94,6 +110,12 @@ public class DriverJugador {
                     break;
                 case 4:
                     test_varias_maquinas();
+                    break;
+                case 5:
+                    test_guardar_partida();
+                    break;
+                case 6:
+                    test_cargar_partida();
                     break;
                 default:
             }

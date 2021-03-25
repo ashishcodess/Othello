@@ -1,8 +1,10 @@
 
 package jugador;
 
+import main.java.juego.Partida;
 
 import java.io.*;
+import java.util.Vector;
 
 public class JugadorPersona extends Jugador {
     /*Atributos*/
@@ -88,11 +90,51 @@ public class JugadorPersona extends Jugador {
         return res;
     }
 
-    //Estas cosas tendrian que ir en la capa de persistencia
-    public void Cargar_partida(String path_fichero) throws FileNotFoundException {
-        FileReader fr = new FileReader (path_fichero);
-        BufferedReader contenido=new BufferedReader(fr);
 
+
+    //Estas cosas tendrian que ir en la capa de persistencia
+    public void Cargar_partida(String f) throws IOException {
+        FileReader fr = new FileReader (f);
+        BufferedReader bf =new BufferedReader(fr);
+
+
+        String s1 = bf.readLine();
+        String s2[] = s1.split(" ");
+
+
+        int id1, id2, modo, turno;
+
+        int reglas[] = new int[3];
+        String nick1 = new String();
+        String nick2 = new String();
+
+        id1 = Integer.parseInt(s2[0]);
+        if (s2.length != 1) nick1 = s2[1];
+
+        s1 = bf.readLine();
+        s2 = s1.split(" ");
+        id2 = Integer.parseInt(s2[0]);
+        if (s2.length != 1) nick2 = s2[1];
+
+        s1 = bf.readLine();
+        modo = Integer.parseInt(s1);
+
+        s1 = bf.readLine();
+        s2 = s1.split(" ");
+        reglas[0] = Integer.parseInt(s2[0]);
+        reglas[1] = Integer.parseInt(s2[1]);
+        reglas[2] = Integer.parseInt(s2[2]);
+
+        s1 = bf.readLine();
+        turno = Integer.parseInt(s1);
+
+        System.out.println("Extraidos: " +  id1 + " " + nick1);
+        System.out.println("Extraidos: " +  id2 + " " + nick2);
+        System.out.println("Extraidos: " +  modo);
+        System.out.println("Extraidos: " +  reglas[0] + reglas[1] + reglas[2]);
+        System.out.println("Extraidos: " +  turno);
+
+        //FALTA EXTRAER EL TABLERO
 
     }
 
