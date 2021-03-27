@@ -20,6 +20,14 @@ public class ElementoRanking implements Comparable<ElementoRanking> {
         this.partidasPerdidas = 0;
     }
 
+    public ElementoRanking (int id, String nick,  int ganadas, int perdidas, int total) {
+        this.idJugador = id;
+        this.nickJugador = nick;
+        this.totalPartidasJugadas = total;
+        this.partidasGanadas = ganadas;
+        this.partidasPerdidas = perdidas;
+    }
+
     public void incrementar_partida_ganada() {
         this.partidasGanadas = this.partidasGanadas + 1;
         this.totalPartidasJugadas = this.totalPartidasJugadas + 1;

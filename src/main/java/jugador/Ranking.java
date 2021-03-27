@@ -1,5 +1,6 @@
 package jugador;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -9,6 +10,46 @@ public class Ranking {
     /*Constructora*/
     public Ranking () {
         this.ranking = new ArrayList<ElementoRanking>();
+    }
+
+    //IMPORTAR RANKING
+    public Ranking (File f) throws IOException {
+        this.ranking = new ArrayList<ElementoRanking>();
+        FileReader fr = new FileReader (f);
+        BufferedReader bf =new BufferedReader(fr);
+        String s1 = "aa";
+        while (s1 != null) {
+            s1 = bf.readLine();
+            String s2[] = s1.split(" ");
+
+            int id, total, ganadas, perdidas;
+            String nick;
+
+            if (s2.length == 5) {
+                id = Integer.parseInt(s2[0]);
+                nick = s2[1];
+                ganadas = Integer.parseInt(s2[2]);
+                perdidas = Integer.parseInt(s2[3]);
+                total = Integer.parseInt(s2[4]);
+
+                ElementoRanking e = new ElementoRanking(id,nick,ganadas,perdidas,total);
+                this.ranking.add(e);
+;            }
+        }
+    }
+
+    public void Exportar_ranking() throws IOException {
+        String path = "./files/ranking/" + "ranking" + this.ranking.size() + ".txt";
+        File f = new File(path);
+        if (!f.exists()) {
+            f.createNewFile();
+            FileWriter fw = new FileWriter(f);
+            int tam = this.ranking.size();
+            for  (int i = 0; i < tam; ++i) {
+                fw.write(this.ranking.get(i).consultar_all() + "\n");
+            }
+            fw.close();
+        }
     }
 
     public void add_al_ranking(ElementoRanking e) {
@@ -65,5 +106,6 @@ public class Ranking {
         }
         return res;
     }
+
 
 }
