@@ -3,6 +3,9 @@ package jugador;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+
+import static java.util.Arrays.*;
 
 public class Ranking {
     private ArrayList<ElementoRanking> ranking;
@@ -54,7 +57,6 @@ public class Ranking {
 
     public void add_al_ranking(ElementoRanking e) {
         this.ranking.add(e);
-        if (this.ranking.size() >= 2) Collections.sort(this.ranking);
     }
 
     public void modificar_elemento_ranking(int i, ElementoRanking e) {
@@ -91,7 +93,6 @@ public class Ranking {
             return null;
         }
     }
-
     //modo: 1 -> Ganadas, 0 -> perdidas
     public Boolean incrementar_ganada_perdida(int id, String nick, Boolean modo) {
         int tam = ranking.size();
@@ -107,5 +108,58 @@ public class Ranking {
         return res;
     }
 
+    //orden -> 0 (Ganadas), 1 (ID) , 2 (NICKNAME)
+    public Boolean ordenar_ranking(int orden) {
+        if (orden > 2 || orden < 0) return false;
+        else {
+            switch(orden) {
+                case 0:
+                    Collections.sort(this.ranking, new SortbyGanadas());
+                    break;
+                case 1:
+                    Collections.sort(this.ranking, new SortbyID());
+                    break;
+                case 2:
+                    Collections.sort(this.ranking, new SortbyNICKNAME());
+                    break;
+            }
+            return true;
+        }
+    }
+
+    public void print_Ranking() {
+        int tam = this.ranking.size();
+        for (int i = 0; i < tam; ++i) {
+            String s = this.ranking.get(i).consultar_all();
+            System.out.println(s);
+        }
+    }
+
+    public void print_Ranking(int orden) {
+        ordenar_ranking(orden);
+        int tam = this.ranking.size();
+        for (int i = 0; i < tam; ++i) {
+            String s = this.ranking.get(i).consultar_all();
+            System.out.println(s);
+        }
+    }
+
+    class SortbyGanadas implements Comparator<ElementoRanking> {
+        public int compare(ElementoRanking e1, ElementoRanking e2) {
+            return (e2.getGanadas() - e1.getGanadas());
+        }
+    }
+
+    class SortbyID implements Comparator<ElementoRanking> {
+        public int compare(ElementoRanking e1, ElementoRanking e2) {
+            return (e2.getID() - e1.getID());
+        }
+    }
+
+    class SortbyNICKNAME implements Comparator<ElementoRanking> {
+        public int compare(ElementoRanking e1, ElementoRanking e2) {
+            return e2.getNickname().compareTo(e1.getNickname());
+        }
+    }
 
 }

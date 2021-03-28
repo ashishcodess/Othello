@@ -1,7 +1,7 @@
 package jugador;
 
 
-public class ElementoRanking implements Comparable<ElementoRanking> {
+public class ElementoRanking {
     /*Atributos*/
     private int idJugador;
     private String nickJugador;
@@ -44,6 +44,12 @@ public class ElementoRanking implements Comparable<ElementoRanking> {
 
     public String getNickname() {return this.nickJugador;}
 
+    public int getGanadas() {return this.partidasGanadas;}
+
+    public int getPerdidas() {return this.partidasPerdidas;}
+
+    public int getTotales() {return this.totalPartidasJugadas;}
+
     public String consultar_ganadas() {
         return (this.idJugador + " " + this.nickJugador + " " + this.partidasGanadas);
     }
@@ -53,14 +59,14 @@ public class ElementoRanking implements Comparable<ElementoRanking> {
     }
 
     public String consultar_all() {
-        return (this.idJugador + " " + this.nickJugador + " " + this.partidasGanadas + " " + this.partidasPerdidas + this.totalPartidasJugadas);
+        return (this.idJugador + " " + this.nickJugador + " " + this.partidasGanadas + " " + this.partidasPerdidas + " " + this.totalPartidasJugadas);
     }
 
     //FUNCION PARA PODERLO ORDENAR EN FUNCION DE LAS PARTIDAS GANADAS
-    @Override
+    /*@Override
     public int compareTo(ElementoRanking e) {
         if (partidasGanadas < e.partidasGanadas) return -1;
         if (partidasGanadas > e.partidasGanadas) return 1;
         return 0;
-    }
+    }*/
 }
