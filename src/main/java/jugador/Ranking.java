@@ -21,8 +21,7 @@ public class Ranking {
         FileReader fr = new FileReader (f);
         BufferedReader bf =new BufferedReader(fr);
         String s1 = "aa";
-        while (s1 != null) {
-            s1 = bf.readLine();
+        while ((s1 = bf.readLine()) != null) {
             String s2[] = s1.split(" ");
 
             int id, total, ganadas, perdidas;
