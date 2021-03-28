@@ -34,7 +34,7 @@ public class Ranking {
 
                 ElementoRanking e = new ElementoRanking(id,nick,ganadas,perdidas,total);
                 this.ranking.add(e);
-;            }
+                ;            }
         }
     }
 
