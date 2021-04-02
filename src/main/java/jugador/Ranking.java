@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import static java.util.Arrays.*;
-
 public class Ranking {
     private ArrayList<ElementoRanking> ranking;
 
@@ -127,8 +125,24 @@ public class Ranking {
         }
     }
 
+    public Boolean print_persona_ranking(int id ,String nick) {
+        Boolean res = false;
+        int tam = ranking.size();
+        Boolean res = false;
+        int i = 0;
+        while (i < tam && !res) {
+            res = (this.ranking.get(i).getID() == id) && (this.ranking.get(i).getNickname() == nick);
+        }
+        if (res) {
+            System.out.println("(ID, nickname, Ganadas, Perdidas, Totales)");
+            System.out.println(this.ranking.get(i).consultar_all());
+        }
+        return res;
+    }
+
     public void print_Ranking() {
         int tam = this.ranking.size();
+        System.out.println("(ID, nickname, Ganadas, Perdidas, Totales)");
         for (int i = 0; i < tam; ++i) {
             String s = this.ranking.get(i).consultar_all();
             System.out.println(s);
@@ -138,25 +152,26 @@ public class Ranking {
     public void print_Ranking(int orden) {
         ordenar_ranking(orden);
         int tam = this.ranking.size();
+        System.out.println("(ID, nickname, Ganadas, Perdidas, Totales)");
         for (int i = 0; i < tam; ++i) {
             String s = this.ranking.get(i).consultar_all();
             System.out.println(s);
         }
     }
 
-    class SortbyGanadas implements Comparator<ElementoRanking> {
+    static class SortbyGanadas implements Comparator<ElementoRanking> {
         public int compare(ElementoRanking e1, ElementoRanking e2) {
             return (e2.getGanadas() - e1.getGanadas());
         }
     }
 
-    class SortbyID implements Comparator<ElementoRanking> {
+    static class SortbyID implements Comparator<ElementoRanking> {
         public int compare(ElementoRanking e1, ElementoRanking e2) {
             return (e2.getID() - e1.getID());
         }
     }
 
-    class SortbyNICKNAME implements Comparator<ElementoRanking> {
+    static class SortbyNICKNAME implements Comparator<ElementoRanking> {
         public int compare(ElementoRanking e1, ElementoRanking e2) {
             return e2.getNickname().compareTo(e1.getNickname());
         }
