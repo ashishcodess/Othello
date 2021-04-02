@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 
@@ -25,16 +28,85 @@ public class Main {
 
     }
 
-    public static void cargarPartida(){
+    public static Boolean cargarPartida() throws IOException {
+        Boolean res = false;
+        String path_partida = ""; //igual esta bien pasarlo como parametro o algo
+        File f = new File(path_partida);
+        if(f.exists()) {
+            FileReader fr = new FileReader (f);
+            BufferedReader bf =new BufferedReader(fr);
 
+            String s1 = bf.readLine();
+            String s2[] = s1.split(" ");
+
+            int id1, id2, modo, turno;
+
+            int reglas[] = new int[3];
+            String nick1 = new String();
+            String nick2 = new String();
+
+            id1 = Integer.parseInt(s2[0]);
+            if (s2.length != 1) nick1 = s2[1];
+
+            s1 = bf.readLine();
+            s2 = s1.split(" ");
+            id2 = Integer.parseInt(s2[0]);
+            if (s2.length != 1) nick2 = s2[1];
+
+            s1 = bf.readLine();
+            modo = Integer.parseInt(s1);
+
+            s1 = bf.readLine();
+            s2 = s1.split(" ");
+            reglas[0] = Integer.parseInt(s2[0]);
+            reglas[1] = Integer.parseInt(s2[1]);
+            reglas[2] = Integer.parseInt(s2[2]);
+
+            s1 = bf.readLine();
+            turno = Integer.parseInt(s1);
+
+            System.out.println("Extraidos: " +  id1 + " " + nick1);
+            System.out.println("Extraidos: " +  id2 + " " + nick2);
+            System.out.println("Extraidos: " +  modo);
+            System.out.println("Extraidos: " +  reglas[0] + reglas[1] + reglas[2]);
+            System.out.println("Extraidos: " +  turno);
+            s1 = bf.readLine(); //espacio vacio
+
+            char[][] mapa = new char[8][8];
+            for (int i = 0; i < 8; ++i) {
+                s1 = bf.readLine();
+                for (int j = 0; j < 8; ++j) {
+                    mapa[i][j] = s1.charAt(j);
+                }
+            }
+
+        /*
+        Ahora tenemos toda la informacion para crear una partida, falta creadora de
+        Tablero a partir de la matriz de mapa y creadora de Partida con toda la info
+        * */
+
+
+        /* PRINT DEL MAPA
+        System.out.println("Imprimir mapa");
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                System.out.print(mapa[i][j]);
+            }
+            System.out.println();
+        }*/
+            res = true; //se ha cargado correctamente
+        }
+        return res;
     }
 
     public static void consultarRanking(){
-
+        //SERGIO: Duda donde guardamos el objeto Ranking???
+        ranking.print_ranking();
     }
 
-    public static void consultarEstadístiques(int id){
-
+    public static void consultarEstadístiques(int id, String nick){
+        //SERGIO: Duda donde guardamos el objeto Ranking???
+        ranking.print_persona_ranking(id,nick);
     }
 
 

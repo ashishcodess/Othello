@@ -17,11 +17,10 @@ public class Ranking {
     public Ranking (String path_fichero) throws IOException {
         this.ranking = new ArrayList<ElementoRanking>();
         File f = new File(path_fichero);
-        if (!f.exists()) {
-            f.createNewFile();
+        if (f.exists()) {
             FileReader fr = new FileReader (f);
             BufferedReader bf =new BufferedReader(fr);
-            String s1 = "aa";
+            String s1;
             while ((s1 = bf.readLine()) != null) {
                 String s2[] = s1.split(" ");
                 int id, total, ganadas, perdidas;
@@ -128,7 +127,6 @@ public class Ranking {
     public Boolean print_persona_ranking(int id ,String nick) {
         Boolean res = false;
         int tam = ranking.size();
-        Boolean res = false;
         int i = 0;
         while (i < tam && !res) {
             res = (this.ranking.get(i).getID() == id) && (this.ranking.get(i).getNickname() == nick);
@@ -137,10 +135,11 @@ public class Ranking {
             System.out.println("(ID, nickname, Ganadas, Perdidas, Totales)");
             System.out.println(this.ranking.get(i).consultar_all());
         }
+        else System.out.println("Error: no existe persona con ID:" + id + " y nick:" + nick + " dentro del Ranking");
         return res;
     }
 
-    public void print_Ranking() {
+    public void print_ranking() {
         int tam = this.ranking.size();
         System.out.println("(ID, nickname, Ganadas, Perdidas, Totales)");
         for (int i = 0; i < tam; ++i) {
@@ -149,7 +148,7 @@ public class Ranking {
         }
     }
 
-    public void print_Ranking(int orden) {
+    public void print_ranking_orden(int orden) {
         ordenar_ranking(orden);
         int tam = this.ranking.size();
         System.out.println("(ID, nickname, Ganadas, Perdidas, Totales)");

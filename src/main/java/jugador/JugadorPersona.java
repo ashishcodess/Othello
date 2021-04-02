@@ -16,13 +16,10 @@ public class JugadorPersona extends Jugador {
         this.nickname = nicknameJugador;
 
         //Crear fichero "idJugador_nickname"
-        //persona
         this.persona_nueva = crearFicheroUsuario(idJugador,nicknameJugador);
     }
 
     /*Sets y Gets*/
-
-
     public void modificar_IDJugador(int nuevoID) {
         super.modificar_id(nuevoID);
     }
@@ -49,34 +46,6 @@ public class JugadorPersona extends Jugador {
     }
 
 
-    /*public Partida Crear_partida(int idPartida, String reglas, int idContrincante, String nickContricante, Tablero tab) {
-        //Comprobar si contrincante es maquina o jugador (en caso de ser jugador crear Objecto jugador,...)
-
-
-        Partida par = new Partida(idPartida);
-        if (idContrincante > 5) { //es una persona
-
-            //if (Ranking.existe_Persona(idContrincante,nickContricante)) {}else { //Crear nuevo contrincante}
-
-        } else { //es una maquina
-            //JugadorMaquina contrincante= conjuntoMaquinas.getMaquina_i(idContrincante);
-        }
-
-        //Partida(idPartida,idContrincante, reglas, );
-
-
-        //CONFIGURAR PARTIDA
-
-
-        //INICIAR PARTIDA
-        return par;
-    }*/
-
-
-    public void consultar_ranking() {
-
-    }
-
     //Estas cosas tendrian que ir en la capa de persistencia
     public boolean crearFicheroUsuario(int idJugador,String nicknameJugador) throws IOException{
         String path = "./files/users/" + idJugador + "_" + nicknameJugador;
@@ -92,14 +61,13 @@ public class JugadorPersona extends Jugador {
 
 
     //Estas cosas tendrian que ir en la capa de persistencia
-    public void Cargar_partida(String f) throws IOException {
+
+    public void Cargar_partida(String f) throws IOException { //COPIADA EN EL MAIN
         FileReader fr = new FileReader (f);
         BufferedReader bf =new BufferedReader(fr);
 
-
         String s1 = bf.readLine();
         String s2[] = s1.split(" ");
-
 
         int id1, id2, modo, turno;
 
@@ -185,10 +153,6 @@ public class JugadorPersona extends Jugador {
             fw.write(sbuff + "\n");
         }
         fw.close();
-    }
-
-    public void Finalizar_partida(Partida par) {
-
     }
 
 }

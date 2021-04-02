@@ -61,12 +61,4 @@ public class ElementoRanking {
     public String consultar_all() {
         return (this.idJugador + " " + this.nickJugador + " " + this.partidasGanadas + " " + this.partidasPerdidas + " " + this.totalPartidasJugadas);
     }
-
-    //FUNCION PARA PODERLO ORDENAR EN FUNCION DE LAS PARTIDAS GANADAS
-    /*@Override
-    public int compareTo(ElementoRanking e) {
-        if (partidasGanadas < e.partidasGanadas) return -1;
-        if (partidasGanadas > e.partidasGanadas) return 1;
-        return 0;
-    }*/
 }
