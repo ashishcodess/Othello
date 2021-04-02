@@ -16,27 +16,28 @@ public class Ranking {
     }
 
     //IMPORTAR RANKING
-    public Ranking (File f) throws IOException {
+    public Ranking (String path_fichero) throws IOException {
         this.ranking = new ArrayList<ElementoRanking>();
-        FileReader fr = new FileReader (f);
-        BufferedReader bf =new BufferedReader(fr);
-        String s1 = "aa";
-        while ((s1 = bf.readLine()) != null) {
-            String s2[] = s1.split(" ");
-
-            int id, total, ganadas, perdidas;
-            String nick;
-
-            if (s2.length == 5) {
-                id = Integer.parseInt(s2[0]);
-                nick = s2[1];
-                ganadas = Integer.parseInt(s2[2]);
-                perdidas = Integer.parseInt(s2[3]);
-                total = Integer.parseInt(s2[4]);
-
-                ElementoRanking e = new ElementoRanking(id,nick,ganadas,perdidas,total);
-                this.ranking.add(e);
-                ;            }
+        File f = new File(path_fichero);
+        if (!f.exists()) {
+            f.createNewFile();
+            FileReader fr = new FileReader (f);
+            BufferedReader bf =new BufferedReader(fr);
+            String s1 = "aa";
+            while ((s1 = bf.readLine()) != null) {
+                String s2[] = s1.split(" ");
+                int id, total, ganadas, perdidas;
+                String nick;
+                if (s2.length == 5) {
+                    id = Integer.parseInt(s2[0]);
+                    nick = s2[1];
+                    ganadas = Integer.parseInt(s2[2]);
+                    perdidas = Integer.parseInt(s2[3]);
+                    total = Integer.parseInt(s2[4]);
+                    ElementoRanking e = new ElementoRanking(id,nick,ganadas,perdidas,total);
+                    this.ranking.add(e);
+                }
+            }
         }
     }
 

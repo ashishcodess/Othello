@@ -4,7 +4,6 @@ package jugador;
 import main.java.juego.Partida;
 
 import java.io.*;
-import java.util.Vector;
 
 public class JugadorPersona extends Jugador {
     /*Atributos*/
@@ -133,8 +132,30 @@ public class JugadorPersona extends Jugador {
         System.out.println("Extraidos: " +  modo);
         System.out.println("Extraidos: " +  reglas[0] + reglas[1] + reglas[2]);
         System.out.println("Extraidos: " +  turno);
+        s1 = bf.readLine(); //espacio vacio
 
-        //FALTA EXTRAER EL TABLERO
+        char[][] mapa = new char[8][8];
+        for (int i = 0; i < 8; ++i) {
+            s1 = bf.readLine();
+            for (int j = 0; j < 8; ++j) {
+                mapa[i][j] = s1.charAt(j);
+            }
+        }
+
+        /*
+        Ahora tenemos toda la informacion para crear una partida, falta creadora de
+        Tablero a partir de la matriz de mapa y creadora de Partida con toda la info
+        * */
+
+
+        /* PRINT DEL MAPA
+        System.out.println("Imprimir mapa");
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                System.out.print(mapa[i][j]);
+            }
+            System.out.println();
+        }*/
 
     }
 
@@ -143,7 +164,7 @@ public class JugadorPersona extends Jugador {
         int idPartida = par_guardar.getIdPartida();
         String path = "./files/partidas/" + "partida" + String.valueOf(idPartida) + ".txt";
         File f = new File(path);
-        if (!f.exists()) {
+        if (f.exists()) {
             f.createNewFile();
             FileWriter fw = new FileWriter(f);
             fw.write(par_guardar.getID_J1() + " " + par_guardar.getNickJugador1() + "\n");
@@ -163,6 +184,7 @@ public class JugadorPersona extends Jugador {
             }
             fw.close();
         }
+        else f.createNewFile();
     }
 
     public void Finalizar_partida(Partida par) {

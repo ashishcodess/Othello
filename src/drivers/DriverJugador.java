@@ -119,7 +119,7 @@ public class DriverJugador {
                     break;
                 default:
             }
-            System.out.println("");
+            System.out.println();
         }
     }
 }
