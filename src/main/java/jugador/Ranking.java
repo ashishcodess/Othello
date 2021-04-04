@@ -23,15 +23,16 @@ public class Ranking {
             String s1;
             while ((s1 = bf.readLine()) != null) {
                 String s2[] = s1.split(" ");
-                int id, total, ganadas, perdidas;
+                int id, total, ganadas, perdidas,empatadas;
                 String nick;
-                if (s2.length == 5) {
+                if (s2.length == 6) {
                     id = Integer.parseInt(s2[0]);
                     nick = s2[1];
                     ganadas = Integer.parseInt(s2[2]);
                     perdidas = Integer.parseInt(s2[3]);
-                    total = Integer.parseInt(s2[4]);
-                    ElementoRanking e = new ElementoRanking(id,nick,ganadas,perdidas,total);
+                    empatadas = Integer.parseInt(s2[4]);
+                    total = Integer.parseInt(s2[5]);
+                    ElementoRanking e = new ElementoRanking(id,nick,ganadas,perdidas,empatadas,total);
                     this.ranking.add(e);
                 }
             }
@@ -41,15 +42,14 @@ public class Ranking {
     public void Exportar_ranking() throws IOException {
         String path = "./files/ranking/" + "ranking" + this.ranking.size() + ".txt";
         File f = new File(path);
-        if (!f.exists()) {
-            f.createNewFile();
-            FileWriter fw = new FileWriter(f);
-            int tam = this.ranking.size();
-            for  (int i = 0; i < tam; ++i) {
-                fw.write(this.ranking.get(i).consultar_all() + "\n");
-            }
-            fw.close();
+        if (f.exists()) f.delete();
+        f.createNewFile();
+        FileWriter fw = new FileWriter(f);
+        int tam = this.ranking.size();
+        for  (int i = 0; i < tam; ++i) {
+            fw.write(this.ranking.get(i).consultar_all() + "\n");
         }
+        fw.close();
     }
 
     public void add_al_ranking(ElementoRanking e) {
@@ -64,46 +64,51 @@ public class Ranking {
         return this.ranking.size();
     }
 
-    public Boolean existe_en_ranking(int id, String nick) {
+    //devuelve posicion dentro del Arraylist si existe, si no devuelve -1
+    public int existe_en_ranking(int id, String nick) {
         int tam = ranking.size();
+        int i = -1;
         Boolean res = false;
-        for (int i = 0; i < tam && !res; ++i) {
+        for (i = 0; i < tam && !res; ++i) {
             res = (this.ranking.get(i).getID() == id) && (this.ranking.get(i).getNickname() == nick);
         }
-        return res;
+        System.out.println("existeRank: " + i );
+        if (!res) return -1; //no ha sido encontrado en el RANKING
+        return (i-1);
     }
 
     public ElementoRanking consultar_ranking(int id, String nick) {
-        int tam = ranking.size();
-        Boolean res = false;
-        int i = 0;
-        while (i < tam && !res) {
-            res = (this.ranking.get(i).getID() == id) && (this.ranking.get(i).getNickname() == nick);
-        }
-        if (res) return this.ranking.get(i);
+        int i = existe_en_ranking(id,nick);
+        if (i != -1) return this.ranking.get(i); //existe en el ranking
         else return null;
     }
 
     public ElementoRanking consultar_elemento_i(int i) {
-        if (i < ranking.size()) return this.ranking.get(i);
-        else {
-            return null;
-        }
+        if (i > 0 && i < ranking.size()) return this.ranking.get(i);
+        else return null;
     }
-    //modo: 1 -> Ganadas, 0 -> perdidas
-    public Boolean incrementar_ganada_perdida(int id, String nick, Boolean modo) {
-        int tam = ranking.size();
-        Boolean res = false;
-        int i = 0;
-        while (i < tam && !res) {
-            res = (this.ranking.get(i).getID() == id) && (this.ranking.get(i).getNickname() == nick);
-        }
-        if (res) { //lo ha encontrado en el ranking (proceder)
-            if (modo) this.ranking.get(i).incrementar_partida_ganada();
-            else this.ranking.get(i).incrementar_partida_perdida();
-        }
-        return res;
+
+    //ganador -> 0 (gana nick1), 1 (gana nick2), 2 (empate)
+    public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, int ganador) {
+        if (id1 > 5) incrementar_ganada_perdida(id1,nick1,ganador);
+        if (id2 > 5) incrementar_ganada_perdida(id2,nick2,ganador);
     }
+
+    //modo: 2 -> empate, 1 -> Ganadas, 0 -> perdidas
+    public void incrementar_ganada_perdida(int id, String nick, int modo) {
+        int i = existe_en_ranking(id,nick);
+        System.out.println("existe: " + i + ", " +id + " "+ nick);
+        if (i == -1) {
+            ElementoRanking e = new ElementoRanking(id,nick);
+            this.add_al_ranking(e);
+            i = ranking.size()-1;
+        }
+        if (modo == 2) this.ranking.get(i).incrementar_partida_empatada();
+        if (modo == 1) this.ranking.get(i).incrementar_partida_ganada();
+        else this.ranking.get(i).incrementar_partida_perdida();
+    }
+
+
 
     //orden -> 0 (Ganadas), 1 (ID) , 2 (NICKNAME)
     public Boolean ordenar_ranking(int orden) {
@@ -132,7 +137,7 @@ public class Ranking {
             res = (this.ranking.get(i).getID() == id) && (this.ranking.get(i).getNickname() == nick);
         }
         if (res) {
-            System.out.println("(ID, nickname, Ganadas, Perdidas, Totales)");
+            System.out.println("(ID, nickname, Ganadas, Perdidas,Empatadas, Totales)");
             System.out.println(this.ranking.get(i).consultar_all());
         }
         else System.out.println("Error: no existe persona con ID:" + id + " y nick:" + nick + " dentro del Ranking");
@@ -141,7 +146,7 @@ public class Ranking {
 
     public void print_ranking() {
         int tam = this.ranking.size();
-        System.out.println("(ID, nickname, Ganadas, Perdidas, Totales)");
+        System.out.println("(ID, nickname, Ganadas, Perdidas,Empatadas, Totales)");
         for (int i = 0; i < tam; ++i) {
             String s = this.ranking.get(i).consultar_all();
             System.out.println(s);
@@ -151,7 +156,7 @@ public class Ranking {
     public void print_ranking_orden(int orden) {
         ordenar_ranking(orden);
         int tam = this.ranking.size();
-        System.out.println("(ID, nickname, Ganadas, Perdidas, Totales)");
+        System.out.println("(ID, nickname, Ganadas, Perdidas,Empatadas, Totales)");
         for (int i = 0; i < tam; ++i) {
             String s = this.ranking.get(i).consultar_all();
             System.out.println(s);

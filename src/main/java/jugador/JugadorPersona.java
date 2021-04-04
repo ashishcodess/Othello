@@ -128,7 +128,7 @@ public class JugadorPersona extends Jugador {
     }
 
     //Estas cosas tendrian que ir en la capa de persistencia
-        public void Guardar_partida(Partida par_guardar) throws IOException {
+    public void Guardar_partida(Partida par_guardar) throws IOException {
         int idPartida = par_guardar.getIdPartida();
         String path = "./files/partidas/" + "partida" + String.valueOf(idPartida) + ".txt";
         File f = new File(path);

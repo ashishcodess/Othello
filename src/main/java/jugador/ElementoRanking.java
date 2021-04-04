@@ -7,6 +7,7 @@ public class ElementoRanking {
     private String nickJugador;
     private int partidasGanadas;
     private int partidasPerdidas;
+    private int partidasEmpatadas;
     private int totalPartidasJugadas;
     //Se le puede agregar mas como porcentajes y esas cosas
 
@@ -16,14 +17,16 @@ public class ElementoRanking {
         this.idJugador = id;
         this.nickJugador = nick;
         this.totalPartidasJugadas = 0;
+        this.partidasEmpatadas = 0;
         this.partidasGanadas = 0;
         this.partidasPerdidas = 0;
     }
 
-    public ElementoRanking (int id, String nick,  int ganadas, int perdidas, int total) {
+    public ElementoRanking (int id, String nick,  int ganadas, int perdidas, int empatadas,int total) {
         this.idJugador = id;
         this.nickJugador = nick;
         this.totalPartidasJugadas = total;
+        this.partidasEmpatadas = empatadas;
         this.partidasGanadas = ganadas;
         this.partidasPerdidas = perdidas;
     }
@@ -38,6 +41,11 @@ public class ElementoRanking {
         this.totalPartidasJugadas = this.totalPartidasJugadas + 1;
     }
 
+    public void incrementar_partida_empatada() {
+        this.partidasEmpatadas = this.partidasEmpatadas + 1;
+        this.totalPartidasJugadas = this.totalPartidasJugadas + 1;
+    }
+
     public int getID() {
         return this.idJugador;
     }
@@ -47,6 +55,8 @@ public class ElementoRanking {
     public int getGanadas() {return this.partidasGanadas;}
 
     public int getPerdidas() {return this.partidasPerdidas;}
+
+    public int getEmpatadas() {return this.partidasEmpatadas;}
 
     public int getTotales() {return this.totalPartidasJugadas;}
 
@@ -58,7 +68,11 @@ public class ElementoRanking {
         return (this.idJugador + " " + this.nickJugador + " " + this.partidasPerdidas);
     }
 
+    public String consultar_empatadas() {
+        return (this.idJugador + " " + this.nickJugador + " " + this.partidasEmpatadas);
+    }
+
     public String consultar_all() {
-        return (this.idJugador + " " + this.nickJugador + " " + this.partidasGanadas + " " + this.partidasPerdidas + " " + this.totalPartidasJugadas);
+        return (this.idJugador + " " + this.nickJugador + " " + this.partidasGanadas + " " + this.partidasPerdidas + " " + this.partidasEmpatadas + " " + this.totalPartidasJugadas);
     }
 }
