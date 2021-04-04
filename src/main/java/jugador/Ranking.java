@@ -72,7 +72,6 @@ public class Ranking {
         for (i = 0; i < tam && !res; ++i) {
             res = (this.ranking.get(i).getID() == id) && (this.ranking.get(i).getNickname() == nick);
         }
-        System.out.println("existeRank: " + i );
         if (!res) return -1; //no ha sido encontrado en el RANKING
         return (i-1);
     }
@@ -97,17 +96,25 @@ public class Ranking {
     //modo: 2 -> empate, 1 -> Ganadas, 0 -> perdidas
     public void incrementar_ganada_perdida(int id, String nick, int modo) {
         int i = existe_en_ranking(id,nick);
-        System.out.println("existe: " + i + ", " +id + " "+ nick);
         if (i == -1) {
             ElementoRanking e = new ElementoRanking(id,nick);
             this.add_al_ranking(e);
             i = ranking.size()-1;
         }
-        if (modo == 2) this.ranking.get(i).incrementar_partida_empatada();
-        if (modo == 1) this.ranking.get(i).incrementar_partida_ganada();
-        else this.ranking.get(i).incrementar_partida_perdida();
+        switch(modo) {
+            case 0:
+                this.ranking.get(i).incrementar_partida_perdida();
+                break;
+            case 1:
+                this.ranking.get(i).incrementar_partida_ganada();
+                break;
+            case 2:
+                this.ranking.get(i).incrementar_partida_empatada();
+                break;
+            default:
+                break;
+        }
     }
-
 
 
     //orden -> 0 (Ganadas), 1 (ID) , 2 (NICKNAME)
@@ -129,28 +136,22 @@ public class Ranking {
         }
     }
 
-    public Boolean print_persona_ranking(int id ,String nick) {
-        Boolean res = false;
-        int tam = ranking.size();
-        int i = 0;
-        while (i < tam && !res) {
-            res = (this.ranking.get(i).getID() == id) && (this.ranking.get(i).getNickname() == nick);
-        }
-        if (res) {
+    public void print_persona_ranking(int id ,String nick) {
+        int i = existe_en_ranking(id,nick);
+        if (i != -1) {
             System.out.println("(ID, nickname, Ganadas, Perdidas,Empatadas, Totales)");
             System.out.println(this.ranking.get(i).consultar_all());
         }
         else System.out.println("Error: no existe persona con ID:" + id + " y nick:" + nick + " dentro del Ranking");
-        return res;
     }
 
     public void print_ranking() {
         int tam = this.ranking.size();
         System.out.println("(ID, nickname, Ganadas, Perdidas,Empatadas, Totales)");
         for (int i = 0; i < tam; ++i) {
-            String s = this.ranking.get(i).consultar_all();
-            System.out.println(s);
+            System.out.println(this.ranking.get(i).consultar_all());
         }
+        System.out.println();
     }
 
     public void print_ranking_orden(int orden) {
@@ -158,9 +159,9 @@ public class Ranking {
         int tam = this.ranking.size();
         System.out.println("(ID, nickname, Ganadas, Perdidas,Empatadas, Totales)");
         for (int i = 0; i < tam; ++i) {
-            String s = this.ranking.get(i).consultar_all();
-            System.out.println(s);
+            System.out.println(this.ranking.get(i).consultar_all());
         }
+        System.out.println();
     }
 
     static class SortbyGanadas implements Comparator<ElementoRanking> {
@@ -180,5 +181,4 @@ public class Ranking {
             return e2.getNickname().compareTo(e1.getNickname());
         }
     }
-
 }

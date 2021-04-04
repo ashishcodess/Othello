@@ -18,6 +18,12 @@ public class DriverRanking {
         rank.incrementar_ganada_perdida(6, "aaa",1);
         e = new ElementoRanking(7,"bbb",2, 3,0,5);
         rank.add_al_ranking(e);
+        e = new ElementoRanking(8,"c",4, 1,0, 5);
+        rank.add_al_ranking(e);
+        rank.incrementar_ganada_perdida(8, "c",0);
+        rank.incrementar_ganada_perdida(8, "c",1);
+        rank.incrementar_ganada_perdida(8, "c",2);
+        System.out.println();
         System.out.println("orden normal");
         rank.print_ranking();
         System.out.println("orden partidas ganadas");
@@ -32,11 +38,13 @@ public class DriverRanking {
         rank.add_al_ranking(e);
         rank.incrementar_ganada_perdida(6, "a",1);
         rank.incrementar_ganada_perdida(6, "a",0);
-        e = new ElementoRanking(7,"b",2, 3,0, 5);
+        e = new ElementoRanking(7,"b",2, 3,2, 7);
         rank.add_al_ranking(e);
+        rank.print_ranking();
         System.out.println("Exportando ranking a fichero");
+        System.out.println();
         rank.Exportar_ranking();
-        e = new ElementoRanking(8,"c",1, 4,0, 5);
+        e = new ElementoRanking(8,"c",4, 1,0, 5);
         rank.add_al_ranking(e);
         rank.print_ranking();
         System.out.println("Cargar otra vez ranking anterior");
@@ -47,13 +55,15 @@ public class DriverRanking {
 
     public static void main(String[] args) throws IOException {
         boolean b = true;
-        System.out.println("DriverRanking");
         while (b) {
-            System.out.println("OPCIONES:");
+            System.out.println("DriverRanking (OPCIONES):");
             System.out.println("-1 - SALIR DEL DRIVER");
-            System.out.println("1 - Crear Ranking (prueba1)");
+            System.out.println("1 - Crear Ranking (Crear, incrementar_partidas, ordenaciones)");
             System.out.println("2 - Crear Ranking (exportar, importar)");
+            System.out.println();
+            System.out.print("Introducir opcion:");
             int i_entrada = Integer.parseInt(scan.next());
+            System.out.println();
             switch(i_entrada) {
                 case -1:
                     b = false;
