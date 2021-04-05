@@ -5,6 +5,7 @@ import jugador.JugadorMaquina;
 import jugador.JugadorPersona;
 import jugador.ConjuntoMaquinas;
 import main.java.juego.Partida;
+import MyException.MyException;
 
 import java.io.IOException;
 import java.util.*;

@@ -1,5 +1,7 @@
 package jugador;
 
+import MyException.MyException;
+
 
 public class ElementoRanking {
     /*Atributos*/
@@ -13,7 +15,7 @@ public class ElementoRanking {
 
 
     /*Constructora*/
-    public ElementoRanking (int id, String nick) throws MyException{
+    public ElementoRanking (int id, String nick) throws MyException {
         if (id < 6 && id >= 0) {throw new MyException("El ID:" + id + " pertenece a una maquina");}
         else {
             this.idJugador = id;

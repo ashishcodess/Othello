@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import MyException.MyException;
 
 public class Ranking {
     private ArrayList<ElementoRanking> ranking;
@@ -88,7 +89,7 @@ public class Ranking {
     }
 
     //ganador -> 0 (gana nick1), 1 (gana nick2), 2 (empate)
-    public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, int ganador) throws MyException{
+    public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, int ganador) throws MyException {
         if (ganador >= 0 && ganador < 3) {
             if (id1 > 5) incrementar_ganada_perdida(id1,nick1,ganador);
             if (id2 > 5) incrementar_ganada_perdida(id2,nick2,ganador);

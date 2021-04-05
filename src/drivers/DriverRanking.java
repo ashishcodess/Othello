@@ -1,6 +1,6 @@
 package drivers;
 
-import jugador.MyException;
+import MyException.MyException;
 import jugador.Ranking;
 import jugador.ElementoRanking;
 
