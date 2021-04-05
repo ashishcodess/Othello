@@ -40,6 +40,8 @@ public class DriverRanking {
         rank.incrementar_ganada_perdida(6, "a",0);
         e = new ElementoRanking(7,"b",2, 3,2, 7);
         rank.add_al_ranking(e);
+        rank.incrementar_ganadas_perdidas(7,"b",16, "eeeeee",1);
+        rank.incrementar_ganadas_perdidas(6,"a",16, "eeeeee",2);
         rank.print_ranking();
         System.out.println("Exportando ranking a fichero");
         System.out.println();
