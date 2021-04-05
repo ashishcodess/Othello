@@ -13,22 +13,30 @@ public class ElementoRanking {
 
 
     /*Constructora*/
-    public ElementoRanking (int id, String nick) {
-        this.idJugador = id;
-        this.nickJugador = nick;
-        this.totalPartidasJugadas = 0;
-        this.partidasEmpatadas = 0;
-        this.partidasGanadas = 0;
-        this.partidasPerdidas = 0;
+    public ElementoRanking (int id, String nick) throws MyException{
+        if (id < 6 && id >= 0) {throw new MyException("El ID:" + id + " pertenece a una maquina");}
+        else {
+            this.idJugador = id;
+            this.nickJugador = nick;
+            this.totalPartidasJugadas = 0;
+            this.partidasEmpatadas = 0;
+            this.partidasGanadas = 0;
+            this.partidasPerdidas = 0;
+        }
     }
 
-    public ElementoRanking (int id, String nick,  int ganadas, int perdidas, int empatadas,int total) {
-        this.idJugador = id;
-        this.nickJugador = nick;
-        this.totalPartidasJugadas = total;
-        this.partidasEmpatadas = empatadas;
-        this.partidasGanadas = ganadas;
-        this.partidasPerdidas = perdidas;
+    public ElementoRanking (int id, String nick,  int ganadas, int perdidas, int empatadas,int total) throws MyException {
+        if (id < 6 && id >= 0) {
+            throw new MyException("El ID:" + id + " pertenece a una maquina");
+        }
+        else {
+            this.idJugador = id;
+            this.nickJugador = nick;
+            this.totalPartidasJugadas = total;
+            this.partidasEmpatadas = empatadas;
+            this.partidasGanadas = ganadas;
+            this.partidasPerdidas = perdidas;
+        }
     }
 
     public void incrementar_partida_ganada() {

@@ -14,7 +14,7 @@ public class Ranking {
     }
 
     //IMPORTAR RANKING
-    public Ranking (String path_fichero) throws IOException {
+    public Ranking (String path_fichero) throws IOException, MyException {
         this.ranking = new ArrayList<ElementoRanking>();
         File f = new File(path_fichero);
         if (f.exists()) {
@@ -88,7 +88,7 @@ public class Ranking {
     }
 
     //ganador -> 0 (gana nick1), 1 (gana nick2), 2 (empate)
-    public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, int ganador) {
+    public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, int ganador) throws MyException{
         if (ganador >= 0 && ganador < 3) {
             if (id1 > 5) incrementar_ganada_perdida(id1,nick1,ganador);
             if (id2 > 5) incrementar_ganada_perdida(id2,nick2,ganador);
@@ -96,7 +96,7 @@ public class Ranking {
     }
 
     //modo: 2 -> empate, 1 -> Ganadas, 0 -> perdidas
-    public void incrementar_ganada_perdida(int id, String nick, int modo) {
+    public void incrementar_ganada_perdida(int id, String nick, int modo) throws MyException {
         int i = existe_en_ranking(id,nick);
         if (i == -1) {
             ElementoRanking e = new ElementoRanking(id,nick);

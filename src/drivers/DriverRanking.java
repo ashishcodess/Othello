@@ -1,5 +1,6 @@
 package drivers;
 
+import jugador.MyException;
 import jugador.Ranking;
 import jugador.ElementoRanking;
 
@@ -11,7 +12,7 @@ public class DriverRanking {
 
     static Scanner scan = new Scanner(System.in);
 
-    public static void test_crear_ranking() {
+    public static void test_crear_ranking() throws MyException {
         Ranking rank= new Ranking();
         ElementoRanking e = new ElementoRanking(6,"aaa");
         rank.add_al_ranking(e);
@@ -32,7 +33,7 @@ public class DriverRanking {
         rank.print_ranking_orden(1);
     }
 
-    public static void test_crear_ranking2() throws IOException {
+    public static void test_crear_ranking2() throws IOException, MyException {
         Ranking rank= new Ranking();
         ElementoRanking e = new ElementoRanking(6,"a");
         rank.add_al_ranking(e);
@@ -55,13 +56,20 @@ public class DriverRanking {
         rank2.print_ranking();
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void test_crear_ranking3() throws IOException, MyException {
+        //Ranking rank= new Ranking();
+        ElementoRanking e = new ElementoRanking(2,"sdasd");
+    }
+
+
+    public static void main(String[] args) throws IOException, MyException{
         boolean b = true;
         while (b) {
             System.out.println("DriverRanking (OPCIONES):");
             System.out.println("-1 - SALIR DEL DRIVER");
             System.out.println("1 - Crear Ranking (Crear, incrementar_partidas, ordenaciones)");
             System.out.println("2 - Crear Ranking (exportar, importar)");
+            System.out.println("3 - Prueba excepciones");
             System.out.println();
             System.out.print("Introducir opcion:");
             int i_entrada = Integer.parseInt(scan.next());
@@ -75,6 +83,9 @@ public class DriverRanking {
                     break;
                 case 2:
                     test_crear_ranking2();
+                    break;
+                case 3:
+                    test_crear_ranking3();
                     break;
                 default:
                     System.out.println("Introducir una opcion correcta");
