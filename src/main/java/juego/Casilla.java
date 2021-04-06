@@ -10,7 +10,7 @@ public class Casilla {
     public int getId(){
         return id;
     }
-    public int getTipoCasilla(){ return tipo }
+    public int getTipoCasilla(){ return tipo; }
     public int getPosicionX(){ return x; }
     public int getPosicionY(){ return y; }
 

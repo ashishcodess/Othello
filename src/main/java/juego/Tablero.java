@@ -13,7 +13,7 @@ public class Tablero {
     }
 
     public Casilla getCasilla(int x, int y){
-        return this.Casilla[x][y];
+        return this.tablero[x][y];
     }
 
     public int getNumCasillasBlancas(){
@@ -48,7 +48,7 @@ public class Tablero {
     }
 
     public boolean es_possible(int x, int y) {// cuando quiere hacer un movimeinto pasamos pos para chequear
-        if (tablero[x][y] == 1) return true;
+        if (this.tablero[x][y].getId() == 1) return true;
         else return false;
     }
 
