@@ -48,7 +48,7 @@ public class JugadorPersona extends Jugador {
 
     //Estas cosas tendrian que ir en la capa de persistencia
     public boolean crearFicheroUsuario(int idJugador,String nicknameJugador) throws IOException{
-        String path = "./files/users/" + idJugador + "_" + nicknameJugador;
+        String path = "./src/files/users/" + idJugador + "_" + nicknameJugador;
         File f = new File(path);
         boolean res = false;
         if (!f.exists()) {
@@ -130,7 +130,7 @@ public class JugadorPersona extends Jugador {
     //Estas cosas tendrian que ir en la capa de persistencia
     public void Guardar_partida(Partida par_guardar) throws IOException {
         int idPartida = par_guardar.getIdPartida();
-        String path = "./files/partidas/" + "partida" + String.valueOf(idPartida) + ".txt";
+        String path = "./src/files/partidas/" + "partida" + String.valueOf(idPartida) + ".txt";
         File f = new File(path);
         if (f.exists()) f.delete();
         f.createNewFile();

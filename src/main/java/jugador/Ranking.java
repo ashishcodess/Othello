@@ -41,7 +41,7 @@ public class Ranking {
     }
 
     public void Exportar_ranking() throws IOException {
-        String path = "./files/ranking/" + "ranking" + this.ranking.size() + ".txt";
+        String path = "./src/files/ranking/" + "ranking" + this.ranking.size() + ".txt";
         File f = new File(path);
         if (f.exists()) f.delete();
         f.createNewFile();
