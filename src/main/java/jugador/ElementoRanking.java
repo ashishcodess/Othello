@@ -41,6 +41,8 @@ public class ElementoRanking {
         }
     }
 
+    public void modificar_nickname(String nick){ this.nickJugador=nick; }
+
     public void incrementar_partida_ganada() {
         this.partidasGanadas = this.partidasGanadas + 1;
         this.totalPartidasJugadas = this.totalPartidasJugadas + 1;

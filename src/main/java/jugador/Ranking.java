@@ -65,6 +65,15 @@ public class Ranking {
         return this.ranking.size();
     }
 
+    public Boolean eliminar_elemento_ranking(int id, String nick) {
+        int ires = existe_en_ranking(id,nick);
+        Boolean res = false;
+        if (ires != -1) {
+            res = this.ranking.remove(ires);
+        }
+        return res;
+    }
+
     //devuelve posicion dentro del Arraylist si existe, si no devuelve -1
     public int existe_en_ranking(int id, String nick) {
         int tam = ranking.size();
