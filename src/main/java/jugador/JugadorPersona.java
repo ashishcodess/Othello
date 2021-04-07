@@ -1,9 +1,9 @@
 
 package jugador;
 
-import main.java.juego.Partida;
 
 import java.io.*;
+import juego.Partida;
 
 public class JugadorPersona extends Jugador {
     /*Atributos*/
@@ -126,6 +126,7 @@ public class JugadorPersona extends Jugador {
         }*/
 
     }
+
 
     //Estas cosas tendrian que ir en la capa de persistencia
     public void Guardar_partida(Partida par_guardar) throws IOException {

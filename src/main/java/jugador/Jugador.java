@@ -1,6 +1,6 @@
 package jugador;
 
-import main.java.juego.Partida;
+import juego.Partida;
 
 public class Jugador {
 

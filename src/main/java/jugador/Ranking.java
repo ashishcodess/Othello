@@ -69,7 +69,8 @@ public class Ranking {
         int ires = existe_en_ranking(id,nick);
         Boolean res = false;
         if (ires != -1) {
-            res = this.ranking.remove(ires);
+            this.ranking.remove(ires);
+            res = true;
         }
         return res;
     }
