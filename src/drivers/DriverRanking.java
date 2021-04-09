@@ -51,7 +51,7 @@ public class DriverRanking {
         rank.add_al_ranking(e);
         rank.print_ranking();
         System.out.println("Cargar otra vez ranking anterior");
-        Ranking rank2 = new Ranking("./files/ranking/ranking2.txt");
+        Ranking rank2 = new Ranking("./src/files/ranking/ranking2.txt");
         System.out.println("Ranking importado");
         rank2.print_ranking();
     }

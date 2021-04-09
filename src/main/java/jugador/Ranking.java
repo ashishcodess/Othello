@@ -41,7 +41,7 @@ public class Ranking {
     }
 
     public void Exportar_ranking() throws IOException {
-        String path = "./files/ranking/" + "ranking" + this.ranking.size() + ".txt";
+        String path = "./src/files/ranking/" + "ranking" + this.ranking.size() + ".txt";
         File f = new File(path);
         if (f.exists()) f.delete();
         f.createNewFile();
@@ -69,7 +69,8 @@ public class Ranking {
         int ires = existe_en_ranking(id,nick);
         Boolean res = false;
         if (ires != -1) {
-            res = this.ranking.remove(ires);
+            this.ranking.remove(ires);
+            res = true;
         }
         return res;
     }
