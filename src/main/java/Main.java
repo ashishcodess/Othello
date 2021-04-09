@@ -1,3 +1,5 @@
+import jugador.Ranking;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -9,6 +11,7 @@ import java.util.*;
 public class Main {
     static int code;
     static Scanner scan = new Scanner(System.in);
+    private static Ranking ranking;
 
     public static void entrar() {
         System.out.println("Estas Registrado/a? Si/No ");
