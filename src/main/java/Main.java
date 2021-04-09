@@ -37,19 +37,18 @@ public class Main {
         String path_partida = ""; //igual esta bien pasarlo como parametro o algo
         File f = new File(path_partida);
         if(f.exists()) {
-            FileReader fr = new FileReader (f);
-            BufferedReader bf =new BufferedReader(fr);
+            BufferedReader bf =new BufferedReader(new FileReader (f));
 
-            String s1 = bf.readLine();
-            String s2[] = s1.split(" ");
+            String s1;
+            String s2[] = bf.readLine().split(" ");
 
-            int id1, id2, modo, turno;
+            int id2, modo, turno;
 
             int reglas[] = new int[3];
             String nick1 = new String();
             String nick2 = new String();
 
-            id1 = Integer.parseInt(s2[0]);
+            int id1 = Integer.parseInt(s2[0]);
             if (s2.length != 1) nick1 = s2[1];
 
             s1 = bf.readLine();
@@ -127,7 +126,7 @@ public class Main {
                     iniciarPartida();
                     break;
                 case 2:
-                    cargarPartida();
+                    if(cargarPartida());
                     break;
                 case 3:
                     consultarRanking();
