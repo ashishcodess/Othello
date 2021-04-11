@@ -4,37 +4,58 @@ import java.util.*;
 
 public class Tablero {
 
-    private Casilla[][] tablero = new Casilla[8][8];
-    private Map<Integer, Casilla> map_fichas_blanca = new HashMap<Integer, Casilla>();
-    private Map<Integer, Casilla> map_fichas_negra = new HashMap<Integer, Casilla>();
+    private Casilla[][] tablero ;
+    private int num_negra , num_blanca , num_disponible , num_vacia;
 
+//constructor
+public Tablero(){
+    tablero = new Casilla[8][8];
+    num_blanca = 0;
+    num_negra = 0;
+    num_disponible = 0;
+    num_vacia = 60;
+}
+
+//Jugador sends the tablero to load in case of game resumes from the earlier saved state.
+public Tablero(int[][] tab) {
+    for(int i = 0 ; i < 8 ; ++i){
+        for(int j = 0 ; j < 8 ; ++j){
+            tablero[i][j].cambiar_tipo(tab[i][j]);  // change the type to the one passed as parameter .
+            if(tab[i][j] == 2 ) {   // If they are black increase the number of black tokens and decrease the empty ones.
+                num_negra ++;
+                num_vacia --;
+            }
+            else if (tab[i][j] == 3 ) { // If they are white increase the number of white tokens and decrease the empty ones.
+                num_blanca ++ ;
+                num_vacia --;
+            }
+            else{  // If they are available ones increase the number of availables and decrease the empty ones.
+                num_disponible ++;
+                num_vacia --;
+            }
+        }
+    }
+}
+
+// Returns the tablero in case the other classes want the current state of tablero.
     public Casilla[][] getTablero() {
         return tablero;
     }
-
+    
+    //Returns if the casilla in the pos x , y is vacía, disponible, negra, blanca.
     public Casilla getCasilla(int x, int y){
-        return this.tablero[x][y];
+        return tablero[x][y].getTipoCasilla();
     }
 
     public int getNumCasillasBlancas(){
-        return map_fichas_blanca.size();
+        return num_blanca;
     }
 
     public int getNumCasillasNegras(){
-        return map_fichas_negra.size();
+        return num_negra;
     }
 
-    public int colocada_blancas() {
-        return map_fichas_blanca.size();
-
-    }
-
-    public int colocada_negras() {
-        return map_fichas_negra.size();
-
-    }
-
-    //Devuelve todas las casillas disponibles donde poder colocar una ficha
+    //To calculate the Casillas that are available to be put the tokens ; mark these casillas as 2 i.e disponible.
     public void calcularCasillasDisponiblesVertical(){
 
     }
@@ -46,9 +67,10 @@ public class Tablero {
     public void calcularCasillasDisponiblesDiagonales(){
 
     }
-
-    public boolean es_possible(int x, int y) {// cuando quiere hacer un movimeinto pasamos pos para chequear
-        if (this.tablero[x][y].getId() == 1) return true;
+// The jugador wants to move to this position but is it possible? We can show the position disponibles but still the jugador wants
+//to move in this position then we should not allow it to happen.
+    public boolean es_possible(int x, int y) {
+        if (tablero[x][y].getTipoCasilla() == 2) return true;
         else return false;
     }
 
@@ -56,17 +78,10 @@ public class Tablero {
         //Moviendo por este ficha vamos haciendo bfs etc.
     }
 
-    public void añadir_fichas(Casilla cas) { // ficha fic no existe ya .
-        if (cas.consultar_color() == 1) map_fichas_negra.put(cas.getId(), cas);
-        else map_fichas_blanca.put(cas.getId(), cas);
+    public void modificar_casilla(Vector<pair<int, int>>casillas_afectadas) { // casillas afectadas have to change thier color.
 
-        // añadir ficha nueva a mapa de fichas donde su id es el key y el objeto es el cuerpo de mapa
-    }
-
-    public void modificar_fichas(Vector<Integer> id_fichas_afectadas) {
-
-        for (int i = 0; i < id_fichas_afectadas.size(); ++i) {
-            //if()
+        for (int i = 0; i < casillas_afectadas.size(); ++i) {
+            //if(the position was black change tablero[][]) to white etc. 
 
             //cuando nos llega ids de todas las fichas afectadas vamos a hacer find de ids desde el map y si
             //estan en negras borramos de ahí y añadimos a blancas ya que fichas afectadas cambian de color.

@@ -3,20 +3,20 @@ package juego;
 import java.util.*;
 
 public class Casilla {
-    //faltaria un typedef para señalar el tipo de casilla (0 - vacía, 1 - disponible, 2 - negra, 3 - blanca)
-    private int id , tipo ,x , y;     //1 = negra , 0 = blanca.
 
-    //getters
-    public int getId(){
-        return id;
-    }
-    public int getTipoCasilla(){ return tipo; }
-    public int getPosicionX(){ return x; }
-    public int getPosicionY(){ return y; }
+    private int tipo;     //0 - vacía, 1 - disponible, 2 - negra, 3 - blanca
 
-
-    public void modificar_color(int color_modificar){
-        color = color_modificar;
+    //Constructor of  Casilla
+    public Casilla () {
+        this.tipo = 0;    // At first all of them are empty.
     }
 
+    public int getTipoCasilla() {
+        return tipo;
+    }
+
+    public void cambiar_tipo(int tipo){
+        this.tipo = tipo;
+    }
 }
+
