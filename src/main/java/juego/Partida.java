@@ -1,5 +1,7 @@
 package juego;
 
+import jugador.ElementoRanking;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -107,5 +109,21 @@ public class Partida {
     //Actualiza el tablero de la partida
     public void actualizarTablero() {
         //this.tablero = Tablero::getTablero();
+    }
+
+    //Actualiza el ranking con el resultado de la partida
+    public void actualizarRanking(boolean ganadorj1, boolean ganadorj2){
+        if (ganadorj1 && !ganadorj2){
+            ElementoRanking::incrementar_partida_ganada (String nick1);
+            ElementoRanking::incrementar_partida_perdida(String nick2);
+        }
+        else if (!ganadorj1 && ganadorj2){
+            ElementoRanking::incrementar_partida_ganada(String nick2);
+            ElementoRanking::incrementar_partida_perdida(String nick1);
+        }
+        else {
+            ElementoRanking::incrementar_partida_empatada(String nick1);
+            ElementoRanking::incrementar_partida_empatada(String nick2);
+        }
     }
 }

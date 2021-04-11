@@ -43,19 +43,25 @@ public class ElementoRanking {
 
     public void modificar_nickname(String nick){ this.nickJugador=nick; }
 
-    public void incrementar_partida_ganada() {
-        this.partidasGanadas = this.partidasGanadas + 1;
-        this.totalPartidasJugadas = this.totalPartidasJugadas + 1;
+    public void incrementar_partida_ganada(String nick) {
+        if (this.nickJugador == nick) {
+            this.partidasGanadas = this.partidasGanadas + 1;
+            this.totalPartidasJugadas = this.totalPartidasJugadas + 1;
+        }
     }
 
-    public void incrementar_partida_perdida() {
-        this.partidasPerdidas = this.partidasPerdidas + 1;
-        this.totalPartidasJugadas = this.totalPartidasJugadas + 1;
+    public void incrementar_partida_perdida(String nick) {
+        if (this.nickJugador == nick) {
+            this.partidasPerdidas = this.partidasPerdidas + 1;
+            this.totalPartidasJugadas = this.totalPartidasJugadas + 1;
+        }
     }
 
-    public void incrementar_partida_empatada() {
-        this.partidasEmpatadas = this.partidasEmpatadas + 1;
-        this.totalPartidasJugadas = this.totalPartidasJugadas + 1;
+    public void incrementar_partida_empatada(String nick) {
+        if (this.nickJugador == nick) {
+            this.partidasEmpatadas = this.partidasEmpatadas + 1;
+            this.totalPartidasJugadas = this.totalPartidasJugadas + 1;
+        }
     }
 
     public int getID() {

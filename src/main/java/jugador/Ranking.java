@@ -116,13 +116,13 @@ public class Ranking {
         }
         switch(modo) {
             case 0:
-                this.ranking.get(i).incrementar_partida_perdida();
+                this.ranking.get(i).incrementar_partida_perdida(nick);
                 break;
             case 1:
-                this.ranking.get(i).incrementar_partida_ganada();
+                this.ranking.get(i).incrementar_partida_ganada(nick);
                 break;
             case 2:
-                this.ranking.get(i).incrementar_partida_empatada();
+                this.ranking.get(i).incrementar_partida_empatada(nick);
                 break;
             default:
                 break;
