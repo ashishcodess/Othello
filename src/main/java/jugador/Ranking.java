@@ -7,7 +7,7 @@ import java.util.Comparator;
 import MyException.MyException;
 
 public class Ranking {
-    private ArrayList<ElementoRanking> ranking;
+    private final ArrayList<ElementoRanking> ranking;
 
     /*Constructora*/
     public Ranking () {
@@ -23,7 +23,7 @@ public class Ranking {
             BufferedReader bf =new BufferedReader(fr);
             String s1;
             while ((s1 = bf.readLine()) != null) {
-                String s2[] = s1.split(" ");
+                String[] s2 = s1.split(" ");
                 int id, total, ganadas, perdidas,empatadas;
                 String nick;
                 if (s2.length == 6) {
@@ -99,15 +99,20 @@ public class Ranking {
     }
 
     //ganador -> 0 (gana nick1), 1 (gana nick2), 2 (empate)
+
+    /*
+     * Esta funcion es la encargada de crear los objetos ElementoRanking de cada jugador (en caso de que no exista)
+     * y de incrementar los contadores de partidas respetivamente en funcion del entero "ganador"
+     * */
     public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, int ganador) throws MyException {
         if (ganador >= 0 && ganador < 3) {
-            if (id1 > 5) incrementar_ganada_perdida(id1,nick1,ganador);
-            if (id2 > 5) incrementar_ganada_perdida(id2,nick2,ganador);
+            if (id1 > 5) incrementar_partida(id1,nick1,ganador);
+            if (id2 > 5) incrementar_partida(id2,nick2,ganador);
         }
     }
 
     //modo: 2 -> empate, 1 -> Ganadas, 0 -> perdidas
-    public void incrementar_ganada_perdida(int id, String nick, int modo) throws MyException {
+    public void incrementar_partida(int id, String nick, int modo) throws MyException {
         int i = existe_en_ranking(id,nick);
         if (i == -1) {
             ElementoRanking e = new ElementoRanking(id,nick);
@@ -116,13 +121,13 @@ public class Ranking {
         }
         switch(modo) {
             case 0:
-                this.ranking.get(i).incrementar_partida_perdida(nick);
+                this.ranking.get(i).incrementar_partida_perdida();
                 break;
             case 1:
-                this.ranking.get(i).incrementar_partida_ganada(nick);
+                this.ranking.get(i).incrementar_partida_ganada();
                 break;
             case 2:
-                this.ranking.get(i).incrementar_partida_empatada(nick);
+                this.ranking.get(i).incrementar_partida_empatada();
                 break;
             default:
                 break;

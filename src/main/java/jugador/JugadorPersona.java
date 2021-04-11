@@ -1,9 +1,10 @@
 
 package jugador;
 
+import juego.Partida;
+import juego.Tablero;
 
 import java.io.*;
-import juego.Partida;
 
 public class JugadorPersona extends Jugador {
     /*Atributos*/
@@ -59,75 +60,68 @@ public class JugadorPersona extends Jugador {
     }
 
 
-
+    /*
+     * Borrar para la entrega
+     * */
     //Estas cosas tendrian que ir en la capa de persistencia
+    public Partida Cargar_partida(String path_partida, int idPartida) throws IOException {
+        File f = new File(path_partida);
+        if(f.exists()) {
+            BufferedReader bf =new BufferedReader(new FileReader (f));
 
-    public void Cargar_partida(String f) throws IOException { //COPIADA EN EL MAIN
-        FileReader fr = new FileReader (f);
-        BufferedReader bf =new BufferedReader(fr);
+            String s1;
+            String s2[] = bf.readLine().split(" ");
 
-        String s1 = bf.readLine();
-        String s2[] = s1.split(" ");
+            int id2, modo, turno;
 
-        int id1, id2, modo, turno;
+            int reglas[] = new int[3];
+            String nick1 = new String();
+            String nick2 = new String();
 
-        int reglas[] = new int[3];
-        String nick1 = new String();
-        String nick2 = new String();
+            int id1 = Integer.parseInt(s2[0]);
+            if (s2.length != 1) nick1 = s2[1];
 
-        id1 = Integer.parseInt(s2[0]);
-        if (s2.length != 1) nick1 = s2[1];
-
-        s1 = bf.readLine();
-        s2 = s1.split(" ");
-        id2 = Integer.parseInt(s2[0]);
-        if (s2.length != 1) nick2 = s2[1];
-
-        s1 = bf.readLine();
-        modo = Integer.parseInt(s1);
-
-        s1 = bf.readLine();
-        s2 = s1.split(" ");
-        reglas[0] = Integer.parseInt(s2[0]);
-        reglas[1] = Integer.parseInt(s2[1]);
-        reglas[2] = Integer.parseInt(s2[2]);
-
-        s1 = bf.readLine();
-        turno = Integer.parseInt(s1);
-
-        System.out.println("Extraidos: " +  id1 + " " + nick1);
-        System.out.println("Extraidos: " +  id2 + " " + nick2);
-        System.out.println("Extraidos: " +  modo);
-        System.out.println("Extraidos: " +  reglas[0] + reglas[1] + reglas[2]);
-        System.out.println("Extraidos: " +  turno);
-        s1 = bf.readLine(); //espacio vacio
-
-        char[][] mapa = new char[8][8];
-        for (int i = 0; i < 8; ++i) {
             s1 = bf.readLine();
-            for (int j = 0; j < 8; ++j) {
-                mapa[i][j] = s1.charAt(j);
+            s2 = s1.split(" ");
+            id2 = Integer.parseInt(s2[0]);
+            if (s2.length != 1) nick2 = s2[1];
+
+            s1 = bf.readLine();
+            modo = Integer.parseInt(s1);
+
+            s1 = bf.readLine();
+            s2 =  bf.readLine().split(" ");
+            reglas[0] = Integer.parseInt(s2[0]);
+            reglas[1] = Integer.parseInt(s2[1]);
+            reglas[2] = Integer.parseInt(s2[2]);
+
+            s1 = bf.readLine();
+            turno = Integer.parseInt(s1);
+
+            System.out.println("Extraidos: " +  id1 + " " + nick1);
+            System.out.println("Extraidos: " +  id2 + " " + nick2);
+            System.out.println("Extraidos: " +  modo);
+            System.out.println("Extraidos: " +  reglas[0] + reglas[1] + reglas[2]);
+            System.out.println("Extraidos: " +  turno);
+            s1 = bf.readLine(); //espacio vacio
+
+            int[][] map = new int[8][8];
+            for (int i = 0; i < 8; ++i) {
+                s1 = bf.readLine();
+                for (int j = 0; j < 8; ++j) {
+                    map[i][j] = Integer.parseInt(String.valueOf(s1.charAt(j)));
+                }
             }
+            Tablero t = new Tablero(map);
+            Partida res = new Partida(idPartida,modo,reglas,turno,id1,nick1,id2,nick2,t);
+            return res;
         }
-
-        /*
-        Ahora tenemos toda la informacion para crear una partida, falta creadora de
-        Tablero a partir de la matriz de mapa y creadora de Partida con toda la info
-        * */
-
-
-        /* PRINT DEL MAPA
-        System.out.println("Imprimir mapa");
-        for (int i = 0; i < 8; ++i) {
-            for (int j = 0; j < 8; ++j) {
-                System.out.print(mapa[i][j]);
-            }
-            System.out.println();
-        }*/
-
+        return null; //no existe el fichero partida a cargar
     }
 
-
+    /*
+     * Borrar para la entrega
+     * */
     //Estas cosas tendrian que ir en la capa de persistencia
     public void Guardar_partida(Partida par_guardar) throws IOException {
         int idPartida = par_guardar.getIdPartida();

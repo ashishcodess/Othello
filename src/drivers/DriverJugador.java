@@ -1,11 +1,10 @@
 package drivers;
 
+import juego.Partida;
 import jugador.Jugador;
 import jugador.JugadorMaquina;
 import jugador.JugadorPersona;
 import jugador.ConjuntoMaquinas;
-import main.java.juego.Partida;
-import MyException.MyException;
 
 import java.io.IOException;
 import java.util.*;
@@ -65,14 +64,15 @@ public class DriverJugador {
 
     public static void test_guardar_partida() throws IOException {
         JugadorPersona res = new JugadorPersona(6,"as");
-        Partida par = new Partida(0,3,"1 1 1" + "",0,6,"as",7,"as2");
+        int[] reglas = {1,1,1};
+        Partida par = new Partida(0,3,reglas,0,6,"as",7,"as2",null);
         res.Guardar_partida(par);
     }
 
     public static void test_cargar_partida() throws IOException {
         JugadorPersona res = new JugadorPersona(6,"as");
         String f = "./src/files/partidas/partida0.txt";
-        res.Cargar_partida(f);
+        res.Cargar_partida(f,0);
     }
 
     public static void main(String[] args) throws IOException {

@@ -1,3 +1,5 @@
+import juego.Tablero;
+import juego.Partida;
 import jugador.Ranking;
 
 import java.io.BufferedReader;
@@ -32,9 +34,7 @@ public class Main {
 
     }
 
-    public static Boolean cargarPartida() throws IOException {
-        Boolean res = false;
-        String path_partida = ""; //igual esta bien pasarlo como parametro o algo
+    public static Partida cargarPartida(String path_partida, int idPartida) throws IOException {
         File f = new File(path_partida);
         if(f.exists()) {
             BufferedReader bf =new BufferedReader(new FileReader (f));
@@ -60,7 +60,7 @@ public class Main {
             modo = Integer.parseInt(s1);
 
             s1 = bf.readLine();
-            s2 = s1.split(" ");
+            s2 =  bf.readLine().split(" ");
             reglas[0] = Integer.parseInt(s2[0]);
             reglas[1] = Integer.parseInt(s2[1]);
             reglas[2] = Integer.parseInt(s2[2]);
@@ -75,40 +75,25 @@ public class Main {
             System.out.println("Extraidos: " +  turno);
             s1 = bf.readLine(); //espacio vacio
 
-            char[][] mapa = new char[8][8];
+            int[][] map = new int[8][8];
             for (int i = 0; i < 8; ++i) {
                 s1 = bf.readLine();
                 for (int j = 0; j < 8; ++j) {
-                    mapa[i][j] = s1.charAt(j);
+                    map[i][j] = Integer.parseInt(String.valueOf(s1.charAt(j)));
                 }
             }
-
-        /*
-        Ahora tenemos toda la informacion para crear una partida, falta creadora de
-        Tablero a partir de la matriz de mapa y creadora de Partida con toda la info
-        * */
-
-
-        /* PRINT DEL MAPA
-        System.out.println("Imprimir mapa");
-        for (int i = 0; i < 8; ++i) {
-            for (int j = 0; j < 8; ++j) {
-                System.out.print(mapa[i][j]);
-            }
-            System.out.println();
-        }*/
-            res = true; //se ha cargado correctamente
+            Tablero t = new Tablero(map);
+            Partida res = new Partida(idPartida,modo,reglas,turno,id1,nick1,id2,nick2,t);
+            return res;
         }
-        return res;
+        return null; //no existe el fichero partida a cargar
     }
 
     public static void consultarRanking(){
-        //SERGIO: Duda donde guardamos el objeto Ranking???
         ranking.print_ranking();
     }
 
     public static void consultarEstadístiques(int id, String nick){
-        //SERGIO: Duda donde guardamos el objeto Ranking???
         ranking.print_persona_ranking(id,nick);
     }
 
@@ -126,13 +111,13 @@ public class Main {
                     iniciarPartida();
                     break;
                 case 2:
-                    if(cargarPartida());
+                    //if(cargarPartida()); //faltan parametros
                     break;
                 case 3:
                     consultarRanking();
                     break;
                 case 4:
-                    consultarEstadístiques();
+                    //consultarEstadístiques(); //faltan parametros
                     break;
                 case 5:
                     salir = true;
