@@ -1,0 +1,22 @@
+Aqui mostramos lo que ha hecho cada uno para esta primera entrega.
+
+Sergi Cassanmagnago:
+	- Main
+
+Sergi Bosquet:
+	- Partida
+
+Ashish Kshetri:
+	- Tablero
+	- Casilla
+
+Sergio Aguado:
+	- Jugador (sin comportamiento de IA)
+		-JugadorMaquina
+		-JugadorPersona
+	- MyException
+	- Ranking
+	- ElementoRanking
+	- DriverJugador
+	- DriverRanking
+	- Implementacion funciones CargarPartida (en clase Main), GuardarPartida(en clase Partida)
