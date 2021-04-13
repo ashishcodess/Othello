@@ -51,6 +51,10 @@ public class Tablero {
         return tablero[x][y].getTipoCasilla();
     }
 
+    public void setCasilla_tipo(int x, int y, int tipo){
+        tablero[x][y].cambiar_tipo(tipo);
+    }
+
     public int getNumCasillasBlancas(){
         return num_blanca;
     }
@@ -82,7 +86,7 @@ public class Tablero {
         //Moviendo por este ficha vamos haciendo bfs etc.
     }
 
-    public void modificar_casilla(Vector<pair<int, int>>casillas_afectadas) { // casillas afectadas have to change thier color.
+    /*public void modificar_casilla(Vector<pair<int, int>>casillas_afectadas) { // casillas afectadas have to change thier color.
 
         for (int i = 0; i < casillas_afectadas.size(); ++i) {
             //if(the position was black change tablero[][]) to white etc.
@@ -90,7 +94,7 @@ public class Tablero {
             //cuando nos llega ids de todas las fichas afectadas vamos a hacer find de ids desde el map y si
             //estan en negras borramos de ahí y añadimos a blancas ya que fichas afectadas cambian de color.
         }
-    }
+    }*/
 
     public void modificarCasillasVertical(){
 
