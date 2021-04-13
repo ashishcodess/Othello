@@ -43,7 +43,6 @@ public class Partida {
         this.tablero = t;
     }
 
-
     //Devuelve un boleano indicando si el jugador está en la partida
     public Boolean existeJugador(int id){
         return ((idJugador1 == id) || (idJugador2 == id));
