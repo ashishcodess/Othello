@@ -121,7 +121,8 @@ public class Partida {
     }
 
     public int rondaPartida() {
-        /* mostrar fichas disponibles jugador
+        /* identificar turno del jugador (turno impar -> negro; turno par -> blanco)
+            mostrar fichas disponibles jugador
             opciones del jugador(colocar ficha, guardar partida, finalizar, pasar turno)
             colocar ficha
             actualizar tablero
