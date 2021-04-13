@@ -8,7 +8,6 @@ public class ConjuntoMaquinas {
     /**
      * Constructora por defecto (genera 6 maquinas diferentes)
      * */
-    //Sergi C: quizas podriamos iniciar solo las que hacen falta
     public ConjuntoMaquinas() {
         Vector <JugadorMaquina> temp = new Vector<JugadorMaquina>(6);
         for (int i = 0; i < 6; ++i) {
