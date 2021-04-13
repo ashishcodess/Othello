@@ -13,8 +13,11 @@ public class ElementoRanking {
 
 
     /*Constructora*/
+    /**
+     * Constructora de ElementoRanking(id,nick) con contadores de partidas a 0
+     * */
     public ElementoRanking (int id, String nick) throws MyException {
-        if (id < 6 && id >= 0) {throw new MyException("El ID:" + id + " pertenece a una maquina");}
+        if (id < 6) throw new MyException("El ID:" + id + " pertenece a una maquina o esta fuera de rango(es negativo)");
         else {
             this.idJugador = id;
             this.nickJugador = nick;
@@ -24,11 +27,11 @@ public class ElementoRanking {
             this.partidasPerdidas = 0;
         }
     }
-
+    /**
+     * Constructora de ElementoRanking(id,nick) con asignacion de contadores de partidas (pasados como parametros)
+     * */
     public ElementoRanking (int id, String nick,  int ganadas, int perdidas, int empatadas,int total) throws MyException {
-        if (id < 6 && id >= 0) {
-            throw new MyException("El ID:" + id + " pertenece a una maquina");
-        }
+        if (id < 6) throw new MyException("El ID:" + id + " pertenece a una maquina o esta fuera de rango(es negativo)");
         else {
             this.idJugador = id;
             this.nickJugador = nick;

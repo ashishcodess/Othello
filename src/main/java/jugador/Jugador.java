@@ -8,11 +8,20 @@ public class Jugador {
     private int id;
 
     /**
+     * Constructora por defecto de jugador
+     */
+    public Jugador() {
+        this.id = -1;
+    }
+
+    /**
      * Constructora de Jugador
      */
     public Jugador (int idJugador) {
         this.id = idJugador;
     }
+
+
 
     /*Sets y Gets*/
     /**

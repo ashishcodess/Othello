@@ -1,44 +1,61 @@
 package jugador;
 
 /*
-* IDEA: Hacer que las maquinas tengan como ID's valores del 0 al 5 (6 maquinas)
+*
+* falta hacer IA maquina
 *
 * */
 
 public class JugadorMaquina extends Jugador {
 
     /*Atributos*/
-    private String estrategia; //puede eliminarse porque sera al final la profundidad_minMax
     private int profundidad_MinMax;
 
     /*Constructora*/
+    /**
+     * Constructora por defecto (vacia) de JugadorMaquina
+     * */
+    public JugadorMaquina () {
+        super();
+    }
+
+    /**
+     * Constructora JugadorMaquina (si tener en cuenta la profundidad del arbol de MinMax)
+     * */
     public JugadorMaquina (int idMaquina) {
         super(idMaquina);
     }
 
+    /**
+     * Constructora JugadorMaquina (idMaquina, profundidad)
+     * */
     public JugadorMaquina (int idMaquina, int profundidad) {
         super(idMaquina);
         this.profundidad_MinMax = profundidad;
     }
 
-    public JugadorMaquina (int idMaquina, int profundidad, String strategy) {
-        super(idMaquina);
-        this.estrategia = strategy;
-        this.profundidad_MinMax = profundidad;
-    }
-
     /*Sets y Gets*/
+    /**
+     * Operacion set del atributo ID
+     * @param nuevoID indica el nuevo valor que tomara el atributo id
+     */
     public void modificar_id_maquina(int nuevoID) { super.modificar_id(nuevoID); } //Aunque para las maquinas creo yo que no es necesario modificar su ID
 
-    public void modificar_estrategia(String nuevaEstrategia) {this.estrategia = nuevaEstrategia;}
-
+    /**
+     * Operacion set del atributo profundidad_MinMax
+     * @param nuevaProfundidad indica el nuevo valor que tomara el atributo profundidad_MinMax
+     */
     public void modificar_profundidad(int nuevaProfundidad) {this.profundidad_MinMax = nuevaProfundidad;}
 
-
+    /**
+     * Operacion get del atributo ID
+     * @return  devuelve el ID de Jugador
+     */
     public int get_MaquinaID() { return super.getID(); }
 
+    /**
+     * Operacion get del atributo profundidad
+     * @return  devuelve el atributo profundidad de JugadorMaquina
+     */
     public int get_profundidadMaquina() { return this.profundidad_MinMax; }
-
-    public String get_estrategia() {return this.estrategia;}
-
 }

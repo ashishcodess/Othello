@@ -1,6 +1,7 @@
 
 package jugador;
 
+import MyException.MyException;
 import juego.Partida;
 import juego.Tablero;
 
@@ -12,8 +13,27 @@ public class JugadorPersona extends Jugador {
     private boolean persona_nueva; //persona_nueva -> 1 si no existia el fichero, 0 -> si previamente se ha utilizado dicho usuario
 
     /*Constructora*/
-    public JugadorPersona (int idJugador,String nicknameJugador) throws IOException {
+    /**
+     * Constructora por defecto (vacia) de JugadorPersona
+     * */
+    public JugadorPersona ()  {
+        super();
+    }
+
+    /**
+     * Constructora JugadorPersona (sin asignarle un nickname y sin crear fichero de la Persona)
+     * */
+    public JugadorPersona (int idJugador) throws MyException {
         super(idJugador);
+        if (idJugador < 6) throw new MyException("El ID:" + idJugador + " pertenece a una maquina o esta fuera de rango(es negativo)");
+    }
+
+    /**
+     * Constructora JugadorPersona (idJugador,nicknameJugador, además de crear Fichero Usuario en caso de no existir)
+     * */
+    public JugadorPersona (int idJugador,String nicknameJugador) throws IOException, MyException {
+        super(idJugador);
+        if (idJugador < 6) throw new MyException("El ID:" + idJugador + " pertenece a una maquina o esta fuera de rango(es negativo)");
         this.nickname = nicknameJugador;
 
         //Crear fichero "idJugador_nickname"
@@ -21,33 +41,64 @@ public class JugadorPersona extends Jugador {
     }
 
     /*Sets y Gets*/
+
+    /**
+     * Operacion set del atributo ID
+     * @param nuevoID indica el nuevo valor que tomara el atributo id de Jugador
+     */
     public void modificar_IDJugador(int nuevoID) {
         super.modificar_id(nuevoID);
     }
 
+    /**
+     * Operacion set del atributo nickName
+     * @param nuevoNick indica el nuevo valor que tomara el atributo nickname de JugadorPersona
+     */
     public void modificar_nickname(String nuevoNick) {
         this.nickname = nuevoNick;
     }
 
+    /**
+     * Operacion get del atributo nickname
+     * @return  devuelve el nickname de JugadorPersona
+     */
     public String get_Nickname() {
         return this.nickname;
     }
 
+    /**
+     * Operacion get del atributo ID
+     * @return  devuelve el ID de JugadorPersona
+     */
     public int get_PersonaID() {
         return super.getID();
     }
 
+    /**
+     * Operacion get del atributo persona_nueva
+     * @return  devuelve el atributo bool de JugadorPersona que indica si esta persona existia anteriormente o
+     * se ha creado de nuevo (nuevo fichero Persona)
+     */
     public boolean get_persona_nueva()  {
         return this.persona_nueva;
     }
 
+
     /*Devuelve el conjunto formado por nickname y ID -> nickname#ID */
+    /**
+     * Operacion get del conjunto nickname#ID
+     * @return  devuelve el conjunto identificado como nickname#ID
+     */
     public String get_ID_TAG_persona() {
         return (this.nickname + "#" + String.valueOf(super.getID()));
     }
 
 
     //Estas cosas tendrian que ir en la capa de persistencia
+    /**
+     * Operacion crearFicheroUsuario
+     * @return  devuelve el conjunto identificado como nickname#ID
+     */
     public boolean crearFicheroUsuario(int idJugador,String nicknameJugador) throws IOException{
         String path = "./src/files/users/" + idJugador + "_" + nicknameJugador;
         File f = new File(path);
