@@ -33,7 +33,7 @@ public class Partida {
         this.ganador = -1;
     }
 
-    public Partida(int id, int modoJuego, int[] r, int turn, int idj1,String n1, int idj2, String n2,Tablero t) {
+    public Partida(int id, int modoJuego, int[] r, int turn, int idj1, String n1 , int idj2, String n2,Tablero t) {
         this.id = id;
         this.modoDeJuego = modoJuego;
         this.reglas = r;

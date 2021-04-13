@@ -23,6 +23,7 @@ public class Main {
             String nombre = scan.next();
             code = 1;                           // de momento
             System.out.println("Creado usiario " + nombre + " con codigo " + code);
+            //crear jugadorpersona y agregarlo al ranking
         }
         else{
             System.out.println("Entra tu código");
@@ -95,6 +96,10 @@ public class Main {
 
     public static void consultarEstadístiques(int id, String nick){
         ranking.print_persona_ranking(id,nick);
+    }
+
+    public static void runPartida(Partida p) {
+
     }
 
 
