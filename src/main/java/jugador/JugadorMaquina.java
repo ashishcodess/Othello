@@ -62,9 +62,12 @@ public class JugadorMaquina extends Jugador {
 
     /**
      * Operacion para tirar ficha
+     * @param t el tablero de la partida
+     * @param x posicion x de la casilla que retorna
+     * @param y posicion y de la casilla que retorna
      * @return devuelve el identificador de la casilla donde coloca la ficha
      */
-    public int elegir_posicion(Tablero t){
+    public void posicionMinMax(Tablero t, int x, int y){
 
     }
 }
