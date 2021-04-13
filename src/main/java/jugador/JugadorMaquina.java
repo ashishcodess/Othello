@@ -1,4 +1,5 @@
 package jugador;
+import juego.Tablero;
 
 /*
 *
@@ -58,4 +59,12 @@ public class JugadorMaquina extends Jugador {
      * @return  devuelve el atributo profundidad de JugadorMaquina
      */
     public int get_profundidadMaquina() { return this.profundidad_MinMax; }
+
+    /**
+     * Operacion para tirar ficha
+     * @return devuelve el identificador de la casilla donde coloca la ficha
+     */
+    public int elegir_posicion(Tablero t){
+
+    }
 }
