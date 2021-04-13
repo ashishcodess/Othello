@@ -17,8 +17,6 @@ public class Partida {
     private String nick2;
     private final int idJugador2;
     private Tablero tablero;
-
-    private Boolean finalizada; //indica si la partida esta finalizada o no
     private int ganador; //indica una vez finalizada la partida quien es el ganador (para despues hacer modificacion de ranking)
 
     //Creadora - Configuración de los parámetros de una partida
@@ -29,11 +27,10 @@ public class Partida {
         this.turno = turn;
         this.idJugador1 = idj1;
         this.idJugador2 = idj2;
-        this.finalizada = false;
         this.ganador = -1;
     }
 
-    public Partida(int id, int modoJuego, int[] r, int turn, int idj1, String n1 , int idj2, String n2,Tablero t) {
+    public Partida(int id, int modoJuego, int[] r, int turn, int idj1,String n1, int idj2, String n2, Tablero t) {
         this.id = id;
         this.modoDeJuego = modoJuego;
         this.reglas = r;
@@ -42,11 +39,9 @@ public class Partida {
         this.idJugador1 = idj1;
         this.nick2 = n2;
         this.idJugador2 = idj2;
-        this.finalizada = false;
         this.ganador = -1;
         this.tablero = t;
     }
-
 
     //Devuelve un boleano indicando si el jugador está en la partida
     public Boolean existeJugador(int id){
@@ -83,18 +78,12 @@ public class Partida {
         return this.nick2;
     }
 
-    /* Modifica el atributo finalizada (para indicar que partida a finalizado) , cambiarlo una vez tengamos gestion de turnos*/
-    public void modificar_finalizada (Boolean b) {this.finalizada = b;}
 
-    public Boolean getFinalizada() {return this.finalizada;}
 
     // ganador -> 0 (gana Jugador1), 1 (gana Jugador2), 2 (empate)
-    public void modificar_ganador(int i) {this.ganador = i;}
+    public void setGanador(int i) {this.ganador = i;}
 
-    public int getGanador() {
-        if (this.finalizada) return -1;
-        else return this.ganador;
-    }
+    public int getGanador() {return this.ganador;}
 
 
     //Guarda la partida actual y todos sus datos en un fichero
@@ -129,6 +118,19 @@ public class Partida {
     //Imprime el tablero con las casillas disponibles marcadas
     public void generarCasillesDisponibles(){
 
+    }
+
+    public int rondaPartida() {
+        /* identificar turno del jugador (turno impar -> negro; turno par -> blanco)
+            mostrar fichas disponibles jugador
+            opciones del jugador(colocar ficha, guardar partida, finalizar, pasar turno)
+            colocar ficha
+            actualizar tablero
+            contar fichas
+            retornar valor que indique si la partida ha acabado o no (no hay más espacios en el tablero o se ha
+            llegado al turno máximo)
+         */
+        return this.ganador;
     }
 
     //Actualiza el tablero de la partida
