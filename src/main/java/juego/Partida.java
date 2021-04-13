@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Partida {
     private final int id;
     private final int modoDeJuego;
-    private final int turno;
+    private int turno;
     private final int[] reglas; //array de 3 enteros para las reglas
     private String nick1;
     private final int idJugador1;
@@ -120,7 +120,7 @@ public class Partida {
 
     }
 
-    public int rondaPartida() {
+    public int rondaPartida(String[] accion) {
         /* identificar turno del jugador (turno impar -> negro; turno par -> blanco)
             mostrar fichas disponibles jugador
             opciones del jugador(colocar ficha, guardar partida, finalizar, pasar turno)
@@ -130,6 +130,26 @@ public class Partida {
             retornar valor que indique si la partida ha acabado o no (no hay más espacios en el tablero o se ha
             llegado al turno máximo)
          */
+
+        if (this.turno % 2 != 0) {
+            this.tablero.calcularCasillasDisponiblesDiagonales();
+            this.tablero.calcularCasillasDisponiblesHorizontal();
+            this.tablero.calcularCasillasDisponiblesVertical();
+            switch (accion) {
+                case "colocar":
+                    //this.tablero.setCasilla_tipo(x, y, tipo);
+                    break;
+                case "guardar":
+                    //guardarPartida()
+                    break;
+                case "finalizar":
+                    //finalizarPartida
+                    break;
+                case "paso":
+                    this.turno = this.turno +  1;
+                    break;
+            }
+        }
         return this.ganador;
     }
 
