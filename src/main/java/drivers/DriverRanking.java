@@ -1,8 +1,8 @@
 package drivers;
 
 import MyException.MyException;
-import jugador.Ranking;
-import jugador.ElementoRanking;
+import Dominio.Ranking;
+import Dominio.ElementoRanking;
 
 
 import java.io.IOException;

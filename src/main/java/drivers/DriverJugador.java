@@ -1,10 +1,11 @@
 package drivers;
 
 import Dominio.Partida;
-import jugador.Jugador;
-import jugador.JugadorMaquina;
-import jugador.JugadorPersona;
-import jugador.ConjuntoMaquinas;
+import Dominio.Jugador;
+import Dominio.JugadorMaquina;
+import Dominio.JugadorPersona;
+import Dominio.ConjuntoMaquinas;
+import MyException.MyException;
 
 import java.io.IOException;
 import java.util.*;
@@ -42,7 +43,7 @@ public class DriverJugador {
 
     }
 
-    public static void test_crear_jugadorPersona(int idPersona, String nick) throws IOException {
+    public static void test_crear_jugadorPersona(int idPersona, String nick) throws IOException, MyException {
         JugadorPersona res = new JugadorPersona(idPersona,nick);
         System.out.println("Maquina creada con ID:" + idPersona);
         System.out.println("Prueba get_MaquinaID : " + res.get_PersonaID());
@@ -62,20 +63,20 @@ public class DriverJugador {
         }
     }
 
-    public static void test_guardar_partida() throws IOException {
+    public static void test_guardar_partida() throws IOException, MyException {
         JugadorPersona res = new JugadorPersona(6,"as");
         int[] reglas = {1,1,1};
         Partida par = new Partida(0,3,reglas,0,6,"as",7,"as2",null);
         res.Guardar_partida(par);
     }
 
-    public static void test_cargar_partida() throws IOException {
+    public static void test_cargar_partida() throws IOException, MyException {
         JugadorPersona res = new JugadorPersona(6,"as");
         String f = "./src/files/partidas/0.txt";
         res.Cargar_partida(f,0);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, MyException {
         boolean b = true;
         while (b) {
             System.out.println("DriverJugador (OPCIONES):");

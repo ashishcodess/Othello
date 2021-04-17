@@ -18,10 +18,27 @@ public class CtrlPersitencia {
     private String path_partidas;
     private String path_ranking;
     private String path_users;
-
     //Faltaria agregarle el Controlador de Domino
+
+    /**
+     * Constructora por defecto
+     */
     public CtrlPersitencia() {
         path = "./src/files/";
+        path_partidas = path + "partidas/";
+        path_ranking =  path + "ranking/";
+        path_users = path + "users/";
+        cPartidas = new CtrlPartidas(path_partidas);
+        cRanking = new CtrlRanking(path_ranking);
+        cUsuario = new CtrlUsuario(path_users);
+        InicializarDirPersitencia();
+    }
+
+    /**
+     * Constructora
+     */
+    public CtrlPersitencia(String s_path) {
+        path = s_path;
         path_partidas = path + "partidas/";
         path_ranking =  path + "ranking/";
         path_users = path + "users/";

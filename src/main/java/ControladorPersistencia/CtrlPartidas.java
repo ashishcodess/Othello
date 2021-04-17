@@ -62,12 +62,12 @@ public class CtrlPartidas {
             turno = Integer.parseInt(s1);
 
             //por si tenemos que ver la info que hemos extraido del fichero
-            /*
+
             System.out.println("Extraidos: " +  id1 + " " + nick1);
             System.out.println("Extraidos: " +  id2 + " " + nick2);
             System.out.println("Extraidos: " +  modo);
             System.out.println("Extraidos: " +  reglas[0] + reglas[1] + reglas[2]);
-            System.out.println("Extraidos: " +  turno);*/
+            System.out.println("Extraidos: " +  turno);
 
             s1 = bf.readLine(); //espacio vacio
 
