@@ -135,7 +135,7 @@ public class Partida {
             this.tablero.calcularCasillasDisponiblesDiagonales();
             this.tablero.calcularCasillasDisponiblesHorizontal();
             this.tablero.calcularCasillasDisponiblesVertical();
-            switch (accion) {
+            switch (accion[0]) {
                 case "colocar":
                     //this.tablero.setCasilla_tipo(x, y, tipo);
                     break;
