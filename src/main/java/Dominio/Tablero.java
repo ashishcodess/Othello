@@ -2,7 +2,7 @@ package Dominio;
 
 public class Tablero {
 
-    private Casilla[][] tablero ;
+    private Casilla[][] tablero;
     private int num_negra , num_blanca , num_disponible , num_vacia;
 
     //constructor
@@ -23,7 +23,8 @@ public class Tablero {
         num_vacia = 60;
         for(int i = 0 ; i < 8 ; ++i){
             for(int j = 0 ; j < 8 ; ++j){
-                tablero[i][j].cambiar_tipo(tab[i][j]);  // change the type to the one passed as parameter
+                tablero[i][j] = new Casilla(tab[i][j]);
+                //tablero[i][j].cambiar_tipo(tab[i][j]);  // change the type to the one passed as parameter
                 if(tab[i][j] == 2 ) {   // If they are black increase the number of black tokens and decrease the empty ones.
                     num_negra ++;
                     num_vacia --;

@@ -37,7 +37,11 @@ public class DriverPersistencia {
                     b = false;
                     break;
                 case 1:
-                    test_CtrlPartidas();
+                    System.out.print("seleccionar ID partida(fichero para realizar pruebas):");
+                    i_entrada = Integer.parseInt(scan.next());
+                    System.out.println("Prueba cargar partida");
+                    System.out.println();
+                    test_CtrlPartidas(i_entrada);
                     break;
 
             }
@@ -45,9 +49,14 @@ public class DriverPersistencia {
         }
     }
 
-    public static void test_CtrlPartidas() throws IOException, MyException {
-        Partida p = cp.ctrl_cargar_partida(0);
-
+    public static void test_CtrlPartidas(int id) throws IOException, MyException {
+        int idPartida = id;
+        Partida p = cp.ctrl_cargar_partida(idPartida);
+        p.get_info_partida();
+        ArrayList<String> as = p.toArrayList();
+        /*for (int i = 0; i < as.size(); ++i) {
+            System.out.println(as.get(i));
+        }*/
     }
 
 }

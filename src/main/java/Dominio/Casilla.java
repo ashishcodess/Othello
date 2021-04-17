@@ -9,6 +9,8 @@ public class Casilla {
         this.tipo = 0;    // At first all of them are empty.
     }
 
+    public Casilla (int t) {this.tipo = t;}
+
     public int getTipoCasilla() {
         return tipo;
     }

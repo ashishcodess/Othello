@@ -63,18 +63,6 @@ public class DriverJugador {
         }
     }
 
-    public static void test_guardar_partida() throws IOException, MyException {
-        JugadorPersona res = new JugadorPersona(6,"as");
-        int[] reglas = {1,1,1};
-        Partida par = new Partida(0,3,reglas,0,6,"as",7,"as2",null);
-        res.Guardar_partida(par);
-    }
-
-    public static void test_cargar_partida() throws IOException, MyException {
-        JugadorPersona res = new JugadorPersona(6,"as");
-        String f = "./src/files/partidas/0.txt";
-        res.Cargar_partida(f,0);
-    }
 
     public static void main(String[] args) throws IOException, MyException {
         boolean b = true;
@@ -85,8 +73,6 @@ public class DriverJugador {
             System.out.println("2 - Crear Jugador Maquina");
             System.out.println("3 - Crear Jugador Persona");
             System.out.println("4 - Crear varias maquinas(6) y jugador ");
-            System.out.println("5 - Guardar Partida (fichero) ");
-            System.out.println("6 - Cargar Partida (fichero) ");
             System.out.println();
             System.out.print("Introducir opcion:");
             int i_entrada = Integer.parseInt(scan.next());
@@ -106,12 +92,6 @@ public class DriverJugador {
                     break;
                 case 4:
                     test_varias_maquinas();
-                    break;
-                case 5:
-                    test_guardar_partida();
-                    break;
-                case 6:
-                    test_cargar_partida();
                     break;
                 default:
             }
