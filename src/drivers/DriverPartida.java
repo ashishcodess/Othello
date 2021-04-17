@@ -71,7 +71,7 @@ public class DriverPartida {
 
     public static void test_cargar_partida() throws IOException {
         JugadorPersona res = new JugadorPersona(6,"as");
-        String f = "./src/files/partidas/partida0.txt";
+        String f = "./src/files/partidas/0.txt";
         res.Cargar_partida(f,0);
     }
 

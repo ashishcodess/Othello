@@ -7,9 +7,6 @@ import Dominio.Ranking;
 import java.io.*;
 import java.util.ArrayList;
 
-
-//SERGIO: CLASE AUN SIN TESTEAR
-
 public class CtrlRanking {
 
     private String path_ranking;
@@ -19,8 +16,16 @@ public class CtrlRanking {
      */
     public CtrlRanking() {this.path_ranking = "./src/files/ranking/";}
 
+    /**
+     * Constructora path_ranking igual a s
+     */
     public CtrlRanking(String s) {this.path_ranking = s;}
 
+    /**
+     * Operacion importar_ranking
+     * @param path_fichero es el path del fichero de Ranking a importar
+     * @return devuelve el Ranking ubicado en path_file, caso de no existir devuelve excepcion
+     */
     public Ranking importar_ranking (String path_fichero) throws IOException, MyException {
         Ranking rank = new Ranking();
         File f = new File(path_fichero);
@@ -48,6 +53,10 @@ public class CtrlRanking {
         return rank;
     }
 
+    /**
+     * Operacion ctrl_exportar_ranking
+     * @param as es ArrayList con los parametros necesarios para guardar la partida (utilizando funcion consultar_all() de cada ElementoRanking)
+     */
     public void exportar_ranking(ArrayList<String> as) throws IOException, MyException {
         int tam = as.size();
         if (tam > 0) {

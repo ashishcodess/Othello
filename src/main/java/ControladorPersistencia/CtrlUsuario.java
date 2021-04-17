@@ -1,21 +1,30 @@
 package ControladorPersistencia;
 
+import MyException.MyException;
+
 import java.io.*;
+import java.util.ArrayList;
 
-
-//SERGIO: CLASE AUN SIN TESTEAR
 
 public class CtrlUsuario {
 
-    private String path_users;
+    private final String path_users;
 
     /**
      * Constructora por defecto
      */
-    public CtrlUsuario() {this.path_users = "./src/files/ranking/";}
+    public CtrlUsuario() {this.path_users = "./src/files/users/";}
 
+    /**
+     * Constructora path_users igual a s
+     */
     public CtrlUsuario(String s) {this.path_users = s;}
 
+    /**
+     * Operacion crear_usuario
+     * @return devuelve TRUE en caso de haberse creado el fichero Usuario(idJugador,nicknameJugador) con
+     * exito, caso contrario (ya existía) devuelve FALSE
+     */
     public boolean crear_usuario(int idJugador,String nicknameJugador) throws IOException {
         String path = path_users + idJugador + "_" + nicknameJugador;
         File f = new File(path);
@@ -27,12 +36,19 @@ public class CtrlUsuario {
         return res;
     }
 
-    public Boolean existe_usuario(int idJugador, String nick) {
+    /**
+     * Operacion existe_usuario
+     * @return devuelve TRUE en caso de existir el fichero Usuario(idJugador,nicknameJugador) caso contrario devuelve FALSE
+     */
+    public boolean existe_usuario(int idJugador, String nick) {
         String path = path_users + idJugador + "_" + nick;
         File f = new File(path);
         return (f.exists());
     }
 
+    /**
+     * Operacion borrar_usuario
+     */
     public void borrar_usuario(int idJugador, String nick) throws IOException {
         String path = path_users + idJugador + "_" + nick;
         File f = new File(path);
@@ -47,9 +63,9 @@ public class CtrlUsuario {
      * @return  devuelve TRUE si existe el idPartida dentro del fichero de Usuario, caso contrario (no exista fichero o no encontrado dentro del mismo)
      * devuelve FALSE
      */
-    public Boolean existe_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException {
+    public boolean existe_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException {
         String path = path_users + idJugador + "_" + nicknameJugador;
-        Boolean res = false;
+        boolean res = false;
         File f = new File(path);
         if (f.exists()) {
             FileReader fr = new FileReader (f);
@@ -63,9 +79,12 @@ public class CtrlUsuario {
         return res;
     }
 
-    //PARTIDAS
-
-
+    //GESTION DE PARTIDAS
+    /**
+     * Operacion agregar_partida_usuario
+     * @return devuelve TRUE en caso de haber agregado correctamente la partida con id igual a idPartida dentro del fichero Usuario(idJugador,nicknameJugador),
+     * caso contrario devuelve FALSE
+     */
     public boolean agregar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException {
         String path = path_users + idJugador + "_" + nicknameJugador;
         boolean res = false;
@@ -75,14 +94,19 @@ public class CtrlUsuario {
             String s_res = idPartida + ".txt";
             fw.write(s_res + "\n");
             fw.close();
+            fw.close();
             res = true;
         }
         return res;
     }
 
 
-
-    public Boolean borrar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException {
+    /**
+     * Operacion borrar_partida_usuario
+     * @return devuelve TRUE en caso de haber eliminado la partida con id igual a idPartida dentro del fichero Usuario(idJugador,nicknameJugador),
+     * caso contrario devuelve FALSE
+     */
+    public boolean borrar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException {
         String path = path_users + idJugador + "_" + nicknameJugador;
         Boolean res = false;
         if (existe_partida_usuario(idJugador,nicknameJugador,idPartida)) {
@@ -110,6 +134,27 @@ public class CtrlUsuario {
         return res;
     }
 
+    /**
+     * Operacion ctrl_listar_partidas_disponibles
+     * @return devuelve la lista de partidas disponibles (partidas donde se encuentra el Jugador dentro), caso contrario
+     * devuelve excepcion (no existe el usuario)
+     */
+    public ArrayList<String> listar_partidas_disponibles(int IDjugador, String nick) throws IOException, MyException {
+        if (existe_usuario(IDjugador,nick)) {
+            ArrayList<String> res = new ArrayList<String>();
+            String path = path_users + IDjugador + "_" + nick;
+            File f = new File(path);
+            FileReader fr = new FileReader (f);
+            BufferedReader bf = new BufferedReader(fr);
+            String s1;
+            while ((s1 = bf.readLine()) != null) {
+                //System.out.println(s1);
+                res.add(s1);
+            }
+            return res;
+        }
+        else throw new MyException("No existe usuario con ID:" + IDjugador + ", nickname: "+ nick);
+    }
 
 
 }

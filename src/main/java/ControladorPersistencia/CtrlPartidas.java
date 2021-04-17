@@ -17,10 +17,16 @@ public class CtrlPartidas {
      */
     public CtrlPartidas() {this.path_partidas = "./src/files/partidas/";}
 
-
-
+    /**
+     * Constructora path_partida igual a s
+     */
     public CtrlPartidas(String s) {this.path_partidas = s;}
 
+    /**
+     * Operacion cargar_partida
+     * @param idPartida es el ID de partida a cargar
+     * @return devuelve Partida con id igual a idPartida, caso contrario salta excepcion
+     */
     public Partida cargar_partida(int idPartida) throws IOException, MyException {
         String path = path_partidas + idPartida + ".txt";
         File f = new File(path);
@@ -79,9 +85,12 @@ public class CtrlPartidas {
         else throw new MyException("No existe fichero de partida seleccionada por el ID:" + idPartida);
     }
 
-
-
-    public void guardar_partida(ArrayList<String> as) throws IOException, MyException {
+    /**
+     * Operacion guardar_partida
+     * @param as es ArrayList con los parametros necesarios para guardar la partida (utilizando funcion toArrayList() de Partida)
+     * @return devuelve TRUE en caso que se haya guardado con exito, caso contrario devuelve FALSE
+     */
+    public boolean guardar_partida(ArrayList<String> as) throws IOException, MyException {
         if (as.size() == 15) { //size correcto (se ha pasado correctamente el ArrayList generadod desde partida
             String idPartida = as.get(0);
             String path = path_partidas + idPartida + ".txt";
@@ -100,8 +109,9 @@ public class CtrlPartidas {
                 fw.write(as.get(i) +"\n");
             }
             fw.close();
+            return true;
         }
-        else throw new MyException("El formato del ArrayList para guardar partida es incorrecto");
+        else return false;
     }
 
 }
