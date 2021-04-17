@@ -1,6 +1,6 @@
 package drivers;
 
-import juego.Partida;
+import Dominio.Partida;
 import jugador.Jugador;
 import jugador.JugadorMaquina;
 import jugador.JugadorPersona;

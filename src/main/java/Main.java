@@ -1,6 +1,6 @@
-import juego.Tablero;
-import juego.Partida;
-import jugador.Ranking;
+import Dominio.Tablero;
+import Dominio.Partida;
+import Dominio.Ranking;
 
 import java.io.BufferedReader;
 import java.io.File;

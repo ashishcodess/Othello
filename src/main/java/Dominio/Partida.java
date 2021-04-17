@@ -1,7 +1,6 @@
-package juego;
+package Dominio;
 
 import MyException.MyException;
-import jugador.Ranking;
 
 import java.io.File;
 import java.io.FileWriter;

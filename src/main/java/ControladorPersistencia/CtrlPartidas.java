@@ -2,8 +2,8 @@ package ControladorPersistencia;
 
 
 import MyException.MyException;
-import juego.Partida;
-import juego.Tablero;
+import Dominio.Partida;
+import Dominio.Tablero;
 
 import java.io.*;
 import java.util.ArrayList;

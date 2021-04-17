@@ -1,4 +1,4 @@
-package jugador;
+package Dominio;
 
 import java.io.*;
 import java.util.ArrayList;

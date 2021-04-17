@@ -1,6 +1,4 @@
-package juego;
-
-import java.util.*;
+package Dominio;
 
 public class Casilla {
 

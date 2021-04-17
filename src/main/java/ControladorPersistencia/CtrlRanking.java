@@ -1,8 +1,8 @@
 package ControladorPersistencia;
 
 import MyException.MyException;
-import jugador.ElementoRanking;
-import jugador.Ranking;
+import Dominio.ElementoRanking;
+import Dominio.Ranking;
 
 import java.io.*;
 import java.util.ArrayList;

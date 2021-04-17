@@ -1,5 +1,4 @@
-package jugador;
-import juego.Tablero;
+package Dominio;
 
 /*
 *

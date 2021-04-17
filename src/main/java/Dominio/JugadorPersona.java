@@ -1,9 +1,7 @@
 
-package jugador;
+package Dominio;
 
 import MyException.MyException;
-import juego.Partida;
-import juego.Tablero;
 
 import java.io.*;
 
