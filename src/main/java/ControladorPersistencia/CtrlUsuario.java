@@ -49,12 +49,14 @@ public class CtrlUsuario {
     /**
      * Operacion borrar_usuario
      */
-    public void borrar_usuario(int idJugador, String nick) throws IOException {
+    public boolean borrar_usuario(int idJugador, String nick) throws IOException {
         String path = path_users + idJugador + "_" + nick;
         File f = new File(path);
-        if (f.exists()) {
+        boolean b = false;
+        if (b = f.exists()) {
             f.delete();
         }
+        return b;
     }
 
 
@@ -71,9 +73,8 @@ public class CtrlUsuario {
             FileReader fr = new FileReader (f);
             BufferedReader bf =new BufferedReader(fr);
             String s1;
-            String s_res = idPartida + ".txt";
             while (((s1 = bf.readLine()) != null) && !res) {
-                res = (s1 == s_res);
+                res = Integer.parseInt(s1) == idPartida;
             }
         }
         return res;
@@ -91,7 +92,7 @@ public class CtrlUsuario {
         File f = new File(path);
         if (f.exists() && (!existe_partida_usuario(idJugador,nicknameJugador,idPartida))) {
             FileWriter fw = new FileWriter(f,true); //opcion append
-            String s_res = idPartida + ".txt";
+            String s_res = String.valueOf(idPartida);
             fw.write(s_res + "\n");
             fw.close();
             fw.close();
@@ -114,7 +115,7 @@ public class CtrlUsuario {
             FileReader fr = new FileReader (f);
             BufferedReader bf = new BufferedReader(fr);
             String s1 = path_users + idJugador + "_" + nicknameJugador;
-            String s_res = idPartida + ".txt";
+            String s_res = String.valueOf(idPartida);
 
 
             File f_temp = new File(s1);
@@ -148,7 +149,6 @@ public class CtrlUsuario {
             BufferedReader bf = new BufferedReader(fr);
             String s1;
             while ((s1 = bf.readLine()) != null) {
-                //System.out.println(s1);
                 res.add(s1);
             }
             return res;

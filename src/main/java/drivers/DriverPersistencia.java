@@ -50,13 +50,29 @@ public class DriverPersistencia {
     }
 
     public static void test_CtrlPartidas(int id) throws IOException, MyException {
+        System.out.print("Probar metodos: Cargar/Guardar partida, listar_partidas_disponibles, borrar_partida");
         int idPartida = id;
         Partida p = cp.ctrl_cargar_partida(idPartida);
         p.get_info_partida();
         ArrayList<String> as = p.toArrayList();
-        /*for (int i = 0; i < as.size(); ++i) {
-            System.out.println(as.get(i));
-        }*/
+        System.out.println();
+        System.out.println();
+        System.out.println("sizes: " + as.size() + ", correcto? " + (as.size() == 15));
+        as.set(0,"4");
+        as.set(1,"9 dd");
+        cp.ctrl_guardar_partida(as);
+        System.out.println("Listar partidas disponibles (usuario 7_as2):");
+
+        ArrayList<String> partidas = cp.ctrl_listar_partidas_disponibles(7,"as2");
+        if (partidas.size() > 0) {
+            System.out.print(partidas.get(0));
+            for (int i = 1; i < partidas.size(); ++i) {
+                System.out.print(", " + partidas.get(i));
+            }
+            System.out.println();
+        }
+
+
     }
 
 }

@@ -201,7 +201,7 @@ public class Partida {
         as.add(s);
         s = String.valueOf(this.turno);
         as.add(s);
-
+        as.add("");
         //parte del tablero
         for (int i = 0; i < 8; ++i) {
             String sbuff = new String();

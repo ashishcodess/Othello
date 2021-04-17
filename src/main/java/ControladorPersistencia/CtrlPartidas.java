@@ -12,6 +12,7 @@ public class CtrlPartidas {
 
     private String path_partidas;
 
+
     /**
      * Constructora por defecto
      */
@@ -82,7 +83,7 @@ public class CtrlPartidas {
             Partida res = new Partida(idPartida,modo,reglas,turno,id1,nick1,id2,nick2,t);
             return res;
         }
-        else throw new MyException("No existe fichero de partida seleccionada por el ID:" + idPartida);
+        else return null;
     }
 
     /**
@@ -112,6 +113,21 @@ public class CtrlPartidas {
             return true;
         }
         else return false;
+    }
+
+    /**
+     * Operacion borrar_partida
+     * @param idPartida es el identificador de partida a borrar
+     * @return devuelve TRUE en caso que se haya borrado con exito, caso contrario devuelve FALSE
+     */
+    public boolean borrar_partida(int idPartida) throws IOException, MyException {
+        String path = path_partidas + idPartida +".txt";
+        File f = new File(path);
+        boolean b = false;
+        if (b = f.exists()) {
+            f.delete();
+        }
+        return b;
     }
 
 }
