@@ -6,6 +6,9 @@ import Dominio.Partida;
 import Dominio.Tablero;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class CtrlPartidas {
@@ -37,8 +40,7 @@ public class CtrlPartidas {
             String nick1 = new String();
             String nick2 = new String();
 
-            FileReader fr = new FileReader (f);
-            BufferedReader bf =new BufferedReader(fr);
+            BufferedReader bf =new BufferedReader(new FileReader (f));
 
             String s1 = bf.readLine(); //buffer por si acaso...
             String s2[] = s1.split(" ");
@@ -79,6 +81,7 @@ public class CtrlPartidas {
                     map[i][j] = Integer.parseInt(String.valueOf(s1.charAt(j)));
                 }
             }
+            bf.close();
             Tablero t = new Tablero(map);
             Partida res = new Partida(idPartida,modo,reglas,turno,id1,nick1,id2,nick2,t);
             return res;
@@ -98,7 +101,7 @@ public class CtrlPartidas {
             File f = new File(path);
             if (f.exists()) f.delete();
             f.createNewFile();
-            FileWriter fw = new FileWriter(f);
+            PrintWriter fw = new PrintWriter(f);
             fw.write( as.get(1)+ "\n"); //IDjugador1 nick1
             fw.write( as.get(2)+ "\n"); //IDjugador2 nick2
             fw.write(as.get(3)+ "\n"); //modo juego
@@ -109,6 +112,7 @@ public class CtrlPartidas {
             for (int i = 7; i  < as.size();++i) {
                 fw.write(as.get(i) +"\n");
             }
+            fw.flush();
             fw.close();
             return true;
         }
@@ -125,7 +129,7 @@ public class CtrlPartidas {
         File f = new File(path);
         boolean b = false;
         if (b = f.exists()) {
-            f.delete();
+            b = f.delete();
         }
         return b;
     }

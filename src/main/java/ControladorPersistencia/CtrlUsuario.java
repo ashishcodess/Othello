@@ -107,33 +107,26 @@ public class CtrlUsuario {
      * @return devuelve TRUE en caso de haber eliminado la partida con id igual a idPartida dentro del fichero Usuario(idJugador,nicknameJugador),
      * caso contrario devuelve FALSE
      */
-    public boolean borrar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException {
+        public boolean borrar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException, MyException {
         String path = path_users + idJugador + "_" + nicknameJugador;
         Boolean res = false;
         if (existe_partida_usuario(idJugador,nicknameJugador,idPartida)) {
-            File f = new File(path);
-            FileReader fr = new FileReader (f);
-            BufferedReader bf = new BufferedReader(fr);
-            String s1 = path_users + idJugador + "_" + nicknameJugador;
-            String s_res = String.valueOf(idPartida);
-
-
-            File f_temp = new File(s1);
-            if (f_temp.exists()) f_temp.delete();
-            f_temp.createNewFile();
-            FileWriter fw_temp = new FileWriter(f_temp);
-            while ((s1 = bf.readLine()) != null) {
-                if (s1 != s_res) fw_temp.write(s1 + "\n");
+            ArrayList<String> partidas = listar_partidas_disponibles(idJugador,nicknameJugador);
+            int i = 0;
+            boolean b = false;
+            for (i = 0; (i < partidas.size()) && !b; ++i) { //buscar indice a borrar
+                b = (Integer.parseInt(partidas.get(i)) == idPartida);
+                if (b) partidas.remove(i);
             }
-            fw_temp.close();
-            res = f.delete(); //borrar fichero original
-            if (res) {
-                File f2 = new File(path);
-                f_temp.renameTo(f2);
-            }
+            //partidas ahora contiene el nuevo contenido (con la partida seleccionada ya borrada)
+            PrintWriter pw = new PrintWriter(path);
+            for (i = 0; i < partidas.size(); ++i) pw.println(partidas.get(i));
+            pw.flush();
+            pw.close();
         }
         return res;
     }
+
 
     /**
      * Operacion ctrl_listar_partidas_disponibles

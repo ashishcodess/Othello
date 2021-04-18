@@ -215,7 +215,7 @@ public class CtrlPersitencia {
      * @return devuelve TRUE en caso de haber eliminado la partida con id igual a idPartida dentro del fichero Usuario(idJugador,nicknameJugador),
      * caso contrario devuelve FALSE
      */
-    public boolean ctrl_borrar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException {
+    public boolean ctrl_borrar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException, MyException {
         return (cUsuario.borrar_partida_usuario(idJugador,nicknameJugador,idPartida));
     }
 
@@ -227,4 +227,17 @@ public class CtrlPersitencia {
         return cUsuario.listar_partidas_disponibles(IDjugador,nick);
     }
 
+    public void ctrl_print_partidas_disponibles(int IDjugador, String nick) throws IOException, MyException {
+        System.out.println("Partidas disponibles de ID: "+ IDjugador + " ,nick: " + nick);
+        ArrayList<String> partidas = cUsuario.listar_partidas_disponibles(IDjugador,nick);
+        if (partidas.size() > 0) {
+            System.out.print(partidas.get(0));
+            for (int i = 1; i < partidas.size(); ++i) {
+                System.out.print(", " + partidas.get(i));
+            }
+            System.out.println();
+        }
+        else System.out.print("vacio");
+        System.out.println();
+    }
 }
