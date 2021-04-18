@@ -1,12 +1,13 @@
-package Dominio;
+package drivers;
 
+import Dominio.ElementoRanking;
+import Dominio.Ranking;
 import MyException.MyException;
-import org.junit.Assert;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+
 
 /*Clase para Test con JUnit sobre Clase Ranking*/
 public class RankingTest {
