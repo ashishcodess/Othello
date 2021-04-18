@@ -6,19 +6,19 @@ import java.io.*;
 import java.util.ArrayList;
 
 
-public class CtrlUsuario {
+public class IOUsuario {
 
     private final String path_users;
 
     /**
      * Constructora por defecto
      */
-    public CtrlUsuario() {this.path_users = "./src/files/users/";}
+    public IOUsuario() {this.path_users = "./src/files/users/";}
 
     /**
      * Constructora path_users igual a s
      */
-    public CtrlUsuario(String s) {this.path_users = s;}
+    public IOUsuario(String s) {this.path_users = s;}
 
     /**
      * Operacion crear_usuario
@@ -54,7 +54,7 @@ public class CtrlUsuario {
         File f = new File(path);
         boolean b = false;
         if (b = f.exists()) {
-            f.delete();
+            b = f.delete();
         }
         return b;
     }
@@ -70,12 +70,12 @@ public class CtrlUsuario {
         boolean res = false;
         File f = new File(path);
         if (f.exists()) {
-            FileReader fr = new FileReader (f);
-            BufferedReader bf =new BufferedReader(fr);
+            BufferedReader bf =new BufferedReader(new FileReader (f));
             String s1;
             while (((s1 = bf.readLine()) != null) && !res) {
-                res = Integer.parseInt(s1) == idPartida;
+                res = (Integer.parseInt(s1) == idPartida);
             }
+            bf.close();
         }
         return res;
     }
@@ -91,11 +91,11 @@ public class CtrlUsuario {
         boolean res = false;
         File f = new File(path);
         if (f.exists() && (!existe_partida_usuario(idJugador,nicknameJugador,idPartida))) {
-            FileWriter fw = new FileWriter(f,true); //opcion append
-            String s_res = String.valueOf(idPartida);
-            fw.write(s_res + "\n");
-            fw.close();
-            fw.close();
+            PrintWriter pw = new PrintWriter(new FileOutputStream(new File(path), true));
+            String s_res = String.valueOf(idPartida) +"\n";
+            pw.append(s_res);
+            pw.flush();
+            pw.close();
             res = true;
         }
         return res;
@@ -134,20 +134,18 @@ public class CtrlUsuario {
      * devuelve excepcion (no existe el usuario)
      */
     public ArrayList<String> listar_partidas_disponibles(int IDjugador, String nick) throws IOException, MyException {
-        if (existe_usuario(IDjugador,nick)) {
+        String path = path_users + IDjugador + "_" + nick;
+        File f = new File(path);
+        if (f.exists()) {
             ArrayList<String> res = new ArrayList<String>();
-            String path = path_users + IDjugador + "_" + nick;
-            File f = new File(path);
-            FileReader fr = new FileReader (f);
-            BufferedReader bf = new BufferedReader(fr);
+            BufferedReader bf = new BufferedReader(new FileReader (f));
             String s1;
             while ((s1 = bf.readLine()) != null) {
                 res.add(s1);
             }
+            bf.close();
             return res;
         }
         else throw new MyException("No existe usuario con ID:" + IDjugador + ", nickname: "+ nick);
     }
-
-
 }

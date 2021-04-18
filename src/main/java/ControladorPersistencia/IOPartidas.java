@@ -6,12 +6,9 @@ import Dominio.Partida;
 import Dominio.Tablero;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class CtrlPartidas {
+public class IOPartidas {
 
     private String path_partidas;
 
@@ -19,12 +16,12 @@ public class CtrlPartidas {
     /**
      * Constructora por defecto
      */
-    public CtrlPartidas() {this.path_partidas = "./src/files/partidas/";}
+    public IOPartidas() {this.path_partidas = "./src/files/partidas/";}
 
     /**
      * Constructora path_partida igual a s
      */
-    public CtrlPartidas(String s) {this.path_partidas = s;}
+    public IOPartidas(String s) {this.path_partidas = s;}
 
     /**
      * Operacion cargar_partida

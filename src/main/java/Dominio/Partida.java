@@ -3,8 +3,6 @@ package Dominio;
 import ControladorPersistencia.CtrlPersitencia;
 import MyException.MyException;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -88,33 +86,9 @@ public class Partida {
     public int getGanador() {return this.ganador;}
 
 
-    //Esta en el Controlador de Persitencia (modificar cuando tengamos el controlador de dominio
+    //Esta en el Controlador de Persitencia (modificar cuando tengamos el controlador de dominio y quitarle el parametro)
     public void guardarPartida(CtrlPersitencia cp) throws IOException, MyException {
         cp.ctrl_guardar_partida(this.toArrayList());
-        /*int idPartida = this.getIdPartida();
-        String path = "./src/files/partidas/" + "partida" + String.valueOf(idPartida) + ".txt";
-        File f = new File(path);
-        if (f.exists()) f.delete();
-        f.createNewFile();
-
-        FileWriter fw = new FileWriter(f);
-        fw.write(this.getID_J1() + " " + this.getNickJugador1() + "\n");
-        fw.write(this.getID_J2() + " " + this.getNickJugador2() + "\n");
-        fw.write(this.getModoDeJuegoPartida() + "\n");
-        fw.write(this.getReglasPartida()  + "\n");
-        fw.write(this.getTurnoPartida()+ "\n");
-        fw.write("\n");
-
-        for (int i = 0; i < 8; ++i) {
-            String sbuff = new String();
-            for (int j = 0; j < 8; ++j) {
-                sbuff = sbuff + this.tablero.getCasilla_tipo(i,j);
-                //if ((i==3 && j==4)  || (i==4 && j==3) ) sbuff = sbuff + '1';
-                //else sbuff = sbuff + '0';
-            }
-            fw.write(sbuff + "\n");
-        }
-        fw.close();*/
     }
 
     //Imprime el tablero con las casillas disponibles marcadas

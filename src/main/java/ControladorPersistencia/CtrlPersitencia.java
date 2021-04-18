@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 public class CtrlPersitencia {
 
-    private CtrlPartidas cPartidas;
-    private CtrlRanking cRanking;
-    private CtrlUsuario cUsuario;
+    private IOPartidas cPartidas;
+    private IORanking cRanking;
+    private IOUsuario cUsuario;
 
     private String path;
     private String path_partidas;
@@ -28,23 +28,51 @@ public class CtrlPersitencia {
         path_partidas = path + "partidas/";
         path_ranking =  path + "ranking/";
         path_users = path + "users/";
-        cPartidas = new CtrlPartidas(path_partidas);
-        cRanking = new CtrlRanking(path_ranking);
-        cUsuario = new CtrlUsuario(path_users);
+        cPartidas = new IOPartidas(path_partidas);
+        cRanking = new IORanking(path_ranking);
+        cUsuario = new IOUsuario(path_users);
         InicializarDirPersitencia();
     }
 
     /**
-     * Constructora
+     * Constructora con modoRanking (activado)
+     */
+    public CtrlPersitencia(boolean bRank) {
+        path = "./src/files/";
+        path_partidas = path + "partidas/";
+        path_ranking =  path + "ranking/";
+        path_users = path + "users/";
+        cPartidas = new IOPartidas(path_partidas);
+        cRanking = new IORanking(path_ranking,bRank);
+        cUsuario = new IOUsuario(path_users);
+        InicializarDirPersitencia();
+    }
+
+    /**
+     * Constructora con s_path
      */
     public CtrlPersitencia(String s_path) {
         path = s_path;
         path_partidas = path + "partidas/";
         path_ranking =  path + "ranking/";
         path_users = path + "users/";
-        cPartidas = new CtrlPartidas(path_partidas);
-        cRanking = new CtrlRanking(path_ranking);
-        cUsuario = new CtrlUsuario(path_users);
+        cPartidas = new IOPartidas(path_partidas);
+        cRanking = new IORanking(path_ranking);
+        cUsuario = new IOUsuario(path_users);
+        InicializarDirPersitencia();
+    }
+
+    /**
+     * Constructora con s_path y modoRanking
+     */
+    public CtrlPersitencia(String s_path, boolean bRank) {
+        path = s_path;
+        path_partidas = path + "partidas/";
+        path_ranking =  path + "ranking/";
+        path_users = path + "users/";
+        cPartidas = new IOPartidas(path_partidas);
+        cRanking = new IORanking(path_ranking,bRank);
+        cUsuario = new IOUsuario(path_users);
         InicializarDirPersitencia();
     }
 
@@ -153,12 +181,32 @@ public class CtrlPersitencia {
     //Controlador de Ranking (cRanking)
     /**
      * Operacion ctrl_importar_ranking
+     * @return devuelve el Ranking ubicado en el fichero ranking.txt, caso de no existir devuelve excepcion
+     */
+    public Ranking ctrl_importar_ranking() throws IOException, MyException {
+        String path_file = path_ranking + "ranking.txt";
+        return cRanking.importar_ranking(path_file);
+    }
+
+    public Ranking ctrl_a_importar_ranking() throws IOException, MyException {
+        String path_file = path_ranking + "ranking.txt";
+        return cRanking.importar_ranking(path_file);
+    }
+
+
+    /**
+     * Operacion ctrl_importar_ranking2
      * @param path_file es el path del fichero de Ranking a importar
      * @return devuelve el Ranking ubicado en path_file, caso de no existir devuelve excepcion
      */
-    public Ranking ctrl_importar_ranking(String path_file) throws IOException, MyException {
+    public Ranking ctrl_importar_ranking2(String path_file) throws IOException, MyException {
         return cRanking.importar_ranking(path_file);
     }
+
+
+
+
+
     /**
      * Operacion ctrl_exportar_ranking
      * @param as es ArrayList con los parametros necesarios para guardar la partida (utilizando funcion consultar_all() de cada ElementoRanking)
@@ -187,9 +235,11 @@ public class CtrlPersitencia {
 
     /**
      * Operacion ctrl_borrar_usuario
+     * * @return devuelve TRUE en caso de haberse eliminado correctamente el fichero Usuario(idJugador,nicknameJugador),
+     * caso contrario devuelve FALSE
      */
-    public void ctrl_borrar_usuario(int idJugador,String nicknameJugador) throws IOException {
-        cUsuario.borrar_usuario(idJugador,nicknameJugador);
+    public boolean ctrl_borrar_usuario(int idJugador,String nicknameJugador) throws IOException {
+        return cUsuario.borrar_usuario(idJugador,nicknameJugador);
     }
 
     /**

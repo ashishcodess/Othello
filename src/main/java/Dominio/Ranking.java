@@ -4,6 +4,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import ControladorPersistencia.CtrlPersitencia;
 import MyException.MyException;
 
 public class Ranking {
@@ -16,11 +18,11 @@ public class Ranking {
         this.ranking = new ArrayList<ElementoRanking>();
     }
 
-    //IMPORTAR RANKING
     /**
      * Constructora a partir de un fichero Ranking (en caso de que este exista)
      * @param path_fichero es la ubicacion del fichero a importar
      * */
+    //SERGIO: no podemos usar esta tenemos que usar capa de Persitencia
     public Ranking (String path_fichero) throws IOException, MyException {
         this.ranking = new ArrayList<ElementoRanking>();
         File f = new File(path_fichero);
@@ -46,27 +48,40 @@ public class Ranking {
         }
     }
 
+    //CUANDO este listo Ctrolador de dominio utilizar con importar ranking (version1 - fichero ranking.txt)
+    public Ranking (CtrlPersitencia cp) throws IOException, MyException {
+        this.ranking = new ArrayList<ElementoRanking>();
+        cp.ctrl_importar_ranking();
+    }
+
+    /*MODIFICAR CUANDO ESTE EL CONTROLADOR DE DOMINO*/
+    public Ranking (String path_fichero, CtrlPersitencia cp) throws IOException, MyException {
+        this.ranking = new ArrayList<ElementoRanking>();
+        cp.ctrl_importar_ranking2(path_fichero);
+    }
+
+
+
+
+
     /**
      * Este metodo exporta toda la informacion del Ranking en un fichero
      * */
-    public void Exportar_ranking() throws IOException {
-        String path = "./src/files/ranking/" + "ranking" + this.ranking.size() + ".txt";
-        File f = new File(path);
-        if (f.exists()) f.delete();
-        f.createNewFile();
-        FileWriter fw = new FileWriter(f);
-        int tam = this.ranking.size();
-        for  (int i = 0; i < tam; ++i) {
-            fw.write(this.ranking.get(i).consultar_all() + "\n");
-        }
-        fw.close();
+    public void Exportar_ranking(CtrlPersitencia cp) throws IOException, MyException {
+        ArrayList<String> as = this.toArrayList();
+        cp.ctrl_exportar_ranking(as);
     }
 
     /**
-     * Este metodo inserta en la ultima posicion de ArrayList el ElementoRanking e
+     * Este metodo modifica el elemento del Ranking con identificadores iguales a e (en caso de existir en el ranking),
+     * caso contrario inserta el ElementoRanking e en la ultima posicion de ArrayList
      * */
     public void add_al_ranking(ElementoRanking e) {
-        this.ranking.add(e);
+        int b = existe_en_ranking(e.getID(),e.getNickname());
+        if (b != -1) {
+            modificar_elemento_ranking(b,e);
+        }
+        else this.ranking.add(e);
     }
 
     /**
@@ -106,12 +121,13 @@ public class Ranking {
      * @return devuelve la posicion del elemento del ranking con identificadores (id,nick) en caso de que exista, caso contrario devuelve -1
      * */
     public int existe_en_ranking(int id, String nick) {
-        if (id < 0 || id > this.ranking.size()) return -1;
         int tam = ranking.size();
         int i = -1;
         Boolean res = false;
         for (i = 0; i < tam && !res; ++i) {
-            res = (this.ranking.get(i).getID() == id) && (this.ranking.get(i).getNickname() == nick);
+            int idAux = this.ranking.get(i).getID();
+            String sAux = this.ranking.get(i).getNickname();
+            res = (idAux == id) && (sAux == nick);
         }
         if (!res) return -1; //no ha sido encontrado en el RANKING
         return (i-1);
@@ -153,6 +169,7 @@ public class Ranking {
      * */
     public void incrementar_partida(int id, String nick, int modo) throws MyException {
         int i = existe_en_ranking(id,nick);
+        System.out.println("existe en ranking (" + id + ", " + nick + ")? " + i);
         if (i == -1) {
             ElementoRanking e = new ElementoRanking(id,nick);
             this.add_al_ranking(e);
@@ -196,6 +213,14 @@ public class Ranking {
             }
             return true;
         }
+    }
+
+    public ArrayList<String> toArrayList() {
+        ArrayList<String> as = new ArrayList<String>();
+        for (int i = 0; i < this.ranking.size(); ++i) {
+            as.add(ranking.get(i).consultar_all());
+        }
+        return as;
     }
 
 

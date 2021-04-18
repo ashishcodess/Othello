@@ -1,8 +1,9 @@
 package drivers;
 
 import ControladorPersistencia.CtrlPersitencia;
+import Dominio.ElementoRanking;
 import Dominio.Partida;
-import Dominio.Tablero;
+import Dominio.Ranking;
 import MyException.MyException;
 
 import java.io.IOException;
@@ -22,12 +23,15 @@ public class DriverPersistencia {
     public DriverPersistencia() {}
 
     public static void main(String[] args) throws IOException, MyException {
-        cp = new CtrlPersitencia();
+        //cp = new CtrlPersitencia();
+        cp = new CtrlPersitencia(false); //activar para utilizar solo 1 fichero de ranking
         boolean b = true;
         while (b) {
             System.out.println("DriverPersistencia (OPCIONES):");
             System.out.println("0 - SALIR DEL DRIVER");
             System.out.println("1 - CtrlPartidas (Cargar/Guardar partida, toArrayList, listar_partidas_disponibles, borrar_partida)");
+            System.out.println("2 - CtrlRanking (Importar/Exportar Ranking, modificando el Ranking)");
+            System.out.println("3 - CtrlUsuario (Crear, modificar, borrar usuario");
             System.out.println();
             System.out.print("Introducir opcion:");
             int i_entrada = Integer.parseInt(scan.next());
@@ -41,15 +45,25 @@ public class DriverPersistencia {
                     i_entrada = Integer.parseInt(scan.next());
                     System.out.println("Prueba cargar partida");
                     System.out.println();
-                    test_CtrlPartidas(i_entrada);
+                    test_IOPartidas(i_entrada);
                     break;
-
+                case 2:
+                    test_IORanking("ranking2");
+                    break;
+                case 3:
+                    System.out.print("Introducir ID de usuario a modificar:");
+                    i_entrada = Integer.parseInt(scan.next());
+                    System.out.println();
+                    System.out.print("Introducir Nickname de usuario a modificar:");
+                    String s = scan.next();
+                    test_IOUsuario(i_entrada,s);
+                    break;
             }
             System.out.println();
         }
     }
 
-    public static void test_CtrlPartidas(int id) throws IOException, MyException {
+    public static void test_IOPartidas(int id) throws IOException, MyException {
         System.out.println("Probar metodos: Cargar/Guardar partida, toArrayList, listar_partidas_disponibles, borrar_partida");
         System.out.println();
         Partida p = cp.ctrl_cargar_partida(id);
@@ -70,6 +84,46 @@ public class DriverPersistencia {
         cp.ctrl_print_partidas_disponibles(7,"as2");
         cp.ctrl_print_partidas_disponibles(9,"dd");
         System.out.println();
+    }
+
+
+    public static void test_IORanking(String rk) throws IOException, MyException {
+        String path = "./src/files/ranking/" + rk + ".txt";
+        Ranking rank= cp.ctrl_importar_ranking2(path);
+        System.out.println("Ranking importado correctamente");
+        rank.print_ranking();
+        ElementoRanking e = new ElementoRanking(8,"aaaa",4, 1,0, 5);
+        rank.incrementar_ganadas_perdidas(8,"aaaa",9,"dd", 2);
+        rank.add_al_ranking(e);
+        e = new ElementoRanking(9,"dd",2, 1,2, 5);
+        rank.add_al_ranking(e);
+        rank.print_ranking();
+        rank.incrementar_ganadas_perdidas(8,"aaaa",9,"dd", 1);
+        ArrayList<String> ar = rank.toArrayList();
+        cp.ctrl_exportar_ranking(ar);
+    }
+
+    public static void test_IOUsuario(int id, String nick) throws IOException, MyException {
+        if (cp.ctrl_existe_usuario(id,nick)) System.out.println("Fichero usuario ya existe, crear uno diferente para probar...");
+        else {
+            if (cp.ctrl_crear_usuario(id,nick)) {
+                System.out.println("fichero creado correctamente");
+                System.out.println();
+                System.out.println("Agregar/borrar/listar partidas de este Usuario");
+                if (!cp.ctrl_agregar_partida_usuario(id,nick,17)) System.out.println("fallo al agregar partida 17");
+                cp.ctrl_print_partidas_disponibles(id,nick);
+                if (!cp.ctrl_agregar_partida_usuario(id,nick,14)) System.out.println("fallo al agregar partida 14");
+                cp.ctrl_print_partidas_disponibles(id,nick);
+                System.out.println("Partidas ficticias: 17 y 14 creadas correctamente");
+                System.out.println("Prueba eliminar partida 17");
+                cp.ctrl_borrar_partida_usuario(id,nick,17);
+                cp.ctrl_print_partidas_disponibles(id,nick);
+                System.out.println("Borrando Usuario:" + id + " ," + nick);
+                if (cp.ctrl_borrar_usuario(id,nick)) System.out.println("Se ha borrado correctamente");
+                else System.out.println("Error al borrar el usuario");
+            }
+            else System.out.println("Problema al crear fichero (ya existia previamente)");
+        }
     }
 
 }

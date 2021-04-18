@@ -81,17 +81,4 @@ public class JugadorPersona extends Jugador {
         return (this.nickname + "#" + String.valueOf(super.getID()));
     }
 
-    /*
-    //Esta operacion pertenece a Capa de Persitencia
-    public boolean crearFicheroUsuario(int idJugador,String nicknameJugador) throws IOException{
-        String path = "./src/files/users/" + idJugador + "_" + nicknameJugador;
-        File f = new File(path);
-        boolean res = false;
-        if (!f.exists()) {
-            f.createNewFile();
-            res = true;
-        }
-        return res;
-    }*/
-
 }
