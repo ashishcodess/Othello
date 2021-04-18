@@ -22,6 +22,6 @@ Sergio Aguado:
 
 	- ControladorPersitencia
 	    - CtrlPersitencia + DriverPersitencia
-	    - CtrlPartidas
-	    - CtrlRanking
-	    - CtrlUsuario
+	    - IOPartidas
+	    - IORanking
+	    - IOUsuario

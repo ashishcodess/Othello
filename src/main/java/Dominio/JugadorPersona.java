@@ -32,9 +32,6 @@ public class JugadorPersona extends Jugador {
         super(idJugador);
         if (idJugador < 6) throw new MyException("El ID:" + idJugador + " pertenece a una maquina o esta fuera de rango(es negativo)");
         this.nickname = nicknameJugador;
-
-        /*//Crear fichero "idJugador_nickname"
-        this.persona_nueva = crearFicheroUsuario(idJugador,nicknameJugador);*/
     }
 
     /*Sets y Gets*/

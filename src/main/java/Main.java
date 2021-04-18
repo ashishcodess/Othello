@@ -89,5 +89,7 @@ public class Main {
                     break;
             }
         }
+        //exportar ranking antes de salir del programa
+        cp.ctrl_exportar_ranking(ranking.toArrayList());
     }
 }

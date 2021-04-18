@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import ControladorPersistencia.CtrlPersitencia;
 import MyException.MyException;
 
 public class Ranking {
@@ -18,59 +17,6 @@ public class Ranking {
         this.ranking = new ArrayList<ElementoRanking>();
     }
 
-    /**
-     * Constructora a partir de un fichero Ranking (en caso de que este exista)
-     * @param path_fichero es la ubicacion del fichero a importar
-     * */
-    //SERGIO: no podemos usar esta tenemos que usar capa de Persitencia
-    public Ranking (String path_fichero) throws IOException, MyException {
-        this.ranking = new ArrayList<ElementoRanking>();
-        File f = new File(path_fichero);
-        if (f.exists()) {
-            FileReader fr = new FileReader (f);
-            BufferedReader bf =new BufferedReader(fr);
-            String s1;
-            while ((s1 = bf.readLine()) != null) {
-                String[] s2 = s1.split(" ");
-                int id, total, ganadas, perdidas,empatadas;
-                String nick;
-                if (s2.length == 6) {
-                    id = Integer.parseInt(s2[0]);
-                    nick = s2[1];
-                    ganadas = Integer.parseInt(s2[2]);
-                    perdidas = Integer.parseInt(s2[3]);
-                    empatadas = Integer.parseInt(s2[4]);
-                    total = Integer.parseInt(s2[5]);
-                    ElementoRanking e = new ElementoRanking(id,nick,ganadas,perdidas,empatadas,total);
-                    this.ranking.add(e);
-                }
-            }
-        }
-    }
-
-    //CUANDO este listo Ctrolador de dominio utilizar con importar ranking (version1 - fichero ranking.txt)
-    public Ranking (CtrlPersitencia cp) throws IOException, MyException {
-        this.ranking = new ArrayList<ElementoRanking>();
-        cp.ctrl_importar_ranking();
-    }
-
-    /*MODIFICAR CUANDO ESTE EL CONTROLADOR DE DOMINO*/
-    public Ranking (String path_fichero, CtrlPersitencia cp) throws IOException, MyException {
-        this.ranking = new ArrayList<ElementoRanking>();
-        cp.ctrl_importar_ranking2(path_fichero);
-    }
-
-
-
-
-
-    /**
-     * Este metodo exporta toda la informacion del Ranking en un fichero
-     * */
-    public void Exportar_ranking(CtrlPersitencia cp) throws IOException, MyException {
-        ArrayList<String> as = this.toArrayList();
-        cp.ctrl_exportar_ranking(as);
-    }
 
     /**
      * Este metodo modifica el elemento del Ranking con identificadores iguales a e (en caso de existir en el ranking),

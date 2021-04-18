@@ -36,38 +36,6 @@ public class IORanking {
     /**
      * Operacion importar_ranking
      * @param path_fichero es el path del fichero de Ranking a importar
-     * @return devuelve el Arraylist de elementos de ranking ubicado en path_file, caso de no existir devuelve excepcion
-     */
-    public ArrayList<ElementoRanking> importar_ranking_a(String path_fichero) throws IOException, MyException {
-        ArrayList<ElementoRanking> rank = new ArrayList<ElementoRanking>();
-        File f = new File(path_fichero);
-        if (f.exists()) {
-            BufferedReader bf =new BufferedReader(new FileReader (f));
-            String s1;
-            while ((s1 = bf.readLine()) != null) {
-                String[] s2 = s1.split(" ");
-                int id, total, ganadas, perdidas,empatadas;
-                String nick;
-                if (s2.length == 6) {
-                    id = Integer.parseInt(s2[0]);
-                    nick = s2[1];
-                    ganadas = Integer.parseInt(s2[2]);
-                    perdidas = Integer.parseInt(s2[3]);
-                    empatadas = Integer.parseInt(s2[4]);
-                    total = Integer.parseInt(s2[5]);
-                    ElementoRanking e = new ElementoRanking(id,nick,ganadas,perdidas,empatadas,total);
-                    rank.add(e);
-                }
-            }
-            bf.close();
-        }
-        else throw new MyException("Fichero de ranking a importar no existe");
-        return rank;
-    }
-
-    /**
-     * Operacion importar_ranking
-     * @param path_fichero es el path del fichero de Ranking a importar
      * @return devuelve el Ranking ubicado en path_file, caso de no existir devuelve excepcion
      */
     public Ranking importar_ranking (String path_fichero) throws IOException, MyException {
