@@ -96,6 +96,14 @@ public class Ranking {
         else return null;
     }
 
+    /**
+     * @return devuelve la informacion del  elemento del ranking en la posicion i de ArrayList
+     * */
+    public String consultar_info_elemento_i(int i) {
+        if (i < 0 && i > ranking.size()) return null;
+        else return this.ranking.get(i).consultar_all();
+    }
+
     //ganador -> 0 (gana nick1), 1 (gana nick2), 2 (empate)
     /**
      * Este metodo es el encargado de incrementar las partidas de cada jugador (en caso de que no exista creara los Elementos del Ranking
@@ -103,8 +111,11 @@ public class Ranking {
      * */
     public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, int ganador) throws MyException {
         if (ganador >= 0 && ganador < 3) {
+            int ganador2 = 2;
+            if (ganador == 0) ganador2 = 1;
+            else if (ganador == 1) ganador2 = 0;
             if (id1 > 5) incrementar_partida(id1,nick1,ganador);
-            if (id2 > 5) incrementar_partida(id2,nick2,ganador);
+            if (id2 > 5) incrementar_partida(id2,nick2,ganador2);
         }
     }
 
@@ -115,7 +126,7 @@ public class Ranking {
      * */
     public void incrementar_partida(int id, String nick, int modo) throws MyException {
         int i = existe_en_ranking(id,nick);
-        System.out.println("existe en ranking (" + id + ", " + nick + ")? " + i);
+        //System.out.println("existe en ranking (" + id + ", " + nick + ")? " + i);
         if (i == -1) {
             ElementoRanking e = new ElementoRanking(id,nick);
             this.add_al_ranking(e);
@@ -231,7 +242,7 @@ public class Ranking {
      * */
     static class SortbyNICKNAME implements Comparator<ElementoRanking> {
         public int compare(ElementoRanking e1, ElementoRanking e2) {
-            return e2.getNickname().compareTo(e1.getNickname());
+            return e1.getNickname().compareTo(e2.getNickname());
         }
     }
 }
