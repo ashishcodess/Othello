@@ -6,6 +6,7 @@ import Dominio.Partida;
 import Dominio.Ranking;
 import MyException.MyException;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -31,7 +32,8 @@ public class DriverPersistencia {
             System.out.println("0 - SALIR DEL DRIVER");
             System.out.println("1 - CtrlPartidas (Cargar/Guardar partida, toArrayList, listar_partidas_disponibles, borrar_partida)");
             System.out.println("2 - CtrlRanking (Importar/Exportar Ranking, modificando el Ranking)");
-            System.out.println("3 - CtrlUsuario (Crear, modificar, borrar usuario");
+            System.out.println("3 - CtrlUsuario (Crear, modificar, borrar usuario)");
+            System.out.println("4 - GetNuevoID_User");
             System.out.println();
             System.out.print("Introducir opcion:");
             int i_entrada = Integer.parseInt(scan.next());
@@ -58,6 +60,11 @@ public class DriverPersistencia {
                     String s = scan.next();
                     test_IOUsuario(i_entrada,s);
                     break;
+                case 4:
+                    test_prueba_getID_nuevo_user();
+                    break;
+                default:
+                    System.out.println("Introducir una opcion correcta");
             }
             System.out.println();
         }
@@ -124,6 +131,18 @@ public class DriverPersistencia {
             }
             else System.out.println("Problema al crear fichero (ya existia previamente)");
         }
+    }
+
+    public static void test_prueba_getID_nuevo_user() throws IOException, MyException {
+        int id1 = cp.get_nuevo_ID_user();
+        int id2 = cp.get_nuevo_ID_user();
+        int id3 = cp.get_nuevo_ID_user();
+        System.out.println("ID_usuario1: " + String.valueOf(id1));
+        System.out.println("ID_usuario2: " + String.valueOf(id2));
+        System.out.println("ID_usuario3: " + String.valueOf(id3));
+        boolean b = (id1 != id2) && (id2 != id3) && (id1 != id3);
+        if (b) System.out.println("Todo correcto (ID's diferentes)");
+        else System.out.println("Error hay algun ID igual (no deberia ser asi...)");
     }
 
 }

@@ -65,9 +65,13 @@ public class RankingTest {
         assertEquals("7 ba 0 0 1 1",s);
     }
 
-    //Test sobre Ranking
+
+    //Tests sobre Ranking
 
     @Test
+    /**
+     * Test sobre Ranking (Agregar elemento al Ranking)
+     * */
     public void test_agregarAlRanking() throws MyException {
         ElementoRanking e = new ElementoRanking(9,"aa",2,2,3,7);
         Ranking rank = new Ranking();
@@ -78,6 +82,9 @@ public class RankingTest {
     }
 
     @Test
+    /**
+     * Test sobre Ranking (Funcion incrementar_ganadas_perdidas, en caso de no existir en el ranking los crea y los agrega)
+     * */
     public void test_incrementar_ganadas_perdidas() throws MyException {
         Ranking rank = new Ranking();
         rank.incrementar_ganadas_perdidas(6, "a", 7, "b", 1);
@@ -88,6 +95,9 @@ public class RankingTest {
     }
 
     @Test
+    /**
+     * Test sobre Ranking (Funcion existe en Ranking)
+     * */
     public void test_existeEnRanking() throws MyException {
         Ranking rank = new Ranking();
         rank.add_al_ranking(new ElementoRanking(6, "aa"));
@@ -96,6 +106,9 @@ public class RankingTest {
     }
 
     @Test
+    /**
+     * Test sobre Ranking (Funcion eliminar del ranking)
+     * */
     public void test_eliminarDelRanking() throws MyException {
         Ranking rank = new Ranking();
         rank.incrementar_ganadas_perdidas(6, "a", 7, "b", 1);
@@ -109,6 +122,9 @@ public class RankingTest {
 
 
     @Test
+    /**
+     * Test sobre Ranking (Funcion ordenar ranking por partidas Ganadas)
+     * */
     public void test_ordenarGanadas() throws MyException{
         Ranking rank = new Ranking();
         rank.add_al_ranking(new ElementoRanking(7, "b", 2,1,0,3));
@@ -123,6 +139,9 @@ public class RankingTest {
     }
 
     @Test
+    /**
+     * Test sobre Ranking (Funcion ordenar ranking por ID de usuario)
+     * */
     public void test_ordenarID() throws MyException{
         Ranking rank = new Ranking();
         rank.add_al_ranking(new ElementoRanking(7, "b", 2,1,0,3));
@@ -136,6 +155,9 @@ public class RankingTest {
     }
 
     @Test
+    /**
+     * Test sobre Ranking (Funcion ordenar ranking por Nickname de Usuario)
+     * */
     public void test_ordenarNickname() throws MyException{
         Ranking rank = new Ranking();
         rank.add_al_ranking(new ElementoRanking(7, "b", 2,1,0,3));

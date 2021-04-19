@@ -13,25 +13,28 @@ public class CtrlPersitencia {
     private IOPartidas cPartidas;
     private IORanking cRanking;
     private IOUsuario cUsuario;
+    private int ID_max;
 
     private String path;
     private String path_partidas;
     private String path_ranking;
     private String path_users;
+
     //Faltaria agregarle el Controlador de Domino
 
     /**
      * Constructora por defecto
      */
     public CtrlPersitencia() {
-        path = "./src/files/";
-        path_partidas = path + "partidas/";
-        path_ranking =  path + "ranking/";
-        path_users = path + "users/";
-        cPartidas = new IOPartidas(path_partidas);
-        cRanking = new IORanking(path_ranking);
-        cUsuario = new IOUsuario(path_users);
+        this.path = "./src/files/";
+        this.path_partidas = path + "partidas/";
+        this.path_ranking =  path + "ranking/";
+        this.path_users = path + "users/";
+        this.cPartidas = new IOPartidas(path_partidas);
+        this.cRanking = new IORanking(path_ranking);
+        this.cUsuario = new IOUsuario(path_users);
         InicializarDirPersitencia();
+        this.ID_max = calcularID_MAX();
     }
 
     /**
@@ -46,7 +49,9 @@ public class CtrlPersitencia {
         cRanking = new IORanking(path_ranking,bRank);
         cUsuario = new IOUsuario(path_users);
         InicializarDirPersitencia();
+        this.ID_max = calcularID_MAX();
     }
+
 
     /**
      * Constructora con s_path
@@ -60,6 +65,7 @@ public class CtrlPersitencia {
         cRanking = new IORanking(path_ranking);
         cUsuario = new IOUsuario(path_users);
         InicializarDirPersitencia();
+        this.ID_max = calcularID_MAX();
     }
 
     /**
@@ -74,6 +80,7 @@ public class CtrlPersitencia {
         cRanking = new IORanking(path_ranking,bRank);
         cUsuario = new IOUsuario(path_users);
         InicializarDirPersitencia();
+        this.ID_max = calcularID_MAX();
     }
 
     /**
@@ -93,6 +100,27 @@ public class CtrlPersitencia {
         }
     }
 
+    /**
+     * Este metodo devuelve el ID maximo de todos los usuarios (ya inicializados en la carpeta de users)
+     * */
+    private int calcularID_MAX() {
+        File f = new File(path_users);
+        String[] s = f.list();
+        int maxID = 0;
+        for (int i = 0; i < s.length; ++i) {
+            String res[] = s[i].split("_");
+            int i_aux = Integer.parseInt(res[0]);
+            if (maxID < i_aux) maxID = i_aux;
+        }
+        return maxID;
+    }
+
+    /**
+     * Este metodo devuelve el siguente ID disponible para asignarselo a un Usuario
+     * */
+    public int get_nuevo_ID_user() {
+        return (++this.ID_max);
+    }
 
     //Controlador de Partidas (cPartidas)
     /**
@@ -188,11 +216,6 @@ public class CtrlPersitencia {
         return cRanking.importar_ranking(path_file);
     }
 
-    public Ranking ctrl_a_importar_ranking() throws IOException, MyException {
-        String path_file = path_ranking + "ranking.txt";
-        return cRanking.importar_ranking(path_file);
-    }
-
 
     /**
      * Operacion ctrl_importar_ranking2
@@ -202,8 +225,6 @@ public class CtrlPersitencia {
     public Ranking ctrl_importar_ranking2(String path_file) throws IOException, MyException {
         return cRanking.importar_ranking(path_file);
     }
-
-
 
 
 
@@ -277,6 +298,10 @@ public class CtrlPersitencia {
         return cUsuario.listar_partidas_disponibles(IDjugador,nick);
     }
 
+    /**
+     * Operacion ctrl_print_partidas_disponibles
+     * muestra por salida estandar las partidas disponibles por el Jugador (IDjugador,nick)
+     */
     public void ctrl_print_partidas_disponibles(int IDjugador, String nick) throws IOException, MyException {
         System.out.println("Partidas disponibles de ID: "+ IDjugador + " ,nick: " + nick);
         ArrayList<String> partidas = cUsuario.listar_partidas_disponibles(IDjugador,nick);

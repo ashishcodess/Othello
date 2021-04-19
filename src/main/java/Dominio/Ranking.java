@@ -35,11 +35,11 @@ public class Ranking {
      * @return devuelve falso si el entero "i" no pertenece al rango permitido dentro del ArrayList
      * */
     public Boolean modificar_elemento_ranking(int i, ElementoRanking e) {
-        if (i < 0 || i > this.ranking.size()) return false;
-        else {
+        if (i >= 0 && i < ranking.size()) {
             this.ranking.set(i,e);
             return true;
         }
+        else return false;
     }
 
     /**
@@ -92,7 +92,7 @@ public class Ranking {
      * @return devuelve el elemento del ranking en la posicion i de ArrayList
      * */
     public ElementoRanking consultar_elemento_i(int i) {
-        if (i > 0 && i < ranking.size()) return this.ranking.get(i);
+        if (i >= 0 && i < ranking.size()) return this.ranking.get(i);
         else return null;
     }
 
@@ -100,8 +100,8 @@ public class Ranking {
      * @return devuelve la informacion del  elemento del ranking en la posicion i de ArrayList
      * */
     public String consultar_info_elemento_i(int i) {
-        if (i < 0 && i > ranking.size()) return null;
-        else return this.ranking.get(i).consultar_all();
+        if (i >= 0 && i < ranking.size()) return this.ranking.get(i).consultar_all();
+        else return null;
     }
 
     //ganador -> 0 (gana nick1), 1 (gana nick2), 2 (empate)
@@ -126,7 +126,6 @@ public class Ranking {
      * */
     public void incrementar_partida(int id, String nick, int modo) throws MyException {
         int i = existe_en_ranking(id,nick);
-        //System.out.println("existe en ranking (" + id + ", " + nick + ")? " + i);
         if (i == -1) {
             ElementoRanking e = new ElementoRanking(id,nick);
             this.add_al_ranking(e);
@@ -172,6 +171,9 @@ public class Ranking {
         }
     }
 
+    /**
+     * Este metodo Convierte toda la información del Ranking en un ArrayList de Strings
+     * */
     public ArrayList<String> toArrayList() {
         ArrayList<String> as = new ArrayList<String>();
         for (int i = 0; i < this.ranking.size(); ++i) {

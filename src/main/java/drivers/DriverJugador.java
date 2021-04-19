@@ -94,6 +94,7 @@ public class DriverJugador {
                     test_varias_maquinas();
                     break;
                 default:
+                    System.out.println("Introducir una opcion correcta");
             }
             System.out.println();
         }

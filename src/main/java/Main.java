@@ -22,15 +22,14 @@ public class Main {
         if(in.toLowerCase().equals("no")){
             System.out.println("Entra tu nombre de usuario");
             String nombre = scan.next();
-            code = 1;                           // de momento
-            System.out.println("Creado usiario " + nombre + " con codigo " + code);
-            //Sergio: faltaria hacer que code fuera el ID que se va incrementando y nos lo vaya dando actualizado (ID unico)
+            code = cp.get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
+            System.out.println("Creado usuario " + nombre + " con ID " + code);
             cp.ctrl_crear_usuario(code,nombre);
         }
         else{
             System.out.println("Entra tu nombre de usuario");
             String nombre = scan.next();
-            System.out.println("Entra tu código");
+            System.out.println("Entra tu ID");
             code = scan.nextInt();
             if (cp.ctrl_existe_usuario(code,nombre)) System.out.println("Login Correcto");
         }

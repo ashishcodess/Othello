@@ -37,6 +37,7 @@ public class DriverPartida {
                     break;
 
                 default:
+                    System.out.println("Introducir una opcion correcta");
             }
             System.out.println();
         }

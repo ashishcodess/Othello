@@ -46,7 +46,6 @@ public class DriverRanking {
             System.out.println("DriverRanking (OPCIONES):");
             System.out.println("0 - SALIR DEL DRIVER");
             System.out.println("1 - Crear Ranking (Crear, incrementar_partidas, ordenaciones)");
-            System.out.println("2 - Prueba excepciones");
             System.out.println();
             System.out.print("Introducir opcion:");
             int i_entrada = Integer.parseInt(scan.next());
@@ -57,9 +56,6 @@ public class DriverRanking {
                     break;
                 case 1:
                     test_crear_ranking();
-                    break;
-                case 2:
-                    test_crear_ranking2();
                     break;
                 default:
                     System.out.println("Introducir una opcion correcta");
