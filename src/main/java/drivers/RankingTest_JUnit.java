@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 
 
 /*Clase para Test con JUnit sobre Clase Ranking*/
-public class RankingTest {
+public class RankingTest_JUnit {
 
     /**
      * Test sobre ElementoRanking (crear objeto 1)
