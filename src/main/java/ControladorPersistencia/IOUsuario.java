@@ -9,16 +9,45 @@ import java.util.ArrayList;
 public class IOUsuario {
 
     private final String path_users;
+    private int ID_max;
 
     /**
      * Constructora por defecto
      */
-    public IOUsuario() {this.path_users = "./src/files/users/";}
+    public IOUsuario() {
+        this.path_users = "./src/files/users/";
+        this.ID_max = calcularID_MAX();
+    }
 
     /**
      * Constructora path_users igual a s
      */
-    public IOUsuario(String s) {this.path_users = s;}
+    public IOUsuario(String s) {
+        this.path_users = s;
+        this.ID_max = calcularID_MAX();
+    }
+
+    /**
+     * Este metodo devuelve el ID maximo de todos los usuarios (ya inicializados en la carpeta de users)
+     * */
+    private int calcularID_MAX() {
+        File f = new File(path_users);
+        String[] s = f.list();
+        int maxID = 0;
+        for (int i = 0; i < s.length; ++i) {
+            String res[] = s[i].split("_");
+            int i_aux = Integer.parseInt(res[0]);
+            if (maxID < i_aux) maxID = i_aux;
+        }
+        return maxID;
+    }
+
+    /**
+     * Este metodo devuelve el siguente ID disponible para asignarselo a un Usuario
+     * */
+    public int get_nuevo_ID_user() {
+        return (++this.ID_max);
+    }
 
     /**
      * Operacion crear_usuario

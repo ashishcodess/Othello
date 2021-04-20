@@ -134,9 +134,9 @@ public class DriverPersistencia {
     }
 
     public static void test_prueba_getID_nuevo_user() throws IOException, MyException {
-        int id1 = cp.get_nuevo_ID_user();
-        int id2 = cp.get_nuevo_ID_user();
-        int id3 = cp.get_nuevo_ID_user();
+        int id1 = cp.ctrl_get_nuevo_ID_user();
+        int id2 = cp.ctrl_get_nuevo_ID_user();
+        int id3 = cp.ctrl_get_nuevo_ID_user();
         System.out.println("ID_usuario1: " + String.valueOf(id1));
         System.out.println("ID_usuario2: " + String.valueOf(id2));
         System.out.println("ID_usuario3: " + String.valueOf(id3));

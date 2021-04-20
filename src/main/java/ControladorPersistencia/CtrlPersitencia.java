@@ -13,7 +13,6 @@ public class CtrlPersitencia {
     private IOPartidas cPartidas;
     private IORanking cRanking;
     private IOUsuario cUsuario;
-    private int ID_max;
 
     private String path;
     private String path_partidas;
@@ -34,7 +33,6 @@ public class CtrlPersitencia {
         this.cRanking = new IORanking(path_ranking);
         this.cUsuario = new IOUsuario(path_users);
         InicializarDirPersitencia();
-        this.ID_max = calcularID_MAX();
     }
 
     /**
@@ -49,7 +47,6 @@ public class CtrlPersitencia {
         cRanking = new IORanking(path_ranking,bRank);
         cUsuario = new IOUsuario(path_users);
         InicializarDirPersitencia();
-        this.ID_max = calcularID_MAX();
     }
 
 
@@ -65,7 +62,6 @@ public class CtrlPersitencia {
         cRanking = new IORanking(path_ranking);
         cUsuario = new IOUsuario(path_users);
         InicializarDirPersitencia();
-        this.ID_max = calcularID_MAX();
     }
 
     /**
@@ -80,7 +76,6 @@ public class CtrlPersitencia {
         cRanking = new IORanking(path_ranking,bRank);
         cUsuario = new IOUsuario(path_users);
         InicializarDirPersitencia();
-        this.ID_max = calcularID_MAX();
     }
 
     /**
@@ -101,25 +96,10 @@ public class CtrlPersitencia {
     }
 
     /**
-     * Este metodo devuelve el ID maximo de todos los usuarios (ya inicializados en la carpeta de users)
-     * */
-    private int calcularID_MAX() {
-        File f = new File(path_users);
-        String[] s = f.list();
-        int maxID = 0;
-        for (int i = 0; i < s.length; ++i) {
-            String res[] = s[i].split("_");
-            int i_aux = Integer.parseInt(res[0]);
-            if (maxID < i_aux) maxID = i_aux;
-        }
-        return maxID;
-    }
-
-    /**
      * Este metodo devuelve el siguente ID disponible para asignarselo a un Usuario
      * */
-    public int get_nuevo_ID_user() {
-        return (++this.ID_max);
+    public int ctrl_get_nuevo_ID_user() {
+        return cUsuario.get_nuevo_ID_user();
     }
 
     //Controlador de Partidas (cPartidas)
