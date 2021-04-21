@@ -60,13 +60,25 @@ public class JugadorMaquina extends Jugador {
     public int get_profundidadMaquina() { return this.profundidad_MinMax; }
 
     /**
-     * Operacion para tirar ficha
+     * Operacion para tirar ficha ejecutando el algoritmo minMax
      * @param t el tablero de la partida
      * @param x posicion x de la casilla que "retorna"
      * @param y posicion y de la casilla que "retorna"
      * @return devuelve el identificador de la casilla donde coloca la ficha
      */
-    public void posicionMinMax(Tablero t, int x, int y){
+    public void valorMax(Tablero t, int x, int y){
+
+    }
+
+    /**
+     * Operacion para ejecutar el algoritmo minMax
+     * @param t el tablero de la partida
+     * @param x posicion x de la casilla que "retorna"
+     * @param y posicion y de la casilla que "retorna"
+     * @return devuelve el identificador de la casilla donde coloca la ficha
+     */
+
+    public void valorMin(Tablero t, int x, int y){
 
     }
 }
