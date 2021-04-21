@@ -114,6 +114,55 @@ public class Partida {
             switch (accion[0]) {
                 case "colocar":
                     //this.tablero.setCasilla_tipo(x, y, tipo);
+                    this.turno = this.turno +  1;
+                    actualizarTablero();
+                    //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
+                    /*int blancas = this.tablero.getNumCasillasBlancas();
+                    int negras = this.tablero.getNumCasillasNegras();
+                    if (blancas > negras){
+                        this.ganador = 1;
+                    }
+                    else if (blancas < negras){
+                        this.ganador = 0;
+                    }
+                    else if (blancas == negras){
+                        this.ganador = 2;
+                    }
+                    else { this.ganador = -1;}*/
+                    break;
+                case "guardar":
+                    //guardarPartida()
+                    break;
+                case "finalizar":
+                    //finalizarPartida
+                    break;
+                case "paso":
+                    this.turno = this.turno +  1;
+                    break;
+            }
+        }
+        else if (this.turno % 2 == 0) {
+            this.tablero.calcularCasillasDisponiblesDiagonales();
+            this.tablero.calcularCasillasDisponiblesHorizontal();
+            this.tablero.calcularCasillasDisponiblesVertical();
+            switch (accion[0]) {
+                case "colocar":
+                    //this.tablero.setCasilla_tipo(x, y, tipo);
+                    this.turno = this.turno +  1;
+                    actualizarTablero();
+                    //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
+                    /*int blancas = this.tablero.getNumCasillasBlancas();
+                    int negras = this.tablero.getNumCasillasNegras();
+                    if (blancas > negras){
+                        this.ganador = 1;
+                    }
+                    else if (blancas < negras){
+                        this.ganador = 0;
+                    }
+                    else if (blancas == negras){
+                        this.ganador = 2;
+                    }
+                    else { this.ganador = -1;}*/
                     break;
                 case "guardar":
                     //guardarPartida()
@@ -131,7 +180,7 @@ public class Partida {
 
     //Actualiza el tablero de la partida
     public void actualizarTablero() {
-        //this.tablero = Tablero::getTablero();
+        this.tablero.getTablero();
     }
 
     public void actualizarRanking(Ranking r) throws MyException {
