@@ -11,12 +11,18 @@ Ashish Kshetri:
 	- Casilla
 
 Sergio Aguado:
-	- Jugador (sin comportamiento de IA)
-		-JugadorMaquina
-		-JugadorPersona
+	- Jugador
+		- JugadorMaquina (sin comportamiento de IA)
+		- JugadorPersona
+		- DriverJugador
 	- MyException
 	- Ranking
-	- ElementoRanking
-	- DriverJugador
-	- DriverRanking
-	- Implementacion funciones CargarPartida (en clase Main), GuardarPartida(en clase Partida)
+	    - ElementoRanking
+	    - DriverRanking
+	    - RankingTest_JUnit (test unitario JUnit)
+
+	- ControladorPersitencia
+	    - CtrlPersitencia + DriverPersitencia
+	    - IOPartidas
+	    - IORanking
+	    - IOUsuario

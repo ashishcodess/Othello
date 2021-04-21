@@ -1,5 +1,5 @@
-idJugador1 nickJugador1
-idJugador2 nickJugador2
+idJugador1 nickJugador1 [Negro]
+idJugador2 nickJugador2 [Blanco]
 modo
 reglas [vertical, horizontal, diagonal]
 turno

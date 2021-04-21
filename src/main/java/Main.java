@@ -1,10 +1,9 @@
-import juego.Tablero;
-import juego.Partida;
-import jugador.Ranking;
+import ControladorPersistencia.CtrlPersitencia;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import Dominio.Partida;
+import Dominio.Ranking;
+import MyException.MyException;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -13,21 +12,26 @@ import java.util.*;
 public class Main {
     static int code;
     static Scanner scan = new Scanner(System.in);
+
+    private static CtrlPersitencia cp;
     private static Ranking ranking;
 
-    public static void entrar() {
+    public static void entrar() throws IOException {
         System.out.println("Estas Registrado/a? Si/No ");
         String in = scan.next();
         if(in.toLowerCase().equals("no")){
             System.out.println("Entra tu nombre de usuario");
             String nombre = scan.next();
-            code = 1;                           // de momento
-            System.out.println("Creado usiario " + nombre + " con codigo " + code);
-            //crear jugadorpersona y agregarlo al ranking
+            code = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
+            System.out.println("Creado usuario " + nombre + " con ID " + code);
+            cp.ctrl_crear_usuario(code,nombre);
         }
         else{
-            System.out.println("Entra tu código");
+            System.out.println("Entra tu nombre de usuario");
+            String nombre = scan.next();
+            System.out.println("Entra tu ID");
             code = scan.nextInt();
+            if (cp.ctrl_existe_usuario(code,nombre)) System.out.println("Login Correcto");
         }
     }
 
@@ -35,59 +39,9 @@ public class Main {
 
     }
 
-    public static Partida cargarPartida(String path_partida, int idPartida) throws IOException {
-        File f = new File(path_partida);
-        if(f.exists()) {
-            BufferedReader bf =new BufferedReader(new FileReader (f));
-
-            String s1;
-            String s2[] = bf.readLine().split(" ");
-
-            int id2, modo, turno;
-
-            int reglas[] = new int[3];
-            String nick1 = new String();
-            String nick2 = new String();
-
-            int id1 = Integer.parseInt(s2[0]);
-            if (s2.length != 1) nick1 = s2[1];
-
-            s1 = bf.readLine();
-            s2 = s1.split(" ");
-            id2 = Integer.parseInt(s2[0]);
-            if (s2.length != 1) nick2 = s2[1];
-
-            s1 = bf.readLine();
-            modo = Integer.parseInt(s1);
-
-            s1 = bf.readLine();
-            s2 =  bf.readLine().split(" ");
-            reglas[0] = Integer.parseInt(s2[0]);
-            reglas[1] = Integer.parseInt(s2[1]);
-            reglas[2] = Integer.parseInt(s2[2]);
-
-            s1 = bf.readLine();
-            turno = Integer.parseInt(s1);
-
-            System.out.println("Extraidos: " +  id1 + " " + nick1);
-            System.out.println("Extraidos: " +  id2 + " " + nick2);
-            System.out.println("Extraidos: " +  modo);
-            System.out.println("Extraidos: " +  reglas[0] + reglas[1] + reglas[2]);
-            System.out.println("Extraidos: " +  turno);
-            s1 = bf.readLine(); //espacio vacio
-
-            int[][] map = new int[8][8];
-            for (int i = 0; i < 8; ++i) {
-                s1 = bf.readLine();
-                for (int j = 0; j < 8; ++j) {
-                    map[i][j] = Integer.parseInt(String.valueOf(s1.charAt(j)));
-                }
-            }
-            Tablero t = new Tablero(map);
-            Partida res = new Partida(idPartida,modo,reglas,turno,id1,nick1,id2,nick2,t);
-            return res;
-        }
-        return null; //no existe el fichero partida a cargar
+    public static Partida cargarPartida(int idPartida) throws IOException, MyException {
+        Partida res = cp.ctrl_cargar_partida(idPartida);
+        return res;
     }
 
     public static void consultarRanking(){
@@ -104,7 +58,9 @@ public class Main {
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, MyException {
+        cp = new CtrlPersitencia(true); //activar para utilizar solo 1 fichero de ranking
+        ranking = cp.ctrl_importar_ranking();
         entrar();
         boolean salir = false;
         while(!salir){
@@ -132,5 +88,7 @@ public class Main {
                     break;
             }
         }
+        //exportar ranking antes de salir del programa
+        cp.ctrl_exportar_ranking(ranking.toArrayList());
     }
 }

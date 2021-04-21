@@ -1,6 +1,4 @@
-package juego;
-
-import java.util.*;
+package Dominio;
 
 public class Casilla {
 
@@ -10,6 +8,8 @@ public class Casilla {
     public Casilla () {
         this.tipo = 0;    // At first all of them are empty.
     }
+
+    public Casilla (int t) {this.tipo = t;}
 
     public int getTipoCasilla() {
         return tipo;

@@ -1,16 +1,15 @@
-package juego;
+package Dominio;
 
+import ControladorPersistencia.CtrlPersitencia;
 import MyException.MyException;
-import jugador.Ranking;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Partida {
     private final int id;
     private final int modoDeJuego;
-    private final int turno;
+    private int turno;
     private final int[] reglas; //array de 3 enteros para las reglas
     private String nick1;
     private final int idJugador1;
@@ -28,6 +27,7 @@ public class Partida {
         this.idJugador1 = idj1;
         this.idJugador2 = idj2;
         this.ganador = -1;
+        this.tablero = new Tablero();
     }
 
     public Partida(int id, int modoJuego, int[] r, int turn, int idj1,String n1, int idj2, String n2, Tablero t) {
@@ -86,33 +86,9 @@ public class Partida {
     public int getGanador() {return this.ganador;}
 
 
-    //Guarda la partida actual y todos sus datos en un fichero
-    public void guardarPartida() throws IOException { //Parte Sergio
-        int idPartida = this.getIdPartida();
-        String path = "./src/files/partidas/" + "partida" + String.valueOf(idPartida) + ".txt";
-        File f = new File(path);
-        if (f.exists()) f.delete();
-        f.createNewFile();
-
-        FileWriter fw = new FileWriter(f);
-        fw.write(this.getID_J1() + " " + this.getNickJugador1() + "\n");
-        fw.write(this.getID_J2() + " " + this.getNickJugador2() + "\n");
-        fw.write(this.getModoDeJuegoPartida() + "\n");
-        fw.write(this.getReglasPartida()  + "\n");
-        fw.write(this.getTurnoPartida()+ "\n");
-        fw.write("\n");
-
-        //ESTO ES UN EJEMPLO HABRIA QUE PASAR EL TABLERO DE LA PARTIDA Y TRADUCIRLO A STRING
-        for (int i = 0; i < 8; ++i) {
-            String sbuff = new String();
-            for (int j = 0; j < 8; ++j) {
-                sbuff = sbuff + this.tablero.getCasilla_tipo(i,j);
-                //if ((i==3 && j==4)  || (i==4 && j==3) ) sbuff = sbuff + '1';
-                //else sbuff = sbuff + '0';
-            }
-            fw.write(sbuff + "\n");
-        }
-        fw.close();
+    //Esta en el Controlador de Persitencia (modificar cuando tengamos el controlador de dominio y quitarle el parametro)
+    public void guardarPartida(CtrlPersitencia cp) throws IOException, MyException {
+        cp.ctrl_guardar_partida(this.toArrayList());
     }
 
     //Imprime el tablero con las casillas disponibles marcadas
@@ -120,7 +96,7 @@ public class Partida {
 
     }
 
-    public int rondaPartida() {
+    public int rondaPartida(String[] accion) {
         /* identificar turno del jugador (turno impar -> negro; turno par -> blanco)
             mostrar fichas disponibles jugador
             opciones del jugador(colocar ficha, guardar partida, finalizar, pasar turno)
@@ -130,6 +106,26 @@ public class Partida {
             retornar valor que indique si la partida ha acabado o no (no hay más espacios en el tablero o se ha
             llegado al turno máximo)
          */
+
+        if (this.turno % 2 != 0) {
+            this.tablero.calcularCasillasDisponiblesDiagonales();
+            this.tablero.calcularCasillasDisponiblesHorizontal();
+            this.tablero.calcularCasillasDisponiblesVertical();
+            switch (accion[0]) {
+                case "colocar":
+                    //this.tablero.setCasilla_tipo(x, y, tipo);
+                    break;
+                case "guardar":
+                    //guardarPartida()
+                    break;
+                case "finalizar":
+                    //finalizarPartida
+                    break;
+                case "paso":
+                    this.turno = this.turno +  1;
+                    break;
+            }
+        }
         return this.ganador;
     }
 
@@ -138,31 +134,56 @@ public class Partida {
         //this.tablero = Tablero::getTablero();
     }
 
-    /*
-     * Sergio Aguado: esto es como se haria el actualizar Ranking desde partida, pero veo innecesario si esta gestion la puede hacer directamente
-     * el controlador de juego (o en nuestro caso el Main)
-     *
-     * De la manera en como esta en la parte de abajo no compila (no podemos utilizar funciones de una clase cuyo objeto no hemos declarado)
-     * */
     public void actualizarRanking(Ranking r) throws MyException {
         r.incrementar_ganadas_perdidas(this.idJugador1, this.nick1,this.idJugador2, this.nick2, this.ganador);
     }
 
+    public void print_Tablero() {
+        for (int i = 0; i < 8; ++i) {
+            String sbuff = new String();
+            for (int j = 0; j < 8; ++j) {
+                sbuff = sbuff + this.tablero.getCasilla_tipo(i,j);
+            }
+            System.out.println(sbuff);
+        }
+    }
 
-    //Actualiza el ranking con el resultado de la partida
-    /*
-    public void actualizarRanking(boolean ganadorj1, boolean ganadorj2){
-        if (ganadorj1 && !ganadorj2){
-            ElementoRanking::incrementar_partida_ganada (String nick1);
-            ElementoRanking::incrementar_partida_perdida(String nick2);
+    //Imprime por pantalla toda la informacion de la partida
+    public void get_info_partida() {
+        System.out.println("IDpartida:" + this.id);
+        System.out.println("Jugador1 (ID,nick): " +  this.idJugador1 + " " + this.nick1);
+        System.out.println("Jugador1 (ID,nick): " +  this.idJugador2 + " " + this.nick2);
+        System.out.println("Modo de juego: " +  this.modoDeJuego);
+        System.out.println("Reglas(v,h,d): " +  this.reglas[0] + this.reglas[1] + this.reglas[2]);
+        System.out.println("Turno: " +  this.turno);
+        System.out.println();
+        System.out.println("Tablero:");
+        print_Tablero();
+    }
+
+    //guarda toda la info en un ArrayList de String para tratamiento con CtrlPersitencia
+    public ArrayList<String> toArrayList() {
+        ArrayList<String> as = new ArrayList<String>();
+        as.add(String.valueOf(this.id));
+        String s =this.idJugador1 + " " + this.nick1;
+        as.add(s);
+        s =this.idJugador2 + " " + this.nick2;
+        as.add(s);
+        s = String.valueOf(this.modoDeJuego);
+        as.add(s);
+        s = (this.reglas[0] + " " + this.reglas[1] + " " +this.reglas[2]);
+        as.add(s);
+        s = String.valueOf(this.turno);
+        as.add(s);
+        as.add("");
+        //parte del tablero
+        for (int i = 0; i < 8; ++i) {
+            String sbuff = new String();
+            for (int j = 0; j < 8; ++j) {
+                sbuff = sbuff + this.tablero.getCasilla_tipo(i,j);
+            }
+            as.add(sbuff);
         }
-        else if (!ganadorj1 && ganadorj2){
-            ElementoRanking::incrementar_partida_ganada(String nick2);
-            ElementoRanking::incrementar_partida_perdida(String nick1);
-        }
-        else {
-            ElementoRanking::incrementar_partida_empatada(String nick1);
-            ElementoRanking::incrementar_partida_empatada(String nick2);
-        }
-    }*/
+        return as;
+    }
 }

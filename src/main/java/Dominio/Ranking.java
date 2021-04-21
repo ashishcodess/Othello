@@ -1,9 +1,10 @@
-package jugador;
+package Dominio;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
 import MyException.MyException;
 
 public class Ranking {
@@ -16,57 +17,17 @@ public class Ranking {
         this.ranking = new ArrayList<ElementoRanking>();
     }
 
-    //IMPORTAR RANKING
-    /**
-     * Constructora a partir de un fichero Ranking (en caso de que este exista)
-     * @param path_fichero es la ubicacion del fichero a importar
-     * */
-    public Ranking (String path_fichero) throws IOException, MyException {
-        this.ranking = new ArrayList<ElementoRanking>();
-        File f = new File(path_fichero);
-        if (f.exists()) {
-            FileReader fr = new FileReader (f);
-            BufferedReader bf =new BufferedReader(fr);
-            String s1;
-            while ((s1 = bf.readLine()) != null) {
-                String[] s2 = s1.split(" ");
-                int id, total, ganadas, perdidas,empatadas;
-                String nick;
-                if (s2.length == 6) {
-                    id = Integer.parseInt(s2[0]);
-                    nick = s2[1];
-                    ganadas = Integer.parseInt(s2[2]);
-                    perdidas = Integer.parseInt(s2[3]);
-                    empatadas = Integer.parseInt(s2[4]);
-                    total = Integer.parseInt(s2[5]);
-                    ElementoRanking e = new ElementoRanking(id,nick,ganadas,perdidas,empatadas,total);
-                    this.ranking.add(e);
-                }
-            }
-        }
-    }
 
     /**
-     * Este metodo exporta toda la informacion del Ranking en un fichero
-     * */
-    public void Exportar_ranking() throws IOException {
-        String path = "./src/files/ranking/" + "ranking" + this.ranking.size() + ".txt";
-        File f = new File(path);
-        if (f.exists()) f.delete();
-        f.createNewFile();
-        FileWriter fw = new FileWriter(f);
-        int tam = this.ranking.size();
-        for  (int i = 0; i < tam; ++i) {
-            fw.write(this.ranking.get(i).consultar_all() + "\n");
-        }
-        fw.close();
-    }
-
-    /**
-     * Este metodo inserta en la ultima posicion de ArrayList el ElementoRanking e
+     * Este metodo modifica el elemento del Ranking con identificadores iguales a e (en caso de existir en el ranking),
+     * caso contrario inserta el ElementoRanking e en la ultima posicion de ArrayList
      * */
     public void add_al_ranking(ElementoRanking e) {
-        this.ranking.add(e);
+        int b = existe_en_ranking(e.getID(),e.getNickname());
+        if (b != -1) {
+            modificar_elemento_ranking(b,e);
+        }
+        else this.ranking.add(e);
     }
 
     /**
@@ -74,11 +35,11 @@ public class Ranking {
      * @return devuelve falso si el entero "i" no pertenece al rango permitido dentro del ArrayList
      * */
     public Boolean modificar_elemento_ranking(int i, ElementoRanking e) {
-        if (i < 0 || i > this.ranking.size()) return false;
-        else {
+        if (i >= 0 && i < ranking.size()) {
             this.ranking.set(i,e);
             return true;
         }
+        else return false;
     }
 
     /**
@@ -106,12 +67,13 @@ public class Ranking {
      * @return devuelve la posicion del elemento del ranking con identificadores (id,nick) en caso de que exista, caso contrario devuelve -1
      * */
     public int existe_en_ranking(int id, String nick) {
-        if (id < 0 || id > this.ranking.size()) return -1;
         int tam = ranking.size();
         int i = -1;
         Boolean res = false;
         for (i = 0; i < tam && !res; ++i) {
-            res = (this.ranking.get(i).getID() == id) && (this.ranking.get(i).getNickname() == nick);
+            int idAux = this.ranking.get(i).getID();
+            String sAux = this.ranking.get(i).getNickname();
+            res = (idAux == id) && (sAux == nick);
         }
         if (!res) return -1; //no ha sido encontrado en el RANKING
         return (i-1);
@@ -130,7 +92,15 @@ public class Ranking {
      * @return devuelve el elemento del ranking en la posicion i de ArrayList
      * */
     public ElementoRanking consultar_elemento_i(int i) {
-        if (i > 0 && i < ranking.size()) return this.ranking.get(i);
+        if (i >= 0 && i < ranking.size()) return this.ranking.get(i);
+        else return null;
+    }
+
+    /**
+     * @return devuelve la informacion del  elemento del ranking en la posicion i de ArrayList
+     * */
+    public String consultar_info_elemento_i(int i) {
+        if (i >= 0 && i < ranking.size()) return this.ranking.get(i).consultar_all();
         else return null;
     }
 
@@ -141,8 +111,11 @@ public class Ranking {
      * */
     public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, int ganador) throws MyException {
         if (ganador >= 0 && ganador < 3) {
+            int ganador2 = 2;
+            if (ganador == 0) ganador2 = 1;
+            else if (ganador == 1) ganador2 = 0;
             if (id1 > 5) incrementar_partida(id1,nick1,ganador);
-            if (id2 > 5) incrementar_partida(id2,nick2,ganador);
+            if (id2 > 5) incrementar_partida(id2,nick2,ganador2);
         }
     }
 
@@ -196,6 +169,17 @@ public class Ranking {
             }
             return true;
         }
+    }
+
+    /**
+     * Este metodo Convierte toda la información del Ranking en un ArrayList de Strings
+     * */
+    public ArrayList<String> toArrayList() {
+        ArrayList<String> as = new ArrayList<String>();
+        for (int i = 0; i < this.ranking.size(); ++i) {
+            as.add(ranking.get(i).consultar_all());
+        }
+        return as;
     }
 
 
@@ -260,7 +244,7 @@ public class Ranking {
      * */
     static class SortbyNICKNAME implements Comparator<ElementoRanking> {
         public int compare(ElementoRanking e1, ElementoRanking e2) {
-            return e2.getNickname().compareTo(e1.getNickname());
+            return e1.getNickname().compareTo(e2.getNickname());
         }
     }
 }

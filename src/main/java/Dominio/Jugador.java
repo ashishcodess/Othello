@@ -1,6 +1,6 @@
-package jugador;
+package Dominio;
 
-import juego.Partida;
+import Dominio.Partida;
 
 public class Jugador {
 
