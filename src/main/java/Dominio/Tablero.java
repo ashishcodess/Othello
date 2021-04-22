@@ -112,4 +112,8 @@ public class Tablero {
 
     }
 
+    public boolean finalizada(){
+
+    }
+
 }
