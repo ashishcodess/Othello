@@ -60,9 +60,12 @@ public class Main {
         }
 
         //Luego ejecutarla (descomentar lo de abajo)
-        /*int res = pa.rondaPartida();
+        /*res = -1;
+        String[] accion = {"a"};
         while (res < 0) { //continua la partida
-            res = pa.rondaPartida();
+            accion[0] = scan.nextLine(); //para evitar bugs
+            accion = generar_accion_partida();
+            res = pa0.rondaPartida(accion);
         }
         if (res == -2) { //jugador a selecionado guardar partida
             cp.ctrl_guardar_partida(pa.toArrayList());
@@ -81,10 +84,10 @@ public class Main {
         System.out.println("//////////////////////////////////////////////////////");
         System.out.println("Acciones a realizar");
         System.out.println("//////////////////////////////////////////////////////");
-        System.out.println("colocar x y (colocar ficha en posicion x, y)");
-        System.out.println("paso (pasar el turno)");
-        System.out.println("guardar (guardar partida y finalizar)");
-        System.out.println("finalizar (finalizar partida)");
+        System.out.println("-  colocar x y (colocar ficha en posicion x, y)");
+        System.out.println("-  paso (pasar el turno)");
+        System.out.println("-  guardar (guardar partida y finalizar)");
+        System.out.println("-  finalizar (finalizar partida)");
         System.out.println("//////////////////////////////////////////////////////");
         System.out.println();
         System.out.print("Introducir accion a realizar:");
@@ -124,14 +127,14 @@ public class Main {
         System.out.println();
         int modo = cp.ctrl_leer_modo_partida(idPartida);
         int res;
-        String[] accion;
+        String[] accion = {"prueba"};
         switch (modo) {
             case 0: //Maquina vs Maquina
                 PartidaModo0 pa0 = cp.ctrl_cargar_partida_modo0(idPartida);
                 //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
-                accion = generar_accion_partida();
-                res = pa0.rondaPartida(accion);
+                res = -1;
                 while (res < 0) { //continua la partida
+                    accion[0] = scan.nextLine(); //para evitar bugs
                     accion = generar_accion_partida();
                     res = pa0.rondaPartida(accion);
                 }
@@ -145,9 +148,9 @@ public class Main {
             case 1: //Persona vs Maquina
                 PartidaModo1 pa1 = cp.ctrl_cargar_partida_modo1(idPartida);
                 //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
-                accion = generar_accion_partida();
-                res = pa1.rondaPartida(accion);
+                res = -1;
                 while (res < 0) { //continua la partida
+                    accion[0] = scan.nextLine(); //para evitar bugs
                     accion = generar_accion_partida();
                     res = pa1.rondaPartida(accion);
                 }
@@ -160,9 +163,9 @@ public class Main {
             case 2: //Persona vs Persona
                 PartidaModo2 pa2 = cp.ctrl_cargar_partida_modo2(idPartida);
                 //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
-                accion = generar_accion_partida();
-                res = pa2.rondaPartida(accion);
+                res = -1;
                 while (res < 0) { //continua la partida
+                    accion[0] = scan.nextLine(); //para evitar bugs
                     accion = generar_accion_partida();
                     res = pa2.rondaPartida(accion);
                 }
@@ -218,7 +221,7 @@ public class Main {
         boolean salir = false;
         while(!salir){
             System.out.println("Elige lo que quieres hacer: \n 1: Empezar una partida \n 2: Cargar una partida \n" +
-                    "3: Consultar el ranquing \n 4: Consultar estadísticas \n 5: salir");
+                    " 3: Consultar el ranquing \n 4: Consultar estadísticas \n 5: salir");
             int quit = scan.nextInt();
             switch (quit){
                 case 1:
