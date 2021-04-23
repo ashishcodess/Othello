@@ -35,6 +35,7 @@ public class Main {
         }
     }
 
+    //Sergio: al crear partida utilizar cp.ctrl_get_nuevo_ID_Partida(); para generar ID de partida
     public static void iniciarPartida(){
 
     }

@@ -40,19 +40,18 @@ public class Jugador {
         return id;
     }
 
-    /*idPartida tendria que ser objeto main.java.juego.Partida, */
+
 
     /**
      * Este metodo es el encargado de indicar que ficha colocar dentro de una partida
      */
-    public void Mover_pieza_en_partida(Partida par, int x, int y) {
-        //Comprobar que jugador existe en partida y que la casilla esta vacia
 
-        //asegurarse que el jugador esta en la partida
-        Boolean b = (par.existeJugador(this.id));
-        /*if (b && par.es_movimiento_posible(x,y)) {
-            par.colocar_ficha(this.id,x,y);
-        }*/
+    public boolean Mover_pieza_en_partida(int tipo, int x, int y, Tablero t) {
+        if (t.es_possible(x, y)) {
+            t.setCasilla_tipo(x,y,tipo);
+            return true;
+        }
+        else return false;
     }
 
 }

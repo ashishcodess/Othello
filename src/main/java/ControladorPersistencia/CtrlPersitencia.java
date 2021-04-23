@@ -102,6 +102,13 @@ public class CtrlPersitencia {
         return cUsuario.get_nuevo_ID_user();
     }
 
+    /**
+     * Este metodo devuelve el siguente ID disponible para asignarselo a una Partida
+     * */
+    public int ctrl_get_nuevo_ID_Partida() {
+        return cPartidas.get_nuevo_ID_Partida();
+    }
+
     //Controlador de Partidas (cPartidas)
     /**
      * Operacion ctrl_cargar_partida

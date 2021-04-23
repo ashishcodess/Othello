@@ -25,7 +25,7 @@ public class DriverPersistencia {
 
     public static void main(String[] args) throws IOException, MyException {
         //cp = new CtrlPersitencia();
-        cp = new CtrlPersitencia(false); //activar para utilizar solo 1 fichero de ranking
+        cp = new CtrlPersitencia(true); //activar para utilizar solo 1 fichero de ranking
         boolean b = true;
         while (b) {
             System.out.println("DriverPersistencia (OPCIONES):");
@@ -34,6 +34,7 @@ public class DriverPersistencia {
             System.out.println("2 - CtrlRanking (Importar/Exportar Ranking, modificando el Ranking)");
             System.out.println("3 - CtrlUsuario (Crear, modificar, borrar usuario)");
             System.out.println("4 - GetNuevoID_User");
+            System.out.println("5 - GetNuevoID_Partida");
             System.out.println();
             System.out.print("Introducir opcion:");
             int i_entrada = Integer.parseInt(scan.next());
@@ -62,6 +63,9 @@ public class DriverPersistencia {
                     break;
                 case 4:
                     test_prueba_getID_nuevo_user();
+                    break;
+                case 5:
+                    test_prueba_getID_nueva_partida();;
                     break;
                 default:
                     System.out.println("Introducir una opcion correcta");
@@ -140,6 +144,18 @@ public class DriverPersistencia {
         System.out.println("ID_usuario1: " + String.valueOf(id1));
         System.out.println("ID_usuario2: " + String.valueOf(id2));
         System.out.println("ID_usuario3: " + String.valueOf(id3));
+        boolean b = (id1 != id2) && (id2 != id3) && (id1 != id3);
+        if (b) System.out.println("Todo correcto (ID's diferentes)");
+        else System.out.println("Error hay algun ID igual (no deberia ser asi...)");
+    }
+
+    public static void test_prueba_getID_nueva_partida() throws IOException, MyException {
+        int id1 = cp.ctrl_get_nuevo_ID_Partida();
+        int id2 = cp.ctrl_get_nuevo_ID_Partida();
+        int id3 = cp.ctrl_get_nuevo_ID_Partida();
+        System.out.println("ID_partida1: " + String.valueOf(id1));
+        System.out.println("ID_partida2: " + String.valueOf(id2));
+        System.out.println("ID_partida3: " + String.valueOf(id3));
         boolean b = (id1 != id2) && (id2 != id3) && (id1 != id3);
         if (b) System.out.println("Todo correcto (ID's diferentes)");
         else System.out.println("Error hay algun ID igual (no deberia ser asi...)");

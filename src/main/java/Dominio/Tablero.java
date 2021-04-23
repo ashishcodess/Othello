@@ -113,7 +113,7 @@ public class Tablero {
     }
 
     public boolean finalizada(){
-
+        return true; //para poderlo compilar y hacer pruebas
     }
 
 }

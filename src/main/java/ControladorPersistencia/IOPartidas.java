@@ -11,17 +11,46 @@ import java.util.ArrayList;
 public class IOPartidas {
 
     private String path_partidas;
+    private int ID_max_partida;
 
 
     /**
      * Constructora por defecto
      */
-    public IOPartidas() {this.path_partidas = "./src/files/partidas/";}
+    public IOPartidas() {
+        this.path_partidas = "./src/files/partidas/";
+        this.ID_max_partida = calcularID_MAX_partida(this.path_partidas);
+    }
 
     /**
      * Constructora path_partida igual a s
      */
-    public IOPartidas(String s) {this.path_partidas = s;}
+    public IOPartidas(String s) {
+        this.path_partidas = s;
+        this.ID_max_partida = calcularID_MAX_partida(this.path_partidas);
+    }
+
+    /**
+     * Este metodo devuelve el ID maximo de todos los partidas (ya inicializados en la carpeta de partidas)
+     * */
+    private int calcularID_MAX_partida(String path) {
+        File f = new File(path);
+        String[] s = f.list();
+        int maxID = 0;
+        for (int i = 0; i < s.length; ++i) {
+            String res[] = s[i].split(".txt");
+            int i_aux = Integer.parseInt(res[0]);
+            if (maxID < i_aux) maxID = i_aux;
+        }
+        return maxID;
+    }
+
+    /**
+     * Este metodo devuelve el siguente ID disponible para asignarselo a una Partida
+     * */
+    public int get_nuevo_ID_Partida() {
+        return (++this.ID_max_partida);
+    }
 
     /**
      * Operacion cargar_partida
