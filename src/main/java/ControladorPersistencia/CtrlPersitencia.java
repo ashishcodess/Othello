@@ -207,6 +207,8 @@ public class CtrlPersitencia {
      */
     public PartidaModo2 ctrl_cargar_partida_modo2(int idPartida) throws IOException, MyException {
         PartidaModo2 p = cPartidas.cargar_partida_modo2(idPartida);
+        p.get_info_partida();
+
         if (p != null) {
             int id1, id2, id_partida;
             String nick1 = new String();

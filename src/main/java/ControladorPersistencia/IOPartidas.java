@@ -211,7 +211,7 @@ public class IOPartidas {
 
             s1 = bf.readLine();
             modo = Integer.parseInt(s1);
-            if (modo == 1) {
+            if (modo == 0) {
                 s1 = bf.readLine();
                 s2 = s1.split(" ");
                 reglas[0] = Integer.parseInt(s2[0]);
@@ -317,7 +317,7 @@ public class IOPartidas {
 
             s1 = bf.readLine();
             modo = Integer.parseInt(s1);
-            if (modo == 1) {
+            if (modo == 2) {
                 s1 = bf.readLine();
                 s2 = s1.split(" ");
                 reglas[0] = Integer.parseInt(s2[0]);

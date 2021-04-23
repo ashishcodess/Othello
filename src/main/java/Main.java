@@ -26,10 +26,10 @@ public class Main {
             cp.ctrl_crear_usuario(code,nombre);
         }
         else{
-            System.out.println("Entra tu nombre de usuario");
-            String nombre = scan.next();
             System.out.println("Entra tu ID");
             code = scan.nextInt();
+            System.out.println("Entra tu nombre de usuario");
+            String nombre = scan.next();
             if (cp.ctrl_existe_usuario(code,nombre)) System.out.println("Login Correcto");
         }
     }
@@ -78,10 +78,15 @@ public class Main {
 
     private static String[] generar_accion_partida() {
         String[] res;
+        System.out.println("//////////////////////////////////////////////////////");
+        System.out.println("Acciones a realizar");
+        System.out.println("//////////////////////////////////////////////////////");
         System.out.println("colocar x y (colocar ficha en posicion x, y)");
         System.out.println("paso (pasar el turno)");
         System.out.println("guardar (guardar partida y finalizar)");
         System.out.println("finalizar (finalizar partida)");
+        System.out.println("//////////////////////////////////////////////////////");
+        System.out.println();
         System.out.print("Introducir accion a realizar:");
         String s_aux = scan.nextLine();
         System.out.println();
