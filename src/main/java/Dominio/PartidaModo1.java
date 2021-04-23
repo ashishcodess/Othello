@@ -30,4 +30,6 @@ public class PartidaModo1 extends Partida {
         int res = -1;
         return res; //Sergio:para que compile correctamente
     }
+
+
 }

@@ -26,5 +26,34 @@ public class PartidaModo0 extends Partida {
         int res = -1;
         return res; //Sergio:para que compile correctamente
     }
+
+
+
+
+    //guarda toda la info en un ArrayList de String para tratamiento con CtrlPersitencia
+    /*public ArrayList<String> toArrayList0() {
+        ArrayList<String> as = new ArrayList<String>();
+        as.add(String.valueOf(this.id));
+        String s =super.idJugador1 + " " + this.nick1;
+        as.add(s);
+        s =this.idJugador2 + " " + this.nick2;
+        as.add(s);
+        s = String.valueOf(this.modoDeJuego);
+        as.add(s);
+        s = (this.reglas[0] + " " + this.reglas[1] + " " +this.reglas[2]);
+        as.add(s);
+        s = String.valueOf(this.turno);
+        as.add(s);
+        as.add("");
+        //parte del tablero
+        for (int i = 0; i < 8; ++i) {
+            String sbuff = new String();
+            for (int j = 0; j < 8; ++j) {
+                sbuff = sbuff + this.tablero.getCasilla_tipo(i,j);
+            }
+            as.add(sbuff);
+        }
+        return as;
+    }*/
 }
 
