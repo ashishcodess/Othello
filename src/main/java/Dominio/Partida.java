@@ -17,7 +17,7 @@ public class Partida {
     private final int idJugador2;
     private Tablero tablero;
     private int ganador; //indica una vez finalizada la partida quien es el ganador (para despues hacer modificacion de ranking)
-    //ganador -> -1 (partida sigue en curso),0 (gana nick1), 1 (gana nick2), 2 (empate), 3 (guardar partida)
+    //ganador -> -1 (partida sigue en curso),0 (gana nick1), 1 (gana nick2), 2 (empate), 3 (guardar partida), 4 (finalizar)
 
     //Creadora - Configuración de los parámetros de una partida
     public Partida (int id, int modoJuego, int[] r, int turn, int idj1, int idj2) {
@@ -107,7 +107,6 @@ public class Partida {
             retornar valor que indique si la partida ha acabado o no (no hay más espacios en el tablero o se ha
             llegado al turno máximo)
          */
-
         if (this.turno % 2 != 0) {
             this.tablero.calcularCasillasDisponiblesDiagonales();
             this.tablero.calcularCasillasDisponiblesHorizontal();
@@ -131,12 +130,10 @@ public class Partida {
                     }
                     else { this.ganador = -1;}*/
                     break;
-                case "guardar":
-                    //guardarPartida()
-                    break;
-                case "finalizar":
-                    //finalizarPartida
-                    break;
+                case "guardar": //guardarPartida
+                    return 2;
+                case "finalizar": //finalizarPartida
+                    return 3;
                 case "paso":
                     this.turno = this.turno +  1;
                     break;
@@ -164,13 +161,10 @@ public class Partida {
                         this.ganador = 2;
                     }
                     else { this.ganador = -1;}*/
-                    break;
-                case "guardar":
-                    //guardarPartida()
-                    break;
-                case "finalizar":
-                    //finalizarPartida
-                    break;
+                case "guardar": //guardarPartida
+                    return 2;
+                case "finalizar": //finalizarPartida
+                    return 3;
                 case "paso":
                     this.turno = this.turno +  1;
                     break;

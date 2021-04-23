@@ -67,7 +67,7 @@ public class Main {
         if (res == -2) { //jugador a selecionado guardar partida
             cp.ctrl_guardar_partida(pa.toArrayList());
         }
-        else actualizar_ranking(pa,res); //tenemos un ganador*/
+        else if (res != 3) actualizar_ranking(pa,res); //tenemos un ganador*/
 
     }
 
@@ -102,7 +102,8 @@ public class Main {
                     y = Integer.parseInt(res[2]);
                     b = rango_mapa_correcto(x,y);
                 }
-                else if ((res[0] == "guardar") || (res[0] == "finalizar")) b = true; //ha realizado otra accion -> salir bucle
+                else if ((res[0].equals("guardar")) || (res[0].equals("finalizar"))) b = true; //ha realizado otra accion -> salir bucle
+                else b = false;
             }
         }
         return res;
@@ -129,10 +130,10 @@ public class Main {
                     accion = generar_accion_partida();
                     res = pa0.rondaPartida(accion);
                 }
-                if (res == -2) { //jugador a selecionado guardar partida
+                if (res == 2) { //jugador a selecionado guardar partida
                     cp.ctrl_guardar_partida(pa0.toArrayList());
                 }
-                else actualizar_ranking(pa0,res); //igual esto se puede elminiar
+                else if (res != 3) actualizar_ranking(pa0,res); //igual esto se puede elminiar
 
                 break;
 
@@ -145,10 +146,10 @@ public class Main {
                     accion = generar_accion_partida();
                     res = pa1.rondaPartida(accion);
                 }
-                if (res == -2) { //jugador a selecionado guardar partida
+                if (res == 2) { //jugador a selecionado guardar partida
                     cp.ctrl_guardar_partida(pa1.toArrayList());
                 }
-                else actualizar_ranking(pa1,res); //tenemos un ganador
+                else if (res != 3) actualizar_ranking(pa1,res); //tenemos un ganador
                 break;
 
             case 2: //Persona vs Persona
@@ -160,10 +161,10 @@ public class Main {
                     accion = generar_accion_partida();
                     res = pa2.rondaPartida(accion);
                 }
-                if (res == -2) { //jugador a selecionado guardar partida
+                if (res == 2) { //jugador a selecionado guardar partida
                     cp.ctrl_guardar_partida(pa2.toArrayList());
                 }
-                else actualizar_ranking(pa2,res); //tenemos un ganador
+                else if (res != 3) actualizar_ranking(pa2,res); //tenemos un ganador
                 break;
 
             default:
