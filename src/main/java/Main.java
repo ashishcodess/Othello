@@ -1,5 +1,3 @@
-package main;
-
 import ControladorPersistencia.CtrlPersitencia;
 
 import Dominio.Tablero;
