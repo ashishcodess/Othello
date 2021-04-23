@@ -1,6 +1,11 @@
 import ControladorPersistencia.CtrlPersitencia;
 
-import Dominio.*;
+import Dominio.Tablero;
+import Dominio.Partida;
+import Dominio.PartidaModo0;
+import Dominio.PartidaModo1;
+import Dominio.PartidaModo2;
+import Dominio.Ranking;
 import MyException.MyException;
 
 import java.io.IOException;
@@ -10,6 +15,7 @@ import java.util.*;
 
 public class Main {
     static int code;
+    static String nickname;
     static Scanner scan = new Scanner(System.in);
 
     private static CtrlPersitencia cp;
@@ -20,57 +26,113 @@ public class Main {
         String in = scan.next();
         if(in.toLowerCase().equals("no")){
             System.out.println("Entra tu nombre de usuario");
-            String nombre = scan.next();
+            nickname = scan.next();
             code = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
-            System.out.println("Creado usuario " + nombre + " con ID " + code);
-            cp.ctrl_crear_usuario(code,nombre);
+            System.out.println("Creado usuario " + nickname + " con ID " + code);
+            cp.ctrl_crear_usuario(code,nickname);
         }
         else{
             System.out.println("Entra tu ID");
             code = scan.nextInt();
             System.out.println("Entra tu nombre de usuario");
-            String nombre = scan.next();
-            if (cp.ctrl_existe_usuario(code,nombre)) System.out.println("Login Correcto");
+            nickname = scan.next();
+            if (cp.ctrl_existe_usuario(code,nickname)) System.out.println("Login Correcto");
         }
     }
 
-    public static void iniciarPartida(){
+    private static int[] seleccionar_reglas() throws MyException {
+        int res[] = new int[3];
+        boolean b = false;
+        System.out.println("Seleccionar reglas (vertical horizontal diagonal) -> ej:1 1 1");
+        System.out.print("Introducir reglas:");
+        String s = scan.nextLine(); //evitar bugs (hacerlo 2 veces...)
+        s = scan.nextLine();
+        String s_aux[] = s.split(" ");
+        if (s_aux.length == 3){ //comprobar que este en rango de reglas y valen 0 o 1
+            b = true;
+            for (int i = 0; i < s_aux.length && b; ++i) {
+                int i_aux = Integer.parseInt(s_aux[0]);
+                b = ((i_aux == 1) || (i_aux == 0));
+                if (b) res[i] = i_aux;
+            }
+        }
+        else throw new MyException("Reglas incorrectas");
+        return res;
+    }
+
+    //Sergio: inacabado
+    public static void iniciarPartida() throws MyException, IOException {
+        int res = -1;
+        String accion[] = {"aa"};
         int idPartida = cp.ctrl_get_nuevo_ID_Partida();
-
-        //Crear la partida (con lo necesario)
-
         System.out.println("0 - Maquina vs Maquina");
         System.out.println("1 - Persona vs Maquina");
         System.out.println("2 - Persona vs Persona");
         System.out.print("Seleccionar modo de juego:");
         int modo = Integer.parseInt(scan.next());
+        System.out.println();
+        int reglas[] = seleccionar_reglas();
+
+        int id1 = 0;
+        int id2 = 0;
+        String nick1 = new String();
+        String nick2 = new String();
+        Tablero t = new Tablero();
         switch (modo) {
-            case 0:
-                //Crear PartidaModo0
+            case 0: //Crear PartidaModo0
+                //FALTA introducir informacion de ID's de maquina
+                PartidaModo0 pa0 = new PartidaModo0(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
+
+                //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
+                res = -1;
+                while (res < 0) { //continua la partida
+                    accion[0] = scan.nextLine(); //para evitar bugs
+                    accion = generar_accion_partida();
+                    res = pa0.rondaPartida(accion);
+                }
+                if (res == 2) { //jugador a selecionado guardar partida
+                    cp.ctrl_guardar_partida(pa0.toArrayList());
+                }
+                else if (res != 3) actualizar_ranking(pa0,res); //igual esto se puede elminiar
                 break;
-            case 1:
-                //Crear PartidaModo1
+            case 1: //Crear PartidaModo1
+                //FALTA introducir informacion de ID de maquina a enfrentarse
+                PartidaModo1 pa1 = new PartidaModo1(idPartida,modo,reglas,0,code,nickname,id2,nick2,t);
+
+                //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
+                res = -1;
+                while (res < 0) { //continua la partida
+                    accion[0] = scan.nextLine(); //para evitar bugs
+                    accion = generar_accion_partida();
+                    res = pa1.rondaPartida(accion);
+                }
+                if (res == 2) { //jugador a selecionado guardar partida
+                    cp.ctrl_guardar_partida(pa1.toArrayList());
+                }
+                else if (res != 3) actualizar_ranking(pa1,res); //tenemos un ganador
                 break;
-            case 2:
-                //Crear PartidaModo2
+
+            case 2: //Crear PartidaModo2
+                //FALTA introducir informacion de id's y nicknames
+                PartidaModo2 pa2 = new PartidaModo2(idPartida,modo,reglas,0,code,nickname,id2,nick2,t);
+
+                //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
+                res = -1;
+                while (res < 0) { //continua la partida
+                    accion[0] = scan.nextLine(); //para evitar bugs
+                    accion = generar_accion_partida();
+                    res = pa2.rondaPartida(accion);
+                }
+                if (res == 2) { //jugador a selecionado guardar partida
+                    cp.ctrl_guardar_partida(pa2.toArrayList());
+                }
+                else if (res != 3) actualizar_ranking(pa2,res); //tenemos un ganador
+
                 break;
             default:
                 System.out.println("No se ha seleccionado un modo de juego correcto");
                 break;
         }
-
-        //Luego ejecutarla (descomentar lo de abajo)
-        /*res = -1;
-        String[] accion = {"a"};
-        while (res < 0) { //continua la partida
-            accion[0] = scan.nextLine(); //para evitar bugs
-            accion = generar_accion_partida();
-            res = pa0.rondaPartida(accion);
-        }
-        if (res == -2) { //jugador a selecionado guardar partida
-            cp.ctrl_guardar_partida(pa.toArrayList());
-        }
-        else if (res != 3) actualizar_ranking(pa,res); //tenemos un ganador*/
 
     }
 
