@@ -21,6 +21,7 @@ public class PartidaModo0 extends Partida {
     }
 
     //Similar rondaPartida del padre pero con llamada de colocar ficha y comportamiento de IA's
+    @Override
     public int rondaPartida(String[] accion) {
         int res = -1;
         return res; //Sergio:para que compile correctamente

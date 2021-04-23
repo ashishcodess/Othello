@@ -1,10 +1,11 @@
 package ControladorPersistencia;
 
-import Dominio.Partida;
-import Dominio.Ranking;
+import Dominio.*;
 import MyException.MyException;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -110,6 +111,17 @@ public class CtrlPersitencia {
     }
 
     //Controlador de Partidas (cPartidas)
+
+    /**
+     * Operacion ctrl_leer_modo_partida
+     * @param idPartida es el ID de partida a cargar
+     * @return devuelve el modo de la partida con igual a idPartida, caso contrario (no existe partida) devuelve -1
+     */
+    public int ctrl_leer_modo_partida(int idPartida) throws IOException {
+        return cPartidas.leer_modo_partida(idPartida);
+    }
+
+
     /**
      * Operacion ctrl_cargar_partida
      * @param idPartida es el ID de partida a cargar
@@ -135,6 +147,85 @@ public class CtrlPersitencia {
         }
         else throw new MyException("No existe fichero de partida seleccionada por el ID:" + idPartida);
     }
+
+    /**
+     * Operacion ctrl_cargar_partida_modo0
+     * @param idPartida es el ID de partida a cargar
+     * @return devuelve PartidaModo0 con id igual a idPartida, caso contrario devuelve excepcion
+     */
+    public PartidaModo0 ctrl_cargar_partida_modo0(int idPartida) throws IOException, MyException {
+        PartidaModo0 p = cPartidas.cargar_partida_modo0(idPartida);
+        if (p != null) {
+            int id1, id2, id_partida;
+            String nick1 = new String();
+            String nick2 = new String();
+            id1 = p.getID_J1(); nick1 = p.getNickJugador1();
+            if (id1 > 5) {
+                cUsuario.crear_usuario(id1,nick1);
+                if (!cUsuario.existe_partida_usuario(id1,nick1,idPartida)) cUsuario.agregar_partida_usuario(id1,nick1,idPartida);
+            }
+            id2 = p.getID_J2(); nick2 = p.getNickJugador2();
+            if (id2 > 5) {
+                cUsuario.crear_usuario(id2,nick2);
+                if (!cUsuario.existe_partida_usuario(id2,nick2,idPartida)) cUsuario.agregar_partida_usuario(id2,nick2,idPartida);
+            }
+            return p;
+        }
+        else throw new MyException("No existe fichero de partida seleccionada por el ID:" + idPartida);
+    }
+
+    /**
+     * Operacion ctrl_cargar_partida_modo0
+     * @param idPartida es el ID de partida a cargar
+     * @return devuelve PartidaModo1 con id igual a idPartida, caso contrario devuelve excepcion
+     */
+    public PartidaModo1 ctrl_cargar_partida_modo1(int idPartida) throws IOException, MyException {
+        PartidaModo1 p = cPartidas.cargar_partida_modo1(idPartida);
+        if (p != null) {
+            int id1, id2, id_partida;
+            String nick1 = new String();
+            String nick2 = new String();
+            id1 = p.getID_J1(); nick1 = p.getNickJugador1();
+            if (id1 > 5) {
+                cUsuario.crear_usuario(id1,nick1);
+                if (!cUsuario.existe_partida_usuario(id1,nick1,idPartida)) cUsuario.agregar_partida_usuario(id1,nick1,idPartida);
+            }
+            id2 = p.getID_J2(); nick2 = p.getNickJugador2();
+            if (id2 > 5) {
+                cUsuario.crear_usuario(id2,nick2);
+                if (!cUsuario.existe_partida_usuario(id2,nick2,idPartida)) cUsuario.agregar_partida_usuario(id2,nick2,idPartida);
+            }
+            return p;
+        }
+        else throw new MyException("No existe fichero de partida seleccionada por el ID:" + idPartida);
+    }
+
+    /**
+     * Operacion ctrl_cargar_partida_modo0
+     * @param idPartida es el ID de partida a cargar
+     * @return devuelve PartidaModo2 con id igual a idPartida, caso contrario devuelve excepcion
+     */
+    public PartidaModo2 ctrl_cargar_partida_modo2(int idPartida) throws IOException, MyException {
+        PartidaModo2 p = cPartidas.cargar_partida_modo2(idPartida);
+        if (p != null) {
+            int id1, id2, id_partida;
+            String nick1 = new String();
+            String nick2 = new String();
+            id1 = p.getID_J1(); nick1 = p.getNickJugador1();
+            if (id1 > 5) {
+                cUsuario.crear_usuario(id1,nick1);
+                if (!cUsuario.existe_partida_usuario(id1,nick1,idPartida)) cUsuario.agregar_partida_usuario(id1,nick1,idPartida);
+            }
+            id2 = p.getID_J2(); nick2 = p.getNickJugador2();
+            if (id2 > 5) {
+                cUsuario.crear_usuario(id2,nick2);
+                if (!cUsuario.existe_partida_usuario(id2,nick2,idPartida)) cUsuario.agregar_partida_usuario(id2,nick2,idPartida);
+            }
+            return p;
+        }
+        else throw new MyException("No existe fichero de partida seleccionada por el ID:" + idPartida);
+    }
+
     /**
      * Operacion ctrl_guardar_partida
      * @param as es ArrayList con los parametros necesarios para guardar la partida (utilizando funcion toArrayList() de Partida)

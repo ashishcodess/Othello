@@ -1,7 +1,6 @@
 import ControladorPersistencia.CtrlPersitencia;
 
-import Dominio.Partida;
-import Dominio.Ranking;
+import Dominio.*;
 import MyException.MyException;
 
 import java.io.IOException;
@@ -37,19 +36,134 @@ public class Main {
 
     //Sergio: al crear partida utilizar cp.ctrl_get_nuevo_ID_Partida(); para generar ID de partida
     public static void iniciarPartida(){
+        //Crear la partida (con lo necesario)
+        System.out.println("0 - Maquina vs Maquina");
+        System.out.println("1 - Persona vs Maquina");
+        System.out.println("2 - Persona vs Persona");
+        System.out.print("Seleccionar modo de juego:");
+        int modo = Integer.parseInt(scan.next());
+        switch (modo) {
+            case 0:
+                //Crear PartidaModo0
+                break;
+            case 1:
+                //Crear PartidaModo1
+                break;
+            case 2:
+                //Crear PartidaModo2
+                break;
+            default:
+                System.out.println("No se ha seleccionado un modo de juego correcto");
+                break;
+        }
+
+        //Luego ejecutarla (descomentar lo de abajo)
+        /*int res = pa.rondaPartida();
+        while (res < 0) { //continua la partida
+            res = pa.rondaPartida();
+        }
+        if (res == -2) { //jugador a selecionado guardar partida
+            cp.ctrl_guardar_partida(pa.toArrayList());
+        }
+        else actualizar_ranking(pa,res); //tenemos un ganador*/
 
     }
 
-    public static Partida cargarPartida(int idPartida) throws IOException, MyException {
-        Partida res = cp.ctrl_cargar_partida(idPartida);
+    private static void actualizar_ranking(Partida p, int ganador) throws MyException {
+        int modo = p.getModoDeJuegoPartida();
+        if (modo != 0) { //maquina vs maquina
+            int id1, id2;
+            String nick1, nick2;
+            id1 = p.getID_J1();
+            nick1 = p.getNickJugador1();
+            id2 = p.getID_J2();
+            nick2 = p.getNickJugador2();
+            ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,ganador);
+        }
+    }
+
+
+    private static String[] generar_accion_partida() {
+        String[] res = {"prueba"};
         return res;
     }
+
+    //sergio: este es un ejemplo de implementacion de como cargar una partida dependiendo del modo de partida
+    public static void cargarPartida() throws IOException, MyException {
+        /*En esta parte faltaria igual hacer la funcion de cargarPartida en funcion del
+        usuario que hayamos hecho login previamente
+         */
+        System.out.print("Introducir ID de partida cargar:");
+        int idPartida = Integer.parseInt(scan.next());
+        System.out.println();
+        int modo = cp.ctrl_leer_modo_partida(idPartida);
+        int res;
+        String[] accion;
+        switch (modo) {
+            case 0: //Maquina vs Maquina
+                PartidaModo0 pa0 = cp.ctrl_cargar_partida_modo0(idPartida);
+                //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
+                accion = generar_accion_partida();
+                res = pa0.rondaPartida(accion);
+                while (res < 0) { //continua la partida
+                    accion = generar_accion_partida();
+                    res = pa0.rondaPartida(accion);
+                }
+                if (res == -2) { //jugador a selecionado guardar partida
+                    cp.ctrl_guardar_partida(pa0.toArrayList());
+                }
+                else actualizar_ranking(pa0,res); //igual esto se puede elminiar
+
+                break;
+
+            case 1: //Persona vs Maquina
+                PartidaModo1 pa1 = cp.ctrl_cargar_partida_modo1(idPartida);
+                //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
+                accion = generar_accion_partida();
+                res = pa1.rondaPartida(accion);
+                while (res < 0) { //continua la partida
+                    accion = generar_accion_partida();
+                    res = pa1.rondaPartida(accion);
+                }
+                if (res == -2) { //jugador a selecionado guardar partida
+                    cp.ctrl_guardar_partida(pa1.toArrayList());
+                }
+                else actualizar_ranking(pa1,res); //tenemos un ganador
+                break;
+
+            case 2: //Persona vs Persona
+                PartidaModo2 pa2 = cp.ctrl_cargar_partida_modo2(idPartida);
+                //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
+                accion = generar_accion_partida();
+                res = pa2.rondaPartida(accion);
+                while (res < 0) { //continua la partida
+                    accion = generar_accion_partida();
+                    res = pa2.rondaPartida(accion);
+                }
+                if (res == -2) { //jugador a selecionado guardar partida
+                    cp.ctrl_guardar_partida(pa2.toArrayList());
+                }
+                else actualizar_ranking(pa2,res); //tenemos un ganador
+                break;
+
+            default:
+                System.out.println("La partida no existe o el modo de partida es incorrecto");
+                break;
+        }
+    }
+
+
 
     public static void consultarRanking(){
         ranking.print_ranking();
     }
 
-    public static void consultarEstadístiques(int id, String nick){
+    public static void consultarEstadístiques(){
+        System.out.print("Introducir ID de jugador a consultar:");
+        int id = Integer.parseInt(scan.next());
+        System.out.print("\n Introducir nickname de jugador a consultar:");
+        String nick = scan.next();
+        System.out.println();
         ranking.print_persona_ranking(id,nick);
     }
 
@@ -73,13 +187,13 @@ public class Main {
                     iniciarPartida();
                     break;
                 case 2:
-                    //if(cargarPartida()); //faltan parametros
+                    cargarPartida();
                     break;
                 case 3:
                     consultarRanking();
                     break;
                 case 4:
-                    //consultarEstadístiques(); //faltan parametros
+                    consultarEstadístiques();
                     break;
                 case 5:
                     salir = true;

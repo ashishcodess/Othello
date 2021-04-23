@@ -17,6 +17,7 @@ public class Partida {
     private final int idJugador2;
     private Tablero tablero;
     private int ganador; //indica una vez finalizada la partida quien es el ganador (para despues hacer modificacion de ranking)
+    //ganador -> -1 (partida sigue en curso),0 (gana nick1), 1 (gana nick2), 2 (empate), 3 (guardar partida)
 
     //Creadora - Configuración de los parámetros de una partida
     public Partida (int id, int modoJuego, int[] r, int turn, int idj1, int idj2) {

@@ -4,7 +4,7 @@ import MyException.MyException;
 
 import java.io.IOException;
 
-//Clase de Partida MODO 2 (JugadorPersona vs Maquina)
+//Clase de Partida MODO 2 (JugadorPersona vs JugadorPersona)
 public class PartidaModo2 extends Partida {
 
     /*Atributos*/
@@ -25,6 +25,7 @@ public class PartidaModo2 extends Partida {
     }
 
     //Similar rondaPartida del padre pero con llamada de colocar ficha de cada jugador
+    @Override
     public int rondaPartida(String[] accion) {
         int res = -1;
         return res; //Sergio:para que compile correctamente
