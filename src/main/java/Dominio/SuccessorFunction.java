@@ -11,6 +11,7 @@ public class SuccessorFunction { //necessaria para implementar la IA
      * @return
      */
     public Tablero[] succesorFunction(Tablero t){
+
         return succesores;
     }
 }
