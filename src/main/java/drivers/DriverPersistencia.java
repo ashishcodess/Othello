@@ -65,7 +65,7 @@ public class DriverPersistencia {
                     test_prueba_getID_nuevo_user();
                     break;
                 case 5:
-                    test_prueba_getID_nueva_partida();;
+                    test_prueba_getID_nueva_partida();
                     break;
                 default:
                     System.out.println("Introducir una opcion correcta");
@@ -160,6 +160,7 @@ public class DriverPersistencia {
         if (b) System.out.println("Todo correcto (ID's diferentes)");
         else System.out.println("Error hay algun ID igual (no deberia ser asi...)");
     }
+
 
 }
 

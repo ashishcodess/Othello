@@ -34,9 +34,11 @@ public class Main {
         }
     }
 
-    //Sergio: al crear partida utilizar cp.ctrl_get_nuevo_ID_Partida(); para generar ID de partida
     public static void iniciarPartida(){
+        int idPartida = cp.ctrl_get_nuevo_ID_Partida();
+
         //Crear la partida (con lo necesario)
+
         System.out.println("0 - Maquina vs Maquina");
         System.out.println("1 - Persona vs Maquina");
         System.out.println("2 - Persona vs Persona");
@@ -69,22 +71,40 @@ public class Main {
 
     }
 
-    private static void actualizar_ranking(Partida p, int ganador) throws MyException {
-        int modo = p.getModoDeJuegoPartida();
-        if (modo != 0) { //maquina vs maquina
-            int id1, id2;
-            String nick1, nick2;
-            id1 = p.getID_J1();
-            nick1 = p.getNickJugador1();
-            id2 = p.getID_J2();
-            nick2 = p.getNickJugador2();
-            ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,ganador);
-        }
+    //esta funcion se puede comprobar desde Partida si no
+    private static boolean rango_mapa_correcto(int x, int y) {
+        return (x >= 0 && x < 9) && (y >= 0 && y < 9);
     }
 
-
     private static String[] generar_accion_partida() {
-        String[] res = {"prueba"};
+        String[] res;
+        System.out.println("colocar x y (colocar ficha en posicion x, y)");
+        System.out.println("paso (pasar el turno)");
+        System.out.println("guardar (guardar partida y finalizar)");
+        System.out.println("finalizar (finalizar partida)");
+        System.out.print("Introducir accion a realizar:");
+        String s_aux = scan.nextLine();
+        System.out.println();
+        res = s_aux.split(" ");
+        if (res.length == 3) { //colocar x y
+            int x, y;
+            x = Integer.parseInt(res[1]);
+            y = Integer.parseInt(res[2]);
+            boolean b = rango_mapa_correcto(x,y);
+            while (!b) { //solo entra si x y no estan dentro del rango
+                System.out.println("x y fuera de rango");
+                System.out.print("Introducir nueva accion:");
+                s_aux = scan.nextLine();
+                System.out.println();
+                res = s_aux.split(" ");
+                if (res.length == 3) {
+                    x = Integer.parseInt(res[1]);
+                    y = Integer.parseInt(res[2]);
+                    b = rango_mapa_correcto(x,y);
+                }
+                else if ((res[0] == "guardar") || (res[0] == "finalizar")) b = true; //ha realizado otra accion -> salir bucle
+            }
+        }
         return res;
     }
 
@@ -153,6 +173,18 @@ public class Main {
     }
 
 
+    private static void actualizar_ranking(Partida p, int ganador) throws MyException {
+        int modo = p.getModoDeJuegoPartida();
+        if (modo != 0) { //diferente de maquina vs maquina
+            int id1, id2;
+            String nick1, nick2;
+            id1 = p.getID_J1();
+            nick1 = p.getNickJugador1();
+            id2 = p.getID_J2();
+            nick2 = p.getNickJugador2();
+            ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,ganador);
+        }
+    }
 
     public static void consultarRanking(){
         ranking.print_ranking();
@@ -167,10 +199,10 @@ public class Main {
         ranking.print_persona_ranking(id,nick);
     }
 
+    //Sergio: creo que la podemos eliminar
     public static void runPartida(Partida p) {
 
     }
-
 
 
     public static void main(String[] args) throws IOException, MyException {
@@ -203,7 +235,6 @@ public class Main {
                     break;
             }
         }
-        //exportar ranking antes de salir del programa
-        cp.ctrl_exportar_ranking(ranking.toArrayList());
+        cp.ctrl_exportar_ranking(ranking.toArrayList()); //exportar ranking antes de salir del programa
     }
 }
