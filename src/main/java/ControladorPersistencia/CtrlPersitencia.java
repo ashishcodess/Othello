@@ -381,7 +381,7 @@ public class CtrlPersitencia {
      * muestra por salida estandar las partidas disponibles por el Jugador (IDjugador,nick)
      */
     public void ctrl_print_partidas_disponibles(int IDjugador, String nick) throws IOException, MyException {
-        System.out.println("Partidas disponibles de ID: "+ IDjugador + " ,nick: " + nick);
+        System.out.println("Partidas disponibles de ID: "+ IDjugador + " ,nickname: " + nick);
         ArrayList<String> partidas = cUsuario.listar_partidas_disponibles(IDjugador,nick);
         if (partidas.size() > 0) {
             System.out.print(partidas.get(0));

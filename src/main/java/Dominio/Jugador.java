@@ -53,5 +53,4 @@ public class Jugador {
         }
         else return false;
     }
-
 }

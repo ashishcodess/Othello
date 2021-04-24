@@ -52,7 +52,7 @@ public class IOPartidas {
      * Este metodo devuelve el siguente ID disponible para asignarselo a una Partida
      * */
     public int get_nuevo_ID_Partida() {
-        return (++this.ID_max_partida);
+        return this.ID_max_partida;
     }
 
 
@@ -81,6 +81,7 @@ public class IOPartidas {
             }
             fw.flush();
             fw.close();
+            ++this.ID_max_partida;
             return true;
         }
         else return false;

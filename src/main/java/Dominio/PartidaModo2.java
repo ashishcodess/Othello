@@ -4,7 +4,11 @@ import MyException.MyException;
 
 import java.io.IOException;
 
+
 //Clase de Partida MODO 2 (JugadorPersona vs JugadorPersona)
+
+/*Sergio: problema no detecta los atributos del padre, no entiendo porque falla */
+
 public class PartidaModo2 extends Partida {
 
     /*Atributos*/
@@ -28,6 +32,20 @@ public class PartidaModo2 extends Partida {
     @Override
     public int rondaPartida(String[] accion) {
         int res = -1;
+        switch (accion[0]) {
+            case "colocar":
+                //this.tablero.setCasilla_tipo(x, y, tipo);
+                super.incrementar_turno();
+                //actualizarTablero();
+                break;
+            case "guardar": //guardarPartida
+                return 2;
+            case "finalizar": //finalizarPartida
+                return 3;
+            case "paso":
+                super.incrementar_turno();
+                break;
+        }
         return res; //Sergio:para que compile correctamente
     }
 }
