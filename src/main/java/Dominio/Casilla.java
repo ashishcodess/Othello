@@ -12,6 +12,10 @@ public class Casilla {
         this.tipo = t;
     }
 
+    public Casilla (int t) {
+        this.tipo = t;
+    }
+
     public int getTipoCasilla() {
         return tipo;
     }

@@ -26,6 +26,32 @@ public class Tablero {
     }
 
     //Jugador sends the tablero to load in case of game resumes from the earlier saved state.
+
+    //Sergio: necesito constructora de la clase a partir de una matriz de enteros :)
+    public Tablero(int[][] tab) {
+        num_vacia = 60;
+        Position pos;
+        for(int i = 0 ; i < 8 ; ++i){
+            for(int j = 0 ; j < 8 ; ++j){
+                tablero[i][j] = new Casilla(tab[i][j]);  // put the exact value in exact position
+
+                if(tab[i][j]== 2 ) {   // If they are black increase the number of black tokens and decrease the empty ones.
+                    num_vacia --;
+                    negras.add(new Position(i , j));
+                }
+                else if (tab[i][j]== 3 ) { // If they are white increase the number of white tokens and decrease the empty ones.
+                    num_vacia --;
+                    blancas.add(new Position(i , j));
+                }
+                else{  // If they are available ones increase the number of availables and decrease the empty ones.
+                    num_vacia --;
+                    //disponibles.add(new Position(i , j));
+                }
+            }
+        }
+    }
+
+    //Jugador sends the tablero to load in case of game resumes from the earlier saved state.
     public Tablero(Casilla[][] tab) {
         num_vacia = 60;
         Position pos;
@@ -136,11 +162,11 @@ public class Tablero {
 
     }
     public void calcularCasillasDisponiblesVertical() {
-        Partida p = new Partida(-----);
-        if (p.getTurnoPartida() % 2 == 0) {
+        int turno = 0; //sergio, temporal para que pueda compilar :)
+        if (turno % 2 == 0) {
             Iterator iter = negras.iterator();
             while (iter.hasNext()) {
-                Position pos = iter.next();
+                Position pos = (Position) iter.next();
                 int x = pos.getX();
                 int y = pos.getY();
                 if (graph_v[x][y] != -1) bfs_calcularCasillasDisponiblesVertical(pos);
@@ -150,7 +176,7 @@ public class Tablero {
         else {
             Iterator iter = negras.iterator();
             while (iter.hasNext()) {
-                Position pos = iter.next();
+                Position pos = (Position) iter.next();
                 int x = pos.getX();
                 int y = pos.getY();
                 if (graph_v[x][y] != -1) bfs_calcularCasillasDisponiblesVertical(pos);
