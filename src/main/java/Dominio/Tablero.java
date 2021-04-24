@@ -29,6 +29,10 @@ public class Tablero {
 
     //Sergio: necesito constructora de la clase a partir de una matriz de enteros :)
     public Tablero(int[][] tab) {
+        tablero = new Casilla[8][8];
+        negras = new HashSet<Position>();
+        blancas = new HashSet<Position>();
+        disponibles= new HashSet<Position>();
         num_vacia = 60;
         Position pos;
         for(int i = 0 ; i < 8 ; ++i){
@@ -53,6 +57,10 @@ public class Tablero {
 
     //Jugador sends the tablero to load in case of game resumes from the earlier saved state.
     public Tablero(Casilla[][] tab) {
+        tablero = new Casilla[8][8];
+        negras = new HashSet<Position>();
+        blancas = new HashSet<Position>();
+        disponibles= new HashSet<Position>();
         num_vacia = 60;
         Position pos;
         for(int i = 0 ; i < 8 ; ++i){

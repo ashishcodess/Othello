@@ -144,9 +144,19 @@ public class Main {
 
         int id1 = -1;
         int id2 = -1;
-        String nick1 = new String();
-        String nick2 = new String();
-        Tablero t = new Tablero();
+        String nick1 = "";
+        String nick2 = "";
+
+        //inicializar tablero
+        int [][] tab = new int[8][8];
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                tab[i][j] = 0;
+                if ((i == 3 & j==3) || (i == 4 & j==4)) tab[i][j] = 3;
+                else if ((i == 3 & j==4) || (i == 4 & j==3)) tab[i][j] = 2;
+            }
+        }
+        Tablero t = new Tablero(tab);
         int bando = -1;
         //Selecionar bando de juego
         if (modo != 0) {
@@ -240,9 +250,10 @@ public class Main {
 
 
         switch (modo) {
-            case 0: //Crear PartidaModo0
+            case 0: //Crear PartidaModo0 (Maquina vs Maquina)
                 PartidaModo0 pa0 = new PartidaModo0(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
                 //Ejecutando partida
+                pa0.get_info_partida();
                 res = -1;
                 while (res < 0) { //continua la partida
                     accion = generar_accion_partida();
@@ -259,9 +270,10 @@ public class Main {
                 System.out.println("PARTIDA FINALIZADA");
                 System.out.println();
                 break;
-            case 1: //Crear PartidaModo1
+            case 1: //Crear PartidaModo1 (Persona vs Maquina)
                 PartidaModo1 pa1 = new PartidaModo1(idPartida,modo,reglas,0,code,nickname,id2,nick2,t);
                 //Ejecutando partida
+                pa1.get_info_partida();
                 res = -1;
                 while (res < 0) { //continua la partida
                     accion = generar_accion_partida();
@@ -279,9 +291,10 @@ public class Main {
                 System.out.println();
                 break;
 
-            case 2: //Crear PartidaModo2
+            case 2: //Crear PartidaModo2 (Persona vs Persona)
                 PartidaModo2 pa2 = new PartidaModo2(idPartida,modo,reglas,0,code,nickname,id2,nick2,t);
                 //Ejecutando partida
+                pa2.get_info_partida();
                 res = -1;
                 while (res < 0) { //continua la partida
                     accion = generar_accion_partida();

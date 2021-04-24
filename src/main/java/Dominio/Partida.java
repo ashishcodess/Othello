@@ -186,26 +186,30 @@ public class Partida {
     }
 
     public void print_Tablero() {
-        for (int i = 0; i < 8; ++i) {
-            String sbuff = new String();
-            for (int j = 0; j < 8; ++j) {
-                sbuff = sbuff + this.tablero.getCasilla_tipo(i,j);
+        if (this.tablero != null) {
+            for (int i = 0; i < 8; ++i) {
+                String sbuff = new String();
+                for (int j = 0; j < 8; ++j) {
+                    sbuff = sbuff + this.tablero.getCasilla_tipo(i,j);
+                }
+                System.out.println(sbuff);
             }
-            System.out.println(sbuff);
         }
     }
 
     //Imprime por pantalla toda la informacion de la partida
     public void get_info_partida() {
+        System.out.println();
         System.out.println("IDpartida:" + this.id);
         System.out.println("Jugador1 (ID,nick): " +  this.idJugador1 + " " + this.nick1);
-        System.out.println("Jugador1 (ID,nick): " +  this.idJugador2 + " " + this.nick2);
+        System.out.println("Jugador2 (ID,nick): " +  this.idJugador2 + " " + this.nick2);
         System.out.println("Modo de juego: " +  this.modoDeJuego);
         System.out.println("Reglas(v,h,d): " +  this.reglas[0] + this.reglas[1] + this.reglas[2]);
         System.out.println("Turno: " +  this.turno);
         System.out.println();
         System.out.println("Tablero:");
         print_Tablero();
+        System.out.println();
     }
 
     //guarda toda la info en un ArrayList de String para tratamiento con CtrlPersitencia
