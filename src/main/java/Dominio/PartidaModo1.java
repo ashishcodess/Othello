@@ -22,6 +22,7 @@ public class PartidaModo1 extends Partida {
 
     public PartidaModo1(int id, int modoJuego, int[] r, int turn, int idj1, String n1, int idj2, String n2, Tablero t) throws IOException, MyException  {
         super(id,modoJuego,r,turn,idj1,n1,idj2,n2,t);
+
         this.j1 = new JugadorPersona(idj1,n1);
         this.j2 = new JugadorMaquina(idj2);
     }

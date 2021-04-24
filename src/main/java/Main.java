@@ -142,9 +142,9 @@ public class Main {
         System.out.println();
         int reglas[] = seleccionar_reglas();
 
-        int id1 = -1;
+        int id1 = code; //por defecto anfitrion como J1
         int id2 = -1;
-        String nick1 = "";
+        String nick1 = nickname; //por defecto anfitrion como J1
         String nick2 = "";
 
         //inicializar tablero
@@ -159,7 +159,7 @@ public class Main {
         Tablero t = new Tablero(tab);
         int bando = -1;
         //Selecionar bando de juego
-        if (modo != 0) {
+        if (modo == 2) {
             boolean primero = true;
             while (bando == -1) {
                 if (!primero) System.out.println("Bando equivocado");
@@ -176,9 +176,9 @@ public class Main {
             }
 
         }
-        //INTRODUCIR INFO CONTRINCANTES
         switch (modo) {
-            case 0:
+            case 0: //Crear PartidaModo0 (Maquina vs Maquina)
+                //INFO CONTRICANTES
                 print_contrincantes_maquina();
                 while (id1 == -1) {
                     id1 = seleccionar_id_maquina(false);
@@ -188,69 +188,6 @@ public class Main {
                     id2 = seleccionar_id_maquina(true);
                     if(id2<0 | id2>5) id2 = -1;
                 }
-                break;
-            case 1:
-                print_contrincantes_maquina();
-                if (bando == 1) {
-                    while (id2 == -1) {
-                        id2 = seleccionar_id_maquina(true);
-                        if(id2<0 | id2>5) id2 = -1;
-                    }
-                }
-                else {
-                    while (id1 == -1) {
-                        id1 = seleccionar_id_maquina(false);
-                        if(id1<0 | id1>5) id1 = -1;
-                    }
-                }
-                break;
-
-            case 2:
-                System.out.println("Introducir informacion de contrincante 2 (Persona)");
-                String in;
-                if (bando == 1) {
-                    System.out.println("Estas Registrado/a? si/no ");
-                    in = scan.next();
-                    if(in.toLowerCase().equals("no")){
-                        System.out.println("Entra tu nombre de usuario");
-                        nick2 = scan.next();
-                        id2 = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
-                        System.out.println("Creado usuario " + nick2 + " con ID " + id2);
-                        cp.ctrl_crear_usuario(id2,nick2);
-                    }
-                    else if(in.toLowerCase().equals("si")){
-                        System.out.println("Entra tu ID");
-                        id2 = scan.nextInt();
-                        System.out.println("Entra tu nombre de usuario");
-                        nick2 = scan.next();
-                        if (cp.ctrl_existe_usuario(id2,nick2)) System.out.println("Login Correcto");
-                    }
-                    else {
-                        System.out.println("Estas Registrado/a? si/no ");
-                        in = scan.next();
-                        if(in.toLowerCase().equals("no")){
-                            System.out.println("Entra tu nombre de usuario");
-                            nick1 = scan.next();
-                            id1 = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
-                            System.out.println("Creado usuario " + nick1 + " con ID " + id1);
-                            cp.ctrl_crear_usuario(id1,nick1);
-                        }
-                        else if(in.toLowerCase().equals("si")){
-                            System.out.println("Entra tu ID");
-                            id1 = scan.nextInt();
-                            System.out.println("Entra tu nombre de usuario");
-                            nick1 = scan.next();
-                            if (cp.ctrl_existe_usuario(id1,nick1)) System.out.println("Login Correcto");
-                        }
-                    }
-                    break;
-                }
-        }
-
-
-
-        switch (modo) {
-            case 0: //Crear PartidaModo0 (Maquina vs Maquina)
                 PartidaModo0 pa0 = new PartidaModo0(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
                 //Ejecutando partida
                 pa0.get_info_partida();
@@ -270,8 +207,16 @@ public class Main {
                 System.out.println("PARTIDA FINALIZADA");
                 System.out.println();
                 break;
-            case 1: //Crear PartidaModo1 (Persona vs Maquina)
-                PartidaModo1 pa1 = new PartidaModo1(idPartida,modo,reglas,0,code,nickname,id2,nick2,t);
+
+
+            case 1: //Crear PartidaModo1 (Persona(siempre negras) vs Maquina)
+                //INFO CONTRICANTES
+                print_contrincantes_maquina();
+                while (id2 == -1) {
+                    id2 = seleccionar_id_maquina(true);
+                    if(id2<0 | id2>5) id2 = -1;
+                }
+                PartidaModo1 pa1 = new PartidaModo1(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
                 //Ejecutando partida
                 pa1.get_info_partida();
                 res = -1;
@@ -292,7 +237,47 @@ public class Main {
                 break;
 
             case 2: //Crear PartidaModo2 (Persona vs Persona)
-                PartidaModo2 pa2 = new PartidaModo2(idPartida,modo,reglas,0,code,nickname,id2,nick2,t);
+                System.out.println("entra en crear partidamodo2");
+                //INFO CONTRICANTES
+                System.out.println("Introducir informacion de contrincante 2 (Persona)");
+                String in;
+                if (bando == 1) {
+                    System.out.println("Estas Registrado/a? si/no ");
+                    in = scan.next();
+                    if (in.toLowerCase().equals("no")) {
+                        System.out.println("Entra tu nombre de usuario");
+                        nick2 = scan.next();
+                        id2 = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
+                        System.out.println("Creado usuario " + nick2 + " con ID " + id2);
+                        cp.ctrl_crear_usuario(id2, nick2);
+                    } else if (in.toLowerCase().equals("si")) {
+                        System.out.println("Entra tu ID");
+                        id2 = scan.nextInt();
+                        System.out.println("Entra tu nombre de usuario");
+                        nick2 = scan.next();
+                        if (cp.ctrl_existe_usuario(id2, nick2)) System.out.println("Login Correcto");
+                    }
+                }
+                else {
+                    System.out.println("Estas Registrado/a? si/no ");
+                    in = scan.next();
+                    if(in.toLowerCase().equals("no")){
+                        System.out.println("Entra tu nombre de usuario");
+                        nick1 = scan.next();
+                        id1 = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
+                        System.out.println("Creado usuario " + nick1 + " con ID " + id1);
+                        cp.ctrl_crear_usuario(id1,nick1);
+                    }
+                    else if(in.toLowerCase().equals("si")){
+                        System.out.println("Entra tu ID");
+                        id1 = scan.nextInt();
+                        System.out.println("Entra tu nombre de usuario");
+                        nick1 = scan.next();
+                        if (cp.ctrl_existe_usuario(id1,nick1)) System.out.println("Login Correcto");
+                    }
+                }
+
+                PartidaModo2 pa2 = new PartidaModo2(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
                 //Ejecutando partida
                 pa2.get_info_partida();
                 res = -1;
@@ -311,6 +296,8 @@ public class Main {
                 System.out.println("PARTIDA FINALIZADA");
                 System.out.println();
                 break;
+
+
             default:
                 System.out.println("No se ha seleccionado un modo de juego correcto");
                 break;
