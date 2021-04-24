@@ -25,8 +25,38 @@ public class Tablero {
         disponibles= new HashSet<Position>();
     }
 
+    public Tablero(int[][] tab) {
+        tablero = new Casilla[8][8];
+        negras = new HashSet<Position>();
+        blancas = new HashSet<Position>();
+        disponibles= new HashSet<Position>();
+        num_vacia = 60;
+        Position pos;
+        for(int i = 0 ; i < 8 ; ++i){
+            for(int j = 0 ; j < 8 ; ++j){
+                tablero[i][j] = new Casilla(tab[i][j]);  // put the exact value in exact position
+                if(tab[i][j] == 2 ) {   // If they are black increase the number of black tokens and decrease the empty ones.
+                    num_vacia --;
+                    negras.add(new Position(i , j));
+                }
+                else if (tab[i][j] == 3) { // If they are white increase the number of white tokens and decrease the empty ones.
+                    num_vacia --;
+                    blancas.add(new Position(i , j));
+                }
+                else{  // If they are available ones increase the number of availables and decrease the empty ones.
+                    num_vacia --;
+                    disponibles.add(new Position(i , j));
+                }
+            }
+        }
+    }
+
     //Jugador sends the tablero to load in case of game resumes from the earlier saved state.
     public Tablero(Casilla[][] tab) {
+        tablero = new Casilla[8][8];
+        negras = new HashSet<Position>();
+        blancas = new HashSet<Position>();
+        disponibles= new HashSet<Position>();
         num_vacia = 60;
         Position pos;
         for(int i = 0 ; i < 8 ; ++i){
