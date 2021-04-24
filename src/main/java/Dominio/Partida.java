@@ -194,6 +194,7 @@ public class Partida {
                 }
                 System.out.println(sbuff);
             }
+            System.out.println();
         }
     }
 

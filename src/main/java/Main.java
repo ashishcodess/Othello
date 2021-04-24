@@ -78,7 +78,9 @@ public class Main {
         System.out.println("//////////////////////////////////////////////////////");
         System.out.println();
         System.out.print("Introducir accion a realizar:");
-        String s_aux = scan.nextLine();
+        String s_aux;
+        while (!scan.hasNextLine()) s_aux = scan.nextLine();
+        s_aux = scan.nextLine();
         System.out.println();
         res = s_aux.split(" ");
         if (res.length == 3) { //colocar x y
@@ -131,7 +133,6 @@ public class Main {
 
     public static void iniciarPartida() throws MyException, IOException {
         int res = -1;
-        String accion[] = {"aa"};
         int idPartida = cp.ctrl_get_nuevo_ID_Partida();
         System.out.println("0 - Maquina vs Maquina");
         System.out.println("1 - Persona vs Maquina");
@@ -190,11 +191,11 @@ public class Main {
                 }
                 PartidaModo0 pa0 = new PartidaModo0(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
                 //Ejecutando partida
-                pa0.get_info_partida();
                 res = -1;
                 while (res < 0) { //continua la partida
-                    accion = generar_accion_partida();
-                    res = pa0.rondaPartida(accion);
+                    res = pa0.rondaPartida(generar_accion_partida());
+                    System.out.println();
+                    if((res!= 2) || (res!= 3)) pa0.print_Tablero();
                 }
                 if (res == 2) { //jugador a selecionado guardar partida
                     cp.ctrl_guardar_partida(pa0.toArrayList());
@@ -218,11 +219,11 @@ public class Main {
                 }
                 PartidaModo1 pa1 = new PartidaModo1(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
                 //Ejecutando partida
-                pa1.get_info_partida();
                 res = -1;
                 while (res < 0) { //continua la partida
-                    accion = generar_accion_partida();
-                    res = pa1.rondaPartida(accion);
+                    res = pa1.rondaPartida(generar_accion_partida());
+                    System.out.println();
+                    if((res!= 2) || (res!= 3)) pa1.print_Tablero();
                 }
                 if (res == 2) { //jugador a selecionado guardar partida
                     cp.ctrl_guardar_partida(pa1.toArrayList());
@@ -279,11 +280,11 @@ public class Main {
 
                 PartidaModo2 pa2 = new PartidaModo2(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
                 //Ejecutando partida
-                pa2.get_info_partida();
                 res = -1;
                 while (res < 0) { //continua la partida
-                    accion = generar_accion_partida();
-                    res = pa2.rondaPartida(accion);
+                    res = pa2.rondaPartida(generar_accion_partida());
+                    System.out.println();
+                    if((res!= 2) || (res!= 3)) pa2.print_Tablero();
                 }
                 if (res == 2) { //jugador a selecionado guardar partida
                     cp.ctrl_guardar_partida(pa2.toArrayList());
@@ -307,15 +308,15 @@ public class Main {
     public static void cargarPartida(int idPartida) throws IOException, MyException {
         int modo = cp.ctrl_leer_modo_partida(idPartida);
         int res;
-        String[] accion = {"prueba"};
         switch (modo) {
             case 0: //Maquina vs Maquina
                 PartidaModo0 pa0 = cp.ctrl_cargar_partida_modo0(idPartida);
                 //Ejecutando partida
                 res = -1;
                 while (res < 0) { //continua la partida
-                    accion = generar_accion_partida();
-                    res = pa0.rondaPartida(accion);
+                    res = pa0.rondaPartida(generar_accion_partida());
+                    System.out.println();
+                    if((res!= 2) || (res!= 3)) pa0.print_Tablero();
                 }
                 if (res == 2) { //jugador a selecionado guardar partida
                     cp.ctrl_guardar_partida(pa0.toArrayList());
@@ -334,8 +335,9 @@ public class Main {
                 //Ejecutando partida
                 res = -1;
                 while (res < 0) { //continua la partida
-                    accion = generar_accion_partida();
-                    res = pa1.rondaPartida(accion);
+                    res = pa1.rondaPartida(generar_accion_partida());
+                    System.out.println();
+                    if((res!= 2) || (res!= 3)) pa1.print_Tablero();
                 }
                 if (res == 2) { //jugador a selecionado guardar partida
                     cp.ctrl_guardar_partida(pa1.toArrayList());
@@ -354,8 +356,9 @@ public class Main {
                 //Ejecutando partida
                 res = -1;
                 while (res < 0) { //continua la partida  //por ahora falla
-                    accion = generar_accion_partida();
-                    res = pa2.rondaPartida(accion);
+                    res = pa2.rondaPartida(generar_accion_partida());
+                    System.out.println();
+                    if((res!= 2) || (res!= 3)) pa2.print_Tablero();
                 }
                 if (res == 2) { //jugador a selecionado guardar partida
                     cp.ctrl_guardar_partida(pa2.toArrayList());
@@ -410,11 +413,6 @@ public class Main {
         System.out.println();
         ranking.print_persona_ranking(id,nick);
     }
-
-    //Sergio: creo que la podemos eliminar
-    /*public static void runPartida(Partida p) {
-
-    }*/
 
 
     public static void main(String[] args) throws IOException, MyException {
