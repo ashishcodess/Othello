@@ -129,9 +129,44 @@ public class Main {
         System.out.println();
     }
 
-    private static void introducir_info_contrincantes(int id1, String nick1, int id2, String nick2, int modo,int bando) {
-        id1 = -1;
-        id2 = -1;
+    public static void iniciarPartida() throws MyException, IOException {
+        int res = -1;
+        String accion[] = {"aa"};
+        int idPartida = cp.ctrl_get_nuevo_ID_Partida();
+        System.out.println("0 - Maquina vs Maquina");
+        System.out.println("1 - Persona vs Maquina");
+        System.out.println("2 - Persona vs Persona");
+        System.out.print("Seleccionar modo de juego:");
+        int modo = Integer.parseInt(scan.next());
+        if (modo<0 || modo > 2) throw new MyException("Modo de juego incorrecto");
+        System.out.println();
+        int reglas[] = seleccionar_reglas();
+
+        int id1 = -1;
+        int id2 = -1;
+        String nick1 = new String();
+        String nick2 = new String();
+        Tablero t = new Tablero();
+        int bando = -1;
+        //Selecionar bando de juego
+        if (modo != 0) {
+            boolean primero = true;
+            while (bando == -1) {
+                if (!primero) System.out.println("Bando equivocado");
+                bando = seleccionar_bando();
+                primero = false;
+            }
+            if (bando == 1) {
+                id1 = code;
+                nick1 = nickname;
+            }
+            else { //ha selecionado bando 2
+                id2 = code;
+                nick2 = nickname;
+            }
+
+        }
+        //INTRODUCIR INFO CONTRINCANTES
         switch (modo) {
             case 0:
                 print_contrincantes_maquina();
@@ -159,50 +194,51 @@ public class Main {
                     }
                 }
                 break;
+
             case 2:
-                //falta por hacer introducir informacion de contricante 2 de Persona vs Persona
-                break;
+                System.out.println("Introducir informacion de contrincante 2 (Persona)");
+                String in;
+                if (bando == 1) {
+                    System.out.println("Estas Registrado/a? si/no ");
+                    in = scan.next();
+                    if(in.toLowerCase().equals("no")){
+                        System.out.println("Entra tu nombre de usuario");
+                        nick2 = scan.next();
+                        id2 = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
+                        System.out.println("Creado usuario " + nick2 + " con ID " + id2);
+                        cp.ctrl_crear_usuario(id2,nick2);
+                    }
+                    else if(in.toLowerCase().equals("si")){
+                        System.out.println("Entra tu ID");
+                        id2 = scan.nextInt();
+                        System.out.println("Entra tu nombre de usuario");
+                        nick2 = scan.next();
+                        if (cp.ctrl_existe_usuario(id2,nick2)) System.out.println("Login Correcto");
+                    }
+                    else {
+                        System.out.println("Estas Registrado/a? si/no ");
+                        in = scan.next();
+                        if(in.toLowerCase().equals("no")){
+                            System.out.println("Entra tu nombre de usuario");
+                            nick1 = scan.next();
+                            id1 = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
+                            System.out.println("Creado usuario " + nick1 + " con ID " + id1);
+                            cp.ctrl_crear_usuario(id1,nick1);
+                        }
+                        else if(in.toLowerCase().equals("si")){
+                            System.out.println("Entra tu ID");
+                            id1 = scan.nextInt();
+                            System.out.println("Entra tu nombre de usuario");
+                            nick1 = scan.next();
+                            if (cp.ctrl_existe_usuario(id1,nick1)) System.out.println("Login Correcto");
+                        }
+                    }
+                    break;
+                }
         }
-    }
 
-    public static void iniciarPartida() throws MyException, IOException {
-        int res = -1;
-        String accion[] = {"aa"};
-        int idPartida = cp.ctrl_get_nuevo_ID_Partida();
-        System.out.println("0 - Maquina vs Maquina");
-        System.out.println("1 - Persona vs Maquina");
-        System.out.println("2 - Persona vs Persona");
-        System.out.print("Seleccionar modo de juego:");
-        int modo = Integer.parseInt(scan.next());
-        if (modo<0 || modo > 2) throw new MyException("Modo de juego incorrecto");
-        System.out.println();
-        int reglas[] = seleccionar_reglas();
 
-        int id1 = 0;
-        int id2 = 0;
-        String nick1 = new String();
-        String nick2 = new String();
-        Tablero t = new Tablero();
-        int bando = -1;
-        //Selecionar bando de juego
-        if (modo != 0) {
-            boolean primero = true;
-            while (bando == -1) {
-                if (!primero) System.out.println("Bando equivocado");
-                bando = seleccionar_bando();
-                primero = false;
-            }
-            if (bando == 1) {
-                id1 = code;
-                nick1 = nickname;
-            }
-            else { //ha selecionado bando 2
-                id2 = code;
-                nick2 = nickname;
-            }
 
-        }
-        introducir_info_contrincantes(id1,nick1,id2,nick2,modo,bando);
         switch (modo) {
             case 0: //Crear PartidaModo0
                 PartidaModo0 pa0 = new PartidaModo0(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
