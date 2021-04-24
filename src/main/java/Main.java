@@ -104,6 +104,13 @@ public class Main {
         return res;
     }
 
+    private static int seleccionar_bando() {
+        System.out.print("Seleccionar bando de juego (1 -> negro, 2 -> blanco):");
+        int res = Integer.parseInt(scan.next());
+        if ((res== 1) || (res== 2)) return res;
+        return -1;
+    }
+
     public static void iniciarPartida() throws MyException, IOException {
         int res = -1;
         String accion[] = {"aa"};
@@ -122,7 +129,22 @@ public class Main {
         String nick2 = new String();
         Tablero t = new Tablero();
 
-        //hay que implementar funcion seleccionar bando del jugador que crea la partida(id1 -> negro, id2-> blanco)
+        //Selecionar bando de juego
+        int bando = -1;
+        boolean primero = true;
+        while (bando == -1) {
+            if (!primero) System.out.println("Bando equivocado");
+            bando = seleccionar_bando();
+            primero = false;
+        }
+        if (bando == 1) {
+            id1 = code;
+            nick1 = nickname;
+        }
+        else { //ha selecionado bando 2
+            id2 = code;
+            nick2 = nickname;
+        }
 
         switch (modo) {
             case 0: //Crear PartidaModo0
