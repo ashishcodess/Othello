@@ -86,8 +86,7 @@ public class Main {
                 //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
                 res = -1;
                 while (res < 0) { //continua la partida
-                    accion[0] = scan.nextLine(); //para evitar bugs
-                    accion = generar_accion_partida();
+                    generar_accion_partida(accion);
                     res = pa0.rondaPartida(accion);
                 }
                 if (res == 2) { //jugador a selecionado guardar partida
@@ -98,12 +97,10 @@ public class Main {
             case 1: //Crear PartidaModo1
                 //FALTA introducir informacion de ID de maquina a enfrentarse
                 PartidaModo1 pa1 = new PartidaModo1(idPartida,modo,reglas,0,code,nickname,id2,nick2,t);
-
                 //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
                 res = -1;
                 while (res < 0) { //continua la partida
-                    accion[0] = scan.nextLine(); //para evitar bugs
-                    accion = generar_accion_partida();
+                    generar_accion_partida(accion);
                     res = pa1.rondaPartida(accion);
                 }
                 if (res == 2) { //jugador a selecionado guardar partida
@@ -119,8 +116,7 @@ public class Main {
                 //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
                 res = -1;
                 while (res < 0) { //continua la partida
-                    accion[0] = scan.nextLine(); //para evitar bugs
-                    accion = generar_accion_partida();
+                    generar_accion_partida(accion);
                     res = pa2.rondaPartida(accion);
                 }
                 if (res == 2) { //jugador a selecionado guardar partida
@@ -141,8 +137,7 @@ public class Main {
         return (x >= 0 && x < 9) && (y >= 0 && y < 9);
     }
 
-    private static String[] generar_accion_partida() {
-        String[] res;
+    private static void generar_accion_partida(String[] res) {
         System.out.println("//////////////////////////////////////////////////////");
         System.out.println("Acciones a realizar");
         System.out.println("//////////////////////////////////////////////////////");
@@ -176,7 +171,9 @@ public class Main {
                 else b = false;
             }
         }
-        return res;
+        /*System.out.println("imprimir resultado generar accion");
+        for (int i = 0; i < res.length; ++i) System.out.print(" " + res[i]);
+        System.out.println();*/
     }
 
     //sergio: este es un ejemplo de implementacion de como cargar una partida dependiendo del modo de partida
@@ -196,8 +193,7 @@ public class Main {
                 //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
                 res = -1;
                 while (res < 0) { //continua la partida
-                    accion[0] = scan.nextLine(); //para evitar bugs
-                    accion = generar_accion_partida();
+                    generar_accion_partida(accion);
                     res = pa0.rondaPartida(accion);
                 }
                 if (res == 2) { //jugador a selecionado guardar partida
@@ -212,8 +208,7 @@ public class Main {
                 //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
                 res = -1;
                 while (res < 0) { //continua la partida
-                    accion[0] = scan.nextLine(); //para evitar bugs
-                    accion = generar_accion_partida();
+                    generar_accion_partida(accion);
                     res = pa1.rondaPartida(accion);
                 }
                 if (res == 2) { //jugador a selecionado guardar partida
@@ -226,12 +221,14 @@ public class Main {
                 PartidaModo2 pa2 = cp.ctrl_cargar_partida_modo2(idPartida);
                 //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
                 res = -1;
-                while (res < 0) { //continua la partida
-                    accion[0] = scan.nextLine(); //para evitar bugs
-                    accion = generar_accion_partida();
+                while (res < 0) { //continua la partida  //por ahora falla
+                    generar_accion_partida(accion);
+                    System.out.println(accion[0]);
                     res = pa2.rondaPartida(accion);
+                    System.out.println("res = " + res);
                 }
                 if (res == 2) { //jugador a selecionado guardar partida
+                    System.out.println("entra en guardar");
                     cp.ctrl_guardar_partida(pa2.toArrayList());
                 }
                 else if (res != 3) actualizar_ranking(pa2,res); //tenemos un ganador

@@ -63,6 +63,8 @@ public class Partida {
         return this.turno;
     }
 
+    public void incrementar_turno() {this.turno = this.turno + 1;}
+
     public int getID_J1() {
         return this.idJugador1;
     }
@@ -78,6 +80,7 @@ public class Partida {
     public String getNickJugador2() {
         return this.nick2;
     }
+
 
 
 
@@ -231,3 +234,5 @@ public class Partida {
         return as;
     }
 }
+
+
