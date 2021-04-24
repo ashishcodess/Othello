@@ -107,8 +107,62 @@ public class Main {
     private static int seleccionar_bando() {
         System.out.print("Seleccionar bando de juego (1 -> negro, 2 -> blanco):");
         int res = Integer.parseInt(scan.next());
+        System.out.println();
         if ((res== 1) || (res== 2)) return res;
         return -1;
+    }
+
+    private static int seleccionar_id_maquina(boolean b) {
+        if (!b) System.out.print("Introducir idMaquina1 (negro):");
+        else System.out.print("Introducir idMaquina2 (blanco):");
+        int res = Integer.parseInt(scan.next());
+        System.out.println();
+        return res;
+    }
+
+    private static void print_contrincantes_maquina() {
+        System.out.println();
+        System.out.println("Mostrando contrincantes maquina");
+        System.out.println("ID's: 0 , 1 (nivel facil)");
+        System.out.println("ID's: 2 , 3 (nivel medio)");
+        System.out.println("ID's: 4 , 5 (nivel dificil)");
+        System.out.println();
+    }
+
+    private static void introducir_info_contrincantes(int id1, String nick1, int id2, String nick2, int modo,int bando) {
+        id1 = -1;
+        id2 = -1;
+        switch (modo) {
+            case 0:
+                print_contrincantes_maquina();
+                while (id1 == -1) {
+                    id1 = seleccionar_id_maquina(false);
+                    if(id1<0 | id1>5) id1 = -1;
+                }
+                while (id2 == -1) {
+                    id2 = seleccionar_id_maquina(true);
+                    if(id2<0 | id2>5) id2 = -1;
+                }
+                break;
+            case 1:
+                print_contrincantes_maquina();
+                if (bando == 1) {
+                    while (id2 == -1) {
+                        id2 = seleccionar_id_maquina(true);
+                        if(id2<0 | id2>5) id2 = -1;
+                    }
+                }
+                else {
+                    while (id1 == -1) {
+                        id1 = seleccionar_id_maquina(false);
+                        if(id1<0 | id1>5) id1 = -1;
+                    }
+                }
+                break;
+            case 2:
+                //falta por hacer introducir informacion de contricante 2 de Persona vs Persona
+                break;
+        }
     }
 
     public static void iniciarPartida() throws MyException, IOException {
@@ -120,6 +174,7 @@ public class Main {
         System.out.println("2 - Persona vs Persona");
         System.out.print("Seleccionar modo de juego:");
         int modo = Integer.parseInt(scan.next());
+        if (modo<0 || modo > 2) throw new MyException("Modo de juego incorrecto");
         System.out.println();
         int reglas[] = seleccionar_reglas();
 
@@ -128,30 +183,30 @@ public class Main {
         String nick1 = new String();
         String nick2 = new String();
         Tablero t = new Tablero();
-
-        //Selecionar bando de juego
         int bando = -1;
-        boolean primero = true;
-        while (bando == -1) {
-            if (!primero) System.out.println("Bando equivocado");
-            bando = seleccionar_bando();
-            primero = false;
-        }
-        if (bando == 1) {
-            id1 = code;
-            nick1 = nickname;
-        }
-        else { //ha selecionado bando 2
-            id2 = code;
-            nick2 = nickname;
-        }
+        //Selecionar bando de juego
+        if (modo != 0) {
+            boolean primero = true;
+            while (bando == -1) {
+                if (!primero) System.out.println("Bando equivocado");
+                bando = seleccionar_bando();
+                primero = false;
+            }
+            if (bando == 1) {
+                id1 = code;
+                nick1 = nickname;
+            }
+            else { //ha selecionado bando 2
+                id2 = code;
+                nick2 = nickname;
+            }
 
+        }
+        introducir_info_contrincantes(id1,nick1,id2,nick2,modo,bando);
         switch (modo) {
             case 0: //Crear PartidaModo0
-                //FALTA introducir informacion de ID's de maquina
                 PartidaModo0 pa0 = new PartidaModo0(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
-
-                //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
+                //Ejecutando partida
                 res = -1;
                 while (res < 0) { //continua la partida
                     accion = generar_accion_partida();
@@ -169,9 +224,8 @@ public class Main {
                 System.out.println();
                 break;
             case 1: //Crear PartidaModo1
-                //FALTA introducir informacion de ID de maquina a enfrentarse
                 PartidaModo1 pa1 = new PartidaModo1(idPartida,modo,reglas,0,code,nickname,id2,nick2,t);
-                //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
+                //Ejecutando partida
                 res = -1;
                 while (res < 0) { //continua la partida
                     accion = generar_accion_partida();
@@ -190,10 +244,8 @@ public class Main {
                 break;
 
             case 2: //Crear PartidaModo2
-                //FALTA introducir informacion de id's y nicknames
                 PartidaModo2 pa2 = new PartidaModo2(idPartida,modo,reglas,0,code,nickname,id2,nick2,t);
-
-                //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
+                //Ejecutando partida
                 res = -1;
                 while (res < 0) { //continua la partida
                     accion = generar_accion_partida();
@@ -217,16 +269,13 @@ public class Main {
     }
 
     public static void cargarPartida(int idPartida) throws IOException, MyException {
-        /*En esta parte faltaria igual hacer la funcion de cargarPartida en funcion del
-        usuario que hayamos hecho login previamente
-         */
         int modo = cp.ctrl_leer_modo_partida(idPartida);
         int res;
         String[] accion = {"prueba"};
         switch (modo) {
             case 0: //Maquina vs Maquina
                 PartidaModo0 pa0 = cp.ctrl_cargar_partida_modo0(idPartida);
-                //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
+                //Ejecutando partida
                 res = -1;
                 while (res < 0) { //continua la partida
                     accion = generar_accion_partida();
@@ -246,7 +295,7 @@ public class Main {
 
             case 1: //Persona vs Maquina
                 PartidaModo1 pa1 = cp.ctrl_cargar_partida_modo1(idPartida);
-                //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
+                //Ejecutando partida
                 res = -1;
                 while (res < 0) { //continua la partida
                     accion = generar_accion_partida();
@@ -266,7 +315,7 @@ public class Main {
 
             case 2: //Persona vs Persona
                 PartidaModo2 pa2 = cp.ctrl_cargar_partida_modo2(idPartida);
-                //aqui se podria ejecutar la partida (pongo un ejemplo de como implementarlo)
+                //Ejecutando partida
                 res = -1;
                 while (res < 0) { //continua la partida  //por ahora falla
                     accion = generar_accion_partida();
@@ -278,9 +327,7 @@ public class Main {
                     System.out.println("PARTIDA GUARDADA");
                     System.out.println();
                 }
-                else if (res != 3) {
-                    actualizar_ranking(pa2,res); //tenemos un ganador
-                }
+                else if (res != 3) actualizar_ranking(pa2,res); //tenemos un ganador
                 System.out.println();
                 System.out.println("PARTIDA FINALIZADA");
                 System.out.println();
@@ -329,9 +376,9 @@ public class Main {
     }
 
     //Sergio: creo que la podemos eliminar
-    public static void runPartida(Partida p) {
+    /*public static void runPartida(Partida p) {
 
-    }
+    }*/
 
 
     public static void main(String[] args) throws IOException, MyException {
