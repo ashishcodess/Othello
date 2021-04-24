@@ -25,9 +25,6 @@ public class Tablero {
         disponibles= new HashSet<Position>();
     }
 
-    //Jugador sends the tablero to load in case of game resumes from the earlier saved state.
-
-    //Sergio: necesito constructora de la clase a partir de una matriz de enteros :)
     public Tablero(int[][] tab) {
         tablero = new Casilla[8][8];
         negras = new HashSet<Position>();
@@ -38,18 +35,17 @@ public class Tablero {
         for(int i = 0 ; i < 8 ; ++i){
             for(int j = 0 ; j < 8 ; ++j){
                 tablero[i][j] = new Casilla(tab[i][j]);  // put the exact value in exact position
-
-                if(tab[i][j]== 2 ) {   // If they are black increase the number of black tokens and decrease the empty ones.
+                if(tab[i][j] == 2 ) {   // If they are black increase the number of black tokens and decrease the empty ones.
                     num_vacia --;
                     negras.add(new Position(i , j));
                 }
-                else if (tab[i][j]== 3 ) { // If they are white increase the number of white tokens and decrease the empty ones.
+                else if (tab[i][j] == 3) { // If they are white increase the number of white tokens and decrease the empty ones.
                     num_vacia --;
                     blancas.add(new Position(i , j));
                 }
                 else{  // If they are available ones increase the number of availables and decrease the empty ones.
                     num_vacia --;
-                    //disponibles.add(new Position(i , j));
+                    disponibles.add(new Position(i , j));
                 }
             }
         }
@@ -66,7 +62,6 @@ public class Tablero {
         for(int i = 0 ; i < 8 ; ++i){
             for(int j = 0 ; j < 8 ; ++j){
                 tablero[i][j] = tab[i][j];  // put the exact value in exact position
-
                 if(tab[i][j].getTipoCasilla() == 2 ) {   // If they are black increase the number of black tokens and decrease the empty ones.
                     num_vacia --;
                     negras.add(new Position(i , j));
@@ -125,23 +120,23 @@ public class Tablero {
             int x = current_pos.getX();
             int y = current_pos.getY();
             q.remove();
-                if (graph_v[x ][y+1] == 0 && graph_v[x][y] == 3) { // the next is the vacio and the current pos is opposite color to me then disponible.
-                    graph_v[x ][y+1] = 1;
-                    graph_v[x][y] = -1 ; // this one is already trevessed.
-                }
-                if (graph_v[x][y-1] == 0 && graph_v[x][y] == 3) {
-                    graph_v[x ][y-1] = 1;
-                    graph_v[x][y] = -1 ; // this one is already trevessed.
-                }
-                if(graph_v[x][y] != -1 && graph_v[x ][y+1] == 2); q.add(new Position(x , y+1)); // same color
-                if(graph_v[x][y] != -1 && graph_v[x ][y+1] == 3); q.add(new Position(x , y+1)); // different color
-                if(graph_v[x][y] != -1 && graph_v[x ][y-1] == 2); q.add(new Position(x , y-1)); // same color
-                if(graph_v[x][y] != -1 && graph_v[x ][y-1] == 3); q.add(new Position(x , y-1)); // different color
+            if (graph_v[x ][y+1] == 0 && graph_v[x][y] == 3) { // the next is the vacio and the current pos is opposite color to me then disponible.
+                graph_v[x ][y+1] = 1;
+                graph_v[x][y] = -1 ; // this one is already trevessed.
+            }
+            if (graph_v[x][y-1] == 0 && graph_v[x][y] == 3) {
+                graph_v[x ][y-1] = 1;
+                graph_v[x][y] = -1 ; // this one is already trevessed.
+            }
+            if(graph_v[x][y] != -1 && graph_v[x ][y+1] == 2); q.add(new Position(x , y+1)); // same color
+            if(graph_v[x][y] != -1 && graph_v[x ][y+1] == 3); q.add(new Position(x , y+1)); // different color
+            if(graph_v[x][y] != -1 && graph_v[x ][y-1] == 2); q.add(new Position(x , y-1)); // same color
+            if(graph_v[x][y] != -1 && graph_v[x ][y-1] == 3); q.add(new Position(x , y-1)); // different color
 
 
         }
 
-        }
+    }
     public void bfs_calcularCasillasDisponiblesVertical(Position pos){
         int row = 8, columns = 8;
         Queue<Position> q = new LinkedList<>();
@@ -166,38 +161,72 @@ public class Tablero {
         }
     }
 
-    public void bfs_calcularCasillasDisponiblesDiagonales(){
+    public void bfs_calcularCasillasDisponiblesDiagonales(Position pos){
 
     }
-    public void calcularCasillasDisponiblesVertical() {
-        int turno = 0; //sergio, temporal para que pueda compilar :)
+    public void calcularCasillasDisponiblesVertical(int turno) {
+        Position pos;
         if (turno % 2 == 0) {
-            Iterator iter = negras.iterator();
-            while (iter.hasNext()) {
-                Position pos = (Position) iter.next();
+            Object[] arr = negras.toArray();
+            for (int i = 0 ; i < negras.size() ; ++i){
+                pos = (Position) arr[i];
                 int x = pos.getX();
                 int y = pos.getY();
                 if (graph_v[x][y] != -1) bfs_calcularCasillasDisponiblesVertical(pos);
-
             }
         }
         else {
-            Iterator iter = negras.iterator();
-            while (iter.hasNext()) {
-                Position pos = (Position) iter.next();
+            Object[] arr = blancas.toArray();
+            for (int i = 0 ; i < blancas.size() ; ++i){
+                pos = (Position) arr[i];
                 int x = pos.getX();
                 int y = pos.getY();
                 if (graph_v[x][y] != -1) bfs_calcularCasillasDisponiblesVertical(pos);
-
             }
         }
     }
-    public void calcularCasillasDisponiblesHorizontal(){
-
+    public void calcularCasillasDisponiblesHorizontal(int turno){
+        Position pos;
+        if (turno % 2 == 0) {
+            Object[] arr = negras.toArray();
+            for (int i = 0 ; i < negras.size() ; ++i){
+                pos = (Position) arr[i];
+                int x = pos.getX();
+                int y = pos.getY();
+                if (graph_h[x][y] != -1) bfs_calcularCasillasDisponiblesHorizontal(pos);
+            }
+        }
+        else {
+            Object[] arr = blancas.toArray();
+            for (int i = 0 ; i < blancas.size() ; ++i){
+                pos = (Position) arr[i];
+                int x = pos.getX();
+                int y = pos.getY();
+                if (graph_h[x][y] != -1) bfs_calcularCasillasDisponiblesHorizontal(pos);
+            }
+        }
     }
 
-    public void calcularCasillasDisponiblesDiagonales(){
-
+    public void calcularCasillasDisponiblesDiagonales(int turno){
+        Position pos;
+        if (turno % 2 == 0) {
+            Object[] arr = negras.toArray();
+            for (int i = 0 ; i < negras.size() ; ++i){
+                pos = (Position) arr[i];
+                int x = pos.getX();
+                int y = pos.getY();
+                if (graph_d[x][y] != -1) bfs_calcularCasillasDisponiblesDiagonales(pos);
+            }
+        }
+        else {
+            Object[] arr = blancas.toArray();
+            for (int i = 0 ; i < blancas.size() ; ++i){
+                pos = (Position) arr[i];
+                int x = pos.getX();
+                int y = pos.getY();
+                if (graph_d[x][y] != -1) bfs_calcularCasillasDisponiblesDiagonales(pos);
+            }
+        }
     }
     // The jugador wants to move to this position but is it possible? We can show the position disponibles but still the jugador wants
 //to move in this position then we should not allow it to happen.
@@ -205,11 +234,6 @@ public class Tablero {
         if (tablero[x][y].getTipoCasilla() == 2) return true;
         else return false;
     }
-
-    public void marcar_pos(Casilla obj) {  // Cuando queremos marcar posiciones como valido, ya atravesado etc.
-        //Moviendo por este ficha vamos haciendo bfs etc.
-    }
-
     /*public void modificar_casilla(Vector<pair<int, int>>casillas_afectadas) { // casillas afectadas have to change thier color.
 
         for (int i = 0; i < casillas_afectadas.size(); ++i) {

@@ -111,9 +111,9 @@ public class Partida {
             llegado al turno máximo)
          */
         if (this.turno % 2 != 0) {
-            this.tablero.calcularCasillasDisponiblesDiagonales();
-            this.tablero.calcularCasillasDisponiblesHorizontal();
-            this.tablero.calcularCasillasDisponiblesVertical();
+            this.tablero.calcularCasillasDisponiblesDiagonales(this.turno);
+            this.tablero.calcularCasillasDisponiblesHorizontal(this.turno);
+            this.tablero.calcularCasillasDisponiblesVertical(this.turno);
             switch (accion[0]) {
                 case "colocar":
                     //this.tablero.setCasilla_tipo(x, y, tipo);
@@ -143,9 +143,9 @@ public class Partida {
             }
         }
         else if (this.turno % 2 == 0) {
-            this.tablero.calcularCasillasDisponiblesDiagonales();
-            this.tablero.calcularCasillasDisponiblesHorizontal();
-            this.tablero.calcularCasillasDisponiblesVertical();
+            this.tablero.calcularCasillasDisponiblesDiagonales(this.turno);
+            this.tablero.calcularCasillasDisponiblesHorizontal(this.turno);
+            this.tablero.calcularCasillasDisponiblesVertical(this.turno);
             switch (accion[0]) {
                 case "colocar":
                     //this.tablero.setCasilla_tipo(x, y, tipo);
