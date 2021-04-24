@@ -1,41 +1,49 @@
 package Dominio;
 
+import java.util.*;
+
 public class Tablero {
 
     private Casilla[][] tablero;
-    private int num_negra , num_blanca , num_disponible , num_vacia;
+    private int[][] graph_h;
+    private int[][] graph_v;
+    private int[][] graph_d;
+    private int num_vacia;
+    private Set<Position> negras;
+    private Set<Position> blancas;
+    private Set<Position> disponibles;
 
     //constructor
     public Tablero(){
         tablero = new Casilla[8][8];
-        num_blanca = 0;
-        num_negra = 0;
-        num_disponible = 0;
+        graph_h = new int[8][8];
+        graph_v = new int[8][8];
+        graph_d = new int[8][8];
         num_vacia = 60;
+        negras = new HashSet<Position>();
+        blancas = new HashSet<Position>();
+        disponibles= new HashSet<Position>();
     }
 
     //Jugador sends the tablero to load in case of game resumes from the earlier saved state.
-    public Tablero(int[][] tab) {
-        tablero = new Casilla[8][8];
-        num_blanca = 0;
-        num_negra = 0;
-        num_disponible = 0;
+    public Tablero(Casilla[][] tab) {
         num_vacia = 60;
+        Position pos;
         for(int i = 0 ; i < 8 ; ++i){
             for(int j = 0 ; j < 8 ; ++j){
-                tablero[i][j] = new Casilla(tab[i][j]);
-                //tablero[i][j].cambiar_tipo(tab[i][j]);  // change the type to the one passed as parameter
-                if(tab[i][j] == 2 ) {   // If they are black increase the number of black tokens and decrease the empty ones.
-                    num_negra ++;
+                tablero[i][j] = tab[i][j];  // put the exact value in exact position
+
+                if(tab[i][j].getTipoCasilla() == 2 ) {   // If they are black increase the number of black tokens and decrease the empty ones.
                     num_vacia --;
+                    negras.add(new Position(i , j));
                 }
-                else if (tab[i][j] == 3 ) { // If they are white increase the number of white tokens and decrease the empty ones.
-                    num_blanca ++ ;
+                else if (tab[i][j].getTipoCasilla() == 3 ) { // If they are white increase the number of white tokens and decrease the empty ones.
                     num_vacia --;
+                    blancas.add(new Position(i , j));
                 }
                 else{  // If they are available ones increase the number of availables and decrease the empty ones.
-                    num_disponible ++;
                     num_vacia --;
+                    disponibles.add(new Position(i , j));
                 }
             }
         }
@@ -43,35 +51,113 @@ public class Tablero {
 
     // Returns the tablero in case the other classes want the current state of tablero.
     public Casilla[][] getTablero() {
+
         return tablero;
     }
 
     //Returns if the casilla in the pos x , y is vacía, disponible, negra, blanca.
     public Casilla getCasilla(int x, int y){
+
         return tablero[x][y];
     }
 
     public int getCasilla_tipo(int x, int y){
+
         return tablero[x][y].getTipoCasilla();
     }
 
     public void setCasilla_tipo(int x, int y, int tipo){
+
         tablero[x][y].cambiar_tipo(tipo);
     }
 
     public int getNumCasillasBlancas(){
-        return num_blanca;
+
+        return blancas.size();
     }
 
     public int getNumCasillasNegras(){
-        return num_negra;
+
+        return negras.size();
     }
 
     //To calculate the Casillas that are available to be put the tokens ; mark these casillas as 2 i.e disponible.
-    public void calcularCasillasDisponiblesVertical(){
+    public void bfs_calcularCasillasDisponiblesHorizontal(Position pos) {
+        int row = 8, columns = 8;
+        Queue<Position> q = new LinkedList<>();
+        q.add(pos);
+        while (!q.isEmpty()) {
+            Position current_pos = q.element();
+            int x = current_pos.getX();
+            int y = current_pos.getY();
+            q.remove();
+                if (graph_v[x ][y+1] == 0 && graph_v[x][y] == 3) { // the next is the vacio and the current pos is opposite color to me then disponible.
+                    graph_v[x ][y+1] = 1;
+                    graph_v[x][y] = -1 ; // this one is already trevessed.
+                }
+                if (graph_v[x][y-1] == 0 && graph_v[x][y] == 3) {
+                    graph_v[x ][y-1] = 1;
+                    graph_v[x][y] = -1 ; // this one is already trevessed.
+                }
+                if(graph_v[x][y] != -1 && graph_v[x ][y+1] == 2); q.add(new Position(x , y+1)); // same color
+                if(graph_v[x][y] != -1 && graph_v[x ][y+1] == 3); q.add(new Position(x , y+1)); // different color
+                if(graph_v[x][y] != -1 && graph_v[x ][y-1] == 2); q.add(new Position(x , y-1)); // same color
+                if(graph_v[x][y] != -1 && graph_v[x ][y-1] == 3); q.add(new Position(x , y-1)); // different color
 
+
+        }
+
+        }
+    public void bfs_calcularCasillasDisponiblesVertical(Position pos){
+        int row = 8, columns = 8;
+        Queue<Position> q = new LinkedList<>();
+        q.add(pos);
+        while (!q.isEmpty()) {
+            Position current_pos = q.element();
+            int x = current_pos.getX();
+            int y = current_pos.getY();
+            q.remove();
+            if (graph_v[x][y+1] == 0 && graph_v[x][y] == 3) { // the next is the vacio and the current pos is opposite color to me then disponible.
+                graph_v[x + 1][y] = 1;
+                graph_v[x][y] = -1 ; // this one is already trevessed.
+            }
+            if (graph_v[x ][y+1] == 0 && graph_v[x][y] == 3) {
+                graph_v[x + 1][y] = 1;
+                graph_v[x][y] = -1 ; // this one is already trevessed.
+            }
+            if(graph_v[x][y] != -1 && graph_v[x + 1][y] == 2); q.add(new Position(x+1 , y)); // same color
+            if(graph_v[x][y] != -1 && graph_v[x + 1][y] == 3); q.add(new Position(x+1 , y)); // different color
+            if(graph_v[x][y] != -1 && graph_v[x -1 ][y] == 2); q.add(new Position(x-1 , y)); // same color
+            if(graph_v[x][y] != -1 && graph_v[x -1][y] == 3); q.add(new Position(x-1 , y)); // different color
+        }
     }
 
+    public void bfs_calcularCasillasDisponiblesDiagonales(){
+
+    }
+    public void calcularCasillasDisponiblesVertical() {
+        Partida p = new Partida(-----);
+        if (p.getTurnoPartida() % 2 == 0) {
+            Iterator iter = negras.iterator();
+            while (iter.hasNext()) {
+                Position pos = iter.next();
+                int x = pos.getX();
+                int y = pos.getY();
+                if (graph_v[x][y] != -1) bfs_calcularCasillasDisponiblesVertical(pos);
+
+            }
+        }
+        else {
+            Iterator iter = negras.iterator();
+            while (iter.hasNext()) {
+                Position pos = iter.next();
+                int x = pos.getX();
+                int y = pos.getY();
+                if (graph_v[x][y] != -1) bfs_calcularCasillasDisponiblesVertical(pos);
+
+            }
+        }
+    }
     public void calcularCasillasDisponiblesHorizontal(){
 
     }
@@ -100,18 +186,21 @@ public class Tablero {
         }
     }*/
 
-    public void modificarCasillasVertical(){
+    public void modificarCasillasVertical(int x , int y){  // debería llamar jugador.
 
     }
 
-    public void modificarCasillasHorizontal(){
+    public void modificarCasillasHorizontal(int x , int y){
 
     }
 
-    public void modificarCasillasDiagonales(){
+    public void modificarCasillasDiagonales(int x , int y){
 
     }
 
+    public Set<Position> getCasillasDisponibles(){
+        return disponibles;
+    }
     public boolean finalizada(){
         return true; //para poderlo compilar y hacer pruebas
     }
