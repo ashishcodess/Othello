@@ -164,6 +164,9 @@ public class Partida {
                         this.ganador = 2;
                     }
                     else { this.ganador = -1;}*/
+                case "info": //imprimir info de partida
+                    this.get_info_partida();
+                    return -1;
                 case "guardar": //guardarPartida
                     return 2;
                 case "finalizar": //finalizarPartida

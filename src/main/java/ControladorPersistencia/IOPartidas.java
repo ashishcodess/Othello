@@ -45,7 +45,7 @@ public class IOPartidas {
             int i_aux = Integer.parseInt(res[0]);
             if (maxID < i_aux) maxID = i_aux;
         }
-        return maxID;
+        return (maxID+1);
     }
 
     /**

@@ -73,6 +73,7 @@ public class Main {
         System.out.println("//////////////////////////////////////////////////////");
         System.out.println("-  colocar x y (colocar ficha en posicion x, y)");
         System.out.println("-  paso (pasar el turno)");
+        System.out.println("-  info (get info partida)");
         System.out.println("-  guardar (guardar partida y finalizar)");
         System.out.println("-  finalizar (finalizar partida)");
         System.out.println("//////////////////////////////////////////////////////");
@@ -381,10 +382,25 @@ public class Main {
 
     public static void listar_partidas_disponibles(int id, String nick) throws IOException, MyException {
         System.out.println();
-        cp.ctrl_print_partidas_disponibles(id,nick);
-        System.out.print("Seleccionar ID de partida a cargar:");
-        int idPartida = Integer.parseInt(scan.next());
-        cargarPartida(idPartida);
+        int modo = -1;
+        System.out.print("Opcion (1 - Cargar , 2 - Borrar):");
+        modo = scan.nextInt();
+        System.out.println();
+        //if ((modo != 1) || (modo != 2))  while (!scan.hasNextInt() &((modo != 1) || (modo != 2))) modo = scan.nextInt();
+        System.out.println("modo seleccionado:" + modo);
+        if (modo == 1) {
+            cp.ctrl_print_partidas_disponibles(id,nick);
+            System.out.print("Seleccionar ID de partida a cargar:");
+            int idPartida = scan.nextInt();
+            cargarPartida(idPartida);
+        }
+        else if (modo == 2) {
+            cp.ctrl_print_partidas_disponibles(id,nick);
+            System.out.print("Seleccionar ID de partida a borrar:");
+            int idPartida = scan.nextInt();
+            if(cp.ctrl_borrar_partida(idPartida)) System.out.println("Partida borrada correctamente");
+            else System.out.println("Problemas al borrar la partida seleccionada");
+        }
     }
 
 
@@ -421,9 +437,11 @@ public class Main {
         entrar();
         boolean salir = false;
         while(!salir){
-            System.out.println("\nElige lo que quieres hacer: \n 1: Empezar una partida \n 2: Cargar una partida \n" +
-                    " 3: Consultar el ranquing \n 4: Consultar estadísticas \n 5: salir");
+            System.out.println("\nElige lo que quieres hacer: \n 1: Empezar una partida \n 2: Cargar/Borrar una partida \n" +
+                    " 3: Consultar el ranquing \n 4: Consultar estadísticas \n 5: salir \n");
+            System.out.print("seleccionar opcion:");
             int quit = scan.nextInt();
+            System.out.println("");
             switch (quit){
                 case 1:
                     iniciarPartida();
