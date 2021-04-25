@@ -19,18 +19,18 @@ public class Partida {
     private int ganador; //indica una vez finalizada la partida quien es el ganador (para despues hacer modificacion de ranking)
     //ganador -> -1 (partida sigue en curso),0 (gana nick1), 1 (gana nick2), 2 (empate), 3 (guardar partida), 4 (finalizar)
 
-    //Creadora - Configuración de los parámetros de una partida
-    public Partida (int id, int modoJuego, int[] r, int turn, int idj1, int idj2) {
+    //Creadora - Configuración de los parámetros de una partida nueva
+    public Partida (int id, int modoJuego, int[] r, int idj1, int idj2) {
         this.id = id;
         this.modoDeJuego = modoJuego;
         this.reglas = r;
-        this.turno = turn;
+        this.turno = 1;
         this.idJugador1 = idj1;
         this.idJugador2 = idj2;
         this.ganador = -1;
         this.tablero = new Tablero();
     }
-
+    //Creadora - Configuración de los parámetros de una partida ya empezada
     public Partida(int id, int modoJuego, int[] r, int turn, int idj1,String n1, int idj2, String n2, Tablero t) {
         this.id = id;
         this.modoDeJuego = modoJuego;
@@ -116,8 +116,10 @@ public class Partida {
             this.tablero.calcularCasillasDisponiblesVertical(this.turno);
             switch (accion[0]) {
                 case "colocar":
-                    //this.tablero.setCasilla_tipo(x, y, tipo);
-                    this.turno = this.turno +  1;
+                    int x = Integer.parseInt(accion[1]);
+                    int y = Integer.parseInt(accion[2]);
+                    this.tablero.setCasilla_tipo(x, y, 2);
+                    incrementar_turno();
                     actualizarTablero();
                     //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
                     /*int blancas = this.tablero.getNumCasillasBlancas();
@@ -138,7 +140,7 @@ public class Partida {
                 case "finalizar": //finalizarPartida
                     return 3;
                 case "paso":
-                    this.turno = this.turno +  1;
+                    incrementar_turno();
                     break;
             }
         }
@@ -148,8 +150,10 @@ public class Partida {
             this.tablero.calcularCasillasDisponiblesVertical(this.turno);
             switch (accion[0]) {
                 case "colocar":
-                    //this.tablero.setCasilla_tipo(x, y, tipo);
-                    this.turno = this.turno +  1;
+                    int x = Integer.parseInt(accion[1]);
+                    int y = Integer.parseInt(accion[2]);
+                    this.tablero.setCasilla_tipo(x, y, 3);
+                    incrementar_turno();
                     actualizarTablero();
                     //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
                     /*int blancas = this.tablero.getNumCasillasBlancas();
@@ -172,7 +176,7 @@ public class Partida {
                 case "finalizar": //finalizarPartida
                     return 3;
                 case "paso":
-                    this.turno = this.turno +  1;
+                    incrementar_turno();
                     break;
             }
         }
