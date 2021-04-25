@@ -12,11 +12,11 @@ public class PartidaModo0 extends Partida {
     private Tablero t;              //Sergi C: necesario para llamar a la IA de jugadorMaquina
 
 
-    /*public PartidaModo0(int id, int modoJuego, int[] r, int turn, int idj1, int idj2) {
-        super(id,modoJuego,r,turn,idj1,idj2);
+    public PartidaModo0(int id, int modoJuego, int[] r, int idj1, int idj2) {
+        super(id,modoJuego,r,idj1,idj2);
         this.j1 = new JugadorMaquina(idj1);
         this.j2 = new JugadorMaquina(idj2);
-    }*/
+    }
 
     public PartidaModo0(int id, int modoJuego, int[] r, int turn, int idj1, String n1, int idj2, String n2, Tablero t) {
         super(id,modoJuego,r,turn,idj1,n1,idj2,n2,t);

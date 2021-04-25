@@ -16,11 +16,11 @@ public class PartidaModo2 extends Partida {
     private JugadorPersona j2;
 
 
-    /*public PartidaModo2(int id, int modoJuego, int[] r, int turn, int idj1, int idj2) throws MyException  {
-        super(id,modoJuego,r,turn,idj1,idj2);
+    public PartidaModo2(int id, int modoJuego, int[] r, int idj1, int idj2) throws MyException  {
+        super(id,modoJuego,r,idj1,idj2);
         this.j1 = new JugadorPersona(idj1);
         this.j2 = new JugadorPersona(idj2);
-    }*/
+    }
 
     public PartidaModo2(int id, int modoJuego, int[] r, int turn, int idj1, String n1, int idj2, String n2, Tablero t) throws IOException, MyException  {
         super(id,modoJuego,r,turn,idj1,n1,idj2,n2,t);
