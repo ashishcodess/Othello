@@ -38,6 +38,9 @@ public class PartidaModo2 extends Partida {
                 super.incrementar_turno();
                 //actualizarTablero();
                 break;
+            case "info": //imprimir info de partida
+                this.get_info_partida();
+                return -1;
             case "guardar": //guardarPartida
                 return 2;
             case "finalizar": //finalizarPartida
