@@ -9,6 +9,7 @@ public class PartidaModo0 extends Partida {
     /*Atributos*/
     private JugadorMaquina j1;
     private JugadorMaquina j2;
+    private Tablero t;              //Sergi C: necesario para llamar a la IA de jugadorMaquina
 
 
     public PartidaModo0(int id, int modoJuego, int[] r, int turn, int idj1, int idj2) {
@@ -27,9 +28,12 @@ public class PartidaModo0 extends Partida {
     @Override
     public int rondaPartida(String[] accion) {
         int res = -1;
+        int x = -1; int y = -1;
         switch (accion[0]) {
             case "colocar":
-                //this.tablero.setCasilla_tipo(x, y, tipo);
+                this.j1.valorMax(this.t, x, y);         //Sergi C: de momento estos son los parametros pero alomejor hay
+                //que cambiar algo(tambien hay que implementaresto para las 2 maquinas)
+                //if(x != -1 && y != -1)this.tablero.setCasilla_tipo(x, y, tipo);
                 super.incrementar_turno();
                 //actualizarTablero();
                 break;
