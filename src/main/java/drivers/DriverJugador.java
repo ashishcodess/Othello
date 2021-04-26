@@ -9,11 +9,13 @@ import java.io.IOException;
 import java.util.*;
 
 
-
 public class DriverJugador {
 
     static Scanner scan = new Scanner(System.in);
 
+    /** test_crear_jugador (clase padre)
+     * @param IDJugador es el identificador de Jugador a crear
+     * */
     public static void test_crear_jugador(int IDJugador) {
         Jugador res = new Jugador(IDJugador);
         System.out.println("Jugador creado con ID:" + IDJugador);
@@ -25,6 +27,9 @@ public class DriverJugador {
         } else System.out.println("ID del jugador ya es -1");
     }
 
+    /** test_crear_jugadorMaquina (clase hijo)
+     * @param idMaquina es el identificador de la Maquina a crear y profundidad (para IA)
+     * */
     public static void test_crear_jugadorMaquina(int idMaquina, int profundidad){
         JugadorMaquina res = new JugadorMaquina(idMaquina,profundidad);
         System.out.println("Maquina creada con ID:" + idMaquina);
@@ -38,6 +43,10 @@ public class DriverJugador {
 
     }
 
+    /** test_crear_jugadorPersona (clase hijo)
+     * @param idPersona es el identificador de la Persona a crear
+     * @param nick nickname de la Persona a crear
+     * */
     public static void test_crear_jugadorPersona(int idPersona, String nick) throws IOException, MyException {
         JugadorPersona res = new JugadorPersona(idPersona,nick);
         System.out.println("Maquina creada con ID:" + idPersona);
@@ -45,6 +54,7 @@ public class DriverJugador {
         System.out.println("Prueba get_Nickname : " + res.get_Nickname());
     }
 
+    /** test_crear_varias_maquinas*/
     public static void test_varias_maquinas() {
         Vector <JugadorMaquina>Maquinas = new Vector<JugadorMaquina>(6);
         for (int i = 0; i < 6; ++i) {
@@ -58,7 +68,7 @@ public class DriverJugador {
         }
     }
 
-
+    /** funcion main (para poder realizar las pruebas)*/
     public static void main(String[] args) throws IOException, MyException {
         boolean b = true;
         while (b) {

@@ -9,6 +9,8 @@ package Dominio;
 public class JugadorMaquina extends Jugador {
 
     /*Atributos*/
+
+    /** atributo profundidad (para IA) */
     private int profundidad_MinMax;
 
     /*Constructora*/

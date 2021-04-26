@@ -7,6 +7,7 @@ import java.io.*;
 
 public class JugadorPersona extends Jugador {
     /*Atributos*/
+    /** Atributo nickname de JugadorPersona*/
     private String nickname;
 
     /*Constructora*/
@@ -26,7 +27,7 @@ public class JugadorPersona extends Jugador {
     }
 
     /**
-     * Constructora JugadorPersona (idJugador,nicknameJugador, además de crear Fichero Usuario en caso de no existir)
+     * Constructora JugadorPersona (idJugador,nicknameJugador)
      * */
     public JugadorPersona (int idJugador,String nicknameJugador) throws IOException, MyException {
         super(idJugador);
@@ -69,13 +70,5 @@ public class JugadorPersona extends Jugador {
     }
 
 
-    /*Devuelve el conjunto formado por nickname y ID -> nickname#ID */
-    /**
-     * Operacion get del conjunto nickname#ID
-     * @return  devuelve el conjunto identificado como nickname#ID
-     */
-    public String get_ID_TAG_persona() {
-        return (this.nickname + "#" + String.valueOf(super.getID()));
-    }
 
 }

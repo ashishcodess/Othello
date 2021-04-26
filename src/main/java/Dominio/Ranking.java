@@ -105,10 +105,10 @@ public class Ranking {
         else return null;
     }
 
-    //ganador -> 0 (gana nick1), 1 (gana nick2), 2 (empate)
     /**
      * Este metodo es el encargado de incrementar las partidas de cada jugador (en caso de que no exista creara los Elementos del Ranking
      * de cada jugador respectivamente)
+     * ;ganador -> 0 (gana nick1), 1 (gana nick2), 2 (empate)
      * */
     public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, int ganador) throws MyException {
         if (ganador >= 0 && ganador < 3) {

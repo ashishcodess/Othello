@@ -1,10 +1,11 @@
 package Dominio;
 
-import Dominio.Partida;
 
 public class Jugador {
 
     /*Atributos*/
+
+    /**identificador de Jugador*/
     private int id;
 
     /**
@@ -44,6 +45,10 @@ public class Jugador {
 
     /**
      * Este metodo es el encargado de indicar que ficha colocar dentro de una partida
+     * @param tipo (2 - casilla negra, 3 - casilla blanca)
+     * @param x posicionX valor entre 0 y 8
+     * @param y posicionY valor entre 0 y 8
+     * @param t Tablero donde se realiza la accion de colocar la ficha
      */
 
     public boolean Mover_pieza_en_partida(int tipo, int x, int y, Tablero t) {

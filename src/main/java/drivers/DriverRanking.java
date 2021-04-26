@@ -12,6 +12,7 @@ public class DriverRanking {
 
     static Scanner scan = new Scanner(System.in);
 
+    /** test operaciones ranking (crear, incrementar partidas, imprimir ranking dependiendo del orden)*/
     public static void test_crear_ranking() throws MyException {
         Ranking rank= new Ranking();
         ElementoRanking e = new ElementoRanking(6,"aaa");
@@ -34,12 +35,7 @@ public class DriverRanking {
     }
 
 
-    public static void test_crear_ranking2() throws IOException, MyException {
-        //Ranking rank= new Ranking();
-        ElementoRanking e = new ElementoRanking(2,"sdasd");
-    }
-
-
+    /** funcion main (para poder realizar las pruebas)*/
     public static void main(String[] args) throws IOException, MyException{
         boolean b = true;
         while (b) {
