@@ -1,0 +1,1 @@
+- MyException: Clase Java extendida de la clase "Exception" para para generar excepciones de manera personalizada

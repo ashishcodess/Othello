@@ -1,0 +1,9 @@
+Este directorio es donde se almacenan los ficheros de los Usuarios generadas por el Controlador \
+de Persistencia (lo que lo hemos denominado a los usuarios registrados)
+
+Nota: Cada fichero almacenado aqui es los usuarios que se han registrado dentro del juego, donde se identifica su ID y \
+su nickname "ID_nickname". Dentro de este fichero contendrá los identificadores de partidas guardadas \
+donde el jugador esta disponible para jugar (puede haber sido esta misma persona la que ha guardado la partida o tambien \
+el segundo jugador en caso de estar jugando una partida Jugador vs Jugador.
+
+

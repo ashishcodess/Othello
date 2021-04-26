@@ -1,0 +1,3 @@
+- ranking.txt : fichero generado por el Controlador de Persitencia donde se ubica el ranking, dicho ranking al \
+ la aplicación se importa hacia la clase de Ranking de la capa de Dominio (para iniciar el juego con el Ranking actualizado) \
+ y al querer cerrar el juego es necesario exportar el ranking (de Dominio) para actualizar los nuevos valores del ranking.

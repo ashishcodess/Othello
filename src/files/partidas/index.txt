@@ -1,0 +1,6 @@
+Este Directorio es donde se almacenan los ficheros de Partidas generadas por el Controlador de Persistencia:
+
+- modeloFicheroPartida.txt: modelo de ejemplo de como se almacena la informacion respectivamente de una partida
+
+Nota: el resto de ficheros vienen a ser las partidas guardadas por los usuarios (cada partida esta nombrada por su \
+identificador de partida, ej: si una partida tiene el ID = 2, y se almacena el nombre del fichero es "2.txt".)

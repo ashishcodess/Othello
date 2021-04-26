@@ -1,0 +1,13 @@
+Directorio donde se almacena toda la informacion respecto a la documentacion del proyecto:
+
+- contribuciones_trabajo.txt : Fichero donde contiene la informacion sobre las clases creadas por cada miembro
+del equipo \
+
+- diagrama_cas_us: Directorio que contiene toda la informacion sobre el "Diagrama de casos d'ús" del proyecto
+
+- diagrama_conceptual_dades: Directorio que contiene toda la información sobre el diagrama estatico completo del modelo \
+conceptual de datos
+
+- JAVADOC: Directorio donde se ubica toda la informacion respecto a la documentación de las clases del proyecto; para \
+este proposito hemos utilizado la herramienta de JAVADOC (acceder desde fichero "index.html")
+

@@ -1,0 +1,4 @@
+- Este directorio contiene todas las librerias externas que se han utilizado en este proyecto:
+
+- Ficheros de clase JUnit para realizar los test's unitarios ("hamcrest-core-1.3.jar", "junit-4.12.jar" \
+y "junit-4.12-javadoc.jar")

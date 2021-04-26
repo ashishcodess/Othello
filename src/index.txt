@@ -1,0 +1,3 @@
+- files: Directorio de Persitencia (aqui se guardan todos los ficheros generados por el Controlador de Persitencia)
+
+- main: Directorio del proyecto de Java

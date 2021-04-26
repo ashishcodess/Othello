@@ -1,0 +1,29 @@
+Este directorio contiene el conjunto de Clases de toda la capa de Dominio:
+
+- Casilla:
+
+- ElementoRanking: Clase utilizada para guardar la informacion respecto al ranking, en este caso se necesita \
+el ID del Jugador, el nickname del Jugador y seguidamente los contadores de partidas (Ganadas, Perdidas, Empatadas \
+y Totales)
+
+- Jugador:
+
+- JugadorMaquina:
+
+- JugadorPersona:
+
+- Partida:
+
+- PartidaModo0:
+
+- PartidaModo1:
+
+- PartidaModo2:
+
+- Position:
+
+- Ranking: Clase utilizada para guardar el conjunto (en este caso un ArrayList) de elementos de tipo ElementoRanking
+
+- SuccessorFunction:
+
+- Tablero:

@@ -1,0 +1,13 @@
+Directorio del conjunto de Drivers para las pruebas del proyecto
+
+- DriverJugador: Driver de la clase Jugador (incluye a la subclases JugadorMaquina y JugadorPersona)
+
+- DriverPersistencia: Driver del Controlador de Persitencia (se incluyen pruebas de los 3 tipos de ficheros que \
+generamos: usuarios, ranking y partidas)
+
+- DriverRanking: Driver de la clase Ranking y clase ElementoRanking (dado que se ha realizado un test unitario con JUnit \
+sobre esta misma clase no es muy extensa)
+
+- RankingTest_Junit: Test Unitario para JUnit de la clase ElementoRanking y clase Ranking
+
+- DriverPartida: FALTA EXPLICAR
