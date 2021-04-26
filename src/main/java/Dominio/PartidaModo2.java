@@ -14,6 +14,7 @@ public class PartidaModo2 extends Partida {
     /*Atributos*/
     private JugadorPersona j1;
     private JugadorPersona j2;
+    private Tablero t;
 
 
     public PartidaModo2(int id, int modoJuego, int[] r, int idj1, int idj2) throws MyException  {
@@ -29,13 +30,14 @@ public class PartidaModo2 extends Partida {
     }
 
     //Similar rondaPartida del padre pero con llamada de colocar ficha de cada jugador
+    //Sergi B.: Esto no haría falta porque el override modifica la clase del padre pero en este caso la funcion que necesita es exactamente la misma que ya hay implementada
     @Override
     public int rondaPartida(String[] accion) {
         int res = -1;
         switch (accion[0]) {
             case "colocar":
                 //this.tablero.setCasilla_tipo(x, y, tipo);
-                super.incrementar_turno();
+                super.incrementarTurnoPartida();
                 //actualizarTablero();
                 break;
             case "info": //imprimir info de partida
@@ -46,7 +48,7 @@ public class PartidaModo2 extends Partida {
             case "finalizar": //finalizarPartida
                 return 3;
             case "paso":
-                super.incrementar_turno();
+                super.incrementarTurnoPartida();
                 break;
         }
         return res; //Sergio:para que compile correctamente

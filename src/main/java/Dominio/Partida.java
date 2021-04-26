@@ -5,6 +5,8 @@ import MyException.MyException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Partida {
     /**identificador de Partida*/
@@ -14,7 +16,7 @@ public class Partida {
     /**Turno de la Partida*/
     private int turno;
     /**Reglas de la Partida*/
-    private final int[] reglas; //array de 3 enteros para las reglas
+    private final int[] reglas; //array de 2 enteros para las reglas; {1,0} vertical/horizontal; {0,1} diagonales; {1,1} normal
     /**Nick del Jugador1 de la Partida*/
     private String nick1;
     /**ID del Jugador1 de la Partida*/
@@ -28,6 +30,7 @@ public class Partida {
     /**Ganador de la Partida*/
     private int ganador; //indica una vez finalizada la partida quien es el ganador (para despues hacer modificacion de ranking)
     //ganador -> -1 (partida sigue en curso),0 (gana nick1), 1 (gana nick2), 2 (empate), 3 (guardar partida), 4 (finalizar)
+    private int finalizada;
 
     /**
      * Creadora - Configuración de los parámetros de una partida nueva
@@ -36,11 +39,12 @@ public class Partida {
         this.id = id;
         this.modoDeJuego = modoJuego;
         this.reglas = r;
-        this.turno = 1;
+        this.turno = 0;
         this.idJugador1 = idj1;
         this.idJugador2 = idj2;
         this.ganador = -1;
         this.tablero = new Tablero();
+        this.finalizada = 0;
     }
 
     /**
@@ -57,6 +61,7 @@ public class Partida {
         this.idJugador2 = idj2;
         this.ganador = -1;
         this.tablero = t;
+        this.finalizada = 0;
     }
 
     /**
@@ -121,14 +126,29 @@ public class Partida {
     }
 
     /**
+     * Operacion get del atributo tablero de Partida
+     */
+    public Tablero getTableroPartida() {
+        return this.tablero;
+    }
+
+    /**
+     * Operacion set del atributo tablero de Partida
+     * @param t es el tablero a actualizar en Partida
+     */
+    public void setTableroPartida(Tablero t) { this.tablero = t; }
+
+    /**
      * Operacion get del atributo ganador de Partida
      */
     public int getGanador() {return this.ganador;}
 
+    protected int getFinalizada() { return this.finalizada; }
+
     /**
      * Operacion que incrementa el atributo turno de Partida
      */
-    public void incrementar_turno() {this.turno = this.turno + 1;}
+    public void incrementarTurnoPartida() {this.turno = this.turno + 1;}
 
     /**
      * Operacion set del atributo ganador de Partida
@@ -155,86 +175,102 @@ public class Partida {
      * @return retorna un int con el ganador de la partida o -1 si la partida no ha acabado todavia
      */
     public int rondaPartida(String[] accion) {
-        /* identificar turno del jugador (turno impar -> negro; turno par -> blanco)
-            mostrar fichas disponibles jugador
-            opciones del jugador(colocar ficha, guardar partida, finalizar, pasar turno)
-            colocar ficha
-            actualizar tablero
-            contar fichas
-            retornar valor que indique si la partida ha acabado o no (no hay más espacios en el tablero o se ha
-            llegado al turno máximo)
-         */
-        if (this.turno % 2 != 0) {
-            this.tablero.calcularCasillasDisponiblesDiagonales(this.turno);
-            this.tablero.calcularCasillasDisponiblesHorizontal(this.turno);
-            this.tablero.calcularCasillasDisponiblesVertical(this.turno);
-            switch (accion[0]) {
-                case "colocar":
-                    int x = Integer.parseInt(accion[1]);
-                    int y = Integer.parseInt(accion[2]);
-                    this.tablero.setCasilla_tipo(x, y, 2);
-                    incrementar_turno();
-                    actualizarTablero();
-                    //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
-                    /*int blancas = this.tablero.getNumCasillasBlancas();
-                    int negras = this.tablero.getNumCasillasNegras();
-                    if (blancas > negras){
-                        this.ganador = 1;
-                    }
-                    else if (blancas < negras){
-                        this.ganador = 0;
-                    }
-                    else if (blancas == negras){
-                        this.ganador = 2;
-                    }
-                    else { this.ganador = -1;}*/
-                    break;
-                case "guardar": //guardarPartida
-                    return 2;
-                case "finalizar": //finalizarPartida
-                    return 3;
-                case "paso":
-                    incrementar_turno();
-                    break;
+        if (finalizada == 2) {
+            if (this.tablero.getNumCasillasBlancas() > this.tablero.getNumCasillasNegras()) {
+                this.ganador = 1;
+            } else if (this.tablero.getNumCasillasBlancas() < this.tablero.getNumCasillasNegras()) {
+                this.ganador = 0;
+            } else if (this.tablero.getNumCasillasBlancas() == this.tablero.getNumCasillasNegras()) {
+                this.ganador = 2;
             }
+            return 3; //si hay dos turnos sin poder mover ningun jugador, la partida se acaba.
         }
-        else if (this.turno % 2 == 0) {
-            this.tablero.calcularCasillasDisponiblesDiagonales(this.turno);
-            this.tablero.calcularCasillasDisponiblesHorizontal(this.turno);
-            this.tablero.calcularCasillasDisponiblesVertical(this.turno);
-            switch (accion[0]) {
-                case "colocar":
-                    int x = Integer.parseInt(accion[1]);
-                    int y = Integer.parseInt(accion[2]);
-                    this.tablero.setCasilla_tipo(x, y, 3);
-                    incrementar_turno();
-                    actualizarTablero();
-                    //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
-                    /*int blancas = this.tablero.getNumCasillasBlancas();
-                    int negras = this.tablero.getNumCasillasNegras();
-                    if (blancas > negras){
-                        this.ganador = 1;
-                    }
-                    else if (blancas < negras){
-                        this.ganador = 0;
-                    }
-                    else if (blancas == negras){
-                        this.ganador = 2;
-                    }
-                    else { this.ganador = -1;}*/
-                case "info": //imprimir info de partida
-                    this.get_info_partida();
-                    return -1;
-                case "guardar": //guardarPartida
-                    return 2;
-                case "finalizar": //finalizarPartida
-                    return 3;
-                case "paso":
-                    incrementar_turno();
-                    break;
+        else {
+            if (this.reglas == new int[]{1, 1}) {
+                this.tablero.calcularCasillasDisponiblesDiagonales(this.turno);
+                this.tablero.calcularCasillasDisponiblesHorizontal(this.turno);
+                this.tablero.calcularCasillasDisponiblesVertical(this.turno);
             }
+            else if (this.reglas == new int[]{1, 0}) {
+                this.tablero.calcularCasillasDisponiblesHorizontal(this.turno);
+                this.tablero.calcularCasillasDisponiblesVertical(this.turno);
+            }
+            else if (this.reglas == new int[]{0, 1}) {
+                this.tablero.calcularCasillasDisponiblesDiagonales(this.turno);
+            }
+            //print_Tablero();
+            Set<Position> disponibles = new HashSet<Position>();
+            disponibles = this.tablero.getCasillasDisponibles();
+            int disp = disponibles.size();
+            /* identificar turno del jugador (turno par -> negro; turno impar -> blanco)
+                mostrar fichas disponibles jugador
+                opciones del jugador(colocar x y, guardar, finalizar, paso)
+                colocar ficha
+                actualizar tablero
+                contar fichas
+                retornar valor que indique si la partida ha acabado o no (no hay más espacios en el tablero o se ha
+                llegado al turno máximo)
+             */
+            if (this.turno % 2 == 0) {
+                switch (accion[0]) {
+                    case "colocar":
+                        int x = Integer.parseInt(accion[1]);
+                        int y = Integer.parseInt(accion[2]);
+
+                        //como se actualizan las fichas que se convierten con tu movimiento?
+                        //como se actualizan las fichas que antes se han puesto a disponible para que vuelvan a estar simplemente vacias?
+                        this.tablero.setCasilla_tipo(x, y, 2);
+
+
+
+                        incrementarTurnoPartida();
+                        actualizarTablero();
+                        this.finalizada = 0;
+                        //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
+                        /*
+                        else { this.ganador = -1;}*/
+                        break;
+                    case "guardar": //guardarPartida
+                        return 2;
+                    case "finalizar": //finalizarPartida
+                        return 3;
+                    case "paso":
+                        if (disp == 0) ++this.finalizada;
+                        incrementarTurnoPartida();
+                        break;
+                }
+            }
+            else if (this.turno % 2 != 0) {
+                switch (accion[0]) {
+                    case "colocar":
+                        int x = Integer.parseInt(accion[1]);
+                        int y = Integer.parseInt(accion[2]);
+
+                        //como se actualizan las fichas que se convierten con tu movimiento?
+                        //como se actualizan las fichas que antes se han puesto a disponible para que vuelvan a estar simplemente vacias?
+                        this.tablero.setCasilla_tipo(x, y, 2);
+
+
+
+                        incrementarTurnoPartida();
+                        actualizarTablero();
+                        this.finalizada = 0;
+                        //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
+                        /*
+                        else { this.ganador = -1;}*/
+                        break;
+                    case "guardar": //guardarPartida
+                        return 2;
+                    case "finalizar": //finalizarPartida
+                        return 3;
+                    case "paso":
+                        if (disp == 0) ++this.finalizada;
+                        incrementarTurnoPartida();
+                        break;
+                }
+            }
+            return this.ganador;
         }
-        return this.ganador;
     }
 
     /**
@@ -308,6 +344,8 @@ public class Partida {
         }
         return as;
     }
+
+
 }
 
 

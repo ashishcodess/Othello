@@ -28,7 +28,7 @@ public class Tablero {
         num_vacia = 60;
         negras = new HashSet<Position>();
         blancas = new HashSet<Position>();
-        disponibles= new HashSet<Position>();
+        disponibles = new HashSet<Position>();
     }
 
     /**

@@ -34,10 +34,10 @@ public class PartidaModo1 extends Partida {
         int res = -1;
         switch (accion[0]) {
             case "colocar":
-                this.j2.valorMax(this.t, super.getTurnoPartida(), -1000 , 1000, this.j2.get_profundidadMaquina());         //Sergi C: de momento estos son los parametros pero alomejor hay
+                this.t = this.j2.valorMax(this.t, super.getTurnoPartida(), -1000 , 1000, this.j2.get_profundidadMaquina());         //Sergi C: de momento estos son los parametros pero alomejor hay
                 //que cambiar algo(esto solo lo implementa j2 se tendria que hacerw la parte de j1)
                 //if(x != -1 && y != -1)this.tablero.setCasilla_tipo(x, y, tipo);
-                super.incrementar_turno();
+                super.incrementarTurnoPartida();
                 //actualizarTablero();
                 break;
             case "info": //imprimir info de partida
@@ -48,7 +48,7 @@ public class PartidaModo1 extends Partida {
             case "finalizar": //finalizarPartida
                 return 3;
             case "paso":
-                super.incrementar_turno();
+                super.incrementarTurnoPartida();
                 break;
         }
         return res; //Sergio:para que compile correctamente
