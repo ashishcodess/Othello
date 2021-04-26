@@ -2,6 +2,8 @@ package Dominio;
 
 import java.util.*;
 
+
+
 public class Tablero {
 
     /*Atributos*/
@@ -20,7 +22,8 @@ public class Tablero {
      * Constructora por defecto (vacia) de Tablero
      * */
     public Tablero(){
-        tablero = new Casilla[8][8];
+        tablero = new Casilla[8][8];    //Problema es que todos serán null.
+        inicializeTablero(tablero);
         graph_h = new int[8][8];
         graph_v = new int[8][8];
         graph_dr = new int[8][8];
@@ -28,7 +31,7 @@ public class Tablero {
         num_vacia = 60;
         negras = new HashSet<Position>();
         blancas = new HashSet<Position>();
-        disponibles = new HashSet<Position>();
+        disponibles= new HashSet<Position>();
     }
 
     /**
@@ -88,7 +91,13 @@ public class Tablero {
             }
         }
     }
-
+    public void inicializeTablero(Casilla[][] tablero){
+        for(int i = 0 ; i < 8 ; ++i){
+            for (int j = 0 ; j <8 ; ++j){
+                tablero[i][j] = new Casilla();
+            }
+        }
+    }
     /*Sets y Gets*/
     /**
      * Operacion get del atributo tablero
@@ -123,6 +132,9 @@ public class Tablero {
      */
     public void setCasilla_tipo(int x, int y, int tipo){
         tablero[x][y].cambiar_tipo(tipo);
+        if(tipo == 1)  disponibles.add(new Position(x , y));
+        else if(tipo == 2)negras.add(new Position(x , y));
+        else if (tipo == 3)blancas.add(new Position(x , y));
     }
 
     /**
@@ -139,14 +151,17 @@ public class Tablero {
         return negras.size();
     }
 
+    public int getNumCasillasDisponibles(){
+        return disponibles.size();
+    }
     /**
      * Operacion get que devuelva si la posicion esta dentro de la posicion valida de un matriz
      * @param x  la fila del matriz
      * @param y la columna del matriz
      */
     public boolean isOk(int x , int y){
-        if (x < 0 || x > 7 || y < 0 || y > 0) return false;
-        return  true;
+        if (x < 0 || x > 7 || y < 0 || y > 7) return false;
+        return true;
     }
     /**
      * Funcion que hace bfs horizontalmente para saber culaes son las casillas disponibles o validas(disponible = 1) para colocar fichas.
@@ -163,20 +178,21 @@ public class Tablero {
             int x = current_pos.getX();
             int y = current_pos.getY();
             q.remove();
-            if (isOk(x+1 , y) && graph_v[x+1][y] == 0 && graph_v[x][y] == color_opp) { // the next is the vacio and the current pos is opposite color to me then disponible.
-                graph_v[x + 1][y] = 1;
+            if (isOk(x+1 , y) && graph_h[x+1][y] == 0 && graph_h[x][y] == color_opp) { // the next is the vacio and the current pos is opposite color to me then disponible.
+                graph_h[x + 1][y] = 1;
                 tablero[x+1][y] = new Casilla(1);
                 disponibles.add(new Position(x+1 , y));
-                graph_v[x][y] = -1 ; // this one is already traversed.
+                graph_h[x][y] = -1 ; // this one is already traversed.
             }
-            if (isOk(x-1 , y) &&graph_v[x-1][y] == 0 && graph_v[x][y] == color_opp) {
-                graph_v[x -1][y] = 1;
+            if (isOk(x-1 , y) &&graph_h[x-1][y] == 0 && graph_h[x][y] == color_opp) {
+                graph_h[x -1][y] = 1;
                 tablero[x-1][y] = new Casilla(1);
                 disponibles.add(new Position(x-1 , y));
-                graph_v[x][y] = -1 ; // this one is already traversed.
+                graph_h[x][y] = -1 ; // this one is already traversed.
             }
-            if(graph_v[x][y] != -1 && isOk(x+1 , y) && (graph_v[x+1][y] == color_own || graph_v[x+1][y] == color_opp)); q.add(new Position(x+1 , y)); // same or different color
-            if(graph_v[x][y] != -1 && isOk(x-1, y) && (graph_v[x-1][y] == color_own || graph_v[x-1 ][y] == color_opp)); q.add(new Position(x-1 , y)); // same color
+            graph_h[x][y] = -1;
+            if(isOk(x+1, y)  &&  ((graph_h[x+1][y] == color_own) || (graph_h[x+1][y] == color_opp)))q.add(new Position(x+1 , y)); // same or different color
+            if(isOk(x-1, y) &&  ((graph_h[x-1][y] == color_own) || (graph_h[x-1 ][y] == color_opp)))q.add(new Position(x-1 , y)); // same color
         }
 
     }
@@ -198,20 +214,20 @@ public class Tablero {
             int y = current_pos.getY();
             q.remove();
             if (isOk(x , y+1) && graph_v[x ][y+1] == 0 && graph_v[x][y] == color_opp) { // the next is the vacio and the current pos is opposite color to me then disponible.
-                graph_h[x ][y+1] = 1;
+                graph_v[x ][y+1] = 1;
                 tablero[x][y+1] = new Casilla(1);
                 disponibles.add(new Position(x , y-1));
                 graph_h[x][y] = -1 ; // this one is already traversed.
             }
             if (isOk(x , y-1) && graph_v[x][y-1] == 0 && graph_v[x][y] == color_opp) {
-                graph_h[x ][y-1] = 1;
+                graph_v[x ][y-1] = 1;
                 tablero[x][y-1] = new Casilla(1);
                 disponibles.add(new Position(x, y-1));
-                graph_h[x][y] = -1 ; // this one is already traversed.
+                graph_v[x][y] = -1 ; // this one is already traversed.
             }
-            graph_h[x][y] = -1;
-            if(isOk(x , y+1) && graph_h[x][y+1] != -1 && (graph_v[x ][y+1] == color_own || graph_v[x ][y+1] == color_opp)); q.add(new Position(x , y+1)); // same or different color
-            if(isOk(x, y-1) && graph_h[x][y-1] != -1 && (graph_v[x ][y-1] == color_own || graph_v[x ][y-1] == color_opp)); q.add(new Position(x , y-1)); // same color
+            graph_v[x][y] = -1;
+            if(isOk(x , y+1) && graph_v[x][y+1] != -1 && (graph_v[x ][y+1] == color_own || graph_v[x ][y+1] == color_opp)) q.add(new Position(x , y+1)); // same or different color
+            if(isOk(x, y-1) && graph_v[x][y-1] != -1 && (graph_v[x ][y-1] == color_own || graph_v[x ][y-1] == color_opp))q.add(new Position(x , y-1)); // same color
         }
     }
 
@@ -230,21 +246,21 @@ public class Tablero {
             int x = current_pos.getX();
             int y = current_pos.getY();
             q.remove();
-            if (isOk(x+1 , y+1) && graph_v[x+1][y+1] == 0 && graph_v[x][y] == color_opp) { // the next is the vacio and the current pos is opposite color to me then disponible.
-                graph_h[x+1][y+1] = 1;
+            if (isOk(x+1 , y+1) && graph_dl[x+1][y+1] == 0 && graph_dl[x][y] == color_opp) { // the next is the vacio and the current pos is opposite color to me then disponible.
+                graph_dl[x+1][y+1] = 1;
                 tablero[x+1][y+1] = new Casilla(1);
                 disponibles.add(new Position(x+1 , y+1));
-                graph_h[x][y] = -1 ; // this one is already traversed.
+                graph_dl[x][y] = -1 ; // this one is already traversed.
             }
-            if (isOk(x-1 , y-1) && graph_v[x-1][y-1] == 0 && graph_v[x][y] == color_opp) {
-                graph_h[x-1][y-1] = 1;
+            if (isOk(x-1 , y-1) && graph_dl[x-1][y-1] == 0 && graph_dl[x][y] == color_opp) {
+                graph_dl[x-1][y-1] = 1;
                 tablero[x-1][y-1] = new Casilla(1);
                 disponibles.add(new Position(x-1 , y-1));
-                graph_h[x][y] = -1 ; // this one is already traversed.
+                graph_dl[x][y] = -1 ; // this one is already traversed.
             }
-            graph_h[x][y] = -1;
-            if(isOk(x+1 , y+1) && graph_h[x+1][y+1] != -1 && (graph_v[x+1][y+1] == color_own || graph_v[x+1][y+1] == color_opp)); q.add(new Position(x+1 , y+1)); // same or different color
-            if(isOk(x-1 , y-1) && graph_h[x-1][y-1] != -1 && (graph_v[x-1][y-1] == color_own || graph_v[x-1][y-1] == color_opp)); q.add(new Position(x-1 , y-1));
+            graph_dl[x][y] = -1;
+            if(isOk(x+1 , y+1) && graph_dl[x+1][y+1] != -1 && (graph_dl[x+1][y+1] == color_own || graph_dl[x+1][y+1] == color_opp))q.add(new Position(x+1 , y+1)); // same or different color
+            if(isOk(x-1 , y-1) && graph_dl[x-1][y-1] != -1 && (graph_dl[x-1][y-1] == color_own || graph_dl[x-1][y-1] == color_opp))q.add(new Position(x-1 , y-1));
         }
     }
     /**
@@ -262,21 +278,21 @@ public class Tablero {
             int x = current_pos.getX();
             int y = current_pos.getY();
             q.remove();
-            if (isOk(x+1 , y-1) && graph_v[x+1][y-1] == 0 && graph_v[x][y] == color_opp) {
-                graph_h[x+1][y-1] = 1;
+            if (isOk(x+1 , y-1) && graph_dr[x+1][y-1] == 0 && graph_dr[x][y] == color_opp) {
+                graph_dr[x+1][y-1] = 1;
                 tablero[x+1][y-1] = new Casilla(1);
                 disponibles.add(new Position(x+1 , y-1));
-                graph_h[x][y] = -1 ; // this one is already traversed.
+                graph_dr[x][y] = -1 ; // this one is already traversed.
             }
-            if (isOk(x-1 , y+1) && graph_v[x-1][y+1] == 0 && graph_v[x][y] == color_opp) {
-                graph_h[x-1][y+1] = 1;
+            if (isOk(x-1 , y+1) && graph_dr[x-1][y+1] == 0 && graph_dr[x][y] == color_opp) {
+                graph_dr[x-1][y+1] = 1;
                 tablero[x-1][y+1] = new Casilla(1);
                 disponibles.add(new Position(x-1 , y+1));
-                graph_h[x][y] = -1 ; // this one is already traversed.
+                graph_dr[x][y] = -1 ; // this one is already traversed.
             }
-            graph_h[x][y] = -1;
-            if(isOk(x+1, y-1) && graph_h[x+1][y-1] != -1 && (graph_v[x+1][y-1] == color_own || graph_v[x+1][y-1] == color_opp)); q.add(new Position(x+1 , y-1)); // same color
-            if(isOk(x-1 , y+1) && graph_h[x-1][y+1] != -1 && (graph_v[x-1][y+1] == color_own || graph_v[x-1][y+1] == color_opp)); q.add(new Position(x-1 , y+1));
+            graph_dr[x][y] = -1;
+            if(isOk(x+1, y-1) && graph_dr[x+1][y-1] != -1 && (graph_dr[x+1][y-1] == color_own || graph_dr[x+1][y-1] == color_opp))q.add(new Position(x+1 , y-1)); // same color
+            if(isOk(x-1 , y+1) && graph_dr[x-1][y+1] != -1 && (graph_dr[x-1][y+1] == color_own || graph_dr[x-1][y+1] == color_opp))q.add(new Position(x-1 , y+1));
         }
     }
     /**
@@ -284,6 +300,11 @@ public class Tablero {
      * @param turno es el turno donde estamos (turno par = negras , turno impar = blancas)
      */
     public void calcularCasillasDisponiblesVertical(int turno) {
+        for(int i = 0 ; i < 8 ; ++i){
+            for (int j = 0 ; j < 8 ; ++j){
+                graph_v[i][j]= tablero[i][j].getTipoCasilla();
+            }
+        }
         Position pos;
         if (turno % 2 == 0) {
             Object[] arr = negras.toArray();
@@ -310,6 +331,11 @@ public class Tablero {
      * @param turno es el turno donde estamos (turno par = negras , turno impar = blancas)
      */
     public void calcularCasillasDisponiblesHorizontal(int turno){
+        for(int i = 0 ; i < 8 ; ++i){
+            for (int j = 0 ; j < 8 ; ++j){
+                graph_h[i][j]= tablero[i][j].getTipoCasilla();
+            }
+        }
         Position pos;
         if (turno % 2 == 0) {
             Object[] arr = negras.toArray();
@@ -335,6 +361,12 @@ public class Tablero {
      * @param turno es el turno donde estamos (turno par = negras , turno impar = blancas)
      */
     public void calcularCasillasDisponiblesDiagonales(int turno){
+        for(int i = 0 ; i < 8 ; ++i){
+            for (int j = 0 ; j < 8 ; ++j){
+                graph_dl[i][j]= tablero[i][j].getTipoCasilla();
+                graph_dr[i][j]= tablero[i][j].getTipoCasilla();
+            }
+        }
         Position pos;
         if (turno % 2 == 0) {
             Object[] arr = negras.toArray();
@@ -363,12 +395,17 @@ public class Tablero {
      * @param y la columna del tablero
      */
     public boolean es_possible(int x, int y) {
-        if (tablero[x][y].getTipoCasilla() == 2) return true;
+        if (tablero[x][y].getTipoCasilla() == 1) return true;
         else return false;
     }
 
-    public void modificarCasillasHorizontal(int x , int y, int turno) {  // debería llamar jugador.
+    public void modificarCasillasVertical(int x , int y, int turno) {  // debería llamar jugador.
 
+        for(int i = 0 ; i < 8 ; ++i){
+            for (int j = 0 ; j < 8 ; ++j){
+                graph_v[i][j]= tablero[i][j].getTipoCasilla();
+            }
+        }
         int own_color, opp_color;
         boolean found1 = false, found2 = false, stop1 = false, stop2 = false;
         Vector<Position> vec1 = new Vector<Position>();
@@ -378,7 +415,7 @@ public class Tablero {
         else { own_color = 3; opp_color = 2;
         }
         if (isOk(x - 1, y) && tablero[x-1][y].getTipoCasilla() == opp_color) {
-            for (int i = x - 1; i >= 0 && found1 && stop1; --i) {
+            for (int i = x - 1; i >= 0 && !found1 && !stop1; --i) {
                 if (tablero[i][y].getTipoCasilla() == own_color) found1 = true;    //Case of finding the same colour
                 else if (tablero[i][y].getTipoCasilla() == 0 || tablero[i][y].getTipoCasilla() == 1)
                     stop1 = true;   // case of being unable to find any color
@@ -406,11 +443,13 @@ public class Tablero {
             }
         }
         if (isOk(x + 1, y) && tablero[x+1][y].getTipoCasilla() == opp_color) {
-            for (int i = x + 1; i <= 7 && found2 && stop2; ++i) {
+            for (int i = x + 1; i <= 7 && !found2 && !stop2; ++i) {
                 if (tablero[i][y].getTipoCasilla() == own_color) found2 = true;    //Case of finding the same colour
                 else if (tablero[i][y].getTipoCasilla() == 0 || tablero[i][y].getTipoCasilla() == 1) stop2 = true;   // case of being unable to find any color
                 else {                           //Same color(i.e opposite )
-                    vec2.addElement(new Position(i, y));
+                    Position ps = new Position(i, y);
+                    vec2.addElement(ps);
+                    System.out.println("the x" + ps.getX() + "the y" + ps.getY());
                 }
             }
             if (found2) {
@@ -433,7 +472,8 @@ public class Tablero {
             }
         }
     }
-    public void modificarCasillasVertical(int x , int y , int turno){
+    public void modificarCasillasHorizontal(int x , int y , int turno){
+
         int own_color, opp_color;
         boolean found1 = false, found2 = false, stop1 = false, stop2 = false;
         Vector<Position> vec1 = new Vector<Position>();
@@ -443,7 +483,7 @@ public class Tablero {
         else { own_color = 3; opp_color = 2;
         }
         if (isOk(x, y-1) && tablero[x][y-1].getTipoCasilla() == opp_color) {
-            for (int i = y - 1; i >= 0 && found1 && stop1; --i) {
+            for (int i = y - 1; i >= 0 && !found1 && !stop1 ; --i) {
                 if (tablero[x][i].getTipoCasilla() == own_color) found1 = true;    //Case of finding the same colour
                 else if (tablero[x][i].getTipoCasilla() == 0 || tablero[x][i].getTipoCasilla() == 1)
                     stop1 = true;   // case of being unable to find any color
@@ -471,11 +511,14 @@ public class Tablero {
             }
         }
         if (isOk(x , y+1) && tablero[x][y+1].getTipoCasilla() == opp_color) {
-            for (int i = y + 1; i <= 7 && found2 && stop2; ++i) {
+            System.out.println("Entra aqui");
+            for (int i = y + 1; i <= 7 && !found2 && !stop2; ++i) {
                 if (tablero[x][i].getTipoCasilla() == own_color) found2 = true;    //Case of finding the same colour
                 else if (tablero[x][i].getTipoCasilla() == 0 || tablero[x][i].getTipoCasilla() == 1) stop2 = true;   // case of being unable to find any color
-                else {                           //Same color(i.e opposite )
-                    vec2.addElement(new Position(x, i));
+                else {//Same color(i.e opposite )
+                    Position ps = new Position(x, i);
+                    vec2.addElement(ps);
+                    System.out.println("the x" + ps.getX() + "the y" + ps.getY());
                 }
             }
             if (found2) {
@@ -499,15 +542,57 @@ public class Tablero {
         }
     }
 
-    public void modificarCasillasDiagonales(int x , int y){
+    public void modificarCasillasDiagonales(int x , int y , int turno){
+        for(int i = 0 ; i < 8 ; ++i){
+            for (int j = 0 ; j < 8 ; ++j){
+                graph_h[i][j]= tablero[i][j].getTipoCasilla();
+            }
+        }
+
+    }
+    public void actualizarTablero(int x , int y , int turno){
+        Object[] arr = disponibles.toArray();
+        modificarCasillasHorizontal(x , y , turno);
+        modificarCasillasVertical(x , y , turno);
+        modificarCasillasDiagonales(x , y , turno);
+
+        int a, b;
+        for (int i = 0; i < arr.length; ++i) {
+            Position pos = (Position) arr[i];
+            a = pos.getX();
+            b = pos.getY();
+            System.out.println("x to delete : " + a + " y to delete : " + b);
+            tablero[a][b].cambiar_tipo(0);  // cambiar todos los disponibles a vacio.
+            disponibles.clear();
+        }
 
     }
 
     public Set<Position> getCasillasDisponibles(){
+        // Object[] arr = disponibles.toArray();
         return disponibles;
+    }
+    public Set<Position> getCasillasNegras(){
+        // Object[] arr = disponibles.toArray();
+        return negras;
+    }
+    public Set<Position> getCasillasBlancas(){
+        // Object[] arr = disponibles.toArray();
+        return blancas;
     }
     public boolean finalizada(){
         return true; //para poderlo compilar y hacer pruebas
+    }
+    public void printHorizontal(){   // para hacer pruebas
+        System.out.println("Imprimir graph Horizontal:");
+        for (int i = 0; i < 8; ++i) {
+            String sbuff = new String();
+            for (int j = 0; j < 8; ++j) {
+                sbuff = sbuff + graph_h[i][j];
+            }
+            System.out.println(sbuff);
+        }
+        System.out.println();
     }
 
 }
