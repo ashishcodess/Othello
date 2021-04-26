@@ -17,6 +17,7 @@ public class Jugador {
 
     /**
      * Constructora de Jugador
+     * @param idJugador (id igual a idJugador)
      */
     public Jugador (int idJugador) {
         this.id = idJugador;
@@ -36,6 +37,7 @@ public class Jugador {
     /*Sets y Gets*/
     /**
      * Operacion get del atributo ID
+     * @return devuelve el identificador de Jugador
      */
     public int getID() {
         return id;
@@ -49,6 +51,7 @@ public class Jugador {
      * @param x posicionX valor entre 0 y 8
      * @param y posicionY valor entre 0 y 8
      * @param t Tablero donde se realiza la accion de colocar la ficha
+     * @return True en caso haber colocado correctamente la ficha, caso contrario devuelve FALSO
      */
 
     public boolean Mover_pieza_en_partida(int tipo, int x, int y, Tablero t) {

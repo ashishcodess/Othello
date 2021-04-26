@@ -20,6 +20,8 @@ public class JugadorPersona extends Jugador {
 
     /**
      * Constructora JugadorPersona (sin asignarle un nickname y sin crear fichero de la Persona)
+     * @param idJugador (id de Jugador = idJugador)
+     * @throws MyException en caso de idJugador menor a 6 (pertenece a ID de maquina)
      * */
     public JugadorPersona (int idJugador) throws MyException {
         super(idJugador);
@@ -28,8 +30,11 @@ public class JugadorPersona extends Jugador {
 
     /**
      * Constructora JugadorPersona (idJugador,nicknameJugador)
+     * @param idJugador (id de Jugador = idJugador)
+     * @param nicknameJugador (nickname de Persona = nicknameJugador)
+     * @throws MyException en caso de idJugador menor a 6 (pertenece a ID de maquina)
      * */
-    public JugadorPersona (int idJugador,String nicknameJugador) throws IOException, MyException {
+    public JugadorPersona (int idJugador,String nicknameJugador) throws MyException {
         super(idJugador);
         if (idJugador < 6) throw new MyException("El ID:" + idJugador + " pertenece a una maquina o esta fuera de rango(es negativo)");
         this.nickname = nicknameJugador;

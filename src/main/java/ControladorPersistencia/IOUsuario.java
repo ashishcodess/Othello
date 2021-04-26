@@ -23,15 +23,16 @@ public class IOUsuario {
     }
 
     /**
-     * Constructora path_users igual a s
+     * Constructora 1
+     * @param s (path_users = s)
      */
     public IOUsuario(String s) {
         this.path_users = s;
         this.ID_max = calcularID_MAX();
     }
 
-    /**
-     * Este metodo devuelve el ID maximo de todos los usuarios (ya inicializados en la carpeta de users)
+    /** Operacion calcularID_MAX
+     * @return devuelve el ID maximo de todos los usuarios (ya inicializados en la carpeta de users)
      * */
     private int calcularID_MAX() {
         File f = new File(path_users);
@@ -45,8 +46,10 @@ public class IOUsuario {
         return maxID;
     }
 
+
     /**
-     * Este metodo devuelve el siguente ID disponible para asignarselo a un Usuario
+     * Operacion get_nuevo_ID_user
+     * @return devuelve el siguente ID disponible para asignarselo a un usuario
      * */
     public int get_nuevo_ID_user() {
         return (++this.ID_max);
@@ -54,8 +57,10 @@ public class IOUsuario {
 
     /**
      * Operacion crear_usuario
-     * @return devuelve TRUE en caso de haberse creado el fichero Usuario(idJugador,nicknameJugador) con
-     * exito, caso contrario (ya existía) devuelve FALSE
+     * @param idJugador identificador de usuario
+     * @param nicknameJugador nickname de de usuario
+     * @return devuelve TRUE en caso de haberse creado el fichero Usuario(idJugador,nicknameJugador) con exito, caso contrario (ya existía) devuelve FALSE
+     * @throws IOException en caso de fallo al crear fichero Usuario
      */
     public boolean crear_usuario(int idJugador,String nicknameJugador) throws IOException {
         String path = path_users + idJugador + "_" + nicknameJugador;
@@ -70,6 +75,8 @@ public class IOUsuario {
 
     /**
      * Operacion existe_usuario
+     * @param idJugador identificador de usuario
+     * @param nick nickname de de usuario
      * @return devuelve TRUE en caso de existir el fichero Usuario(idJugador,nicknameJugador) caso contrario devuelve FALSE
      */
     public boolean existe_usuario(int idJugador, String nick) {
@@ -80,6 +87,10 @@ public class IOUsuario {
 
     /**
      * Operacion borrar_usuario a partir de su idJugador y nickname
+     * @param idJugador identificador de usuario a borrar
+     * @param nick nickname de de usuario a borrar
+     * @return devuelve TRUE en caso de haberse borrado con exito, caso contrario devuelve FALSE
+     * @throws IOException en caso de fallo con fichero de usuario
      */
     public boolean borrar_usuario(int idJugador, String nick) throws IOException {
         String path = path_users + idJugador + "_" + nick;
@@ -94,8 +105,12 @@ public class IOUsuario {
 
     /**
      * Operacion existe_partida_usuario
+     * @param idJugador identificador de usuario
+     * @param nicknameJugador nickname de de usuario
+     * @param idPartida identificador de Partida a consultar si existe el jugador
      * @return  devuelve TRUE si existe el idPartida dentro del fichero de Usuario, caso contrario (no exista fichero o no encontrado dentro del mismo)
      * devuelve FALSE
+     * @throws IOException en caso de fallo con fichero Usuario
      */
     public boolean existe_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException {
         String path = path_users + idJugador + "_" + nicknameJugador;
@@ -115,8 +130,11 @@ public class IOUsuario {
     //GESTION DE PARTIDAS
     /**
      * Operacion agregar_partida_usuario
-     * @return devuelve TRUE en caso de haber agregado correctamente la partida con id igual a idPartida dentro del fichero Usuario(idJugador,nicknameJugador),
-     * caso contrario devuelve FALSE
+     * @param idJugador identificador de usuario
+     * @param nicknameJugador nickname de de usuario
+     * @param idPartida identificador de Partida
+     * @return devuelve TRUE en caso de haber agregado correctamente la partida con id igual a idPartida dentro del fichero Usuario(idJugador,nicknameJugador), caso contrario devuelve FALSE
+     * @throws IOException en caso de fallo con fichero Usuario
      */
     public boolean agregar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException {
         String path = path_users + idJugador + "_" + nicknameJugador;
@@ -136,8 +154,12 @@ public class IOUsuario {
 
     /**
      * Operacion borrar_partida_usuario
-     * @return devuelve TRUE en caso de haber eliminado la partida con id igual a idPartida dentro del fichero Usuario(idJugador,nicknameJugador),
-     * caso contrario devuelve FALSE
+     * @param idJugador identificador de usuario
+     * @param nicknameJugador nickname de de usuario
+     * @param idPartida identificador de Partida
+     * @return devuelve TRUE en caso de haber eliminado la partida con id igual a idPartida dentro del fichero Usuario(idJugador,nicknameJugador), caso contrario devuelve FALSE
+     * @throws IOException en caso de fallo con fichero Usuario
+     * @throws MyException en caso de no existir usuario con idJugador y nicknameJugador
      */
         public boolean borrar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException, MyException {
         String path = path_users + idJugador + "_" + nicknameJugador;
@@ -161,9 +183,12 @@ public class IOUsuario {
 
 
     /**
-     * Operacion ctrl_listar_partidas_disponibles
-     * @return devuelve la lista de partidas disponibles (partidas donde se encuentra el Jugador dentro), caso contrario
-     * devuelve excepcion (no existe el usuario)
+     * Operacion listar_partidas_disponibles
+     * @param IDjugador identificador de Jugador
+     * @param nick nickname de Jugador
+     * @return devuelve la lista de partidas disponibles (partidas donde se encuentra el Jugador dentro)
+     * @throws IOException en caso de fallo con fichero Usuario
+     * @throws MyException en caso de no existir usuario con idJugador y nicknameJugador
      */
     public ArrayList<String> listar_partidas_disponibles(int IDjugador, String nick) throws IOException, MyException {
         String path = path_users + IDjugador + "_" + nick;

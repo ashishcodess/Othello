@@ -22,6 +22,7 @@ public class Ranking {
     /**
      * Este metodo modifica el elemento del Ranking con identificadores iguales a e (en caso de existir en el ranking),
      * caso contrario inserta el ElementoRanking e en la ultima posicion de ArrayList
+     * @param e Elemento tipo ElementoRanking a agregar al ranking
      * */
     public void add_al_ranking(ElementoRanking e) {
         int b = existe_en_ranking(e.getID(),e.getNickname());
@@ -33,6 +34,8 @@ public class Ranking {
 
     /**
      * Este metodo inserta en la ultima posicion "i" el ElementoRanking "e"
+     * @param i posicion dentro del ranking
+     * @param e Elemento tipo ElementoRanking a modificar en el ranking
      * @return devuelve falso si el entero "i" no pertenece al rango permitido dentro del ArrayList
      * */
     public Boolean modificar_elemento_ranking(int i, ElementoRanking e) {
@@ -45,6 +48,7 @@ public class Ranking {
 
     /**
      * Operacion get del ranking.size()
+     * @return devuelve el size del ranking
      * */
     public int consultar_tam_ranking() {
         return this.ranking.size();
@@ -52,6 +56,8 @@ public class Ranking {
 
     /**
      * Este metodo inserta en la ultima posicion "i" el ElementoRanking "e"
+     * @param id identificador de Persona a borrar
+     * @param nick nickname de Persona a borrar
      * @return devuelve falso si el entero "i" no pertenece al rango permitido dentro del ArrayList
      * */
     public Boolean eliminar_elemento_ranking(int id, String nick) {
@@ -65,6 +71,9 @@ public class Ranking {
     }
 
     /**
+     * Operacion existe_en_ranking
+     * @param id identificador de Persona a consultar si existe
+     * @param nick nickname de Persona a consultar si existe
      * @return devuelve la posicion del elemento del ranking con identificadores (id,nick) en caso de que exista, caso contrario devuelve -1
      * */
     public int existe_en_ranking(int id, String nick) {
@@ -81,6 +90,9 @@ public class Ranking {
     }
 
     /**
+     * Operacion consultar_ranking(id,nick)
+     * @param id identificador de Persona a consultar
+     * @param nick nickname de Persona a consultar
      * @return devuelve el elemento del ranking con identificadores (id,nick) en caso de que exista, caso contrario devuelve -1
      * */
     public ElementoRanking consultar_ranking(int id, String nick) {
@@ -90,6 +102,8 @@ public class Ranking {
     }
 
     /**
+     * Operacion consultar_elemento_i(i)
+     * @param i posicion dentro del ranking
      * @return devuelve el elemento del ranking en la posicion i de ArrayList
      * */
     public ElementoRanking consultar_elemento_i(int i) {
@@ -98,6 +112,8 @@ public class Ranking {
     }
 
     /**
+     * Operacion consultar_info_elemento_i(i)
+     * @param i posicion dentro del ranking
      * @return devuelve la informacion del  elemento del ranking en la posicion i de ArrayList
      * */
     public String consultar_info_elemento_i(int i) {
@@ -106,9 +122,14 @@ public class Ranking {
     }
 
     /**
-     * Este metodo es el encargado de incrementar las partidas de cada jugador (en caso de que no exista creara los Elementos del Ranking
-     * de cada jugador respectivamente)
-     * ganador = [2: empate, 1:Ganadas, 0:perdidas]
+     * Operacion incrementar_ganadas_perdidas()
+     * Este metodo es el encargado de incrementar las partidas de cada jugador (en caso de que no exista creara los Elementos del Ranking de cada jugador respectivamente)
+     * @param id1 identificador del Jugador1
+     * @param nick1 nickname del Jugador1 (en caso de que tenga nickname)
+     * @param id2 identificador del Jugador2
+     * @param nick2 nickname del Jugador2 (en caso de que tenga nickname)
+     * @param ganador incrementar contador en funcion de [2: empate, 1:Ganadas, 0:perdidas]
+     * @throws MyException en caso de fallo al crear ficheros Usuarios
      * */
     public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, int ganador) throws MyException {
         if (ganador >= 0 && ganador < 3) {
@@ -121,9 +142,14 @@ public class Ranking {
     }
 
     /**
+     * Operacion incrementar_partida()
+     *
      * Este metodo crea el ElementoRanking asociado a un jugador (en caso de que no exista)
      * e incrementa los contadores de partidas respetivamente en funcion del entero "ganador"
-     * ganador = [2: empate, 1:Ganadas, 0:perdidas]
+     * @param id identificador del Jugador2
+     * @param nick nickname del Jugador2 (en caso de que tenga nickname)
+     * @param ganador incrementar contador en funcion de [2: empate, 1:Ganadas, 0:perdidas]
+     * @throws MyException en caso de fallo al crear ficheros Usuarios
      * */
     public void incrementar_partida(int id, String nick, int ganador) throws MyException {
         int i = existe_en_ranking(id,nick);
@@ -149,8 +175,8 @@ public class Ranking {
 
 
     /**
-     * Este metodo es el encargado de ordenar el ranking (en funcion de PartidasGanadas, ID o NICKNAME);
-     * orden = [0 (Ganadas), 1 (ID) , 2 (NICKNAME)]
+     * Operacion ordenar_ranking(orden) en funcion de un orden concreto
+     * @param orden [0 (Ganadas), 1 (ID) , 2 (NICKNAME)]
      * @return devuelve true en caso de que se haya efectuado una ordenacion, caso contrario devuelve falso
      * */
     public Boolean ordenar_ranking(int orden) {
@@ -172,7 +198,8 @@ public class Ranking {
     }
 
     /**
-     * Este metodo Convierte toda la información del Ranking en un ArrayList de Strings
+     * Operacion toArrayList()
+     * @return devuelve toda la información del Ranking en un ArrayList de Strings
      * */
     public ArrayList<String> toArrayList() {
         ArrayList<String> as = new ArrayList<String>();
@@ -184,7 +211,9 @@ public class Ranking {
 
 
     /**
-     * Este metodo muestra por salida estandar la informacion disponible de un Jugador(id,nick) determinado dentro del Ranking
+     * Operacion print_persona_ranking(id,nick): muestra por salida estandar la informacion disponible de un Jugador(id,nick) determinado dentro del Ranking
+     * @param id identificador de Persona
+     * @param nick nickname de Persona
      * */
     public void print_persona_ranking(int id ,String nick) {
         int i = existe_en_ranking(id,nick);

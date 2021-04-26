@@ -18,7 +18,11 @@ public class DriverPersistencia {
 
     public DriverPersistencia() {}
 
-    /** funcion main (para poder realizar las pruebas)*/
+    /** funcion main (para poder realizar las pruebas)
+     * @param args (argumentos)
+     * @throws IOException heredado de el resto de funciones
+     * @throws MyException heredado de el resto de funciones
+     * */
     public static void main(String[] args) throws IOException, MyException {
         cp = new CtrlPersitencia(true); //activar para utilizar solo 1 fichero de ranking
         boolean b = true;
@@ -71,6 +75,8 @@ public class DriverPersistencia {
 
     /** test_IOPartidas
      * @param id es el identificador de la partida para realizar las pruebas
+     * @throws IOException fallo al crear fichero partida
+     * @throws MyException fallo con modo partida (en este caso no es necesario)
      * */
     public static void test_IOPartidas(int id) throws IOException, MyException {
         System.out.println("Probar metodos: Cargar/Guardar partida, toArrayList, listar_partidas_disponibles, borrar_partida");
@@ -99,6 +105,8 @@ public class DriverPersistencia {
 
     /** test_IORanking
      * @param rk es el nombre del fichero (sin .txt) del ranking a realizar las pruebas
+     * @throws IOException fallo al crear fichero ranking
+     * @throws MyException fallo con sizes de ranking
      * */
     public static void test_IORanking(String rk) throws IOException, MyException {
         String path = "./src/files/ranking/" + rk + ".txt";
@@ -119,6 +127,8 @@ public class DriverPersistencia {
     /** test_IOUsuario
      * @param id es el identificador de usuario a realizar las pruebas
      * @param nick es el nickname de usuario a realizar las pruebas
+     * @throws IOException fallo al crear fichero Usuario
+     * @throws MyException fallo con identificador (id es inferior a 6: pertenece a ID maquina)
      * */
     public static void test_IOUsuario(int id, String nick) throws IOException, MyException {
         if (cp.ctrl_existe_usuario(id,nick)) System.out.println("Fichero usuario ya existe, crear uno diferente para probar...");
@@ -144,7 +154,7 @@ public class DriverPersistencia {
     }
 
     /**test_prueba_getID_nuevo_usuario*/
-    public static void test_prueba_getID_nuevo_user() throws IOException, MyException {
+    public static void test_prueba_getID_nuevo_user() {
         int id1 = cp.ctrl_get_nuevo_ID_user();
         int id2 = cp.ctrl_get_nuevo_ID_user();
         int id3 = cp.ctrl_get_nuevo_ID_user();
@@ -157,7 +167,7 @@ public class DriverPersistencia {
     }
 
     /**test_prueba_getID_nueva_partida*/
-    public static void test_prueba_getID_nueva_partida() throws IOException, MyException {
+    public static void test_prueba_getID_nueva_partida() {
         int id1 = cp.ctrl_get_nuevo_ID_Partida();
         int id2 = cp.ctrl_get_nuevo_ID_Partida();
         int id3 = cp.ctrl_get_nuevo_ID_Partida();

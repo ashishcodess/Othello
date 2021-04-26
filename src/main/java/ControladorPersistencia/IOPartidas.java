@@ -29,7 +29,8 @@ public class IOPartidas {
     }
 
     /**
-     * Constructora path_partida igual a s
+     * Constructora 1
+     * @param s path_partida igual a s
      */
     public IOPartidas(String s) {
         this.path_partidas = s;
@@ -37,7 +38,9 @@ public class IOPartidas {
     }
 
     /**
-     * Este metodo devuelve el ID maximo de todos los partidas (ya inicializados en la carpeta de partidas)
+     * Operacion calcularID_MAX_partida
+     * @param path path del directorio de partidas a consultar
+     * @return devuelve el ID maximo de todos los partidas (ya inicializados en la carpeta de partidas)
      * */
     private int calcularID_MAX_partida(String path) {
         File f = new File(path);
@@ -52,7 +55,8 @@ public class IOPartidas {
     }
 
     /**
-     * Este metodo devuelve el siguente ID disponible para asignarselo a una Partida
+     * Operacion get_nuevo_ID_Partida
+     * @return devuelve el siguente ID disponible para asignarselo a una Partida
      * */
     public int get_nuevo_ID_Partida() {
         return this.ID_max_partida;
@@ -63,8 +67,9 @@ public class IOPartidas {
      * Operacion guardar_partida
      * @param as es ArrayList con los parametros necesarios para guardar la partida (utilizando funcion toArrayList() de Partida)
      * @return devuelve TRUE en caso que se haya guardado con exito, caso contrario devuelve FALSE
+     * @throws IOException en caso de error con el fichero partida
      */
-    public boolean guardar_partida(ArrayList<String> as) throws IOException, MyException {
+    public boolean guardar_partida(ArrayList<String> as) throws IOException{
         if (as.size() == 15) { //size correcto (se ha pasado correctamente el ArrayList generadod desde partida
             String idPartida = as.get(0);
             String path = path_partidas + idPartida + ".txt";
@@ -94,8 +99,9 @@ public class IOPartidas {
      * Operacion borrar_partida
      * @param idPartida es el identificador de partida a borrar
      * @return devuelve TRUE en caso que se haya borrado con exito, caso contrario devuelve FALSE
+     * @throws IOException en caso de no existir el fichero de partida a borrar
      */
-    public boolean borrar_partida(int idPartida) throws IOException, MyException {
+    public boolean borrar_partida(int idPartida) throws IOException{
         String path = path_partidas + idPartida +".txt";
         File f = new File(path);
         boolean b = false;
@@ -110,6 +116,7 @@ public class IOPartidas {
      * Operacion leer_modo_partida
      * @param idPartida es el ID de partida a cargar
      * @return devuelve el modo de la partida con igual a idPartida, caso contrario (no existe partida) devuelve -1
+     * @throws IOException en caso de no existir el fichero de partida
      */
     public int leer_modo_partida(int idPartida) throws IOException {
         String path = path_partidas + idPartida + ".txt";
@@ -129,8 +136,9 @@ public class IOPartidas {
      * Operacion cargar_partida
      * @param idPartida es el ID de partida a cargar
      * @return devuelve Partida con id igual a idPartida, caso contrario salta excepcion
+     * @throws IOException en caso de fallo con fichero de Partida
      */
-    public Partida cargar_partida(int idPartida) throws IOException, MyException {
+    public Partida cargar_partida(int idPartida) throws IOException {
         String path = path_partidas + idPartida + ".txt";
         File f = new File(path);
         if (f.exists()) {
@@ -191,8 +199,9 @@ public class IOPartidas {
     /**
      * Operacion cargar_partida_modo0
      * @param idPartida es el ID de partida a cargar
-     * @return devuelve PartidaModo0 con id igual a idPartida,
-     * caso contrario (no existe o modo incorrecto) salta excepcion
+     * @return devuelve PartidaModo0 con id igual a idPartida,caso contrario (no existe o modo incorrecto) salta excepcion
+     * @throws IOException en caso de fallo con fichero Partida
+     * @throws MyException en caso de fallo al cargar el modo de juego (modo juego incorrecto)
      */
     public PartidaModo0 cargar_partida_modo0(int idPartida) throws IOException, MyException {
         String path = path_partidas + idPartida + ".txt";
@@ -244,8 +253,9 @@ public class IOPartidas {
     /**
      * Operacion cargar_partida_modo1
      * @param idPartida es el ID de partida a cargar
-     * @return devuelve PartidaModo1 con id igual a idPartida,
-     * caso contrario (no existe o modo incorrecto) salta excepcion
+     * @return devuelve PartidaModo1 con id igual a idPartida, caso contrario (no existe o modo incorrecto) salta excepcion
+     * @throws IOException en caso de fallo con fichero Partida
+     * @throws MyException en caso de fallo al cargar el modo de juego (modo juego incorrecto)
      */
     public PartidaModo1 cargar_partida_modo1(int idPartida) throws IOException, MyException {
         String path = path_partidas + idPartida + ".txt";
@@ -297,8 +307,9 @@ public class IOPartidas {
     /**
      * Operacion cargar_partida_modo2
      * @param idPartida es el ID de partida a cargar
-     * @return devuelve PartidaModo2 con id igual a idPartida,
-     * caso contrario (no existe o modo incorrecto) salta excepcion
+     * @return devuelve PartidaModo2 con id igual a idPartida, caso contrario (no existe o modo incorrecto) salta excepcion
+     * @throws IOException en caso de fallo con fichero Partida
+     * @throws MyException en caso de fallo al cargar el modo de juego (modo juego incorrecto)
      */
     public PartidaModo2 cargar_partida_modo2(int idPartida) throws IOException, MyException {
         String path = path_partidas + idPartida + ".txt";
@@ -346,7 +357,6 @@ public class IOPartidas {
         }
         else return null;
     }
-
 
 
 }

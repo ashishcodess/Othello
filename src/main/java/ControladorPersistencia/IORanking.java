@@ -25,7 +25,8 @@ public class IORanking {
     }
 
     /**
-     * Constructora con path_ranking=s
+     * Constructora 1
+     * @param s (path_ranking = s)
      */
     public IORanking(String s) {
         this.path_ranking = s;
@@ -33,7 +34,9 @@ public class IORanking {
     }
 
     /**
-     * Constructora con path_ranking=s y modoRanking=b
+     * Constructora 2
+     * @param s (path_ranking = s)
+     * @param b (modoRanking = b)
      */
     public IORanking(String s, boolean b) {
         this.path_ranking = s;
@@ -44,6 +47,8 @@ public class IORanking {
      * Operacion importar_ranking
      * @param path_fichero es el path del fichero de Ranking a importar
      * @return devuelve el Ranking ubicado en path_file, caso de no existir devuelve excepcion
+     * @throws IOException en caso de error con el fichero de ranking
+     * @throws MyException en caso de no existir el fichero de ranking
      */
     public Ranking importar_ranking (String path_fichero) throws IOException, MyException {
         Ranking rank = new Ranking();
@@ -75,6 +80,8 @@ public class IORanking {
     /**
      * Operacion ctrl_exportar_ranking
      * @param as es ArrayList con los parametros necesarios para guardar la partida (utilizando funcion consultar_all() de cada ElementoRanking)
+     * @throws IOException en caso de fallo con fichero de ranking a exportar
+     * @throws MyException en caso de error con sizes de ranking
      */
     public void exportar_ranking(ArrayList<String> as) throws IOException, MyException {
         int tam = as.size();

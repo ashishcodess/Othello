@@ -23,6 +23,7 @@ public class JugadorMaquina extends Jugador {
 
     /**
      * Constructora JugadorMaquina (si tener en cuenta la profundidad del arbol de MinMax)
+     * @param idMaquina (id de Jugador = idMaquina)
      * */
     public JugadorMaquina (int idMaquina) {
         super(idMaquina);
@@ -30,6 +31,8 @@ public class JugadorMaquina extends Jugador {
 
     /**
      * Constructora JugadorMaquina (idMaquina, profundidad)
+     * @param idMaquina (id de Jugador = idMaquina)
+     * @param profundidad (profundidad_IA = profundidad)
      * */
     public JugadorMaquina (int idMaquina, int profundidad) {
         super(idMaquina);

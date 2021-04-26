@@ -12,7 +12,8 @@ public class DriverRanking {
 
     static Scanner scan = new Scanner(System.in);
 
-    /** test operaciones ranking (crear, incrementar partidas, imprimir ranking dependiendo del orden)*/
+    /** test operaciones ranking (crear, incrementar partidas, imprimir ranking dependiendo del orden)
+     * @throws MyException en caso de fallo con size del ranking*/
     public static void test_crear_ranking() throws MyException {
         Ranking rank= new Ranking();
         ElementoRanking e = new ElementoRanking(6,"aaa");
@@ -35,8 +36,12 @@ public class DriverRanking {
     }
 
 
-    /** funcion main (para poder realizar las pruebas)*/
-    public static void main(String[] args) throws IOException, MyException{
+    /**
+     * funcion main (para poder realizar las pruebas)
+     * @param args (argumentos)
+     * @throws MyException heredado de el resto de funciones
+     * */
+    public static void main(String[] args) throws MyException{
         boolean b = true;
         while (b) {
             System.out.println("DriverRanking (OPCIONES):");

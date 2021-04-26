@@ -28,7 +28,8 @@ public class DriverJugador {
     }
 
     /** test_crear_jugadorMaquina (clase hijo)
-     * @param idMaquina es el identificador de la Maquina a crear y profundidad (para IA)
+     * @param idMaquina es el identificador de la Maquina a crear
+     * @param profundidad profundidad de la IA
      * */
     public static void test_crear_jugadorMaquina(int idMaquina, int profundidad){
         JugadorMaquina res = new JugadorMaquina(idMaquina,profundidad);
@@ -46,8 +47,9 @@ public class DriverJugador {
     /** test_crear_jugadorPersona (clase hijo)
      * @param idPersona es el identificador de la Persona a crear
      * @param nick nickname de la Persona a crear
+     * @throws MyException en caso de fallo con identificadores (id pertenece a Maquina)
      * */
-    public static void test_crear_jugadorPersona(int idPersona, String nick) throws IOException, MyException {
+    public static void test_crear_jugadorPersona(int idPersona, String nick) throws MyException {
         JugadorPersona res = new JugadorPersona(idPersona,nick);
         System.out.println("Maquina creada con ID:" + idPersona);
         System.out.println("Prueba get_MaquinaID : " + res.get_PersonaID());
@@ -68,8 +70,12 @@ public class DriverJugador {
         }
     }
 
-    /** funcion main (para poder realizar las pruebas)*/
-    public static void main(String[] args) throws IOException, MyException {
+    /**
+     * funcion main (para poder realizar las pruebas)
+     * @param  args (argumentos)
+     @throws MyException heredado de el resto de funciones
+     * */
+    public static void main(String[] args) throws MyException {
         boolean b = true;
         while (b) {
             System.out.println("DriverJugador (OPCIONES):");

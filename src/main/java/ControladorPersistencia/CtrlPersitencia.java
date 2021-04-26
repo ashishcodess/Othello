@@ -43,10 +43,9 @@ public class CtrlPersitencia {
     }
 
     /**
-     * Constructora con opcion a cambiar el modoRanking[TRUE: solo utiliza fichero ranking.txt; FALSE:genera varios ficheros en
-     * funcion del size del ranking (usado en las pruebas DriverRanking)])
+     * Constructora con opcion a cambiar el modoRanking)
+     * @param bRank [TRUE: solo utiliza fichero ranking.txt; FALSE:genera varios ficheros en funcion del size del ranking (usado en las pruebas DriverRanking)]
      */
-
     public CtrlPersitencia(boolean bRank) {
         path = "./src/files/";
         path_partidas = path + "partidas/";
@@ -61,6 +60,7 @@ public class CtrlPersitencia {
 
     /**
      * Constructora con s_path
+     * @param s_path path de el directorio de files (para Persistencia)
      */
     public CtrlPersitencia(String s_path) {
         path = s_path;
@@ -75,6 +75,8 @@ public class CtrlPersitencia {
 
     /**
      * Constructora con s_path y modoRanking
+     * @param s_path path de el directorio de files (para Persistencia)
+     * @param bRank [TRUE: solo utiliza fichero ranking.txt; FALSE:genera varios ficheros en funcion del size del ranking (usado en las pruebas DriverRanking)]
      */
     public CtrlPersitencia(String s_path, boolean bRank) {
         path = s_path;
@@ -105,14 +107,16 @@ public class CtrlPersitencia {
     }
 
     /**
-     * Este metodo devuelve el siguente ID disponible para asignarselo a un Usuario
+     * Operacion ctrl_get_nuevo_ID_user
+     * @return devuelve el siguente ID disponible para asignarselo a un Usuario
      * */
     public int ctrl_get_nuevo_ID_user() {
         return cUsuario.get_nuevo_ID_user();
     }
 
     /**
-     * Este metodo devuelve el siguente ID disponible para asignarselo a una Partida
+     * Operacion ctrl_get_nuevo_ID_Partida
+     * @return devuelve el siguente ID disponible para asignarselo a una Partida
      * */
     public int ctrl_get_nuevo_ID_Partida() {
         return cPartidas.get_nuevo_ID_Partida();
@@ -124,6 +128,7 @@ public class CtrlPersitencia {
      * Operacion ctrl_leer_modo_partida
      * @param idPartida es el ID de partida a cargar
      * @return devuelve el modo de la partida con igual a idPartida, caso contrario (no existe partida) devuelve -1
+     * @throws IOException en caso de no existir el fichero de partida
      */
     public int ctrl_leer_modo_partida(int idPartida) throws IOException {
         return cPartidas.leer_modo_partida(idPartida);
@@ -134,8 +139,10 @@ public class CtrlPersitencia {
      * Operacion ctrl_cargar_partida
      * @param idPartida es el ID de partida a cargar
      * @return devuelve Partida con id igual a idPartida, caso contrario devuelve null
+     * @throws IOException en caso de no existir el fichero de partida
+     * @throws MyException en caso de no existir el fichero de partida con id=idPartida
      */
-    public Partida ctrl_cargar_partida(int idPartida) throws IOException, MyException {
+    public Partida ctrl_cargar_partida(int idPartida) throws IOException, MyException{
         Partida p = cPartidas.cargar_partida(idPartida);
         if (p != null) {
             int id1, id2, id_partida;
@@ -159,7 +166,9 @@ public class CtrlPersitencia {
     /**
      * Operacion ctrl_cargar_partida_modo0
      * @param idPartida es el ID de partida a cargar
-     * @return devuelve PartidaModo0 con id igual a idPartida, caso contrario devuelve excepcion
+     * @return devuelve PartidaModo0 con id igual a idPartida
+     * @throws IOException en caso de no existir el fichero de partida
+     * @throws MyException en caso de cargar un modo incorrecto
      */
     public PartidaModo0 ctrl_cargar_partida_modo0(int idPartida) throws IOException, MyException {
         PartidaModo0 p = cPartidas.cargar_partida_modo0(idPartida);
@@ -185,7 +194,9 @@ public class CtrlPersitencia {
     /**
      * Operacion ctrl_cargar_partida_modo0
      * @param idPartida es el ID de partida a cargar
-     * @return devuelve PartidaModo1 con id igual a idPartida, caso contrario devuelve excepcion
+     * @return devuelve PartidaModo1 con id igual a idPartida
+     * @throws IOException en caso de no existir el fichero de partida
+     * @throws MyException en caso de cargar un modo incorrecto
      */
     public PartidaModo1 ctrl_cargar_partida_modo1(int idPartida) throws IOException, MyException {
         PartidaModo1 p = cPartidas.cargar_partida_modo1(idPartida);
@@ -211,7 +222,9 @@ public class CtrlPersitencia {
     /**
      * Operacion ctrl_cargar_partida_modo0
      * @param idPartida es el ID de partida a cargar
-     * @return devuelve PartidaModo2 con id igual a idPartida, caso contrario devuelve excepcion
+     * @return devuelve PartidaModo2 con id igual a idPartida
+     * @throws IOException en caso de no existir el fichero de partida
+     * @throws MyException en caso de cargar un modo incorrecto
      */
     public PartidaModo2 ctrl_cargar_partida_modo2(int idPartida) throws IOException, MyException {
         PartidaModo2 p = cPartidas.cargar_partida_modo2(idPartida);
@@ -237,8 +250,9 @@ public class CtrlPersitencia {
     /**
      * Operacion ctrl_guardar_partida
      * @param as es ArrayList con los parametros necesarios para guardar la partida (utilizando funcion toArrayList() de Partida)
+     * @throws IOException en caso de error con el fichero partida
      */
-    public void ctrl_guardar_partida(ArrayList<String> as) throws IOException, MyException {
+    public void ctrl_guardar_partida(ArrayList<String> as) throws IOException {
         if (cPartidas.guardar_partida(as)) {
             int id_partida = Integer.parseInt(as.get(0));
 
@@ -268,6 +282,8 @@ public class CtrlPersitencia {
     /** Operacion ctrl_borrar_partida
      * @param idPartida es el identificador de partida a borrar
      * @return devuelve TRUE en caso que se haya borrado con exito, caso contrario devuelve excepcion
+     * @throws IOException en caso de error con el fichero partida
+     * @throws MyException en caso de no existir fichero con id=idPartida
      */
     public boolean ctrl_borrar_partida(int idPartida) throws IOException, MyException {
         Partida p = cPartidas.cargar_partida(idPartida);
@@ -296,6 +312,8 @@ public class CtrlPersitencia {
     /**
      * Operacion ctrl_importar_ranking
      * @return devuelve el Ranking ubicado en el fichero ranking.txt, caso de no existir devuelve excepcion
+     * @throws IOException en caso de fallo con fichero "ranking.txt"
+     * @throws MyException en caso de error con sizes de ranking
      */
     public Ranking ctrl_importar_ranking() throws IOException, MyException {
         String path_file = path_ranking + "ranking.txt";
@@ -307,6 +325,8 @@ public class CtrlPersitencia {
      * Operacion ctrl_importar_ranking2
      * @param path_file es el path del fichero de Ranking a importar
      * @return devuelve el Ranking ubicado en path_file, caso de no existir devuelve excepcion
+     * @throws IOException en caso de fallo con fichero con "path_file"
+     * @throws MyException en caso de error con sizes de ranking
      */
     public Ranking ctrl_importar_ranking2(String path_file) throws IOException, MyException {
         return cRanking.importar_ranking(path_file);
@@ -317,6 +337,8 @@ public class CtrlPersitencia {
     /**
      * Operacion ctrl_exportar_ranking
      * @param as es ArrayList con los parametros necesarios para guardar la partida (utilizando funcion consultar_all() de cada ElementoRanking)
+     * @throws IOException en caso de fallo con fichero de ranking a exportar
+     * @throws MyException en caso de error con sizes de ranking
      */
     public void ctrl_exportar_ranking(ArrayList<String> as) throws IOException, MyException {
         cRanking.exportar_ranking(as);
@@ -325,8 +347,11 @@ public class CtrlPersitencia {
     //Controlador de Usuarios (cUsuario)
     /**
      * Operacion ctrl_crear_usuario
+     * @param idJugador identificador de Jugador a crear
+     * @param nicknameJugador nickname de Jugador a crear
      * @return devuelve TRUE en caso de haberse creado el fichero Usuario(idJugador,nicknameJugador) con
      * exito, caso contrario (ya existía) devuelve FALSE
+     * @throws IOException en caso de fallo al crear fichero Usuario
      */
     public boolean ctrl_crear_usuario(int idJugador,String nicknameJugador) throws IOException {
         return (cUsuario.crear_usuario(idJugador,nicknameJugador));
@@ -334,7 +359,10 @@ public class CtrlPersitencia {
 
     /**
      * Operacion ctrl_existe_usuario
+     * @param idJugador identificador de Jugador a consultar si existe
+     * @param nicknameJugador nickname de Jugador a consultar si existe
      * @return devuelve TRUE en caso de existir el fichero Usuario(idJugador,nicknameJugador) caso contrario devuelve FALSE
+     * @throws IOException en caso de fallo con fichero Usuario
      */
     public boolean ctrl_existe_usuario(int idJugador,String nicknameJugador) throws IOException {
         return (cUsuario.existe_usuario(idJugador,nicknameJugador));
@@ -342,17 +370,25 @@ public class CtrlPersitencia {
 
     /**
      * Operacion ctrl_borrar_usuario
-     * * @return devuelve TRUE en caso de haberse eliminado correctamente el fichero Usuario(idJugador,nicknameJugador),
+     * @param idJugador identificador de Jugador a borrar
+     * @param nicknameJugador nickname de Jugador a borrar
+     * @return b devuelve TRUE en caso de haberse eliminado correctamente el fichero Usuario(idJugador,nicknameJugador),
      * caso contrario devuelve FALSE
+     * @throws IOException en caso de fallo con fichero Usuario
      */
     public boolean ctrl_borrar_usuario(int idJugador,String nicknameJugador) throws IOException {
-        return cUsuario.borrar_usuario(idJugador,nicknameJugador);
+        boolean b = cUsuario.borrar_usuario(idJugador,nicknameJugador);
+        return b;
     }
 
     /**
      * Operacion ctrl_existe_partida_usuario
+     * @param idJugador identificador de Jugador a consultar si existe en partida
+     * @param nicknameJugador nickname de Jugador a consultar si existe en partida
+     * @param idPartida identificador de Partida a consultar si existe el jugador
      * @return devuelve TRUE en caso de existir una partida con id igual a idPartida dentro del fichero Usuario(idJugador,nicknameJugador),
      * caso contrario devuelve FALSE
+     * @throws IOException en caso de fallo con fichero Usuario
      */
     public boolean ctrl_existe_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException {
         return (cUsuario.existe_partida_usuario(idJugador,nicknameJugador,idPartida));
@@ -360,8 +396,12 @@ public class CtrlPersitencia {
 
     /**
      * Operacion ctrl_agregar_partida_usuario
+     * @param idJugador identificador de Jugador a agregar en partida
+     * @param nicknameJugador nickname de Jugador a agregar en partida
+     * @param idPartida identificador de Partida
      * @return devuelve TRUE en caso de haber agregado correctamente la partida con id igual a idPartida dentro del fichero Usuario(idJugador,nicknameJugador),
      * caso contrario devuelve FALSE
+     * @throws IOException en caso de fallo con fichero Usuario
      */
     public boolean ctrl_agregar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException {
         return (cUsuario.agregar_partida_usuario(idJugador,nicknameJugador,idPartida));
@@ -369,8 +409,13 @@ public class CtrlPersitencia {
 
     /**
      * Operacion ctrl_borrar_partida_usuario
+     * @param idJugador identificador de Jugador a borrar en partida
+     * @param nicknameJugador nickname de Jugador a borrar en partida
+     * @param idPartida identificador de Partida
      * @return devuelve TRUE en caso de haber eliminado la partida con id igual a idPartida dentro del fichero Usuario(idJugador,nicknameJugador),
      * caso contrario devuelve FALSE
+     * @throws IOException en caso de fallo con fichero Usuario
+     * @throws MyException en caso de no existir usuario con idJugador y nicknameJugador
      */
     public boolean ctrl_borrar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException, MyException {
         return (cUsuario.borrar_partida_usuario(idJugador,nicknameJugador,idPartida));
@@ -378,7 +423,11 @@ public class CtrlPersitencia {
 
     /**
      * Operacion ctrl_listar_partidas_disponibles
+     * @param IDjugador identificador de Jugador
+     * @param nick nickname de Jugador
      * @return devuelve la lista de partidas disponibles (partidas donde se encuentra el Jugador dentro)
+     * @throws IOException en caso de fallo con fichero Usuario
+     * @throws MyException en caso de no existir usuario con idJugador y nicknameJugador
      */
     public ArrayList<String> ctrl_listar_partidas_disponibles(int IDjugador, String nick) throws IOException, MyException {
         return cUsuario.listar_partidas_disponibles(IDjugador,nick);
@@ -386,7 +435,11 @@ public class CtrlPersitencia {
 
     /**
      * Operacion ctrl_print_partidas_disponibles
+     * @param IDjugador identificador de Jugador
+     * @param nick nickname de Jugador
      * muestra por salida estandar las partidas disponibles por el Jugador (IDjugador,nick)
+     * @throws IOException en caso de fallo con fichero Usuario
+     * @throws MyException en caso de no existir usuario con idJugador y nicknameJugador
      */
     public void ctrl_print_partidas_disponibles(int IDjugador, String nick) throws IOException, MyException {
         System.out.println("Partidas disponibles de ID: "+ IDjugador + " ,nickname: " + nick);

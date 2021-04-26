@@ -14,6 +14,7 @@ public class RankingTest_JUnit {
 
     /**
      * Test sobre ElementoRanking (crear objeto 1)
+     * @throws MyException caso de fallo de elementoRanking con id inferior a 6 (tiene que ser una Persona)
      * */
     @Test
     public void test_crearElementoRanking_1() throws MyException {
@@ -24,6 +25,7 @@ public class RankingTest_JUnit {
 
     /**
      * Test sobre ElementoRanking (crear objeto 2)
+     * @throws MyException caso de fallo de elementoRanking con id inferior a 6 (tiene que ser una Persona)
      * */
     @Test
     public void test_crearElementoRanking_2() throws MyException {
@@ -34,6 +36,7 @@ public class RankingTest_JUnit {
 
     /**
      * Test sobre ElementoRanking (incrementar contador partidas ganadas)
+     * @throws MyException caso de fallo de elementoRanking con id inferior a 6 (tiene que ser una Persona)
      * */
     @Test
     public void test_incrementarGanadas() throws MyException {
@@ -45,6 +48,7 @@ public class RankingTest_JUnit {
 
     /**
      * Test sobre ElementoRanking (incrementar contador partidas perdidas)
+     * @throws MyException caso de fallo de elementoRanking con id inferior a 6 (tiene que ser una Persona)
      * */
     @Test
     public void test_incrementarPerdidas() throws MyException {
@@ -56,6 +60,7 @@ public class RankingTest_JUnit {
 
     /**
      * Test sobre ElementoRanking (incrementar contador partidas empatadas)
+     * @throws MyException caso de fallo de elementoRanking con id inferior a 6 (tiene que ser una Persona)
      * */
     @Test
     public void test_incrementarEmpatadas() throws MyException {
@@ -71,6 +76,7 @@ public class RankingTest_JUnit {
     @Test
     /**
      * Test sobre Ranking (Agregar elemento al Ranking)
+     * @throws MyException caso de fallo de elementoRanking con id inferior a 6 (tiene que ser una Persona)
      * */
     public void test_agregarAlRanking() throws MyException {
         ElementoRanking e = new ElementoRanking(9,"aa",2,2,3,7);
@@ -84,6 +90,7 @@ public class RankingTest_JUnit {
     @Test
     /**
      * Test sobre Ranking (Funcion incrementar_ganadas_perdidas, en caso de no existir en el ranking los crea y los agrega)
+     * @throws MyException caso de fallo de elementoRanking con id inferior a 6 (tiene que ser una Persona)
      * */
     public void test_incrementar_ganadas_perdidas() throws MyException {
         Ranking rank = new Ranking();
@@ -97,6 +104,7 @@ public class RankingTest_JUnit {
     @Test
     /**
      * Test sobre Ranking (Funcion existe en Ranking)
+     * @throws MyException caso de fallo de elementoRanking con id inferior a 6 (tiene que ser una Persona)
      * */
     public void test_existeEnRanking() throws MyException {
         Ranking rank = new Ranking();
@@ -108,6 +116,7 @@ public class RankingTest_JUnit {
     @Test
     /**
      * Test sobre Ranking (Funcion eliminar del ranking)
+     * @throws MyException caso de fallo de elementoRanking con id inferior a 6 (tiene que ser una Persona)
      * */
     public void test_eliminarDelRanking() throws MyException {
         Ranking rank = new Ranking();
@@ -124,6 +133,7 @@ public class RankingTest_JUnit {
     @Test
     /**
      * Test sobre Ranking (Funcion ordenar ranking por partidas Ganadas)
+     * @throws MyException caso de fallo de elementoRanking con id inferior a 6 (tiene que ser una Persona)
      * */
     public void test_ordenarGanadas() throws MyException{
         Ranking rank = new Ranking();
@@ -141,6 +151,7 @@ public class RankingTest_JUnit {
     @Test
     /**
      * Test sobre Ranking (Funcion ordenar ranking por ID de usuario)
+     * @throws MyException caso de fallo de elementoRanking con id inferior a 6 (tiene que ser una Persona)
      * */
     public void test_ordenarID() throws MyException{
         Ranking rank = new Ranking();
@@ -157,6 +168,7 @@ public class RankingTest_JUnit {
     @Test
     /**
      * Test sobre Ranking (Funcion ordenar ranking por Nickname de Usuario)
+     * @throws MyException caso de fallo de elementoRanking con id inferior a 6 (tiene que ser una Persona)
      * */
     public void test_ordenarNickname() throws MyException{
         Ranking rank = new Ranking();
