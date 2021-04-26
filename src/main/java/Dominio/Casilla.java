@@ -7,11 +7,6 @@ public class Casilla {
     public Casilla () {
         this.tipo = 0;    // At first all of them are empty.
     }
-
-    public Casilla (int id , int t) {
-        this.tipo = t;
-    }
-
     public Casilla (int t) {
         this.tipo = t;
     }
@@ -21,7 +16,6 @@ public class Casilla {
     }
 
     public void cambiar_tipo(int tipo){
-
         this.tipo = tipo;
     }
 }
