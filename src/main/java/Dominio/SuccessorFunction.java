@@ -3,7 +3,7 @@ package Dominio;
 import java.util.*;
 
 public class SuccessorFunction { //necessaria para implementar la IA
-    Tablero[] succesores;
+    private Set<Tablero> succesores;
     private Set<Position> disponibles;
 
     /**
@@ -11,7 +11,7 @@ public class SuccessorFunction { //necessaria para implementar la IA
      */
 
     public SuccessorFunction(){
-        this.succesores = new Tablero[0];
+        this.succesores = new HashSet<Tablero>();
         Set<Position> disponibles= new HashSet<Position>();
     }
 
@@ -21,7 +21,7 @@ public class SuccessorFunction { //necessaria para implementar la IA
      * @param turno es el turno del tablero t
      * @return retorna la lista de estados hijos de ese tablero, resultantes de cada uno de los posibles movimientos de este
      */
-    public Tablero[] genera_succesores(Tablero t, int turno){
+    public Set<Tablero> genera_succesores(Tablero t, int turno){
 
         Tablero aux; Casilla disponible;
         t.calcularCasillasDisponiblesDiagonales(turno);
@@ -31,9 +31,10 @@ public class SuccessorFunction { //necessaria para implementar la IA
 
         for(Position pos : disponibles){
 
-            disponible = disponibles.
             aux = t;
-            aux.
+            if(turno %2 == 0) aux.setCasilla_tipo(pos.getX(), pos.getY(), 2);
+            else aux.setCasilla_tipo(pos.getX(), pos.getY(), 3);
+            succesores.add(aux);
         }
 
         return succesores;
