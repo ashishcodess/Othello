@@ -7,19 +7,31 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Partida {
+    /**identificador de Partida*/
     private final int id;
+    /**Modo de juego de la Partida*/
     private final int modoDeJuego;
+    /**Turno de la Partida*/
     private int turno;
+    /**Reglas de la Partida*/
     private final int[] reglas; //array de 3 enteros para las reglas
+    /**Nick del Jugador1 de la Partida*/
     private String nick1;
+    /**ID del Jugador1 de la Partida*/
     private final int idJugador1;
+    /**Nick del Jugador2 de la Partida*/
     private String nick2;
+    /**ID del Jugador2 de la Partida*/
     private final int idJugador2;
+    /**Tablero de la Partida*/
     private Tablero tablero;
+    /**Ganador de la Partida*/
     private int ganador; //indica una vez finalizada la partida quien es el ganador (para despues hacer modificacion de ranking)
     //ganador -> -1 (partida sigue en curso),0 (gana nick1), 1 (gana nick2), 2 (empate), 3 (guardar partida), 4 (finalizar)
 
-    //Creadora - Configuración de los parámetros de una partida nueva
+    /**
+     * Creadora - Configuración de los parámetros de una partida nueva
+     * */
     public Partida (int id, int modoJuego, int[] r, int idj1, int idj2) {
         this.id = id;
         this.modoDeJuego = modoJuego;
@@ -30,7 +42,10 @@ public class Partida {
         this.ganador = -1;
         this.tablero = new Tablero();
     }
-    //Creadora - Configuración de los parámetros de una partida ya empezada
+
+    /**
+     * Creadora - Configuración de los parámetros de una partida ya empezada
+     * */
     public Partida(int id, int modoJuego, int[] r, int turn, int idj1,String n1, int idj2, String n2, Tablero t) {
         this.id = id;
         this.modoDeJuego = modoJuego;
@@ -44,50 +59,85 @@ public class Partida {
         this.tablero = t;
     }
 
-    //Devuelve un boleano indicando si el jugador está en la partida
+    /**
+     * Devuelve un boleano indicando si el jugador está en la partida
+     * */
     public Boolean existeJugador(int id){
         return ((idJugador1 == id) || (idJugador2 == id));
     }
 
+    /**
+     * Operacion get del atributo ID de Partida
+     */
     public int getIdPartida() {return this.id;}
 
+    /**
+     * Operacion get del atributo modoDeJuego de Partida
+     */
     public int getModoDeJuegoPartida() {
         return this.modoDeJuego;
     }
 
+    /**
+     * Operacion get del atributo reglas de Partida
+     */
     public int[] getReglasPartida() {
         return this.reglas;
     }
 
+    /**
+     * Operacion get del atributo turno de Partida
+     */
     public int getTurnoPartida() {
         return this.turno;
     }
 
-    public void incrementar_turno() {this.turno = this.turno + 1;}
-
+    /**
+     * Operacion get del atributo ID del Jugador1 de Partida
+     */
     public int getID_J1() {
         return this.idJugador1;
     }
 
+    /**
+     * Operacion get del atributo ID del Jugador2 de Partida
+     */
     public int getID_J2() {
         return this.idJugador2;
     }
 
+    /**
+     * Operacion get del atributo nick del Jugador1 de Partida
+     */
     public String getNickJugador1() {
         return this.nick1;
     }
 
+    /**
+     * Operacion get del atributo nick del Jugador2 de Partida
+     */
     public String getNickJugador2() {
         return this.nick2;
     }
 
+    /**
+     * Operacion get del atributo ganador de Partida
+     */
+    public int getGanador() {return this.ganador;}
 
+    /**
+     * Operacion que incrementa el atributo turno de Partida
+     */
+    public void incrementar_turno() {this.turno = this.turno + 1;}
 
-
-    // ganador -> 0 (gana Jugador1), 1 (gana Jugador2), 2 (empate)
+    /**
+     * Operacion set del atributo ganador de Partida
+     * @param i indica el ganador de la partida de la siguiente manera:
+     *          ganador -> 0 (gana Jugador1), 1 (gana Jugador2), 2 (empate)
+     */
     public void setGanador(int i) {this.ganador = i;}
 
-    public int getGanador() {return this.ganador;}
+
 
 
     //Esta en el Controlador de Persitencia (modificar cuando tengamos el controlador de dominio y quitarle el parametro)
@@ -99,7 +149,11 @@ public class Partida {
     public void generarCasillesDisponibles(){
 
     }
-
+    /**
+     * Operacion que gestiona toda una ronda de la Partida
+     * @param accion indica la acción que el jugador quiere realizar en su turno:
+     * @return retorna un int con el ganador de la partida o -1 si la partida no ha acabado todavia
+     */
     public int rondaPartida(String[] accion) {
         /* identificar turno del jugador (turno impar -> negro; turno par -> blanco)
             mostrar fichas disponibles jugador
@@ -183,7 +237,9 @@ public class Partida {
         return this.ganador;
     }
 
-    //Actualiza el tablero de la partida
+    /**
+     * Operacion que actualiza el tablero de la partida
+     */
     public void actualizarTablero() {
         this.tablero.getTablero();
     }
@@ -192,6 +248,9 @@ public class Partida {
         r.incrementar_ganadas_perdidas(this.idJugador1, this.nick1,this.idJugador2, this.nick2, this.ganador);
     }
 
+    /**
+     * Operacion que imprime por pantalla el tablero de la partida
+     */
     public void print_Tablero() {
         if (this.tablero != null) {
             for (int i = 0; i < 8; ++i) {
@@ -205,7 +264,9 @@ public class Partida {
         }
     }
 
-    //Imprime por pantalla toda la informacion de la partida
+    /**
+     * Operacion que imprime por pantalla toda la informacion de la partida
+     */
     public void get_info_partida() {
         System.out.println();
         System.out.println("IDpartida:" + this.id);
@@ -220,7 +281,9 @@ public class Partida {
         System.out.println();
     }
 
-    //guarda toda la info en un ArrayList de String para tratamiento con CtrlPersitencia
+    /**
+     * Operacion que guarda toda la info en un ArrayList de String para tratamiento con CtrlPersitencia
+     */
     public ArrayList<String> toArrayList() {
         ArrayList<String> as = new ArrayList<String>();
         as.add(String.valueOf(this.id));
