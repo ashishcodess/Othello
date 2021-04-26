@@ -67,23 +67,16 @@ public class JugadorMaquina extends Jugador {
     /**
      * Operacion para tirar ficha ejecutando el algoritmo minMax
      * @param t el tablero de la partida
-     * @param x posicion x de la casilla que "retorna"
-     * @param y posicion y de la casilla que "retorna"
-     * devuelve el identificador de la casilla donde coloca la ficha
+     * @param turno turno de la partida en ese momento en concreto
+     * @param alpha parámetro alfa del algoritmo
+     * @param beta parámetro beta del algoritmo
+     * @param depth profundidad que nos falta por recorrer
+     * devuelve el tablero(estado hijo) resultante de haber ejecutado el turno que nos es más conveniente
      */
-    public void valorMax(Tablero t, int x, int y){
+    public Tablero valorMax(Tablero t, int turno, int alpha, int beta, int depth){
 
-    }
-
-    /**
-     * Operacion para ejecutar el algoritmo minMax
-     * @param t el tablero de la partida
-     * @param x posicion x de la casilla que "retorna"
-     * @param y posicion y de la casilla que "retorna"
-     * devuelve el identificador de la casilla donde coloca la ficha
-     */
-
-    public void valorMin(Tablero t, int x, int y){
-
+        SuccessorFunction succesores = new SuccessorFunction();
+        Tablero[] estados_hijos = succesores.genera_succesores(t);
+        return t;
     }
 }

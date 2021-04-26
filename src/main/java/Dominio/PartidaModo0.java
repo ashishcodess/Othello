@@ -31,7 +31,7 @@ public class PartidaModo0 extends Partida {
         int x = -1; int y = -1;
         switch (accion[0]) {
             case "colocar":
-                this.j1.valorMax(this.t, x, y);         //Sergi C: de momento estos son los parametros pero alomejor hay
+                this.j1.valorMax(this.t, super.getTurnoPartida(), -1000 , 1000, this.j1.get_profundidadMaquina());    //Sergi C: de momento estos son los parametros pero alomejor hay
                 //que cambiar algo(tambien hay que implementaresto para las 2 maquinas)
                 /*
                 if(x != -1 && y != -1)

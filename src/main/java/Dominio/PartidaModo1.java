@@ -32,10 +32,9 @@ public class PartidaModo1 extends Partida {
     @Override
     public int rondaPartida(String[] accion) {
         int res = -1;
-        int x = -1; int y = -1;
         switch (accion[0]) {
             case "colocar":
-                this.j2.valorMax(this.t, x, y);         //Sergi C: de momento estos son los parametros pero alomejor hay
+                this.j2.valorMax(this.t, super.getTurnoPartida(), -1000 , 1000, this.j2.get_profundidadMaquina());         //Sergi C: de momento estos son los parametros pero alomejor hay
                 //que cambiar algo(esto solo lo implementa j2 se tendria que hacerw la parte de j1)
                 //if(x != -1 && y != -1)this.tablero.setCasilla_tipo(x, y, tipo);
                 super.incrementar_turno();
