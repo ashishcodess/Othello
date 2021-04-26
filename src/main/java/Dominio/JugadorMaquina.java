@@ -66,7 +66,7 @@ public class JugadorMaquina extends Jugador {
      * @param t el tablero de la partida
      * @param x posicion x de la casilla que "retorna"
      * @param y posicion y de la casilla que "retorna"
-     * @return devuelve el identificador de la casilla donde coloca la ficha
+     * devuelve el identificador de la casilla donde coloca la ficha
      */
     public void valorMax(Tablero t, int x, int y){
 
@@ -77,7 +77,7 @@ public class JugadorMaquina extends Jugador {
      * @param t el tablero de la partida
      * @param x posicion x de la casilla que "retorna"
      * @param y posicion y de la casilla que "retorna"
-     * @return devuelve el identificador de la casilla donde coloca la ficha
+     * devuelve el identificador de la casilla donde coloca la ficha
      */
 
     public void valorMin(Tablero t, int x, int y){

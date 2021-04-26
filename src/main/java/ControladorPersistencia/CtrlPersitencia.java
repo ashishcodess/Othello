@@ -43,9 +43,10 @@ public class CtrlPersitencia {
     }
 
     /**
-     * Constructora con modoRanking (modoRanking:true -> solo utiliza fichero ranking.txt, false -> genera varios ficheros
-     * en funcion del size del ranking [usado en las pruebas DriverRanking])
+     * Constructora con opcion a cambiar el modoRanking[TRUE: solo utiliza fichero ranking.txt; FALSE:genera varios ficheros en
+     * funcion del size del ranking (usado en las pruebas DriverRanking)])
      */
+
     public CtrlPersitencia(boolean bRank) {
         path = "./src/files/";
         path_partidas = path + "partidas/";

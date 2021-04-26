@@ -11,8 +11,9 @@ public class IORanking {
 
     /** Ubicacion de directorio del ranking para CtrlPersitencia*/
     private String path_ranking;
-    /**modoRanking:true -> solo utiliza fichero ranking.txt, false -> genera varios ficheros
-     * en funcion del size del ranking [usado en las pruebas DriverRanking]*/
+
+    /** [TRUE: solo utiliza fichero ranking.txt; FALSE:genera varios ficheros en
+     funcion del size del ranking (usado en las pruebas DriverRanking)]*/
     private boolean modoRanking; //TRUE: guardara en ranking.txt , FALSE -> guardara en ranking_size.txt
 
     /**

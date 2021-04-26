@@ -2,6 +2,7 @@ Aqui mostramos lo que ha hecho cada uno para esta primera entrega.
 
 Sergi Cassanmagnago:
 	- Main
+	- JugadorMaquina (comportamiento de IA)
 
 Sergi Bosquet:
 	- Partida

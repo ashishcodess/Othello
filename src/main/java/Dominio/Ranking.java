@@ -108,7 +108,7 @@ public class Ranking {
     /**
      * Este metodo es el encargado de incrementar las partidas de cada jugador (en caso de que no exista creara los Elementos del Ranking
      * de cada jugador respectivamente)
-     * ;ganador -> 0 (gana nick1), 1 (gana nick2), 2 (empate)
+     * ganador = [2: empate, 1:Ganadas, 0:perdidas]
      * */
     public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, int ganador) throws MyException {
         if (ganador >= 0 && ganador < 3) {
@@ -123,7 +123,7 @@ public class Ranking {
     /**
      * Este metodo crea el ElementoRanking asociado a un jugador (en caso de que no exista)
      * e incrementa los contadores de partidas respetivamente en funcion del entero "ganador"
-     * ; ganador: 2 -> empate, 1 -> Ganadas, 0 -> perdidas
+     * ganador = [2: empate, 1:Ganadas, 0:perdidas]
      * */
     public void incrementar_partida(int id, String nick, int ganador) throws MyException {
         int i = existe_en_ranking(id,nick);
@@ -150,7 +150,7 @@ public class Ranking {
 
     /**
      * Este metodo es el encargado de ordenar el ranking (en funcion de PartidasGanadas, ID o NICKNAME);
-     * orden -> 0 (Ganadas), 1 (ID) , 2 (NICKNAME)
+     * orden = [0 (Ganadas), 1 (ID) , 2 (NICKNAME)]
      * @return devuelve true en caso de que se haya efectuado una ordenacion, caso contrario devuelve falso
      * */
     public Boolean ordenar_ranking(int orden) {
