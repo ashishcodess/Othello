@@ -75,8 +75,18 @@ public class JugadorMaquina extends Jugador {
      */
     public Tablero valorMax(Tablero t, int turno, int alpha, int beta, int depth){
 
+        Tablero mejorHijo = t;
         SuccessorFunction succesores = new SuccessorFunction();
-        Tablero[] estados_hijos = succesores.genera_succesores(t);
-        return t;
+        Tablero[] estados_hijos = succesores.genera_succesores(t, turno);
+
+        if(turno%2 == 0){
+
+        }
+
+        else {
+
+        }
+
+        return mejorHijo;
     }
 }
