@@ -34,6 +34,11 @@ public class Partida {
 
     /**
      * Creadora - Configuración de los parámetros de una partida nueva
+     * @param id es el ID de la Partida
+     * @param modoJuego es el modo de juego de la Partida
+     * @param r son las reglas de la Partida
+     * @param idj1 es el ID del jugador1 de la Partida
+     * @param idj2 es el ID del jugador2 de la Partida
      * */
     public Partida (int id, int modoJuego, int[] r, int idj1, int idj2) {
         this.id = id;
@@ -49,6 +54,15 @@ public class Partida {
 
     /**
      * Creadora - Configuración de los parámetros de una partida ya empezada
+     * @param id es el ID de la Partida
+     * @param modoJuego es el modo de juego de la Partida
+     * @param r son las reglas de la Partida
+     * @param turn es el turno de la Partida
+     * @param idj1 es el ID del jugador1 de la Partida
+     * @param n1 es el nick del jugador1 de la Partida
+     * @param idj2 es el ID del jugador2 de la Partida
+     * @param n2 es el nick del jugador2 de la Partida
+     * @param t es el tablero de la Partida
      * */
     public Partida(int id, int modoJuego, int[] r, int turn, int idj1,String n1, int idj2, String n2, Tablero t) {
         this.id = id;
@@ -66,6 +80,7 @@ public class Partida {
 
     /**
      * Devuelve un boleano indicando si el jugador está en la partida
+     * @return retorna un bool indicando si el jugador con ID id participa en la Partida
      * */
     public Boolean existeJugador(int id){
         return ((idJugador1 == id) || (idJugador2 == id));
@@ -73,11 +88,13 @@ public class Partida {
 
     /**
      * Operacion get del atributo ID de Partida
+     * @return retorna un int con el ID de la Partida
      */
     public int getIdPartida() {return this.id;}
 
     /**
      * Operacion get del atributo modoDeJuego de Partida
+     * @return retorna un int con el modo de juego de la Partida
      */
     public int getModoDeJuegoPartida() {
         return this.modoDeJuego;
@@ -85,6 +102,7 @@ public class Partida {
 
     /**
      * Operacion get del atributo reglas de Partida
+     * @return retorna un array de int con las reglas de la Partida
      */
     public int[] getReglasPartida() {
         return this.reglas;
@@ -92,6 +110,7 @@ public class Partida {
 
     /**
      * Operacion get del atributo turno de Partida
+     * @return retorna un int con el turno de la Partida
      */
     public int getTurnoPartida() {
         return this.turno;
@@ -99,6 +118,7 @@ public class Partida {
 
     /**
      * Operacion get del atributo ID del Jugador1 de Partida
+     * @return retorna un int con el ID del Jugador1 de la Partida
      */
     public int getID_J1() {
         return this.idJugador1;
@@ -106,6 +126,7 @@ public class Partida {
 
     /**
      * Operacion get del atributo ID del Jugador2 de Partida
+     * @return retorna un int con el ID del Jugador2 de la Partida
      */
     public int getID_J2() {
         return this.idJugador2;
@@ -113,6 +134,7 @@ public class Partida {
 
     /**
      * Operacion get del atributo nick del Jugador1 de Partida
+     * @return retorna un String con el nick del Jugador1 de la Partida
      */
     public String getNickJugador1() {
         return this.nick1;
@@ -120,6 +142,7 @@ public class Partida {
 
     /**
      * Operacion get del atributo nick del Jugador2 de Partida
+     * @return retorna un String con el nick del Jugador2 de la Partida
      */
     public String getNickJugador2() {
         return this.nick2;
@@ -127,6 +150,7 @@ public class Partida {
 
     /**
      * Operacion get del atributo tablero de Partida
+     * @return retorna un tablero de la Partida
      */
     public Tablero getTableroPartida() {
         return this.tablero;
@@ -140,9 +164,13 @@ public class Partida {
 
     /**
      * Operacion get del atributo ganador de Partida
+     * @return retorna un int que define el ganador
      */
     public int getGanador() {return this.ganador;}
 
+    /**
+     * Operacion get del atributo finalizada de Partida
+     */
     protected int getFinalizada() { return this.finalizada; }
 
     /**
@@ -158,17 +186,6 @@ public class Partida {
     public void setGanador(int i) {this.ganador = i;}
 
 
-
-
-    //Esta en el Controlador de Persitencia (modificar cuando tengamos el controlador de dominio y quitarle el parametro)
-    public void guardarPartida(CtrlPersitencia cp) throws IOException, MyException {
-        cp.ctrl_guardar_partida(this.toArrayList());
-    }
-
-    //Imprime el tablero con las casillas disponibles marcadas
-    public void generarCasillesDisponibles(){
-
-    }
     /**
      * Operacion que gestiona toda una ronda de la Partida
      * @param accion indica la acción que el jugador quiere realizar en su turno:
@@ -176,53 +193,21 @@ public class Partida {
      */
     public int rondaPartida(String[] accion) {
         if (finalizada == 2) {
-            if (this.tablero.getNumCasillasBlancas() > this.tablero.getNumCasillasNegras()) {
-                this.ganador = 1;
-            } else if (this.tablero.getNumCasillasBlancas() < this.tablero.getNumCasillasNegras()) {
-                this.ganador = 0;
-            } else if (this.tablero.getNumCasillasBlancas() == this.tablero.getNumCasillasNegras()) {
-                this.ganador = 2;
-            }
+            comprobarPartidaFinalizada();
             return 3; //si hay dos turnos sin poder mover ningun jugador, la partida se acaba.
         }
         else {
-            if (this.reglas == new int[]{1, 1}) {
-                this.tablero.calcularCasillasDisponiblesDiagonales(this.turno);
-                this.tablero.calcularCasillasDisponiblesHorizontal(this.turno);
-                this.tablero.calcularCasillasDisponiblesVertical(this.turno);
-            }
-            else if (this.reglas == new int[]{1, 0}) {
-                this.tablero.calcularCasillasDisponiblesHorizontal(this.turno);
-                this.tablero.calcularCasillasDisponiblesVertical(this.turno);
-            }
-            else if (this.reglas == new int[]{0, 1}) {
-                this.tablero.calcularCasillasDisponiblesDiagonales(this.turno);
-            }
-            //print_Tablero();
-            Set<Position> disponibles = new HashSet<Position>();
-            disponibles = this.tablero.getCasillasDisponibles();
+            reglasCasillasDisponibles();
+            Set<Position> disponibles = this.tablero.getCasillasDisponibles();
             int disp = disponibles.size();
-            /* identificar turno del jugador (turno par -> negro; turno impar -> blanco)
-                mostrar fichas disponibles jugador
-                opciones del jugador(colocar x y, guardar, finalizar, paso)
-                colocar ficha
-                actualizar tablero
-                contar fichas
-                retornar valor que indique si la partida ha acabado o no (no hay más espacios en el tablero o se ha
-                llegado al turno máximo)
-             */
             if (this.turno % 2 == 0) {
-                switch (accion[0]) {
+                switch (accion[0]){
                     case "colocar":
                         int x = Integer.parseInt(accion[1]);
                         int y = Integer.parseInt(accion[2]);
-
                         //como se actualizan las fichas que se convierten con tu movimiento?
                         //como se actualizan las fichas que antes se han puesto a disponible para que vuelvan a estar simplemente vacias?
                         this.tablero.setCasilla_tipo(x, y, 2);
-
-
-
                         incrementarTurnoPartida();
                         actualizarTablero();
                         this.finalizada = 0;
@@ -245,13 +230,9 @@ public class Partida {
                     case "colocar":
                         int x = Integer.parseInt(accion[1]);
                         int y = Integer.parseInt(accion[2]);
-
                         //como se actualizan las fichas que se convierten con tu movimiento?
                         //como se actualizan las fichas que antes se han puesto a disponible para que vuelvan a estar simplemente vacias?
                         this.tablero.setCasilla_tipo(x, y, 2);
-
-
-
                         incrementarTurnoPartida();
                         actualizarTablero();
                         this.finalizada = 0;
@@ -270,6 +251,28 @@ public class Partida {
                 }
             }
             return this.ganador;
+        }
+    }
+
+    private void reglasCasillasDisponibles() {
+        if (this.reglas[0] == 1) {
+            this.tablero.calcularCasillasDisponiblesVertical(this.turno);
+        }
+        if (this.reglas[1] == 1) {
+            this.tablero.calcularCasillasDisponiblesHorizontal(this.turno);
+        }
+        if (this.reglas[2] == 1) {
+            this.tablero.calcularCasillasDisponiblesDiagonales(this.turno);
+        }
+    }
+
+    private void comprobarPartidaFinalizada() {
+        if (this.tablero.getNumCasillasBlancas() > this.tablero.getNumCasillasNegras()) {
+            this.ganador = 1;
+        } else if (this.tablero.getNumCasillasBlancas() < this.tablero.getNumCasillasNegras()) {
+            this.ganador = 0;
+        } else if (this.tablero.getNumCasillasBlancas() == this.tablero.getNumCasillasNegras()) {
+            this.ganador = 2;
         }
     }
 
