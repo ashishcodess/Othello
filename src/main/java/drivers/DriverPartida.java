@@ -26,6 +26,11 @@ public class DriverPartida {
         System.out.println("Prueba getID: " + res.getIdPartida());
         System.out.println("Prueba getModoDeJuego: " + res.getModoDeJuegoPartida());
         System.out.println("Prueba getTurno: " + res.getTurnoPartida());
+        System.out.println("Prueba incrementar turno: ");
+        res.incrementar_turno();
+        System.out.println("Prueba getTurno: " + res.getTurnoPartida());
+        System.out.println("Prueba rondaPartida:");
+
     }
 
 

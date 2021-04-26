@@ -6,6 +6,10 @@ Sergi Cassanmagnago:
 
 Sergi Bosquet:
 	- Partida
+        - PartidaModo0
+        - PartidaModo1
+        - PartidaModo2
+	- DriverPartida
 
 Ashish Kshetri:
 	- Tablero
