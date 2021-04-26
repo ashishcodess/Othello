@@ -8,7 +8,10 @@ import java.util.ArrayList;
 
 public class IOUsuario {
 
+    /** Ubicacion de directorio de los usuarios para CtrlPersitencia*/
     private final String path_users;
+
+    /** ID generado para el proximo Usuario a crear*/
     private int ID_max;
 
     /**
@@ -76,7 +79,7 @@ public class IOUsuario {
     }
 
     /**
-     * Operacion borrar_usuario
+     * Operacion borrar_usuario a partir de su idJugador y nickname
      */
     public boolean borrar_usuario(int idJugador, String nick) throws IOException {
         String path = path_users + idJugador + "_" + nick;

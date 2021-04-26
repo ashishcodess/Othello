@@ -11,16 +11,22 @@ import java.util.ArrayList;
 
 public class CtrlPersitencia {
 
+    /** Objeto IOPartidas*/
     private IOPartidas cPartidas;
+    /** Objeto IORanking*/
     private IORanking cRanking;
+    /** Objeto IOUsuario*/
     private IOUsuario cUsuario;
 
+    /** Ubicacion de directorio de ficheros para CtrlPersitencia*/
     private String path;
+    /** Ubicacion de directorio de las partidas para CtrlPersitencia*/
     private String path_partidas;
+    /** Ubicacion de directorio del ranking para CtrlPersitencia*/
     private String path_ranking;
+    /** Ubicacion de directorio de los usuarios para CtrlPersitencia*/
     private String path_users;
 
-    //Faltaria agregarle el Controlador de Domino
 
     /**
      * Constructora por defecto
@@ -37,7 +43,8 @@ public class CtrlPersitencia {
     }
 
     /**
-     * Constructora con modoRanking (activado)
+     * Constructora con modoRanking (modoRanking:true -> solo utiliza fichero ranking.txt, false -> genera varios ficheros
+     * en funcion del size del ranking [usado en las pruebas DriverRanking])
      */
     public CtrlPersitencia(boolean bRank) {
         path = "./src/files/";

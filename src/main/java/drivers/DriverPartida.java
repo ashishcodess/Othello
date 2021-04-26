@@ -4,7 +4,6 @@ import Dominio.Partida;
 import Dominio.Jugador;
 import Dominio.JugadorMaquina;
 import Dominio.JugadorPersona;
-import Dominio.ConjuntoMaquinas;
 import MyException.MyException;
 
 import java.io.IOException;

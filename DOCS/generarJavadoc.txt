@@ -1,1 +1,3 @@
 Tools-> Generate JavaDOC...
+
+Sergio: para poder ver los atributos poner la barra de la izquierda en "private"

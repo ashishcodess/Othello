@@ -13,7 +13,10 @@ import java.util.ArrayList;
 
 public class IOPartidas {
 
+    /** Ubicacion de directorio de las partidas para CtrlPersitencia*/
     private String path_partidas;
+
+    /** ID generado para la proxima partida a guardar*/
     private int ID_max_partida;
 
 

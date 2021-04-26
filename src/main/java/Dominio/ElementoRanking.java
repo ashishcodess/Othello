@@ -4,11 +4,14 @@ import MyException.MyException;
 
 public class ElementoRanking {
     /*Atributos*/
+
     private final int idJugador;
     private String nickJugador;
     private int partidasGanadas;
     private int partidasPerdidas;
     private int partidasEmpatadas;
+
+    /** total de partidas jugadas por el jugador: Ganadas+Perdidas+Empatadas*/
     private int totalPartidasJugadas;
 
 

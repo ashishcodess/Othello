@@ -1,6 +1,5 @@
 package Dominio;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -8,8 +7,8 @@ import java.util.Comparator;
 import MyException.MyException;
 
 
-
 public class Ranking {
+    /**ArrayList de elementos tipo ElementoRanking*/
     private final ArrayList<ElementoRanking> ranking;
 
     /**
@@ -121,19 +120,19 @@ public class Ranking {
         }
     }
 
-    //modo: 2 -> empate, 1 -> Ganadas, 0 -> perdidas
     /**
      * Este metodo crea el ElementoRanking asociado a un jugador (en caso de que no exista)
      * e incrementa los contadores de partidas respetivamente en funcion del entero "ganador"
+     * ; ganador: 2 -> empate, 1 -> Ganadas, 0 -> perdidas
      * */
-    public void incrementar_partida(int id, String nick, int modo) throws MyException {
+    public void incrementar_partida(int id, String nick, int ganador) throws MyException {
         int i = existe_en_ranking(id,nick);
         if (i == -1) {
             ElementoRanking e = new ElementoRanking(id,nick);
             this.add_al_ranking(e);
             i = ranking.size()-1;
         }
-        switch(modo) {
+        switch(ganador) {
             case 0:
                 this.ranking.get(i).incrementar_partida_perdida();
                 break;
@@ -149,10 +148,9 @@ public class Ranking {
     }
 
 
-    //orden -> 0 (Ganadas), 1 (ID) , 2 (NICKNAME)
-
     /**
-     * Este metodo es el encargado de ordenar el ranking (en funcion de PartidasGanadas, ID o NICKNAME)
+     * Este metodo es el encargado de ordenar el ranking (en funcion de PartidasGanadas, ID o NICKNAME);
+     * orden -> 0 (Ganadas), 1 (ID) , 2 (NICKNAME)
      * @return devuelve true en caso de que se haya efectuado una ordenacion, caso contrario devuelve falso
      * */
     public Boolean ordenar_ranking(int orden) {

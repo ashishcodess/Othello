@@ -9,7 +9,10 @@ import java.util.ArrayList;
 
 public class IORanking {
 
+    /** Ubicacion de directorio del ranking para CtrlPersitencia*/
     private String path_ranking;
+    /**modoRanking:true -> solo utiliza fichero ranking.txt, false -> genera varios ficheros
+     * en funcion del size del ranking [usado en las pruebas DriverRanking]*/
     private boolean modoRanking; //TRUE: guardara en ranking.txt , FALSE -> guardara en ranking_size.txt
 
     /**
@@ -21,13 +24,16 @@ public class IORanking {
     }
 
     /**
-     * Constructora path_ranking igual a s
+     * Constructora con path_ranking=s
      */
     public IORanking(String s) {
         this.path_ranking = s;
         this.modoRanking = false;
     }
 
+    /**
+     * Constructora con path_ranking=s y modoRanking=b
+     */
     public IORanking(String s, boolean b) {
         this.path_ranking = s;
         this.modoRanking = b;
