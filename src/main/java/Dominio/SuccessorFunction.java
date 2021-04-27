@@ -16,7 +16,7 @@ public class SuccessorFunction { //necessaria para implementar la IA
     }
 
     /**
-     *
+     * Función que genera los estados succesores del tablero que recibe como parámetro
      * @param t es el tablero a partir del cual generamos su lista de estados succesores
      * @param turno es el turno del tablero t
      * @return retorna la lista de estados hijos de ese tablero, resultantes de cada uno de los posibles movimientos de este
