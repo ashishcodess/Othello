@@ -45,11 +45,15 @@ public class IOPartidas {
     private int calcularID_MAX_partida(String path) {
         File f = new File(path);
         String[] s = f.list();
+        boolean b = false;
+        String s2 = "index.txt";
         int maxID = 0;
         for (int i = 0; i < s.length; ++i) {
             String res[] = s[i].split(".txt");
-            int i_aux = Integer.parseInt(res[0]);
-            if (maxID < i_aux) maxID = i_aux;
+            if (!s[i].equals(s2)) {
+                int i_aux = Integer.parseInt(res[0]);
+                if (maxID < i_aux) maxID = i_aux;
+            }
         }
         return (maxID+1);
     }

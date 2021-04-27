@@ -37,11 +37,14 @@ public class IOUsuario {
     private int calcularID_MAX() {
         File f = new File(path_users);
         String[] s = f.list();
+        String s2 = "index.txt";
         int maxID = 0;
         for (int i = 0; i < s.length; ++i) {
             String res[] = s[i].split("_");
-            int i_aux = Integer.parseInt(res[0]);
-            if (maxID < i_aux) maxID = i_aux;
+            if (!s[i].equals(s2)) {
+                int i_aux = Integer.parseInt(res[0]);
+                if (maxID < i_aux) maxID = i_aux;
+            }
         }
         return maxID;
     }
