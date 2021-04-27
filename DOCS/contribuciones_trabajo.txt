@@ -1,14 +1,15 @@
 Aqui mostramos lo que ha hecho cada uno para esta primera entrega.
 
 Sergi Cassanmagnago:
-	- Main
-	- JugadorMaquina (comportamiento de IA)
+	- Jugador
+    	- JugadorMaquina
+    	- SuccessorFunction
+    	- DriverJugadorMaquina
+    	- JugadorPersona
+    	- DriverJugadorPersona
 
 Sergi Bosquet:
 	- Partida
-        - PartidaModo0
-        - PartidaModo1
-        - PartidaModo2
 	- DriverPartida
 
 Ashish Kshetri:
@@ -16,16 +17,12 @@ Ashish Kshetri:
 	- Casilla
 
 Sergio Aguado:
-	- Jugador
-		- JugadorMaquina (sin comportamiento de IA)
-		- JugadorPersona
-		- DriverJugador
+	- Main
 	- MyException
 	- Ranking
 	    - ElementoRanking
 	    - DriverRanking
 	    - RankingTest_JUnit (test unitario JUnit)
-
 	- ControladorPersitencia
 	    - CtrlPersitencia + DriverPersitencia
 	    - IOPartidas

@@ -1,7 +1,7 @@
 package Dominio;
 
 
-public class Jugador {
+public abstract class Jugador {
 
     /*Atributos*/
 
@@ -53,8 +53,7 @@ public class Jugador {
      * @param t Tablero donde se realiza la accion de colocar la ficha
      * @return True en caso haber colocado correctamente la ficha, caso contrario devuelve FALSO
      */
-
-    public boolean Mover_pieza_en_partida(int turno, int x, int y, Tablero t) {
+    public boolean colocar_ficha_en_partida(int turno, int x, int y, Tablero t) {
         if (t.es_possible(x, y)) {
             t.actualizarTablero(x,y,turno);
             return true;

@@ -1,9 +1,6 @@
 package ControladorPersistencia;
 
 
-import Dominio.PartidaModo0;
-import Dominio.PartidaModo1;
-import Dominio.PartidaModo2;
 import MyException.MyException;
 import Dominio.Partida;
 import Dominio.Tablero;
@@ -141,8 +138,9 @@ public class IOPartidas {
      * @param idPartida es el ID de partida a cargar
      * @return devuelve Partida con id igual a idPartida, caso contrario salta excepcion
      * @throws IOException en caso de fallo con fichero de Partida
+     * @throws MyException en caso de fallo modo de Partida
      */
-    public Partida cargar_partida(int idPartida) throws IOException {
+    public Partida cargar_partida(int idPartida) throws MyException,IOException {
         String path = path_partidas + idPartida + ".txt";
         File f = new File(path);
         if (f.exists()) {
@@ -207,6 +205,7 @@ public class IOPartidas {
      * @throws IOException en caso de fallo con fichero Partida
      * @throws MyException en caso de fallo al cargar el modo de juego (modo juego incorrecto)
      */
+    /*
     public PartidaModo0 cargar_partida_modo0(int idPartida) throws IOException, MyException {
         String path = path_partidas + idPartida + ".txt";
         File f = new File(path);
@@ -252,7 +251,7 @@ public class IOPartidas {
             else throw new MyException("La partida que se quiere cargar no es del modoPartida incorrecto al solicitado");
         }
         else return null;
-    }
+    }*/
 
     /**
      * Operacion cargar_partida_modo1
@@ -261,7 +260,7 @@ public class IOPartidas {
      * @throws IOException en caso de fallo con fichero Partida
      * @throws MyException en caso de fallo al cargar el modo de juego (modo juego incorrecto)
      */
-    public PartidaModo1 cargar_partida_modo1(int idPartida) throws IOException, MyException {
+    /*public PartidaModo1 cargar_partida_modo1(int idPartida) throws IOException, MyException {
         String path = path_partidas + idPartida + ".txt";
         File f = new File(path);
         if (f.exists()) {
@@ -306,7 +305,7 @@ public class IOPartidas {
             else throw new MyException("La partida que se quiere cargar no es del modoPartida incorrecto al solicitado");
         }
         else return null;
-    }
+    }*/
 
     /**
      * Operacion cargar_partida_modo2
@@ -315,7 +314,7 @@ public class IOPartidas {
      * @throws IOException en caso de fallo con fichero Partida
      * @throws MyException en caso de fallo al cargar el modo de juego (modo juego incorrecto)
      */
-    public PartidaModo2 cargar_partida_modo2(int idPartida) throws IOException, MyException {
+    /*public PartidaModo2 cargar_partida_modo2(int idPartida) throws IOException, MyException {
         String path = path_partidas + idPartida + ".txt";
         File f = new File(path);
         if (f.exists()) {
@@ -360,7 +359,7 @@ public class IOPartidas {
             else throw new MyException("La partida que se quiere cargar no es del modoPartida incorrecto al solicitado");
         }
         else return null;
-    }
+    }*/
 
 
 }

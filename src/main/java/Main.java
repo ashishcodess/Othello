@@ -2,9 +2,6 @@ import ControladorPersistencia.CtrlPersitencia;
 
 import Dominio.Tablero;
 import Dominio.Partida;
-import Dominio.PartidaModo0;
-import Dominio.PartidaModo1;
-import Dominio.PartidaModo2;
 import Dominio.Ranking;
 import MyException.MyException;
 
@@ -190,7 +187,8 @@ public class Main {
                     id2 = seleccionar_id_maquina(true);
                     if(id2<0 | id2>5) id2 = -1;
                 }
-                PartidaModo0 pa0 = new PartidaModo0(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
+                Partida pa0 = new Partida(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
+                //PartidaModo0 pa0 = new PartidaModo0(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
                 //Ejecutando partida
                 res = -1;
                 while (res < 0) { //continua la partida
@@ -218,7 +216,8 @@ public class Main {
                     id2 = seleccionar_id_maquina(true);
                     if(id2<0 | id2>5) id2 = -1;
                 }
-                PartidaModo1 pa1 = new PartidaModo1(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
+                Partida pa1 = new Partida(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
+                //PartidaModo1 pa1 = new PartidaModo1(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
                 //Ejecutando partida
                 res = -1;
                 while (res < 0) { //continua la partida
@@ -278,8 +277,8 @@ public class Main {
                         if (cp.ctrl_existe_usuario(id1,nick1)) System.out.println("Login Correcto");
                     }
                 }
-
-                PartidaModo2 pa2 = new PartidaModo2(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
+                //PartidaModo2 pa2 = new PartidaModo2(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
+                Partida pa2 = new Partida(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
                 //Ejecutando partida
                 res = -1;
                 while (res < 0) { //continua la partida
@@ -311,7 +310,9 @@ public class Main {
         int res;
         switch (modo) {
             case 0: //Maquina vs Maquina
-                PartidaModo0 pa0 = cp.ctrl_cargar_partida_modo0(idPartida);
+                Partida pa0 = cp.ctrl_cargar_partida(idPartida);
+                //Partida pa0 = cp.ctrl_cargar_partida_modo0(idPartida);
+                //PartidaModo0 pa0 = cp.ctrl_cargar_partida_modo0(idPartida);
                 //Ejecutando partida
                 res = -1;
                 while (res < 0) { //continua la partida
@@ -332,7 +333,9 @@ public class Main {
                 break;
 
             case 1: //Persona vs Maquina
-                PartidaModo1 pa1 = cp.ctrl_cargar_partida_modo1(idPartida);
+                Partida pa1 = cp.ctrl_cargar_partida(idPartida);
+                //PartidaModo1 pa1 = cp.ctrl_cargar_partida_modo1(idPartida);
+                //Partida pa1 = cp.ctrl_cargar_partida_modo1(idPartida);
                 //Ejecutando partida
                 res = -1;
                 while (res < 0) { //continua la partida
@@ -353,7 +356,9 @@ public class Main {
                 break;
 
             case 2: //Persona vs Persona
-                PartidaModo2 pa2 = cp.ctrl_cargar_partida_modo2(idPartida);
+                Partida pa2 = cp.ctrl_cargar_partida(idPartida);
+                //Partida pa2 = cp.ctrl_cargar_partida_modo2(idPartida);
+                //PartidaModo2 pa2 = cp.ctrl_cargar_partida_modo2(idPartida);
                 //Ejecutando partida
                 res = -1;
                 while (res < 0) { //continua la partida  //por ahora falla

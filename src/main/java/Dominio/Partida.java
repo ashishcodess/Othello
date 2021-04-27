@@ -26,8 +26,9 @@ public class Partida {
     /**ID del Jugador2 de la Partida*/
     private final int idJugador2;
 
-    //private Jugador j1;
-    //private Jugador j2;
+
+    private Jugador j1;
+    private Jugador j2;
 
     /**Tablero de la Partida*/
     private Tablero tablero;
@@ -68,22 +69,25 @@ public class Partida {
      * @param n2 es el nick del jugador2 de la Partida
      * @param t es el tablero de la Partida
      * */
-    public Partida(int id, int modoJuego, int[] r, int turn, int idj1,String n1, int idj2, String n2, Tablero t) {
+    public Partida(int id, int modoJuego, int[] r, int turn, int idj1,String n1, int idj2, String n2, Tablero t) throws MyException{
         this.id = id;
         this.modoDeJuego = modoJuego;
-        /*
+
         switch (modoJuego){
             case 0:
-                this.j1 = new JugadorMaquina(id1);
-                this.j2 = new JugadorMaquina(id2);
+                this.j1 = new JugadorMaquina(idj1);
+                this.j2 = new JugadorMaquina(idj2);
             case 1:
-                this.j1 = new JugadorPersona(id1, n1);
-                this.j2 = new JugadorMaquina(id2);
+                this.j1 = new JugadorPersona(idj1, n1);
+                this.j2 = new JugadorMaquina(idj2);
             case 2:
-                this.j1 = new JugadorPersona(id1, n1);
-                this.j2 = new JugadorPersona(id2, n2);
+                this.j1 = new JugadorPersona(idj1, n1);
+                this.j2 = new JugadorPersona(idj2, n2);
+                break;
+            default:
+                throw new MyException("Error en el modo de juego");
         }
-       */
+
         this.reglas = r;
         this.turno = turn;
         this.nick1 = n1;
