@@ -170,6 +170,7 @@ public class Partida {
 
     /**
      * Operacion get del atributo finalizada de Partida
+     * @return retorna un int que define si la partida ha finalizado
      */
     protected int getFinalizada() { return this.finalizada; }
 
@@ -199,6 +200,12 @@ public class Partida {
         else {
             reglasCasillasDisponibles();
             Set<Position> disponibles = this.tablero.getCasillasDisponibles();
+            Object[] arr = disponibles.toArray();
+            System.out.println("Movimientos disponibles:");
+            for (int i = 0 ; i < arr.length ; ++i){
+                Position P = (Position)arr[i];
+                System.out.println("x:" + P.getX() + "y:" + P.getY());
+            }
             int disp = disponibles.size();
             if (this.turno % 2 == 0) {
                 switch (accion[0]){
@@ -207,9 +214,8 @@ public class Partida {
                         int y = Integer.parseInt(accion[2]);
                         //como se actualizan las fichas que se convierten con tu movimiento?
                         //como se actualizan las fichas que antes se han puesto a disponible para que vuelvan a estar simplemente vacias?
-                        this.tablero.setCasilla_tipo(x, y, 2);
+                        this.tablero.actualizarTablero(x, y, this.turno);
                         incrementarTurnoPartida();
-                        actualizarTablero();
                         this.finalizada = 0;
                         //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
                         /*
@@ -232,7 +238,7 @@ public class Partida {
                         int y = Integer.parseInt(accion[2]);
                         //como se actualizan las fichas que se convierten con tu movimiento?
                         //como se actualizan las fichas que antes se han puesto a disponible para que vuelvan a estar simplemente vacias?
-                        this.tablero.setCasilla_tipo(x, y, 2);
+                        this.tablero.actualizarTablero(x, y, this.turno);
                         incrementarTurnoPartida();
                         actualizarTablero();
                         this.finalizada = 0;
@@ -250,10 +256,13 @@ public class Partida {
                         break;
                 }
             }
-            return this.ganador;
         }
+        return this.ganador;
     }
 
+    /**
+     * Operacion que utiliza las reglas de Partida para generar las casillas disponibles
+     */
     private void reglasCasillasDisponibles() {
         if (this.reglas[0] == 1) {
             this.tablero.calcularCasillasDisponiblesVertical(this.turno);
@@ -266,13 +275,16 @@ public class Partida {
         }
     }
 
+    /**
+     * Operacion que comprueba si la Partida ha finalizado y genera el ganador
+     */
     private void comprobarPartidaFinalizada() {
-        if (this.tablero.getNumCasillasBlancas() > this.tablero.getNumCasillasNegras()) {
-            this.ganador = 1;
-        } else if (this.tablero.getNumCasillasBlancas() < this.tablero.getNumCasillasNegras()) {
-            this.ganador = 0;
+        if (this.tablero.getNumCasillasBlancas() > this.tablero.getNumCasillasNegras() || this.tablero.getNumCasillasNegras() == 0) {
+            setGanador(1);
+        } else if ((this.tablero.getNumCasillasBlancas() < this.tablero.getNumCasillasNegras()) || this.tablero.getNumCasillasBlancas() == 0) {
+            setGanador(0);
         } else if (this.tablero.getNumCasillasBlancas() == this.tablero.getNumCasillasNegras()) {
-            this.ganador = 2;
+            setGanador(2);
         }
     }
 
@@ -283,9 +295,12 @@ public class Partida {
         this.tablero.getTablero();
     }
 
+
+    /*
     public void actualizarRanking(Ranking r) throws MyException {
         r.incrementar_ganadas_perdidas(this.idJugador1, this.nick1,this.idJugador2, this.nick2, this.ganador);
     }
+    */
 
     /**
      * Operacion que imprime por pantalla el tablero de la partida
@@ -347,8 +362,6 @@ public class Partida {
         }
         return as;
     }
-
-
 }
 
 
