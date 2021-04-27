@@ -25,6 +25,10 @@ public class Partida {
     private String nick2;
     /**ID del Jugador2 de la Partida*/
     private final int idJugador2;
+
+    //private Jugador j1;
+    //private Jugador j2;
+
     /**Tablero de la Partida*/
     private Tablero tablero;
     /**Ganador de la Partida*/
@@ -67,6 +71,19 @@ public class Partida {
     public Partida(int id, int modoJuego, int[] r, int turn, int idj1,String n1, int idj2, String n2, Tablero t) {
         this.id = id;
         this.modoDeJuego = modoJuego;
+        /*
+        switch (modoJuego){
+            case 0:
+                this.j1 = new JugadorMaquina(id1);
+                this.j2 = new JugadorMaquina(id2);
+            case 1:
+                this.j1 = new JugadorPersona(id1, n1);
+                this.j2 = new JugadorMaquina(id2);
+            case 2:
+                this.j1 = new JugadorPersona(id1, n1);
+                this.j2 = new JugadorPersona(id2, n2);
+        }
+       */
         this.reglas = r;
         this.turno = turn;
         this.nick1 = n1;
@@ -215,6 +232,8 @@ public class Partida {
                         //como se actualizan las fichas que se convierten con tu movimiento?
                         //como se actualizan las fichas que antes se han puesto a disponible para que vuelvan a estar simplemente vacias?
                         this.tablero.actualizarTablero(x, y, this.turno);
+                        actualizarTablero();
+                        print_Tablero();
                         incrementarTurnoPartida();
                         this.finalizada = 0;
                         //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
@@ -239,8 +258,9 @@ public class Partida {
                         //como se actualizan las fichas que se convierten con tu movimiento?
                         //como se actualizan las fichas que antes se han puesto a disponible para que vuelvan a estar simplemente vacias?
                         this.tablero.actualizarTablero(x, y, this.turno);
-                        incrementarTurnoPartida();
                         actualizarTablero();
+                        print_Tablero();
+                        incrementarTurnoPartida();
                         this.finalizada = 0;
                         //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
                         /*

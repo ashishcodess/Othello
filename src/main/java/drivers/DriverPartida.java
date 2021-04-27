@@ -48,15 +48,15 @@ public class DriverPartida {
                     b = false;
                     break;
                 case 1:
-                    int[]r = {1,1};
+                    int[]r = {1,1,1};
                     Partida p = test_crear_partida(1,0,r,1,2);
                     break;
                 case 2:
-                    int[]reg = {1,1};
+                    int[]reg = {1,1,1};
 
                     Partida par = test_crear_partida(1,0,reg,1,2);
                     String[] accion = {"colocar"};
-                    //test_ronda_partida(accion, par);
+                    test_ronda_partida(accion, par);
                     break;
                  default:
                     System.out.println("Introducir una opcion correcta");
@@ -65,8 +65,9 @@ public class DriverPartida {
         }
     }
 
-    /*private static void test_ronda_partida(String[] accion, Partida p) {
+    private static void test_ronda_partida(String[] accion, Partida p) {
         System.out.println("Prueba ronda partida: ");
-        p.rondaPartida(new String[]{"colocar", "3", "5"});
-    }*/
+        p.rondaPartida(new String[]{"colocar 3 2"});
+        p.print_Tablero();
+    }
 }
