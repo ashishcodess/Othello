@@ -181,7 +181,7 @@ public class Partida {
     /**
      * Operacion set del atributo ganador de Partida
      * @param i indica el ganador de la partida de la siguiente manera:
-     *          ganador -> 0 (gana Jugador1), 1 (gana Jugador2), 2 (empate)
+     *          ganador : 0 (gana Jugador1), 1 (gana Jugador2), 2 (empate)
      */
     public void setGanador(int i) {this.ganador = i;}
 
