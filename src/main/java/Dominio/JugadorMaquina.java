@@ -6,6 +6,8 @@ package Dominio;
 *
 * */
 
+import java.util.Set;
+
 public class JugadorMaquina extends Jugador {
 
     /*Atributos*/
@@ -77,14 +79,20 @@ public class JugadorMaquina extends Jugador {
 
         Tablero mejorHijo = t;
         SuccessorFunction succesores = new SuccessorFunction();
-        //Tablero[] estados_hijos = succesores.genera_succesores(t, turno);
+        Set<Tablero> estados_hijos = succesores.genera_succesores(t, turno);
 
         if(turno%2 == 0){
+            int maxeval = -1000;
+            for(Tablero aux : estados_hijos){
 
+            }
         }
 
         else {
+            int mineval = 1000;
+            for(Tablero aux : estados_hijos){
 
+            }
         }
 
         return mejorHijo;
