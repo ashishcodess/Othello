@@ -136,7 +136,7 @@ public class DriverTablero {
             System.out.println("x:" + P.getX() + "y:" + P.getY());
         }
         T.actualizarTablero(4 ,1 , turno);
-        T.setCasilla_tipo(4,1 , 2);  // if even tipo = negro
+        //T.setCasilla_tipo(4,1 , 2);  // if even tipo = negro
         for (int i = 0; i < 8; ++i) {
             String sbuff = new String();
             for (int j = 0; j < 8; ++j) {
