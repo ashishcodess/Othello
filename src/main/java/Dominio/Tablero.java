@@ -1,5 +1,6 @@
 package Dominio;
 
+import java.sql.Array;
 import java.util.*;
 
 
@@ -581,6 +582,7 @@ public class Tablero {
     }
     public void actualizarTablero(int x , int y , int turno){
         Object[] arr = disponibles.toArray();
+        disponibles.clear();
         modificarCasillasHorizontal(x , y , turno);
         modificarCasillasVertical(x , y , turno);
         modificarCasillasDiagonales(x , y , turno);
@@ -591,7 +593,6 @@ public class Tablero {
             a = pos.getX();
             b = pos.getY();
             tablero[a][b].cambiar_tipo(0);  // cambiar todos los disponibles a vacio.
-            disponibles.clear();
         }
         int color ;
         if (turno %2 == 0) color = 2;
