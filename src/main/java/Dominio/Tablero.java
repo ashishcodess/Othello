@@ -7,14 +7,23 @@ import java.util.*;
 public class Tablero {
 
     /*Atributos*/
+    /**matrix de casilla*/
     private Casilla[][] tablero;
+    /**matrix para hacer bfs horizontal*/
     private int[][] graph_h;
+    /**matrix para hacer bfs vertical*/
     private int[][] graph_v;
+    /**matrix para hacer bfs diagonal right */
     private int[][] graph_dr;
+    /**matrix para hacer bfs diagonal left*/
     private int[][] graph_dl;
+    /**numero de casilla vacias*/
     private int num_vacia;
+    /**set que contiene fichas negras*/
     private Set<Position> negras;
+    /**set que contiene fichas blancas*/
     private Set<Position> blancas;
+    /**set que contiene fichas disponibles*/
     private Set<Position> disponibles;
 
     /*Constructora*/
@@ -99,10 +108,15 @@ public class Tablero {
             }
         }
     }
+    /**
+     * Inicializar tablero con dos negras y dos blancas ya colocadas
+     * */
     public void inicializeTablero(Casilla[][] tablero){
         for(int i = 0 ; i < 8 ; ++i){
             for (int j = 0 ; j <8 ; ++j){
                 tablero[i][j] = new Casilla();
+                if ((i == 3 & j==3) || (i == 4 & j==4)) tablero[i][j] = new Casilla(3);
+                else if ((i == 3 & j==4) || (i == 4 & j==3)) tablero[i][j] = new Casilla(2);
             }
         }
     }
@@ -407,7 +421,7 @@ public class Tablero {
         else return false;
     }
 
-    public void modificarCasillasVertical(int x , int y, int turno) {  // debería llamar jugador.
+    public void modificarCasillasVertical(int x , int y, int turno) {
 
         for(int i = 0 ; i < 8 ; ++i){
             for (int j = 0 ; j < 8 ; ++j){
@@ -569,11 +583,13 @@ public class Tablero {
             Position pos = (Position) arr[i];
             a = pos.getX();
             b = pos.getY();
-            System.out.println("x to delete : " + a + " y to delete : " + b);
             tablero[a][b].cambiar_tipo(0);  // cambiar todos los disponibles a vacio.
             disponibles.clear();
         }
-
+        int color ;
+        if (turno %2 == 0) color = 2;
+        else  color = 3;
+        tablero[x][y].cambiar_tipo(color);
     }
 
     public Set<Position> getCasillasDisponibles(){
