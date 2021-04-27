@@ -58,7 +58,7 @@ public class Main {
         return res;
     }
 
-    //esta funcion se puede comprobar desde Partida si no
+
     private static boolean rango_mapa_correcto(int x, int y) {
         return (x >= 0 && x < 9) && (y >= 0 && y < 9);
     }
@@ -176,135 +176,97 @@ public class Main {
             }
 
         }
+
+        //Seleccionar informacion del contrincante
         switch (modo) {
-            case 0: //Crear PartidaModo0 (Maquina vs Maquina)
-                //INFO CONTRICANTES
+            case 0: //Maquina vs Maquina
+                id1 = -1; nick1 = "";
+                id2 = -1; nick2 = "";
                 print_contrincantes_maquina();
+                //INFO CONTRICANTES (Jugador1)
                 while (id1 == -1) {
                     id1 = seleccionar_id_maquina(false);
                     if(id1<0 | id1>5) id1 = -1;
                 }
+                //INFO CONTRICANTES (Jugador2)
                 while (id2 == -1) {
                     id2 = seleccionar_id_maquina(true);
                     if(id2<0 | id2>5) id2 = -1;
                 }
-                Partida pa0 = new Partida(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
-                //PartidaModo0 pa0 = new PartidaModo0(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
-                //Ejecutando partida
-                res = -1;
-                while (res < 0) { //continua la partida
-                    res = pa0.rondaPartida(generar_accion_partida());
-                    System.out.println();
-                    if((res!= 2) || (res!= 3)) pa0.print_Tablero();
-                }
-                if (res == 2) { //jugador a selecionado guardar partida
-                    cp.ctrl_guardar_partida(pa0.toArrayList());
-                    System.out.println();
-                    System.out.println("PARTIDA GUARDADA");
-                    System.out.println();
-                }
-                else if (res != 3) actualizar_ranking(pa0,res); //Igual esto se puede eliminar (no actualiza ranking con las Maquinas)
-                System.out.println();
-                System.out.println("PARTIDA FINALIZADA");
-                System.out.println();
                 break;
 
-
-            case 1: //Crear PartidaModo1 (Persona(siempre negras) vs Maquina)
-                //INFO CONTRICANTES
+            case 1: //Persona(siempre negras) vs Maquina
                 print_contrincantes_maquina();
                 while (id2 == -1) {
                     id2 = seleccionar_id_maquina(true);
                     if(id2<0 | id2>5) id2 = -1;
                 }
-                Partida pa1 = new Partida(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
-                //PartidaModo1 pa1 = new PartidaModo1(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
-                //Ejecutando partida
-                res = -1;
-                while (res < 0) { //continua la partida
-                    res = pa1.rondaPartida(generar_accion_partida());
-                    System.out.println();
-                    if((res!= 2) || (res!= 3)) pa1.print_Tablero();
-                }
-                if (res == 2) { //jugador a selecionado guardar partida
-                    cp.ctrl_guardar_partida(pa1.toArrayList());
-                    System.out.println();
-                    System.out.println("PARTIDA GUARDADA");
-                    System.out.println();
-                }
-                else if (res != 3) actualizar_ranking(pa1,res); //tenemos un ganador
-                System.out.println();
-                System.out.println("PARTIDA FINALIZADA");
-                System.out.println();
                 break;
 
-            case 2: //Crear PartidaModo2 (Persona vs Persona)
-                System.out.println("entra en crear partidamodo2");
-                //INFO CONTRICANTES
+            case 2: //Persona vs Persona)
                 System.out.println("Introducir informacion de contrincante 2 (Persona)");
                 String in;
-                if (bando == 1) {
-                    System.out.println("Estas Registrado/a? si/no ");
-                    in = scan.next();
-                    if (in.toLowerCase().equals("no")) {
-                        System.out.println("Entra tu nombre de usuario");
-                        nick2 = scan.next();
-                        id2 = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
-                        System.out.println("Creado usuario " + nick2 + " con ID " + id2);
-                        cp.ctrl_crear_usuario(id2, nick2);
-                    } else if (in.toLowerCase().equals("si")) {
-                        System.out.println("Entra tu ID");
-                        id2 = scan.nextInt();
-                        System.out.println("Entra tu nombre de usuario");
-                        nick2 = scan.next();
-                        if (cp.ctrl_existe_usuario(id2, nick2)) System.out.println("Login Correcto");
+
+                int id_temp = -1;
+                String nick_temp = "";
+                System.out.println("Estas Registrado/a? si/no ");
+                in = scan.next();
+                if (in.toLowerCase().equals("no")) {
+                    System.out.println("Entra tu nombre de usuario");
+                    nick_temp = scan.next();
+                    id_temp = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
+                    System.out.println("Creado usuario " + nick_temp + " con ID " + id_temp);
+                    cp.ctrl_crear_usuario(id_temp, nick_temp);
+                } else if (in.toLowerCase().equals("si")) {
+
+                    System.out.println("Entra tu ID");
+                    id_temp = scan.nextInt();
+                    System.out.println("Entra tu nombre de usuario");
+                    nick_temp = scan.next();
+                    boolean b = ((nick_temp.equals(nickname)) && (id_temp == code));
+                    if (b) {
+                        System.out.println("Error se ha introducido la informacion del usuario logueado");
+                        while (b) {
+                            System.out.println("Entra tu ID");
+                            id_temp = scan.nextInt();
+                            System.out.println("Entra tu nombre de usuario");
+                            nick_temp = scan.next();
+                            b = ((nick_temp.equals(nickname)) && (id_temp == code));
+                        }
                     }
+                    else if (cp.ctrl_existe_usuario(id_temp, nick_temp)) System.out.println("Login Correcto");
+                }
+                if (bando == 1) {
+                    id2 = id_temp;
+                    nick2 = nick_temp;
                 }
                 else {
-                    System.out.println("Estas Registrado/a? si/no ");
-                    in = scan.next();
-                    if(in.toLowerCase().equals("no")){
-                        System.out.println("Entra tu nombre de usuario");
-                        nick1 = scan.next();
-                        id1 = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
-                        System.out.println("Creado usuario " + nick1 + " con ID " + id1);
-                        cp.ctrl_crear_usuario(id1,nick1);
-                    }
-                    else if(in.toLowerCase().equals("si")){
-                        System.out.println("Entra tu ID");
-                        id1 = scan.nextInt();
-                        System.out.println("Entra tu nombre de usuario");
-                        nick1 = scan.next();
-                        if (cp.ctrl_existe_usuario(id1,nick1)) System.out.println("Login Correcto");
-                    }
+                    id1 = id_temp;
+                    nick1 = nick_temp;
                 }
-                //PartidaModo2 pa2 = new PartidaModo2(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
-                Partida pa2 = new Partida(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
-                //Ejecutando partida
-                res = -1;
-                while (res < 0) { //continua la partida
-                    res = pa2.rondaPartida(generar_accion_partida());
-                    System.out.println();
-                    if((res!= 2) || (res!= 3)) pa2.print_Tablero();
-                }
-                if (res == 2) { //jugador a selecionado guardar partida
-                    cp.ctrl_guardar_partida(pa2.toArrayList());
-                    System.out.println();
-                    System.out.println("PARTIDA GUARDADA");
-                    System.out.println();
-                }
-                else if (res != 3) actualizar_ranking(pa2,res); //tenemos un ganador
-                System.out.println();
-                System.out.println("PARTIDA FINALIZADA");
-                System.out.println();
                 break;
-
 
             default:
-                System.out.println("No se ha seleccionado un modo de juego correcto");
+                System.out.println("Modo de juego incorrecto");
                 break;
         }
+        Partida p = new Partida(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
+        //Ejecutando la partida
+        res = -1;
+        while (res < 0) { //continua la partida
+            res = p.rondaPartida(generar_accion_partida());
+            System.out.println();
+            if((res!= 2) || (res!= 3)) p.print_Tablero();
+        }
+        if (res == 2) { //jugador a selecionado guardar partida
+            cp.ctrl_guardar_partida(p.toArrayList());
+            System.out.println();
+            System.out.println("PARTIDA GUARDADA");
+            System.out.println();
+        }
+        else if (res != 3) actualizar_ranking(p,res);
     }
+
 
     public static void cargarPartida(int idPartida) throws IOException, MyException {
         int modo = cp.ctrl_leer_modo_partida(idPartida);
@@ -328,85 +290,6 @@ public class Main {
         System.out.println();
     }
 
-    /*public static void cargarPartida(int idPartida) throws IOException, MyException {
-        int modo = cp.ctrl_leer_modo_partida(idPartida);
-        int res;
-
-        Partida p = cp.ctrl_cargar_partida(idPartida);
-        switch (modo) {
-            case 0: //Maquina vs Maquina
-                Partida pa0 = cp.ctrl_cargar_partida(idPartida);
-                //Partida pa0 = cp.ctrl_cargar_partida_modo0(idPartida);
-                //PartidaModo0 pa0 = cp.ctrl_cargar_partida_modo0(idPartida);
-                //Ejecutando partida
-                res = -1;
-                while (res < 0) { //continua la partida
-                    res = pa0.rondaPartida(generar_accion_partida());
-                    System.out.println();
-                    if((res!= 2) || (res!= 3)) pa0.print_Tablero();
-                }
-                if (res == 2) { //jugador a selecionado guardar partida
-                    cp.ctrl_guardar_partida(pa0.toArrayList());
-                    System.out.println();
-                    System.out.println("PARTIDA GUARDADA");
-                    System.out.println();
-                }
-                else if (res != 3) actualizar_ranking(pa0,res); //Igual esto se puede eliminar (no actualiza ranking con las Maquinas)
-                System.out.println();
-                System.out.println("PARTIDA FINALIZADA");
-                System.out.println();
-                break;
-
-            case 1: //Persona vs Maquina
-                Partida pa1 = cp.ctrl_cargar_partida(idPartida);
-                //PartidaModo1 pa1 = cp.ctrl_cargar_partida_modo1(idPartida);
-                //Partida pa1 = cp.ctrl_cargar_partida_modo1(idPartida);
-                //Ejecutando partida
-                res = -1;
-                while (res < 0) { //continua la partida
-                    res = pa1.rondaPartida(generar_accion_partida());
-                    System.out.println();
-                    if((res!= 2) || (res!= 3)) pa1.print_Tablero();
-                }
-                if (res == 2) { //jugador a selecionado guardar partida
-                    cp.ctrl_guardar_partida(pa1.toArrayList());
-                    System.out.println();
-                    System.out.println("PARTIDA GUARDADA");
-                    System.out.println();
-                }
-                else if (res != 3) actualizar_ranking(pa1,res); //tenemos un ganador
-                System.out.println();
-                System.out.println("PARTIDA FINALIZADA");
-                System.out.println();
-                break;
-
-            case 2: //Persona vs Persona
-                Partida pa2 = cp.ctrl_cargar_partida(idPartida);
-                //Ejecutando partida
-                res = -1;
-                while (res < 0) { //continua la partida  //por ahora falla
-                    res = pa2.rondaPartida(generar_accion_partida());
-                    System.out.println();
-                    if((res!= 2) || (res!= 3)) pa2.print_Tablero();
-                }
-                if (res == 2) { //jugador a selecionado guardar partida
-                    cp.ctrl_guardar_partida(pa2.toArrayList());
-                    System.out.println();
-                    System.out.println("PARTIDA GUARDADA");
-                    System.out.println();
-                }
-                else if (res != 3) actualizar_ranking(pa2,res); //tenemos un ganador
-                System.out.println();
-                System.out.println("PARTIDA FINALIZADA");
-                System.out.println();
-                break;
-
-            default:
-                System.out.println("La partida no existe o el modo de partida es incorrecto");
-                break;
-        }
-    }*/
-
     public static void listar_partidas_disponibles(int id, String nick) throws IOException, MyException {
         System.out.println();
         int modo = -1;
@@ -428,7 +311,6 @@ public class Main {
             else System.out.println("Problemas al borrar la partida seleccionada");
         }
     }
-
 
     private static void actualizar_ranking(Partida p, int ganador) throws MyException {
         int modo = p.getModoDeJuegoPartida();
