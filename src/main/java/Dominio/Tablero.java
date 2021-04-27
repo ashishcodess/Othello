@@ -42,6 +42,10 @@ public class Tablero {
         negras = new HashSet<Position>();
         blancas = new HashSet<Position>();
         disponibles= new HashSet<Position>();
+        graph_h = new int[8][8];
+        graph_v = new int[8][8];
+        graph_dr = new int[8][8];
+        graph_dl = new int[8][8];
         num_vacia = 60;
         Position pos;
         for(int i = 0 ; i < 8 ; ++i){
@@ -71,6 +75,10 @@ public class Tablero {
         negras = new HashSet<Position>();
         blancas = new HashSet<Position>();
         disponibles= new HashSet<Position>();
+        graph_h = new int[8][8];
+        graph_v = new int[8][8];
+        graph_dr = new int[8][8];
+        graph_dl = new int[8][8];
         num_vacia = 60;
         Position pos;
         for(int i = 0 ; i < 8 ; ++i){
