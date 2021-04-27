@@ -81,7 +81,12 @@ public class JugadorMaquina extends Jugador {
         SuccessorFunction succesores = new SuccessorFunction();
         Set<Tablero> estados_hijos = succesores.genera_succesores(t, turno);
 
-        if(turno%2 == 0){
+        for(Tablero aux : estados_hijos){
+            mejorHijo = aux;
+            break;
+        }
+
+        /*if(turno%2 == 0){
             int maxeval = -1000;
             for(Tablero aux : estados_hijos){
 
@@ -93,7 +98,7 @@ public class JugadorMaquina extends Jugador {
             for(Tablero aux : estados_hijos){
 
             }
-        }
+        }*/
 
         return mejorHijo;
     }
