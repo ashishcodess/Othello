@@ -31,6 +31,9 @@ public class Tablero {
      * Constructora por defecto (vacia) de Tablero
      * */
     public Tablero(){
+        negras = new HashSet<Position>();
+        blancas = new HashSet<Position>();
+        disponibles= new HashSet<Position>();
         tablero = new Casilla[8][8];    //Problema es que todos serán null.
         inicializeTablero(tablero);
         graph_h = new int[8][8];
@@ -38,19 +41,17 @@ public class Tablero {
         graph_dr = new int[8][8];
         graph_dl = new int[8][8];
         num_vacia = 60;
-        negras = new HashSet<Position>();
-        blancas = new HashSet<Position>();
-        disponibles= new HashSet<Position>();
+
     }
 
     /**
      * Constructora Tablero (cargando un tablero pasado por parametro)
      * */
     public Tablero(int[][] tab) {
-        tablero = new Casilla[8][8];
         negras = new HashSet<Position>();
         blancas = new HashSet<Position>();
         disponibles= new HashSet<Position>();
+        tablero = new Casilla[8][8];
         graph_h = new int[8][8];
         graph_v = new int[8][8];
         graph_dr = new int[8][8];
@@ -80,10 +81,10 @@ public class Tablero {
      * Constructora Tablero (para caragar de estado ya guardado )
      * */
     public Tablero(Casilla[][] tab) {
-        tablero = new Casilla[8][8];
         negras = new HashSet<Position>();
         blancas = new HashSet<Position>();
         disponibles= new HashSet<Position>();
+        tablero = new Casilla[8][8];
         graph_h = new int[8][8];
         graph_v = new int[8][8];
         graph_dr = new int[8][8];
@@ -115,8 +116,14 @@ public class Tablero {
         for(int i = 0 ; i < 8 ; ++i){
             for (int j = 0 ; j <8 ; ++j){
                 tablero[i][j] = new Casilla();
-                if ((i == 3 & j==3) || (i == 4 & j==4)) tablero[i][j] = new Casilla(3);
-                else if ((i == 3 & j==4) || (i == 4 & j==3)) tablero[i][j] = new Casilla(2);
+                if ((i == 3 & j==3) || (i == 4 & j==4)) {
+                    tablero[i][j] = new Casilla(3);
+                    blancas.add(new Position(i , j));
+                }
+                else if ((i == 3 & j==4) || (i == 4 & j==3)) {
+                    tablero[i][j] = new Casilla(2);
+                    negras.add(new Position(i , j));
+                }
             }
         }
     }

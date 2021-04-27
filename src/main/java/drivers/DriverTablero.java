@@ -80,21 +80,12 @@ public class DriverTablero {
             System.out.println(P.getX());
             System.out.println(P.getY());
         }
-*/      int turno = 6;
+*/      int turno = 0;
         Tablero T = new Tablero();
-        T.setCasilla_tipo(3,2 , 2);
-        T.setCasilla_tipo(3,4 , 2);
-        T.setCasilla_tipo(4,4 , 2);
-        T.setCasilla_tipo(2,4 , 3);
-        T.setCasilla_tipo(3,3 , 3);
-        T.setCasilla_tipo(4,2 , 3);
-        T.setCasilla_tipo(5,5 , 2);
-        T.setCasilla_tipo(4,3 , 3);
-
         T.calcularCasillasDisponiblesHorizontal(turno);
         T.calcularCasillasDisponiblesVertical(turno);
         T.calcularCasillasDisponiblesDiagonales(turno);
-        T.printHorizontal();
+        //T.printHorizontal();
 
         for (int i = 0; i < 8; ++i) {
             String sbuff = new String();
@@ -117,15 +108,6 @@ public class DriverTablero {
     public static void print_modificadas() {
         int turno = 6;
         Tablero T = new Tablero();
-        T.setCasilla_tipo(3,2 , 2);
-        T.setCasilla_tipo(3,4 , 2);
-        T.setCasilla_tipo(4,4 , 2);
-        T.setCasilla_tipo(2,4 , 3);
-        T.setCasilla_tipo(3,3 , 3);
-        T.setCasilla_tipo(4,2 , 3);
-        T.setCasilla_tipo(5,5 , 2);
-        T.setCasilla_tipo(4,3 , 3);
-
         T.calcularCasillasDisponiblesHorizontal(turno);
         T.calcularCasillasDisponiblesVertical(turno);
         T.calcularCasillasDisponiblesDiagonales(turno);
@@ -135,7 +117,7 @@ public class DriverTablero {
             Position P = (Position)arr[i];
             System.out.println("x:" + P.getX() + "y:" + P.getY());
         }
-        T.actualizarTablero(4 ,1 , turno);
+        T.actualizarTablero(3 ,2 , turno);
         //T.setCasilla_tipo(4,1 , 2);  // if even tipo = negro
         for (int i = 0; i < 8; ++i) {
             String sbuff = new String();
