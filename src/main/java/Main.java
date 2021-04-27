@@ -129,6 +129,7 @@ public class Main {
         System.out.println();
     }
 
+    //se puede reducir ahora que tenemos una misma clase Partida
     public static void iniciarPartida() throws MyException, IOException {
         int res = -1;
         int idPartida = cp.ctrl_get_nuevo_ID_Partida();
@@ -308,6 +309,30 @@ public class Main {
     public static void cargarPartida(int idPartida) throws IOException, MyException {
         int modo = cp.ctrl_leer_modo_partida(idPartida);
         int res;
+        Partida p = cp.ctrl_cargar_partida(idPartida);
+        res = -1;
+        while (res < 0) { //continua la partida
+            res = p.rondaPartida(generar_accion_partida());
+            System.out.println();
+            if((res!= 2) || (res!= 3)) p.print_Tablero();
+        }
+        if (res == 2) { //jugador a selecionado guardar partida
+            cp.ctrl_guardar_partida(p.toArrayList());
+            System.out.println();
+            System.out.println("PARTIDA GUARDADA");
+            System.out.println();
+        }
+        else if (res != 3) actualizar_ranking(p,res);
+        System.out.println();
+        System.out.println("PARTIDA FINALIZADA");
+        System.out.println();
+    }
+
+    /*public static void cargarPartida(int idPartida) throws IOException, MyException {
+        int modo = cp.ctrl_leer_modo_partida(idPartida);
+        int res;
+
+        Partida p = cp.ctrl_cargar_partida(idPartida);
         switch (modo) {
             case 0: //Maquina vs Maquina
                 Partida pa0 = cp.ctrl_cargar_partida(idPartida);
@@ -357,8 +382,6 @@ public class Main {
 
             case 2: //Persona vs Persona
                 Partida pa2 = cp.ctrl_cargar_partida(idPartida);
-                //Partida pa2 = cp.ctrl_cargar_partida_modo2(idPartida);
-                //PartidaModo2 pa2 = cp.ctrl_cargar_partida_modo2(idPartida);
                 //Ejecutando partida
                 res = -1;
                 while (res < 0) { //continua la partida  //por ahora falla
@@ -382,8 +405,7 @@ public class Main {
                 System.out.println("La partida no existe o el modo de partida es incorrecto");
                 break;
         }
-
-    }
+    }*/
 
     public static void listar_partidas_disponibles(int id, String nick) throws IOException, MyException {
         System.out.println();
@@ -391,7 +413,6 @@ public class Main {
         System.out.print("Opcion (1 - Cargar , 2 - Borrar):");
         modo = scan.nextInt();
         System.out.println();
-        //if ((modo != 1) || (modo != 2))  while (!scan.hasNextInt() &((modo != 1) || (modo != 2))) modo = scan.nextInt();
         System.out.println("modo seleccionado:" + modo);
         if (modo == 1) {
             cp.ctrl_print_partidas_disponibles(id,nick);

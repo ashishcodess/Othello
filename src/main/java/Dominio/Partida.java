@@ -77,9 +77,11 @@ public class Partida {
             case 0:
                 this.j1 = new JugadorMaquina(idj1);
                 this.j2 = new JugadorMaquina(idj2);
+                break;
             case 1:
                 this.j1 = new JugadorPersona(idj1, n1);
                 this.j2 = new JugadorMaquina(idj2);
+                break;
             case 2:
                 this.j1 = new JugadorPersona(idj1, n1);
                 this.j2 = new JugadorPersona(idj2, n2);
@@ -233,9 +235,8 @@ public class Partida {
                     case "colocar":
                         int x = Integer.parseInt(accion[1]);
                         int y = Integer.parseInt(accion[2]);
-                        //como se actualizan las fichas que se convierten con tu movimiento?
-                        //como se actualizan las fichas que antes se han puesto a disponible para que vuelvan a estar simplemente vacias?
-                        this.tablero.actualizarTablero(x, y, this.turno);
+                        //this.tablero.actualizarTablero(x, y, this.turno);
+                        j1.colocar_ficha_en_partida(turno,x,y,tablero);
                         actualizarTablero();
                         print_Tablero();
                         incrementarTurnoPartida();
@@ -243,6 +244,9 @@ public class Partida {
                         //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
                         /*
                         else { this.ganador = -1;}*/
+                        break;
+                    case "info": //info partida
+                        this.get_info_partida();
                         break;
                     case "guardar": //guardarPartida
                         return 2;
@@ -259,9 +263,8 @@ public class Partida {
                     case "colocar":
                         int x = Integer.parseInt(accion[1]);
                         int y = Integer.parseInt(accion[2]);
-                        //como se actualizan las fichas que se convierten con tu movimiento?
-                        //como se actualizan las fichas que antes se han puesto a disponible para que vuelvan a estar simplemente vacias?
-                        this.tablero.actualizarTablero(x, y, this.turno);
+                        //this.tablero.actualizarTablero(x, y, this.turno);
+                        j2.colocar_ficha_en_partida(turno,x,y,tablero);
                         actualizarTablero();
                         print_Tablero();
                         incrementarTurnoPartida();
@@ -269,6 +272,9 @@ public class Partida {
                         //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
                         /*
                         else { this.ganador = -1;}*/
+                        break;
+                    case "info": //info partida
+                        this.get_info_partida();
                         break;
                     case "guardar": //guardarPartida
                         return 2;
