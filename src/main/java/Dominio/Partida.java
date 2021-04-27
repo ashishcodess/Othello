@@ -230,61 +230,77 @@ public class Partida {
                 System.out.println("x:" + P.getX() + "y:" + P.getY());
             }
             int disp = disponibles.size();
-            if (this.turno % 2 == 0) {
-                switch (accion[0]){
-                    case "colocar":
-                        int x = Integer.parseInt(accion[1]);
-                        int y = Integer.parseInt(accion[2]);
-                        //this.tablero.actualizarTablero(x, y, this.turno);
-                        j1.colocar_ficha_en_partida(turno,x,y,tablero);
-                        actualizarTablero();
-                        print_Tablero();
-                        incrementarTurnoPartida();
-                        this.finalizada = 0;
-                        //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
-                        /*
-                        else { this.ganador = -1;}*/
-                        break;
-                    case "info": //info partida
-                        this.get_info_partida();
-                        break;
-                    case "guardar": //guardarPartida
-                        return 2;
-                    case "finalizar": //finalizarPartida
-                        return 3;
-                    case "paso":
-                        if (disp == 0) ++this.finalizada;
-                        incrementarTurnoPartida();
-                        break;
-                }
-            }
-            else if (this.turno % 2 != 0) {
-                switch (accion[0]) {
-                    case "colocar":
-                        int x = Integer.parseInt(accion[1]);
-                        int y = Integer.parseInt(accion[2]);
-                        //this.tablero.actualizarTablero(x, y, this.turno);
-                        j2.colocar_ficha_en_partida(turno,x,y,tablero);
-                        actualizarTablero();
-                        print_Tablero();
-                        incrementarTurnoPartida();
-                        this.finalizada = 0;
-                        //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
-                        /*
-                        else { this.ganador = -1;}*/
-                        break;
-                    case "info": //info partida
-                        this.get_info_partida();
-                        break;
-                    case "guardar": //guardarPartida
-                        return 2;
-                    case "finalizar": //finalizarPartida
-                        return 3;
-                    case "paso":
-                        if (disp == 0) ++this.finalizada;
-                        incrementarTurnoPartida();
-                        break;
-                }
+            switch (modoDeJuego) {
+                case 2: //Persona vs Persona
+                    switch (accion[0]) {
+                        case "colocar":
+                            int x = Integer.parseInt(accion[1]);
+                            int y = Integer.parseInt(accion[2]);
+                            //this.tablero.actualizarTablero(x, y, this.turno);
+                            if (this.turno % 2 == 0) {
+                                j1.colocar_ficha_en_partida(turno, x, y, tablero);
+                            }
+                            else if (this.turno % 2 != 0) {
+                                j2.colocar_ficha_en_partida(turno, x, y, tablero);
+                            }
+                            actualizarTablero();
+                            print_Tablero();
+                            incrementarTurnoPartida();
+                            this.finalizada = 0;
+                            //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
+                            /*
+                            else { this.ganador = -1;}*/
+                            break;
+                        case "info": //info partida
+                            this.get_info_partida();
+                            break;
+                        case "guardar": //guardarPartida
+                            return 2;
+                        case "finalizar": //finalizarPartida
+                            return 3;
+                        case "paso":
+                            if (disp == 0) ++this.finalizada;
+                            incrementarTurnoPartida();
+                            break;
+                    }
+                    break;
+                case 1: //Persona vs Maquina
+                    switch (accion[0]) {
+                        case "colocar":
+                            //this.tablero.actualizarTablero(x, y, this.turno);
+                            if (this.turno % 2 == 0) {
+                                int x = Integer.parseInt(accion[1]);
+                                int y = Integer.parseInt(accion[2]);
+                                j1.colocar_ficha_en_partida(turno, x, y, tablero);
+                            }
+                            else if (this.turno % 2 != 0) {
+                                // AQUI FALTA FUNCION QUE LLAMA AL JUGADOR MAQUINA A MOVER FICHA
+                            }
+
+                            actualizarTablero();
+                            print_Tablero();
+                            incrementarTurnoPartida();
+                            this.finalizada = 0;
+                            //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
+                            /*
+                            else { this.ganador = -1;}*/
+                            break;
+                        case "info": //info partida
+                            this.get_info_partida();
+                            break;
+                        case "guardar": //guardarPartida
+                            return 2;
+                        case "finalizar": //finalizarPartida
+                            return 3;
+                        case "paso":
+                            if (disp == 0) ++this.finalizada;
+                            incrementarTurnoPartida();
+                            break;
+                    }
+                    break;
+                case 0: //Maquina vs Maquina
+                    // AQUI FALTA FUNCION QUE LLAMA AL JUGADOR MAQUINA A MOVER FICHA
+                    break;
             }
         }
         return this.ganador;
