@@ -86,16 +86,15 @@ public class Main {
      * */
     private static String[] generar_accion_partida(int id, String nick) {
         String[] res;
-        System.out.println("//////////////////////////////////////////////////////");
+        System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
         if (id >= 0 && id < 6) System.out.println("Acciones a realizar para la maquina: (ID: " + id + ")");
         else System.out.println("Acciones a realizar para el jugador: (ID: " + id + ", nick: " + nick + ")");
-        System.out.println("//////////////////////////////////////////////////////");
-        System.out.println("-  colocar x y (colocar ficha en posicion x, y)");
-        System.out.println("-  paso (pasar el turno)");
-        System.out.println("-  info (get info partida)");
-        System.out.println("-  guardar (guardar partida y finalizar)");
-        System.out.println("-  finalizar (finalizar partida)");
-        System.out.println("//////////////////////////////////////////////////////");
+        System.out.println();
+        System.out.println("    - colocar x y (colocar ficha en posicion x, y)");
+        System.out.println("    - paso (pasar el turno)");
+        System.out.println("    - info (get info partida)");
+        System.out.println("    - guardar (guardar partida y finalizar)");
+        System.out.println("    - finalizar (finalizar partida)");
         System.out.println();
         System.out.print("Introducir accion a realizar:");
         String s_aux;
@@ -123,6 +122,8 @@ public class Main {
                 else b = false;
             }
         }
+        System.out.println();
+        System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
         return res;
     }
 
@@ -171,26 +172,6 @@ public class Main {
      * @throws IOException heredado de otra funcion (fallo al guardar la Partida)
      * @throws MyException heredado de otra funcion (fallo en la ronda o al actualizar el ranking)
      * */
-    /*
-    private static void ejecutarPartida(Partida p) throws IOException, MyException {
-        int res = -1;
-        while (res < 0) { //continua la partida
-            res = p.rondaPartida(generar_accion_partida());
-            System.out.println();
-            if((res!= 2) || (res!= 3)) p.print_Tablero();
-        }
-        if (res == 2) { //jugador a selecionado guardar partida
-            cp.ctrl_guardar_partida(p.toArrayList());
-            System.out.println();
-            System.out.println("PARTIDA GUARDADA");
-            System.out.println();
-        }
-        else if (res != 3) actualizar_ranking(p,res);
-        System.out.println();
-        System.out.println("PARTIDA FINALIZADA");
-        System.out.println();
-    }*/
-
     private static void ejecutarPartida(Partida p) throws IOException, MyException {
         int res = -1;
         int turno = 0;
@@ -204,9 +185,14 @@ public class Main {
             else {
                 id_aux = p.getID_J2();s_aux = p.getNickJugador2();
             }
+            if((res!= 2) || (res!= 3)) {
+                System.out.println("TURNO: " + turno + "  [id:" + id_aux + " ,nick:" + s_aux + "]");
+                System.out.println();
+                p.print_casillas_disponibles();
+                p.print_Tablero();
+            }
             res = p.rondaPartida(generar_accion_partida(id_aux,s_aux));
             System.out.println();
-            if((res!= 2) || (res!= 3)) p.print_Tablero();
         }
         if (res == 2) { //jugador a selecionado guardar partida
             cp.ctrl_guardar_partida(p.toArrayList());
@@ -244,16 +230,6 @@ public class Main {
         String nick1 = nickname; //por defecto anfitrion como J1
         String nick2 = "";
 
-        //inicializar tablero
-        int [][] tab = new int[8][8];
-        for (int i = 0; i < 8; ++i) {
-            for (int j = 0; j < 8; ++j) {
-                tab[i][j] = 0;
-                if ((i == 3 & j==3) || (i == 4 & j==4)) tab[i][j] = 3;
-                else if ((i == 3 & j==4) || (i == 4 & j==3)) tab[i][j] = 2;
-            }
-        }
-        Tablero t = new Tablero(tab);
         int bando = -1;
         //Selecionar bando de juego
         if (modo == 2) {
@@ -346,7 +322,18 @@ public class Main {
                 System.out.println("Modo de juego incorrecto");
                 break;
         }
-        Partida p = new Partida(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
+        //inicializar tablero
+        /*int [][] tab = new int[8][8];
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                tab[i][j] = 0;
+                if ((i == 3 & j==3) || (i == 4 & j==4)) tab[i][j] = 3;
+                else if ((i == 3 & j==4) || (i == 4 & j==3)) tab[i][j] = 2;
+            }
+        }
+        Tablero t = new Tablero(tab);*/
+
+        Partida p = new Partida(idPartida,modo,reglas,id1,nick1,id2,nick2);
         ejecutarPartida(p); //Ejecutando la partida
     }
 

@@ -42,7 +42,6 @@ public class Tablero {
         graph_dr = new int[8][8];
         graph_dl = new int[8][8];
         num_vacia = 60;
-
     }
 
     /**
@@ -479,7 +478,7 @@ public class Tablero {
                 else {                           //Same color(i.e opposite )
                     Position ps = new Position(i, y);
                     vec2.addElement(ps);
-                    System.out.println("the x" + ps.getX() + "the y" + ps.getY());
+                    //System.out.println("the x" + ps.getX() + "the y" + ps.getY());
                 }
             }
             if (found2) {
@@ -541,14 +540,14 @@ public class Tablero {
             }
         }
         if (isOk(x , y+1) && tablero[x][y+1].getTipoCasilla() == opp_color) {
-            System.out.println("Entra aqui");
+            //System.out.println("Entra aqui");
             for (int i = y + 1; i <= 7 && !found2 && !stop2; ++i) {
                 if (tablero[x][i].getTipoCasilla() == own_color) found2 = true;    //Case of finding the same colour
                 else if (tablero[x][i].getTipoCasilla() == 0 || tablero[x][i].getTipoCasilla() == 1) stop2 = true;   // case of being unable to find any color
                 else {//Same color(i.e opposite )
                     Position ps = new Position(x, i);
                     vec2.addElement(ps);
-                    System.out.println("the x" + ps.getX() + "the y" + ps.getY());
+                    //System.out.println("the x" + ps.getX() + "the y" + ps.getY());
                 }
             }
             if (found2) {

@@ -6,4 +6,7 @@
 
 - MyException: Directorio del Package de la clase MyException para generar excepciones de manera personalizada
 
-- main: FALTA DESCRIPCIÓN DE LO QUE HACE
+- main: Es un Mega-DRIVER (donde se puede loguear como usuario, inciar una partida, cargar/borrar partida \
+consultar el ranking o consultar estadisticas de un usuario en concreto). Esta clase en principio para las siguentes entregas
+equivaldria a el controlador de Dominio, salvo que en este caso es necesario pasarle parametros por consola para poder
+jugar al juego.

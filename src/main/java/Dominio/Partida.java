@@ -1,10 +1,7 @@
 package Dominio;
 
 import MyException.MyException;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 public class Partida {
@@ -16,14 +13,10 @@ public class Partida {
     private int turno;
     /**Reglas de la Partida*/
     private final int[] reglas; //array de 2 enteros para las reglas; {1,0} vertical/horizontal; {0,1} diagonales; {1,1} normal
-
-    /**Nick del Jugador1 de la Partida*/
+    /**J ugador1 de la Partida*/
     private Jugador j1;
-
-    /**Nick del Jugador2 de la Partida*/
+    /** Jugador2 de la Partida*/
     private Jugador j2;
-
-
     /**Tablero de la Partida*/
     private Tablero tablero;
     /**Ganador de la Partida*/
@@ -37,14 +30,33 @@ public class Partida {
      * @param modoJuego es el modo de juego de la Partida
      * @param r son las reglas de la Partida
      * @param idj1 es el ID del jugador1 de la Partida
+     * @param n1 es el nick del jugador1 de la Partida
      * @param idj2 es el ID del jugador2 de la Partida
+     * @param n2 es el nick del jugador2 de la Partida
+     * @throws MyException caso de fallar con el modo de juego
      * */
-    public Partida (int id, int modoJuego, int[] r, int idj1, int idj2) {
+    public Partida (int id, int modoJuego, int[] r, int idj1, String n1, int idj2, String n2) throws MyException {
         this.id = id;
         this.modoDeJuego = modoJuego;
         this.reglas = r;
         this.turno = 0;
         this.ganador = -1;
+        switch (modoJuego){
+            case 0:
+                this.j1 = new JugadorMaquina(idj1);
+                this.j2 = new JugadorMaquina(idj2);
+                break;
+            case 1:
+                this.j1 = new JugadorPersona(idj1, n1);
+                this.j2 = new JugadorMaquina(idj2);
+                break;
+            case 2:
+                this.j1 = new JugadorPersona(idj1, n1);
+                this.j2 = new JugadorPersona(idj2, n2);
+                break;
+            default:
+                throw new MyException("Error en el modo de juego");
+        }
         this.tablero = new Tablero();
         this.finalizada = 0;
     }
@@ -60,8 +72,9 @@ public class Partida {
      * @param idj2 es el ID del jugador2 de la Partida
      * @param n2 es el nick del jugador2 de la Partida
      * @param t es el tablero de la Partida
+     * @throws MyException caso de fallar con el modo de juego
      * */
-    public Partida(int id, int modoJuego, int[] r, int turn, int idj1,String n1, int idj2, String n2, Tablero t) throws MyException{
+    public Partida(int id, int modoJuego, int[] r, int turn, int idj1, String n1, int idj2, String n2, Tablero t) throws MyException{
         this.id = id;
         this.modoDeJuego = modoJuego;
 
@@ -203,12 +216,7 @@ public class Partida {
         else {
             reglasCasillasDisponibles();
             Set<Position> disponibles = this.tablero.getCasillasDisponibles();
-            Object[] arr = disponibles.toArray();
-            System.out.println("Movimientos disponibles:");
-            for (int i = 0 ; i < arr.length ; ++i){
-                Position P = (Position)arr[i];
-                System.out.println("x:" + P.getX() + "y:" + P.getY());
-            }
+            //Sergio: Casillas disponibles se imprime desde el MAIN igual que el Tablero
             int disp = disponibles.size();
             switch (modoDeJuego) {
                 case 2: //Persona vs Persona
@@ -216,7 +224,6 @@ public class Partida {
                         case "colocar":
                             int x = Integer.parseInt(accion[1]);
                             int y = Integer.parseInt(accion[2]);
-                            //this.tablero.actualizarTablero(x, y, this.turno);
                             if (this.turno % 2 == 0) {
                                 j1.colocar_ficha_en_partida(turno, x, y, tablero);
                             }
@@ -224,7 +231,6 @@ public class Partida {
                                 j2.colocar_ficha_en_partida(turno, x, y, tablero);
                             }
                             actualizarTablero();
-                            print_Tablero();
                             incrementarTurnoPartida();
                             this.finalizada = 0;
                             //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
@@ -255,14 +261,12 @@ public class Partida {
                             }
                             else if (this.turno % 2 != 0) {
                                 // AQUI FALTA FUNCION QUE LLAMA AL JUGADOR MAQUINA A MOVER FICHA
-                                //Sergio: temporal por ahora
+                                //Sergio: esta parte es temporal por ahora (la he puesto para poder hacer pruebas en MAIN)
                                 int x = Integer.parseInt(accion[1]);
                                 int y = Integer.parseInt(accion[2]);
                                 j2.colocar_ficha_en_partida(turno, x, y, tablero);
                             }
-
                             actualizarTablero();
-                            print_Tablero();
                             incrementarTurnoPartida();
                             this.finalizada = 0;
                             //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
@@ -284,43 +288,6 @@ public class Partida {
                     break;
                 case 0: //Maquina vs Maquina
                     // AQUI FALTA FUNCION QUE LLAMA AL JUGADOR MAQUINA A MOVER FICHA
-                    //Sergio:temporal por ahora para realizar pruebas
-                    switch (accion[0]) {
-                        case "colocar":
-                            //this.tablero.actualizarTablero(x, y, this.turno);
-                            if (this.turno % 2 == 0) {
-                                int x = Integer.parseInt(accion[1]);
-                                int y = Integer.parseInt(accion[2]);
-                                j1.colocar_ficha_en_partida(turno, x, y, tablero);
-                            }
-                            else if (this.turno % 2 != 0) {
-                                // AQUI FALTA FUNCION QUE LLAMA AL JUGADOR MAQUINA A MOVER FICHA
-                                //Sergio: temporal por ahora
-                                int x = Integer.parseInt(accion[1]);
-                                int y = Integer.parseInt(accion[2]);
-                                j2.colocar_ficha_en_partida(turno, x, y, tablero);
-                            }
-
-                            actualizarTablero();
-                            print_Tablero();
-                            incrementarTurnoPartida();
-                            this.finalizada = 0;
-                            //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
-                            /*
-                            else { this.ganador = -1;}*/
-                            break;
-                        case "info": //info partida
-                            this.get_info_partida();
-                            break;
-                        case "guardar": //guardarPartida
-                            return 2;
-                        case "finalizar": //finalizarPartida
-                            return 3;
-                        case "paso":
-                            if (disp == 0) ++this.finalizada;
-                            incrementarTurnoPartida();
-                            break;
-                    }
                     break;
             }
         }
@@ -355,6 +322,7 @@ public class Partida {
         }
     }
 
+
     /**
      * Operacion que actualiza el tablero de la partida
      */
@@ -364,10 +332,13 @@ public class Partida {
 
 
     /**
-     * Operacion que imprime por pantalla el tablero de la partida
+     * Operacion que imprime por salida estandar el tablero de la partida
      */
     public void print_Tablero() {
         if (this.tablero != null) {
+            System.out.println();
+            System.out.println("Tablero:");
+            System.out.println();
             for (int i = 0; i < 8; ++i) {
                 String sbuff = new String();
                 for (int j = 0; j < 8; ++j) {
@@ -380,7 +351,23 @@ public class Partida {
     }
 
     /**
-     * Operacion que imprime por pantalla toda la informacion de la partida
+     * Operacion que imprime por salida estandar las casillas disponibles a colocar una pieza de la partida en ese momento
+     */
+    public void print_casillas_disponibles() {
+        Set<Position> disponibles = this.tablero.getCasillasDisponibles();
+        Object[] arr = disponibles.toArray();
+        System.out.println("Movimientos disponibles [x,y]:");
+        for (int i = 0 ; i < arr.length ; ++i){
+            Position P = (Position)arr[i];
+            System.out.print(" [" + P.getX() + "," + P.getY() + "]");
+            if ((i+1)%10==0) System.out.println();
+        }
+        System.out.println();
+    }
+
+
+    /**
+     * Operacion que imprime por salida estandar toda la informacion de la partida
      */
     public void get_info_partida() {
         System.out.println();
@@ -397,7 +384,8 @@ public class Partida {
     }
 
     /**
-     * Operacion que guarda toda la info en un ArrayList de String para tratamiento con CtrlPersitencia
+     * Operacion toArrayList()
+     * @return devuelve toda la informacion de una Partida en un ArrayList de String para tratamiento con CtrlPersitencia
      */
     public ArrayList<String> toArrayList() {
         ArrayList<String> as = new ArrayList<String>();

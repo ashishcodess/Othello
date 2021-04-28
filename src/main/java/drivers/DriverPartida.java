@@ -15,8 +15,8 @@ public class DriverPartida {
 
     static Scanner scan = new Scanner(System.in);
 
-    public static Partida test_crear_partida(int id, int modoJuego, int[] r, int idj1, int idj2){
-        Partida res = new Partida(id, modoJuego, r, idj1, idj2);
+    public static Partida test_crear_partida(int id, int modoJuego, int[] r, int idj1, int idj2) throws MyException {
+        Partida res = new Partida(id,modoJuego,r,idj1,"",idj2,"");
         System.out.println("Partida creada con ID:" + id);
         System.out.println("Jugador1 con ID:" + idj1);
         System.out.println("Jugador1 con ID:" + idj2);
