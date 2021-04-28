@@ -34,7 +34,7 @@ public class CtrlPersitencia {
      * Constructora por defecto
      */
     public CtrlPersitencia() {
-        InicializarDirPersitencia();
+        //InicializarDirPersitencia();
         this.path = "./src/files/";
         this.path_partidas = this.path + "partidas/";
         this.path_ranking =  this.path + "ranking/";
@@ -51,7 +51,7 @@ public class CtrlPersitencia {
      * @param bRank [TRUE: solo utiliza fichero ranking.txt; FALSE:genera varios ficheros en funcion del size del ranking (usado en las pruebas DriverRanking)]
      */
     public CtrlPersitencia(boolean bRank) {
-        InicializarDirPersitencia();
+        //InicializarDirPersitencia();
         this.path = "./src/files/";
         this.path_partidas = this.path + "partidas/";
         this.path_ranking =  this.path + "ranking/";
@@ -69,7 +69,7 @@ public class CtrlPersitencia {
      * @param s_path path de el directorio de files (para Persistencia)
      */
     public CtrlPersitencia(String s_path) {
-        InicializarDirPersitencia();
+        //InicializarDirPersitencia();
         this.path = s_path;
         this.path_partidas =  this.path + "partidas/";
         this.path_ranking =   this.path + "ranking/";
@@ -87,7 +87,7 @@ public class CtrlPersitencia {
      * @param bRank [TRUE: solo utiliza fichero ranking.txt; FALSE:genera varios ficheros en funcion del size del ranking (usado en las pruebas DriverRanking)]
      */
     public CtrlPersitencia(String s_path, boolean bRank) {
-        InicializarDirPersitencia();
+        //InicializarDirPersitencia();
         this.path = s_path;
         this.path_partidas =  this.path + "partidas/";
         this.path_ranking =   this.path + "ranking/";
@@ -101,7 +101,7 @@ public class CtrlPersitencia {
     /**
      * Este metodo inicializa los directorios de la Capa de Persitencia, crea los directorios en caso de no existir
      * */
-    private void InicializarDirPersitencia() {
+    /*private void InicializarDirPersitencia() {
         File f = new File(path);
         if (!f.exists()) {
             if (f.mkdir()) {
@@ -115,7 +115,7 @@ public class CtrlPersitencia {
                 if (!f.exists()) {f.mkdir();}
             }
         }
-    }
+    }*/
 
     /**
      * Operacion ctrl_get_nuevo_ID_user
