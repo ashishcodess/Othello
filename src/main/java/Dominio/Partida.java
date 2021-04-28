@@ -218,6 +218,7 @@ public class Partida {
             Set<Position> disponibles = this.tablero.getCasillasDisponibles();
             //Sergio: Casillas disponibles se imprime desde el MAIN igual que el Tablero
             int disp = disponibles.size();
+            actualizarTablero();
             switch (modoDeJuego) {
                 case 2: //Persona vs Persona
                     switch (accion[0]) {
@@ -230,7 +231,7 @@ public class Partida {
                             else if (this.turno % 2 != 0) {
                                 j2.colocar_ficha_en_partida(turno, x, y, tablero);
                             }
-                            actualizarTablero();
+                            print_Tablero();
                             incrementarTurnoPartida();
                             this.finalizada = 0;
                             //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
@@ -266,6 +267,7 @@ public class Partida {
                                 int y = Integer.parseInt(accion[2]);
                                 j2.colocar_ficha_en_partida(turno, x, y, tablero);
                             }
+
                             actualizarTablero();
                             incrementarTurnoPartida();
                             this.finalizada = 0;
