@@ -14,12 +14,6 @@ y Totales)
 
 - Partida:
 
-- PartidaModo0:
-
-- PartidaModo1:
-
-- PartidaModo2:
-
 - Position:
 
 - Ranking: Clase utilizada para guardar el conjunto (en este caso un ArrayList) de elementos de tipo ElementoRanking

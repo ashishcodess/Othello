@@ -18,6 +18,11 @@ public class Main {
     private static CtrlPersitencia cp;
     private static Ranking ranking;
 
+    /**
+     * Metodo entrar(funcion de login de usuario)
+     * @throws IOException en caso de fallo al crear fichero Usuario
+     * @throws MyException en caso de no haber introducido una opcion correcta en la pregunta de si esta registrado (si/no)
+     * */
     public static void entrar() throws IOException, MyException {
         System.out.println("Estas Registrado/a? si/no ");
         String in = scan.next();
@@ -38,6 +43,11 @@ public class Main {
         else throw new MyException("No se ha introducido una opcion valida (si, no)");
     }
 
+    /**
+     * Metodo seleccionar_reglas
+     * @return devuelve un array de enteros con valores entre 0 y 1 (mostrando las reglas validas para la partida)
+     * @throws MyException en caso de no haber introducido las reglas de manera incorrecta
+     * */
     private static int[] seleccionar_reglas() throws MyException {
         int res[] = new int[3];
         boolean b = false;
@@ -59,14 +69,26 @@ public class Main {
     }
 
 
+    /**
+     * Metodo rango_mapa_correcto
+     * @param x posicion X de la casilla a comprobar el rango del mapa
+     * @param y posicion y de la casilla a comprobar el rango del mapa
+     * @return devuelve TRUE si x,y esta comprendido en el tablero (tablero de 8x8), FALSE en caso contrario
+     * */
     private static boolean rango_mapa_correcto(int x, int y) {
         return (x >= 0 && x < 9) && (y >= 0 && y < 9);
     }
 
-    private static String[] generar_accion_partida() {
+    /**
+     * Metodo generar_accion_partida()
+     * @return devuelve un array de Strings con la accion a realizar en el proximo turno de la partida \
+     * dichas acciones pueden ser [colocar x y, paso, info, guardar, y finalizar]
+     * */
+    private static String[] generar_accion_partida(int id, String nick) {
         String[] res;
         System.out.println("//////////////////////////////////////////////////////");
-        System.out.println("Acciones a realizar");
+        if (id >= 0 && id < 6) System.out.println("Acciones a realizar para la maquina: (ID: " + id + ")");
+        else System.out.println("Acciones a realizar para el jugador: (ID: " + id + ", nick: " + nick + ")");
         System.out.println("//////////////////////////////////////////////////////");
         System.out.println("-  colocar x y (colocar ficha en posicion x, y)");
         System.out.println("-  paso (pasar el turno)");
@@ -104,6 +126,10 @@ public class Main {
         return res;
     }
 
+    /**
+     * Metodo seleccionar_bando
+     * @return devuelve el entero en caso de haber introducido correctamente el bando (1 o 2), caso contrario devuelve -1
+     * */
     private static int seleccionar_bando() {
         System.out.print("Seleccionar bando de juego (1 -> negro, 2 -> blanco):");
         int res = Integer.parseInt(scan.next());
@@ -112,6 +138,11 @@ public class Main {
         return -1;
     }
 
+    /**
+     * Metodo seleccionar_id_maquina
+     * @param b booleano para imprimir que maquina hay que introducir en ese momento
+     * @return devuelve el entero en caso de haber introducido por la consola de comandos
+     * */
     private static int seleccionar_id_maquina(boolean b) {
         if (!b) System.out.print("Introducir idMaquina1 (negro):");
         else System.out.print("Introducir idMaquina2 (blanco):");
@@ -120,6 +151,10 @@ public class Main {
         return res;
     }
 
+    /**
+     * Metodo print_contrincantes_maquina()
+     * Esta funcion unicamente imprime los identificadores disponibles de las maquinas con la dificultad del juego
+     * */
     private static void print_contrincantes_maquina() {
         System.out.println();
         System.out.println("Mostrando contrincantes maquina");
@@ -129,7 +164,69 @@ public class Main {
         System.out.println();
     }
 
-    //se puede reducir ahora que tenemos una misma clase Partida
+    /**
+     * Metodo ejecutarPartida
+     * @param p es la partida ha ejecutar (una vez finalizada dicha partida guardara/actualizara el ranking en caso de \
+     * ser necesario)
+     * @throws IOException heredado de otra funcion (fallo al guardar la Partida)
+     * @throws MyException heredado de otra funcion (fallo en la ronda o al actualizar el ranking)
+     * */
+    /*
+    private static void ejecutarPartida(Partida p) throws IOException, MyException {
+        int res = -1;
+        while (res < 0) { //continua la partida
+            res = p.rondaPartida(generar_accion_partida());
+            System.out.println();
+            if((res!= 2) || (res!= 3)) p.print_Tablero();
+        }
+        if (res == 2) { //jugador a selecionado guardar partida
+            cp.ctrl_guardar_partida(p.toArrayList());
+            System.out.println();
+            System.out.println("PARTIDA GUARDADA");
+            System.out.println();
+        }
+        else if (res != 3) actualizar_ranking(p,res);
+        System.out.println();
+        System.out.println("PARTIDA FINALIZADA");
+        System.out.println();
+    }*/
+
+    private static void ejecutarPartida(Partida p) throws IOException, MyException {
+        int res = -1;
+        int turno = 0;
+        int id_aux = -1;
+        String s_aux = "";
+        while (res < 0) { //continua la partida
+            turno = p.getTurnoPartida();
+            if (turno % 2 == 0) {
+                id_aux = p.getID_J1();s_aux = p.getNickJugador1();
+            }
+            else {
+                id_aux = p.getID_J2();s_aux = p.getNickJugador2();
+            }
+            res = p.rondaPartida(generar_accion_partida(id_aux,s_aux));
+            System.out.println();
+            if((res!= 2) || (res!= 3)) p.print_Tablero();
+        }
+        if (res == 2) { //jugador a selecionado guardar partida
+            cp.ctrl_guardar_partida(p.toArrayList());
+            System.out.println();
+            System.out.println("PARTIDA GUARDADA");
+            System.out.println();
+        }
+        else if (res != 3) actualizar_ranking(p,res);
+        System.out.println();
+        System.out.println("PARTIDA FINALIZADA");
+        System.out.println();
+    }
+
+    /**
+     * Metodo iniciarPartida
+     * Configura lo necesario para crear una partida (idpartida,modo de juego, reglas, contrincantes, tablero) \
+     * seguidamente ejecuta dicha partida creada
+     * @throws MyException heredado por otro metodo (en este caso ejecutarPartida())
+     * @throws IOException error al crear el fichero Partida (en caso de querer guardar la partida)
+     * */
     public static void iniciarPartida() throws MyException, IOException {
         int res = -1;
         int idPartida = cp.ctrl_get_nuevo_ID_Partida();
@@ -176,7 +273,6 @@ public class Main {
             }
 
         }
-
         //Seleccionar informacion del contrincante
         switch (modo) {
             case 0: //Maquina vs Maquina
@@ -203,7 +299,7 @@ public class Main {
                 }
                 break;
 
-            case 2: //Persona vs Persona)
+            case 2: //Persona vs Persona
                 System.out.println("Introducir informacion de contrincante 2 (Persona)");
                 String in;
 
@@ -251,45 +347,31 @@ public class Main {
                 break;
         }
         Partida p = new Partida(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
-        //Ejecutando la partida
-        res = -1;
-        while (res < 0) { //continua la partida
-            res = p.rondaPartida(generar_accion_partida());
-            System.out.println();
-            if((res!= 2) || (res!= 3)) p.print_Tablero();
-        }
-        if (res == 2) { //jugador a selecionado guardar partida
-            cp.ctrl_guardar_partida(p.toArrayList());
-            System.out.println();
-            System.out.println("PARTIDA GUARDADA");
-            System.out.println();
-        }
-        else if (res != 3) actualizar_ranking(p,res);
+        ejecutarPartida(p); //Ejecutando la partida
     }
 
 
+    /**
+     * Metodo cargarPartida
+     * Carga una partida a partir de un fichero guardado previamente y seguidamente ejecuta dicha partida cargada
+     * @throws IOException en caso de fallo con el fichero Partida
+     * @throws MyException heredado por otro metodo (en este caso ejecutarPartida())
+     * */
     public static void cargarPartida(int idPartida) throws IOException, MyException {
         int modo = cp.ctrl_leer_modo_partida(idPartida);
         int res;
         Partida p = cp.ctrl_cargar_partida(idPartida);
-        res = -1;
-        while (res < 0) { //continua la partida
-            res = p.rondaPartida(generar_accion_partida());
-            System.out.println();
-            if((res!= 2) || (res!= 3)) p.print_Tablero();
-        }
-        if (res == 2) { //jugador a selecionado guardar partida
-            cp.ctrl_guardar_partida(p.toArrayList());
-            System.out.println();
-            System.out.println("PARTIDA GUARDADA");
-            System.out.println();
-        }
-        else if (res != 3) actualizar_ranking(p,res);
-        System.out.println();
-        System.out.println("PARTIDA FINALIZADA");
-        System.out.println();
+        ejecutarPartida(p); //Ejecutando la partida
     }
 
+    /**
+     * Metodo listar_partidas_disponibles: Muestra opciones de cargar, borrar partida del usuario logueado
+     * y ejecuta dicha accion una vez introducida la partida a jugar o borrar
+     * @param id identificador de usuario a comprobar sus partidas guardadas
+     * @param nick nickname de usuario a comprobar sus partidas guardadas
+     * @throws IOException en caso de fallo con el fichero de Usuario
+     * @throws MyException heredado por otro metodo
+     * */
     public static void listar_partidas_disponibles(int id, String nick) throws IOException, MyException {
         System.out.println();
         int modo = -1;
@@ -312,6 +394,12 @@ public class Main {
         }
     }
 
+    /**
+     * Metodo actualizar_ranking
+     * @param p partida de la cual se necesita informacion de los jugadores y del ganador
+     * @param ganador incrementar contador de partidas en funcion de [2: empate, 1:gana jugador2, 0:gana jugador1]
+     * @throws MyException heredado por otro metodo
+     * */
     private static void actualizar_ranking(Partida p, int ganador) throws MyException {
         int modo = p.getModoDeJuegoPartida();
         if (modo != 0) { //diferente de maquina vs maquina
@@ -325,11 +413,17 @@ public class Main {
         }
     }
 
+    /**
+     * Metodo consultarRanking (Muestra el ranking al completo)
+     * */
     public static void consultarRanking(){
         ranking.print_ranking();
     }
 
-    public static void consultarEstadístiques(){
+    /**
+     * Metodo consultar_Estadisticas (Muestra la info del ranking de un jugador en concreto)
+     * */
+    public static void consultar_Estadisticas(){
         System.out.print("Introducir ID de jugador a consultar:");
         int id = Integer.parseInt(scan.next());
         System.out.print("\n Introducir nickname de jugador a consultar:");
@@ -338,7 +432,12 @@ public class Main {
         ranking.print_persona_ranking(id,nick);
     }
 
-
+    /**
+     * Funcion main
+     * @param args (argumentos del main)
+     * @throws IOException heredado de otras clases
+     * @throws MyException heredado de otras clases
+     * */
     public static void main(String[] args) throws IOException, MyException {
         cp = new CtrlPersitencia(true); //activar para utilizar solo 1 fichero de ranking (ranking.txt)
         ranking = cp.ctrl_importar_ranking();
@@ -346,7 +445,7 @@ public class Main {
         boolean salir = false;
         while(!salir){
             System.out.println("\nElige lo que quieres hacer: \n 1: Empezar una partida \n 2: Cargar/Borrar una partida \n" +
-                    " 3: Consultar el ranquing \n 4: Consultar estadísticas \n 5: salir \n");
+                    " 3: Consultar el ranquing \n 4: Consultar estadisticas \n 5: salir \n");
             System.out.print("seleccionar opcion:");
             int quit = scan.nextInt();
             System.out.println("");
@@ -361,7 +460,7 @@ public class Main {
                     consultarRanking();
                     break;
                 case 4:
-                    consultarEstadístiques();
+                    consultar_Estadisticas();
                     break;
                 case 5:
                     salir = true;

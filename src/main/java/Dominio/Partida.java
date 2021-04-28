@@ -144,7 +144,7 @@ public class Partida {
      * @return retorna un int con el ID del Jugador1 de la Partida
      */
     public int getID_J1() {
-        return this.idJugador1;
+        return j1.getID();
     }
 
     /**
@@ -152,7 +152,7 @@ public class Partida {
      * @return retorna un int con el ID del Jugador2 de la Partida
      */
     public int getID_J2() {
-        return this.idJugador2;
+        return j2.getID();
     }
 
     /**
@@ -275,6 +275,10 @@ public class Partida {
                             }
                             else if (this.turno % 2 != 0) {
                                 // AQUI FALTA FUNCION QUE LLAMA AL JUGADOR MAQUINA A MOVER FICHA
+                                //Sergio: temporal por ahora
+                                int x = Integer.parseInt(accion[1]);
+                                int y = Integer.parseInt(accion[2]);
+                                j2.colocar_ficha_en_partida(turno, x, y, tablero);
                             }
 
                             actualizarTablero();
@@ -300,6 +304,43 @@ public class Partida {
                     break;
                 case 0: //Maquina vs Maquina
                     // AQUI FALTA FUNCION QUE LLAMA AL JUGADOR MAQUINA A MOVER FICHA
+                    //Sergio:temporal por ahora para realizar pruebas
+                    switch (accion[0]) {
+                        case "colocar":
+                            //this.tablero.actualizarTablero(x, y, this.turno);
+                            if (this.turno % 2 == 0) {
+                                int x = Integer.parseInt(accion[1]);
+                                int y = Integer.parseInt(accion[2]);
+                                j1.colocar_ficha_en_partida(turno, x, y, tablero);
+                            }
+                            else if (this.turno % 2 != 0) {
+                                // AQUI FALTA FUNCION QUE LLAMA AL JUGADOR MAQUINA A MOVER FICHA
+                                //Sergio: temporal por ahora
+                                int x = Integer.parseInt(accion[1]);
+                                int y = Integer.parseInt(accion[2]);
+                                j2.colocar_ficha_en_partida(turno, x, y, tablero);
+                            }
+
+                            actualizarTablero();
+                            print_Tablero();
+                            incrementarTurnoPartida();
+                            this.finalizada = 0;
+                            //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
+                            /*
+                            else { this.ganador = -1;}*/
+                            break;
+                        case "info": //info partida
+                            this.get_info_partida();
+                            break;
+                        case "guardar": //guardarPartida
+                            return 2;
+                        case "finalizar": //finalizarPartida
+                            return 3;
+                        case "paso":
+                            if (disp == 0) ++this.finalizada;
+                            incrementarTurnoPartida();
+                            break;
+                    }
                     break;
             }
         }
@@ -341,12 +382,6 @@ public class Partida {
         this.tablero.getTablero();
     }
 
-
-    /*
-    public void actualizarRanking(Ranking r) throws MyException {
-        r.incrementar_ganadas_perdidas(this.idJugador1, this.nick1,this.idJugador2, this.nick2, this.ganador);
-    }
-    */
 
     /**
      * Operacion que imprime por pantalla el tablero de la partida
