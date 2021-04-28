@@ -342,7 +342,6 @@ public class Tablero {
                 pos = (Position) arr[i];
                 int x = pos.getX();
                 int y = pos.getY();
-                System.out.println("VNegras" + " x " + x + " y "+ y  );
                 if (graph_v[x][y] != -1) bfsCalcularCasillasDisponiblesVertical(pos , 2,3);
             }
         }
@@ -367,12 +366,6 @@ public class Tablero {
                 graph_h[i][j]= tablero[i][j].getTipoCasilla();
             }
         }
-
-        Object[] arr2 = negras.toArray();
-        for (int i = 0 ; i < arr2.length ; ++i) {
-            Position P = (Position) arr2[i];
-            System.out.println("Nx:" + P.getX() + "Ny:" + P.getY());
-        }
         Position pos;
         if (turno % 2 == 0) {
             Object[] arr = negras.toArray();
@@ -380,7 +373,6 @@ public class Tablero {
                 pos = (Position) arr[i];
                 int x = pos.getX();
                 int y = pos.getY();
-                System.out.println("HNegras" + " x " + x + " y "+ y  );
                 if (graph_h[x][y] != -1) bfsCalcularCasillasDisponiblesHorizontal(pos , 2 , 3);
             }
         }
@@ -412,7 +404,6 @@ public class Tablero {
                 pos = (Position) arr[i];
                 int x = pos.getX();
                 int y = pos.getY();
-                System.out.println("DNegras" + " x " + x + " y "+ y  );
                 if (graph_dl[x][y] != -1) bfsCalcularCasillasDisponiblesDiagonalesLeft(pos , 2, 3 );
                 if (graph_dr[x][y] != -1) bfsCalcularCasillasDisponiblesDiagonalesRight(pos , 2, 3 );
             }
@@ -475,14 +466,6 @@ public class Tablero {
                     a = pos.getX();
                     b = pos.getY();
                     tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
-                    if(own_color == 2) {
-                        negras.add(pos);
-                        blancas.remove(pos);
-                    }
-                    else   if(own_color == 3) {
-                        negras.remove(pos);
-                        blancas.add(pos);
-                    }
                 }
             }
         }
@@ -503,14 +486,6 @@ public class Tablero {
                     a = pos.getX();
                     b = pos.getY();
                     tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
-                    if(own_color == 2) {
-                        negras.add(pos);
-                        blancas.remove(pos);
-                    }
-                    else  if(own_color == 3){
-                        negras.remove(pos);
-                        blancas.add(pos);
-                    }
                 }
             }
         }
@@ -548,14 +523,6 @@ public class Tablero {
                     a = pos.getX();
                     b = pos.getY();
                     tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
-                    if(own_color == 2) {
-                        negras.add(pos);
-                        blancas.remove(pos);
-                    }
-                    else if (own_color == 3) {
-                        negras.remove(pos);
-                        blancas.add(pos);
-                    }
                 }
             }
         }
@@ -577,14 +544,6 @@ public class Tablero {
                     a = pos.getX();
                     b = pos.getY();
                     tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
-                    if(own_color == 2) {
-                        negras.add(pos);
-                        blancas.remove(pos);
-                    }
-                    else if (own_color == 3){
-                        negras.remove(pos);
-                        blancas.add(pos);
-                    }
                 }
             }
         }
@@ -625,14 +584,14 @@ public class Tablero {
                     a = pos.getX();
                     b = pos.getY();
                     tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
-                    if(own_color == 2) {
+                   /* if(own_color == 2) {
                         negras.add(pos);
                         blancas.remove(pos);
                     }
                     else  if(own_color == 3){
                         negras.remove(pos);
                         blancas.add(pos);
-                    }
+                    }*/
                 }
             }
         }
@@ -655,14 +614,6 @@ public class Tablero {
                     a = pos.getX();
                     b = pos.getY();
                     tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
-                    if(own_color == 2) {
-                        negras.add(pos);
-                        blancas.remove(pos);
-                    }
-                    else if(own_color == 3) {
-                        negras.remove(pos);
-                        blancas.add(pos);
-                    }
                 }
             }
         }
@@ -685,14 +636,6 @@ public class Tablero {
                     a = pos.getX();
                     b = pos.getY();
                     tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
-                    if(own_color == 2) {
-                        negras.add(pos);
-                        blancas.remove(pos);
-                    }
-                    else  if(own_color == 3) {
-                        negras.remove(pos);
-                        blancas.add(pos);
-                    }
                 }
             }
         }
@@ -716,14 +659,6 @@ public class Tablero {
                     a = pos.getX();
                     b = pos.getY();
                     tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
-                    if(own_color == 2) {
-                        negras.add(pos);
-                        blancas.remove(pos);
-                    }
-                    else  if(own_color == 3) {
-                        negras.remove(pos);
-                        blancas.add(pos);
-                    }
                 }
             }
         }
@@ -744,6 +679,7 @@ public class Tablero {
         modificarCasillasDiagonales(x , y , turno);
 
         int a, b;
+
         for (int i = 0; i < arr.length; ++i) {
             Position pos = (Position) arr[i];
             a = pos.getX();
@@ -755,6 +691,14 @@ public class Tablero {
         else { color = 3; blancas.add(new Position(x , y));}
         tablero[x][y].cambiar_tipo(color);
         arr =  new Position[0];
+        negras.clear();
+        blancas.clear();
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+              if (tablero[i][j].getTipoCasilla() == 2 )negras.add(new Position(i , j));
+              else if  (tablero[i][j].getTipoCasilla() == 3 )blancas.add(new Position(i , j));
+            }
+        }
     }
     /**
      * Operaciones get de casillas disponibles
@@ -781,4 +725,5 @@ public class Tablero {
     public boolean finalizada(){
         return true; //para poderlo compilar y hacer pruebas
     }
+
 }
