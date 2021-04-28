@@ -62,6 +62,7 @@ public class JugadorPersona extends Jugador {
      * Operacion get del atributo nickname
      * @return  devuelve el nickname de JugadorPersona
      */
+    @Override
     public String get_Nickname() {
         return this.nickname;
     }

@@ -1,6 +1,5 @@
 package Dominio;
 
-import ControladorPersistencia.CtrlPersitencia;
 import MyException.MyException;
 
 import java.io.IOException;
@@ -17,18 +16,13 @@ public class Partida {
     private int turno;
     /**Reglas de la Partida*/
     private final int[] reglas; //array de 2 enteros para las reglas; {1,0} vertical/horizontal; {0,1} diagonales; {1,1} normal
+
     /**Nick del Jugador1 de la Partida*/
-    private String nick1;
-    /**ID del Jugador1 de la Partida*/
-    private final int idJugador1;
-    /**Nick del Jugador2 de la Partida*/
-    private String nick2;
-    /**ID del Jugador2 de la Partida*/
-    private final int idJugador2;
-
-
     private Jugador j1;
+
+    /**Nick del Jugador2 de la Partida*/
     private Jugador j2;
+
 
     /**Tablero de la Partida*/
     private Tablero tablero;
@@ -50,8 +44,6 @@ public class Partida {
         this.modoDeJuego = modoJuego;
         this.reglas = r;
         this.turno = 0;
-        this.idJugador1 = idj1;
-        this.idJugador2 = idj2;
         this.ganador = -1;
         this.tablero = new Tablero();
         this.finalizada = 0;
@@ -92,21 +84,9 @@ public class Partida {
 
         this.reglas = r;
         this.turno = turn;
-        this.nick1 = n1;
-        this.idJugador1 = idj1;
-        this.nick2 = n2;
-        this.idJugador2 = idj2;
         this.ganador = -1;
         this.tablero = t;
         this.finalizada = 0;
-    }
-
-    /**
-     * Devuelve un boleano indicando si el jugador está en la partida
-     * @return retorna un bool indicando si el jugador con ID id participa en la Partida
-     * */
-    public Boolean existeJugador(int id){
-        return ((idJugador1 == id) || (idJugador2 == id));
     }
 
     /**
@@ -160,7 +140,7 @@ public class Partida {
      * @return retorna un String con el nick del Jugador1 de la Partida
      */
     public String getNickJugador1() {
-        return this.nick1;
+        return j1.get_Nickname();
     }
 
     /**
@@ -168,7 +148,7 @@ public class Partida {
      * @return retorna un String con el nick del Jugador2 de la Partida
      */
     public String getNickJugador2() {
-        return this.nick2;
+        return j2.get_Nickname();
     }
 
     /**
@@ -405,8 +385,8 @@ public class Partida {
     public void get_info_partida() {
         System.out.println();
         System.out.println("IDpartida:" + this.id);
-        System.out.println("Jugador1 (ID,nick): " +  this.idJugador1 + " " + this.nick1);
-        System.out.println("Jugador2 (ID,nick): " +  this.idJugador2 + " " + this.nick2);
+        System.out.println("Jugador1 (ID,nick): " +  this.j1.getID() + " " + this.j1.get_Nickname());
+        System.out.println("Jugador2 (ID,nick): " +  this.j2.getID() + " " + this.j2.get_Nickname());
         System.out.println("Modo de juego: " +  this.modoDeJuego);
         System.out.println("Reglas(v,h,d): " +  this.reglas[0] + this.reglas[1] + this.reglas[2]);
         System.out.println("Turno: " +  this.turno);
@@ -422,9 +402,9 @@ public class Partida {
     public ArrayList<String> toArrayList() {
         ArrayList<String> as = new ArrayList<String>();
         as.add(String.valueOf(this.id));
-        String s =this.idJugador1 + " " + this.nick1;
+        String s =this.j1.getID() + " " + this.j1.get_Nickname();
         as.add(s);
-        s =this.idJugador2 + " " + this.nick2;
+        s = this.j2.getID() + " " + this.j2.get_Nickname();
         as.add(s);
         s = String.valueOf(this.modoDeJuego);
         as.add(s);

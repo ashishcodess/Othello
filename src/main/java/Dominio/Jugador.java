@@ -60,4 +60,6 @@ public abstract class Jugador {
         }
         else return false;
     }
+
+    public abstract String get_Nickname();
 }

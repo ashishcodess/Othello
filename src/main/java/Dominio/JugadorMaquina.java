@@ -31,6 +31,11 @@ public class JugadorMaquina extends Jugador {
         super(idMaquina);
     }
 
+    @Override
+    public String get_Nickname() {
+        return "";
+    }
+
     /**
      * Constructora JugadorMaquina (idMaquina, profundidad)
      * @param idMaquina (id de Jugador = idMaquina)
