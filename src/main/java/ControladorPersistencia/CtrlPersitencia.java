@@ -3,9 +3,7 @@ package ControladorPersistencia;
 import Dominio.*;
 import MyException.MyException;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -17,6 +15,8 @@ public class CtrlPersitencia {
     private IORanking cRanking;
     /** Objeto IOUsuario*/
     private IOUsuario cUsuario;
+    /** Objeto IOtablero*/
+    private IOTablero cTablero;
 
     /** Ubicacion de directorio de ficheros para CtrlPersitencia*/
     private String path;
@@ -26,20 +26,24 @@ public class CtrlPersitencia {
     private String path_ranking;
     /** Ubicacion de directorio de los usuarios para CtrlPersitencia*/
     private String path_users;
+    /** Ubicacion de directorio de los tableros para CtrlPersitencia*/
+    private String path_tableros;
 
 
     /**
      * Constructora por defecto
      */
     public CtrlPersitencia() {
-        this.path = "./src/files/";
-        this.path_partidas = path + "partidas/";
-        this.path_ranking =  path + "ranking/";
-        this.path_users = path + "users/";
-        this.cPartidas = new IOPartidas(path_partidas);
-        this.cRanking = new IORanking(path_ranking);
-        this.cUsuario = new IOUsuario(path_users);
         InicializarDirPersitencia();
+        this.path = "./src/files/";
+        this.path_partidas = this.path + "partidas/";
+        this.path_ranking =  this.path + "ranking/";
+        this.path_users = this.path + "users/";
+        this.path_tableros =  this.path + "tableros/";
+        this.cPartidas = new IOPartidas(this.path_partidas);
+        this.cRanking = new IORanking(this.path_ranking);
+        this.cUsuario = new IOUsuario(this.path_users);
+        this.cTablero = new IOTablero(this.path_tableros);
     }
 
     /**
@@ -47,14 +51,16 @@ public class CtrlPersitencia {
      * @param bRank [TRUE: solo utiliza fichero ranking.txt; FALSE:genera varios ficheros en funcion del size del ranking (usado en las pruebas DriverRanking)]
      */
     public CtrlPersitencia(boolean bRank) {
-        path = "./src/files/";
-        path_partidas = path + "partidas/";
-        path_ranking =  path + "ranking/";
-        path_users = path + "users/";
-        cPartidas = new IOPartidas(path_partidas);
-        cRanking = new IORanking(path_ranking,bRank);
-        cUsuario = new IOUsuario(path_users);
         InicializarDirPersitencia();
+        this.path = "./src/files/";
+        this.path_partidas = this.path + "partidas/";
+        this.path_ranking =  this.path + "ranking/";
+        this.path_users = this.path + "users/";
+        this.path_tableros =  this.path + "tableros/";
+        this.cPartidas = new IOPartidas(this.path_partidas);
+        this.cRanking = new IORanking(this.path_ranking,bRank);
+        this.cUsuario = new IOUsuario(this.path_users);
+        this.cTablero = new IOTablero(this.path_tableros);
     }
 
 
@@ -63,14 +69,16 @@ public class CtrlPersitencia {
      * @param s_path path de el directorio de files (para Persistencia)
      */
     public CtrlPersitencia(String s_path) {
-        path = s_path;
-        path_partidas = path + "partidas/";
-        path_ranking =  path + "ranking/";
-        path_users = path + "users/";
-        cPartidas = new IOPartidas(path_partidas);
-        cRanking = new IORanking(path_ranking);
-        cUsuario = new IOUsuario(path_users);
         InicializarDirPersitencia();
+        this.path = s_path;
+        this.path_partidas =  this.path + "partidas/";
+        this.path_ranking =   this.path + "ranking/";
+        this.path_users =  this.path + "users/";
+        this.path_tableros =   this.path + "tableros/";
+        this.cPartidas = new IOPartidas(path_partidas);
+        this.cRanking = new IORanking(path_ranking);
+        this.cUsuario = new IOUsuario(path_users);
+        this.cTablero = new IOTablero(this.path_tableros);
     }
 
     /**
@@ -79,14 +87,15 @@ public class CtrlPersitencia {
      * @param bRank [TRUE: solo utiliza fichero ranking.txt; FALSE:genera varios ficheros en funcion del size del ranking (usado en las pruebas DriverRanking)]
      */
     public CtrlPersitencia(String s_path, boolean bRank) {
-        path = s_path;
-        path_partidas = path + "partidas/";
-        path_ranking =  path + "ranking/";
-        path_users = path + "users/";
-        cPartidas = new IOPartidas(path_partidas);
-        cRanking = new IORanking(path_ranking,bRank);
-        cUsuario = new IOUsuario(path_users);
         InicializarDirPersitencia();
+        this.path = s_path;
+        this.path_partidas =  this.path + "partidas/";
+        this.path_ranking =   this.path + "ranking/";
+        this.path_users =  this.path + "users/";
+        this.cPartidas = new IOPartidas( this.path_partidas);
+        this.cRanking = new IORanking( this.path_ranking,bRank);
+        this.cUsuario = new IOUsuario( this.path_users);
+        this.cTablero = new IOTablero(this.path_tableros);
     }
 
     /**
@@ -101,6 +110,8 @@ public class CtrlPersitencia {
                 f = new File(path_ranking);
                 if (!f.exists()) {f.mkdir();}
                 f = new File(path_users);
+                if (!f.exists()) {f.mkdir();}
+                f = new File(path_tableros);
                 if (!f.exists()) {f.mkdir();}
             }
         }
@@ -122,6 +133,14 @@ public class CtrlPersitencia {
         return cPartidas.get_nuevo_ID_Partida();
     }
 
+    /**
+     * Operacion ctrl_get_nuevo_ID_tablero
+     * @return devuelve el siguente ID disponible para asignarselo a un tablero a guardar
+     * */
+    public int ctrl_get_nuevo_ID_tablero() {
+        return cTablero.get_nuevo_ID_tablero();
+    }
+
     //Controlador de Partidas (cPartidas)
 
     /**
@@ -133,7 +152,6 @@ public class CtrlPersitencia {
     public int ctrl_leer_modo_partida(int idPartida) throws IOException {
         return cPartidas.leer_modo_partida(idPartida);
     }
-
 
     /**
      * Operacion ctrl_cargar_partida
@@ -222,6 +240,37 @@ public class CtrlPersitencia {
             return b;
         }
         else throw new MyException("No existe fichero de partida seleccionada por el ID:" + idPartida);
+    }
+
+    //Controlador de Tablero (cTablero)
+    /**
+     * Operacion ctrl_guardar_tablero
+     * @param as es ArrayList con los parametros necesarios para guardar el tablero (utilizando funcion toArrayList() de Tablero)
+     * @return devuelve TRUE en caso que se haya guardado con exito, caso contrario devuelve FALSE
+     * @throws IOException en caso de error con el fichero partida
+     */
+    public boolean ctrl_guardar_tablero(ArrayList<String> as) throws IOException {
+        return cTablero.guardar_tablero(as,this.ctrl_get_nuevo_ID_tablero());
+    }
+
+    /** Operacion ctrl_borrar_tablero
+     * @param idTablero el identificador de tablero a borrar
+     * @return devuelve TRUE en caso que se haya borrado con exito, caso contrario devuelve excepcion
+     * @throws IOException en caso de error con el fichero tablero
+     * @throws MyException en caso de no existir fichero con id=idTablero
+     */
+    public boolean ctrl_borrar_tablero(int idTablero) throws IOException, MyException {
+        return cTablero.borrar_tablero(idTablero);
+    }
+
+    /**
+     * Operacion ctrl_cargar_tablero
+     * @param idTablero es el ID de tablero a cargar
+     * @return devuelve Tablero con id igual a idTablero, caso contrario devuelve null
+     * @throws IOException en caso de no existir el fichero de Tablero
+     */
+    public Tablero ctrl_cargar_tablero(int idTablero) throws IOException {
+        return cTablero.cargar_tablero(idTablero);
     }
 
 

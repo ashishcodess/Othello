@@ -34,6 +34,7 @@ public class DriverPersistencia {
             System.out.println("3 - CtrlUsuario (Crear, modificar, borrar usuario)");
             System.out.println("4 - GetNuevoID_User");
             System.out.println("5 - GetNuevoID_Partida");
+            System.out.println("6 - GetNuevoID_Tablero");
             System.out.println();
             System.out.print("Introducir opcion:");
             int i_entrada = Integer.parseInt(scan.next());
@@ -65,6 +66,9 @@ public class DriverPersistencia {
                     break;
                 case 5:
                     test_prueba_getID_nueva_partida();
+                    break;
+                case 6:
+                    test_prueba_getID_nueva_tablero();
                     break;
                 default:
                     System.out.println("Introducir una opcion correcta");
@@ -174,6 +178,20 @@ public class DriverPersistencia {
         System.out.println("ID_partida1: " + String.valueOf(id1));
         System.out.println("ID_partida2: " + String.valueOf(id2));
         System.out.println("ID_partida3: " + String.valueOf(id3));
+        boolean b = (id1 != id2) && (id2 != id3) && (id1 != id3);
+        if (b) System.out.println("Todo correcto (ID's diferentes)");
+        else System.out.println("Error hay algun ID igual (no deberia ser asi...)");
+    }
+
+
+    /**test_prueba_getID_nueva_tablero*/
+    public static void test_prueba_getID_nueva_tablero() {
+        int id1 = cp.ctrl_get_nuevo_ID_tablero();
+        int id2 = cp.ctrl_get_nuevo_ID_tablero();
+        int id3 = cp.ctrl_get_nuevo_ID_tablero();
+        System.out.println("ID_tablero1: " + String.valueOf(id1));
+        System.out.println("ID_tablero2: " + String.valueOf(id2));
+        System.out.println("ID_tablero3: " + String.valueOf(id3));
         boolean b = (id1 != id2) && (id2 != id3) && (id1 != id3);
         if (b) System.out.println("Todo correcto (ID's diferentes)");
         else System.out.println("Error hay algun ID igual (no deberia ser asi...)");
