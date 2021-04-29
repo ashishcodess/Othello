@@ -6,3 +6,6 @@ de las clases: IOPartidas,IORanking e IOUsuario) es lo unico visible por la capa
 - IORanking: Clase de operaciones de IO y de Persistencia referentes al ranking
 
 - IOUsuario: Clase de operaciones de IO y de Persistencia referentes a los Usuarios (Personas Registradas)
+
+- IOTablero: Clase de operaciones de IO y de Persistencia referentes a los tableros (clase aun en construccion, la idea es
+para la funcion de tableros personalizados)
