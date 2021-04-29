@@ -226,7 +226,7 @@ public class Main {
      * ser necesario)
      * */
     private static void ejecutarPartida(Partida p) {
-        //try {
+        try {
             int res = -1;
             int turno = 0;
             int id_aux = -1;
@@ -250,7 +250,7 @@ public class Main {
                 System.out.println();
             }
             if (res == 2) { //jugador a selecionado guardar partida
-                //cp.ctrl_guardar_partida(p.toArrayList());
+                cp.ctrl_guardar_partida(p.toArrayList());
                 System.out.println();
                 System.out.println("PARTIDA GUARDADA");
                 System.out.println();
@@ -259,10 +259,10 @@ public class Main {
             System.out.println();
             System.out.println("PARTIDA FINALIZADA");
             System.out.println();
-        //}
-        /*catch (Exception e) {
+        }
+        catch (Exception e) {
             System.out.println(e);
-        }*/
+        }
     }
 
     /**
