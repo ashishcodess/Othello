@@ -29,6 +29,7 @@ public class JugadorMaquina extends Jugador {
      * */
     public JugadorMaquina (int idMaquina) {
         super(idMaquina);
+        if (idMaquina > 5)System.out.println("ID no válido");
     }
 
     @Override
