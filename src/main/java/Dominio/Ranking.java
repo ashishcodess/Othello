@@ -129,7 +129,7 @@ public class Ranking {
      * @param id2 identificador del Jugador2
      * @param nick2 nickname del Jugador2 (en caso de que tenga nickname)
      * @param ganador incrementar contador en funcion de [2: empate, 1:Ganadas, 0:perdidas]
-     * @throws MyException en caso de fallo al crear ficheros Usuarios
+     * @throws MyException en caso de fallo al crear ElementoRanking (si es necesario agregar nuevos jugadores en el ranking)
      * */
     public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, int ganador) throws MyException {
         if (ganador >= 0 && ganador < 3) {
@@ -149,7 +149,7 @@ public class Ranking {
      * @param id identificador del Jugador2
      * @param nick nickname del Jugador2 (en caso de que tenga nickname)
      * @param ganador incrementar contador en funcion de [2: empate, 1:Ganadas, 0:perdidas]
-     * @throws MyException en caso de fallo al crear ficheros Usuarios
+     * @throws MyException en caso de fallo al crear ElementoRanking
      * */
     public void incrementar_partida(int id, String nick, int ganador) throws MyException {
         int i = existe_en_ranking(id,nick);

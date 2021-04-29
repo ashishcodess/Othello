@@ -158,28 +158,32 @@ public class CtrlPersitencia {
      * Operacion ctrl_cargar_partida
      * @param idPartida es el ID de partida a cargar
      * @return devuelve Partida con id igual a idPartida, caso contrario devuelve null
-     * @throws IOException en caso de no existir el fichero de partida
-     * @throws MyException en caso de no existir el fichero de partida con id=idPartida
      */
-    public Partida ctrl_cargar_partida(int idPartida) throws IOException, MyException{
-        Partida p = cPartidas.cargar_partida(idPartida);
-        if (p != null) {
-            int id1, id2, id_partida;
-            String nick1 = new String();
-            String nick2 = new String();
-            id1 = p.getID_J1(); nick1 = p.getNickJugador1();
-            if (id1 > 5) {
-                cUsuario.crear_usuario(id1,nick1);
-                if (!cUsuario.existe_partida_usuario(id1,nick1,idPartida)) cUsuario.agregar_partida_usuario(id1,nick1,idPartida);
+    public Partida ctrl_cargar_partida(int idPartida) {
+        try {
+            Partida p = cPartidas.cargar_partida(idPartida);
+            if (p != null) {
+                int id1, id2, id_partida;
+                String nick1 = new String();
+                String nick2 = new String();
+                id1 = p.getID_J1(); nick1 = p.getNickJugador1();
+                if (id1 > 5) {
+                    cUsuario.crear_usuario(id1,nick1);
+                    if (!cUsuario.existe_partida_usuario(id1,nick1,idPartida)) cUsuario.agregar_partida_usuario(id1,nick1,idPartida);
+                }
+                id2 = p.getID_J2(); nick2 = p.getNickJugador2();
+                if (id2 > 5) {
+                    cUsuario.crear_usuario(id2,nick2);
+                    if (!cUsuario.existe_partida_usuario(id2,nick2,idPartida)) cUsuario.agregar_partida_usuario(id2,nick2,idPartida);
+                }
+                return p;
             }
-            id2 = p.getID_J2(); nick2 = p.getNickJugador2();
-            if (id2 > 5) {
-                cUsuario.crear_usuario(id2,nick2);
-                if (!cUsuario.existe_partida_usuario(id2,nick2,idPartida)) cUsuario.agregar_partida_usuario(id2,nick2,idPartida);
-            }
-            return p;
+            else throw new MyException("");
         }
-        else throw new MyException("No existe fichero de partida seleccionada por el ID:" + idPartida);
+        catch (Exception e) {
+            System.out.println("No existe fichero de partida seleccionada por el ID:" + idPartida);
+        }
+        return null;
     }
 
 
@@ -218,29 +222,33 @@ public class CtrlPersitencia {
     /** Operacion ctrl_borrar_partida
      * @param idPartida es el identificador de partida a borrar
      * @return devuelve TRUE en caso que se haya borrado con exito, caso contrario devuelve excepcion
-     * @throws IOException en caso de error con el fichero partida
-     * @throws MyException en caso de no existir fichero con id=idPartida
      */
-    public boolean ctrl_borrar_partida(int idPartida) throws IOException, MyException {
-        Partida p = cPartidas.cargar_partida(idPartida);
+    public boolean ctrl_borrar_partida(int idPartida) {
         boolean b = false;
-        if (p != null) {
-            int id1, id2;
-            String nick1 = new String();
-            String nick2 = new String();
-            id1 = p.getID_J1(); nick1 = p.getNickJugador1();
-            id2 = p.getID_J2(); nick2 = p.getNickJugador2();
-            if (b =cPartidas.borrar_partida(idPartida)) {
-                if (id1 > 5) {
-                    cUsuario.borrar_partida_usuario(id1,nick1,idPartida);
+        try {
+            Partida p = cPartidas.cargar_partida(idPartida);
+            if (p != null) {
+                int id1, id2;
+                String nick1 = new String();
+                String nick2 = new String();
+                id1 = p.getID_J1(); nick1 = p.getNickJugador1();
+                id2 = p.getID_J2(); nick2 = p.getNickJugador2();
+                if (b =cPartidas.borrar_partida(idPartida)) {
+                    if (id1 > 5) {
+                        cUsuario.borrar_partida_usuario(id1,nick1,idPartida);
+                    }
+                    if (id2 > 5) {
+                        cUsuario.borrar_partida_usuario(id2,nick2,idPartida);
+                    }
                 }
-                if (id2 > 5) {
-                    cUsuario.borrar_partida_usuario(id2,nick2,idPartida);
-                }
+                return b;
             }
-            return b;
+            else throw new MyException("");
         }
-        else throw new MyException("No existe fichero de partida seleccionada por el ID:" + idPartida);
+        catch (Exception e) {
+            System.out.println("No existe fichero de partida seleccionada por el ID:" + idPartida);
+        }
+        return b;
     }
 
     //Controlador de Tablero (cTablero)
