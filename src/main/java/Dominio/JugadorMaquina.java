@@ -112,8 +112,13 @@ public class JugadorMaquina extends Jugador {
     }
 
     @Override
+    /**
+     * Operacion posicion (funcion temporal para colocar ficha de la IA)
+     * @param t tablero a colocar la ficha
+     * @param turno heredado de otra funcion (parametro para actualizarTablero)
+     * @return devuelve el tablero con la ficha colocada por la IA
+     * */
     public Tablero posicion(Tablero t, int turno){
-
         Set<Position> disponibles = t.getCasillasDisponibles();
         int x = 0;
         int y = 0;

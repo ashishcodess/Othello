@@ -75,7 +75,8 @@ public class JugadorPersona extends Jugador {
         return super.getID();
     }
 
-
+    /**
+     * Operacion posicion (aqui no se usa, es para la IA)*/
     public Tablero posicion(Tablero tablero, int turno){
         return tablero;
     }
