@@ -2,6 +2,7 @@ package Dominio;
 
 import MyException.MyException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Partida {
@@ -19,6 +20,9 @@ public class Partida {
     private Jugador j2;
     /**Tablero de la Partida*/
     private Tablero tablero;
+
+    /**Casillas disponibles para colocar ficha en Partida*/
+    Set<Position> disponibles;
     /**Ganador de la Partida*/
     private int ganador; //indica una vez finalizada la partida quien es el ganador (para despues hacer modificacion de ranking)
     //ganador -> -1 (partida sigue en curso),0 (gana nick1), 1 (gana nick2), 2 (empate), 3 (guardar partida), 4 (finalizar)
@@ -59,6 +63,7 @@ public class Partida {
         }
         this.tablero = new Tablero();
         this.finalizada = 0;
+        this.disponibles= new HashSet<Position>();
     }
 
     /**
@@ -100,6 +105,7 @@ public class Partida {
         this.ganador = -1;
         this.tablero = t;
         this.finalizada = 0;
+        this.disponibles= new HashSet<Position>();
     }
 
     /**
@@ -215,8 +221,9 @@ public class Partida {
         }
         else {
             reglasCasillasDisponibles();
-            Set<Position> disponibles = this.tablero.getCasillasDisponibles();
-            //Sergio: Casillas disponibles se imprime desde el MAIN igual que el Tablero
+            this.disponibles = this.tablero.getCasillasDisponibles();
+            print_casillas_disponibles();
+            print_Tablero();
             int disp = disponibles.size();
             switch (modoDeJuego) {
                 case 2: //Persona vs Persona
@@ -336,6 +343,7 @@ public class Partida {
      */
     public void print_Tablero() {
         if (this.tablero != null) {
+            actualizarTablero(); //actualizar tablero por si acaso
             System.out.println();
             System.out.println("Tablero:");
             System.out.println();
@@ -354,8 +362,8 @@ public class Partida {
      * Operacion que imprime por salida estandar las casillas disponibles a colocar una pieza de la partida en ese momento
      */
     public void print_casillas_disponibles() {
-        Set<Position> disponibles = this.tablero.getCasillasDisponibles();
-        Object[] arr = disponibles.toArray();
+        this.disponibles = this.tablero.getCasillasDisponibles();
+        Object[] arr = this.disponibles.toArray();
         System.out.println("Movimientos disponibles [x,y]:");
         for (int i = 0 ; i < arr.length ; ++i){
             Position P = (Position)arr[i];
