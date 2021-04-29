@@ -2,6 +2,7 @@ package Dominio;
 
 import MyException.MyException;
 import java.util.ArrayList;
+import java.util.ServiceConfigurationError;
 import java.util.Set;
 
 public class Partida {
@@ -216,9 +217,12 @@ public class Partida {
         else {
             reglasCasillasDisponibles();
             Set<Position> disponibles = this.tablero.getCasillasDisponibles();
+            if (this.turno == 0) {
+                print_casillas_disponibles(disponibles);
+                print_Tablero();
+            }
             //Sergio: Casillas disponibles se imprime desde el MAIN igual que el Tablero
             int disp = disponibles.size();
-            actualizarTablero();
             switch (modoDeJuego) {
                 case 2: //Persona vs Persona
                     switch (accion[0]) {
@@ -231,8 +235,14 @@ public class Partida {
                             else if (this.turno % 2 != 0) {
                                 j2.colocar_ficha_en_partida(turno, x, y, tablero);
                             }
-                            print_Tablero();
+                            //tablero.actualizarTablero(turno, x, y);
                             incrementarTurnoPartida();
+                            if (turno > 0) {
+                                reglasCasillasDisponibles();
+                                disponibles = this.tablero.getCasillasDisponibles();
+                                print_casillas_disponibles(disponibles);
+                                print_Tablero();
+                            }
                             this.finalizada = 0;
                             //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
                             /*
@@ -267,7 +277,6 @@ public class Partida {
                                 int y = Integer.parseInt(accion[2]);
                                 j2.colocar_ficha_en_partida(turno, x, y, tablero);
                             }
-
                             actualizarTablero();
                             incrementarTurnoPartida();
                             this.finalizada = 0;
@@ -355,8 +364,8 @@ public class Partida {
     /**
      * Operacion que imprime por salida estandar las casillas disponibles a colocar una pieza de la partida en ese momento
      */
-    public void print_casillas_disponibles() {
-        Set<Position> disponibles = this.tablero.getCasillasDisponibles();
+    public void print_casillas_disponibles(Set<Position> disponibles) {
+        //Set<Position> disponibles = this.tablero.getCasillasDisponibles();
         Object[] arr = disponibles.toArray();
         System.out.println("Movimientos disponibles [x,y]:");
         for (int i = 0 ; i < arr.length ; ++i){
@@ -380,7 +389,6 @@ public class Partida {
         System.out.println("Reglas(v,h,d): " +  this.reglas[0] + this.reglas[1] + this.reglas[2]);
         System.out.println("Turno: " +  this.turno);
         System.out.println();
-        System.out.println("Tablero:");
         print_Tablero();
         System.out.println();
     }

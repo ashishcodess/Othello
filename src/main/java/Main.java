@@ -188,8 +188,8 @@ public class Main {
             if((res!= 2) || (res!= 3)) {
                 System.out.println("TURNO: " + turno + "  [id:" + id_aux + " ,nick:" + s_aux + "]");
                 System.out.println();
-                p.print_casillas_disponibles();
-                p.print_Tablero();
+                //p.print_casillas_disponibles();
+                //p.print_Tablero();
             }
             res = p.rondaPartida(generar_accion_partida(id_aux,s_aux));
             System.out.println();
