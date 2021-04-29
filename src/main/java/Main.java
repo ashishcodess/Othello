@@ -4,7 +4,6 @@ import Dominio.Partida;
 import Dominio.Ranking;
 import MyException.MyException;
 
-import java.io.IOException;
 import java.util.*;
 
 
@@ -223,131 +222,132 @@ public class Main {
      * Metodo ejecutarPartida
      * @param p es la partida ha ejecutar (una vez finalizada dicha partida guardara/actualizara el ranking en caso de \
      * ser necesario)
-     * @throws IOException heredado de otra funcion (fallo al guardar la Partida)
-     * @throws MyException heredado de otra funcion (fallo en la ronda o al actualizar el ranking)
      * */
-    private static void ejecutarPartida(Partida p) throws IOException, MyException {
-        int res = -1;
-        int turno = 0;
-        int id_aux = -1;
-        String s_aux = "";
-        while (res < 0) { //continua la partida
-            turno = p.getTurnoPartida();
-            if (turno % 2 == 0) {
-                id_aux = p.getID_J1();s_aux = p.getNickJugador1();
-            }
-            else {
-                id_aux = p.getID_J2();s_aux = p.getNickJugador2();
-            }
-            if((res!= 2) || (res!= 3)) {
-                System.out.println("TURNO: " + turno + "  [id:" + id_aux + " ,nick:" + s_aux + "]");
-                System.out.println();
-                //p.print_casillas_disponibles();
-                //p.print_Tablero();
-            }
-            res = p.rondaPartida(generar_accion_partida(id_aux,s_aux));
+    private static void ejecutarPartida(Partida p) {
+        try {
+            int res = -1;
+            int turno = 0;
+            int id_aux = -1;
+            String s_aux = "";
+            while (res < 0) { //continua la partida
+                turno = p.getTurnoPartida();
+                if (turno % 2 == 0) {
+                    id_aux = p.getID_J1();s_aux = p.getNickJugador1();
+                }
+                else {
+                    id_aux = p.getID_J2();s_aux = p.getNickJugador2();
+                }
+                if((res!= 2) || (res!= 3)) {
+                    System.out.println("TURNO: " + turno + "  [id:" + id_aux + " ,nick:" + s_aux + "]");
+                    System.out.println();
+                    //p.print_casillas_disponibles();
+                    //p.print_Tablero();
+                }
+                res = p.rondaPartida(generar_accion_partida(id_aux,s_aux));
 
+                System.out.println();
+            }
+            if (res == 2) { //jugador a selecionado guardar partida
+                cp.ctrl_guardar_partida(p.toArrayList());
+                System.out.println();
+                System.out.println("PARTIDA GUARDADA");
+                System.out.println();
+            }
+            else if (res != 3) actualizar_ranking(p,res);
+            System.out.println();
+            System.out.println("PARTIDA FINALIZADA");
             System.out.println();
         }
-        if (res == 2) { //jugador a selecionado guardar partida
-            cp.ctrl_guardar_partida(p.toArrayList());
-            System.out.println();
-            System.out.println("PARTIDA GUARDADA");
-            System.out.println();
+        catch (Exception e) {
+            System.out.println(e);
         }
-        else if (res != 3) actualizar_ranking(p,res);
-        System.out.println();
-        System.out.println("PARTIDA FINALIZADA");
-        System.out.println();
     }
 
     /**
      * Metodo iniciarPartida
      * Configura lo necesario para crear una partida (idpartida,modo de juego, reglas, contrincantes, tablero) \
      * seguidamente ejecuta dicha partida creada
-     * @throws MyException heredado por otro metodo (en este caso ejecutarPartida())
-     * @throws IOException error al crear el fichero Partida (en caso de querer guardar la partida)
      * */
-    public static void iniciarPartida() throws MyException, IOException {
-        int res = -1;
-        int idPartida = cp.ctrl_get_nuevo_ID_Partida();
-        System.out.println("0 - Maquina vs Maquina");
-        System.out.println("1 - Persona vs Maquina");
-        System.out.println("2 - Persona vs Persona");
-        System.out.print("Seleccionar modo de juego:");
-        int modo = Integer.parseInt(scan.next());
-        if (modo<0 || modo > 2) throw new MyException("Modo de juego incorrecto");
-        System.out.println();
-        int reglas[] = seleccionar_reglas();
+    public static void iniciarPartida() {
+        try {
+            int idPartida = cp.ctrl_get_nuevo_ID_Partida();
+            System.out.println("0 - Maquina vs Maquina");
+            System.out.println("1 - Persona vs Maquina");
+            System.out.println("2 - Persona vs Persona");
+            System.out.print("Seleccionar modo de juego:");
+            int modo = Integer.parseInt(scan.next());
+            if (modo<0 || modo > 2) throw new MyException("Modo de juego incorrecto");
+            System.out.println();
+            int reglas[] = seleccionar_reglas();
 
-        int id1 = code; //por defecto anfitrion como J1
-        int id2 = -1;
-        String nick1 = nickname; //por defecto anfitrion como J1
-        String nick2 = "";
+            int id1 = code; //por defecto anfitrion como J1
+            int id2 = -1;
+            String nick1 = nickname; //por defecto anfitrion como J1
+            String nick2 = "";
 
-        int bando = -1;
-        //Selecionar bando de juego
-        if (modo == 2) {
-            boolean primero = true;
-            bando = seleccionar_bando();
-            while (bando == -1) {
-                if (!primero) System.out.println("Bando equivocado");
+            int bando = -1;
+            //Selecionar bando de juego
+            if (modo == 2) {
+                boolean primero = true;
                 bando = seleccionar_bando();
-                primero = false;
-            }
-            if (bando == 1) {
-                id1 = code;
-                nick1 = nickname;
-            }
-            else { //ha selecionado bando 2
-                id2 = code;
-                nick2 = nickname;
-            }
-
-        }
-        //Seleccionar informacion del contrincante
-        switch (modo) {
-            case 0: //Maquina vs Maquina
-                id1 = -1; nick1 = "";
-                id2 = -1; nick2 = "";
-                print_contrincantes_maquina();
-                //INFO CONTRICANTES (Jugador1)
-                while (id1 == -1) {
-                    id1 = seleccionar_id_maquina(false);
-                    if(id1<0 | id1>5) id1 = -1;
+                while (bando == -1) {
+                    if (!primero) System.out.println("Bando equivocado");
+                    bando = seleccionar_bando();
+                    primero = false;
                 }
-                //INFO CONTRICANTES (Jugador2)
-                while (id2 == -1) {
-                    id2 = seleccionar_id_maquina(true);
-                    if(id2<0 | id2>5) id2 = -1;
-                }
-                break;
-
-            case 1: //Persona(siempre negras) vs Maquina
-                print_contrincantes_maquina();
-                while (id2 == -1) {
-                    id2 = seleccionar_id_maquina(true);
-                    if(id2<0 | id2>5) id2 = -1;
-                }
-                break;
-
-            case 2: //Persona vs Persona
-                entrarJugador2();
                 if (bando == 1) {
-                    id2 = id_2;
-                    nick2 = nick_2;
+                    id1 = code;
+                    nick1 = nickname;
                 }
-                else {
-                    id1 = id_2;
-                    nick1 = nick_2;
+                else { //ha selecionado bando 2
+                    id2 = code;
+                    nick2 = nickname;
                 }
-                break;
 
-            default:
-                System.out.println("Modo de juego incorrecto");
-                break;
-        }
-        //inicializar tablero
+            }
+            //Seleccionar informacion del contrincante
+            switch (modo) {
+                case 0: //Maquina vs Maquina
+                    id1 = -1; nick1 = "";
+                    id2 = -1; nick2 = "";
+                    print_contrincantes_maquina();
+                    //INFO CONTRICANTES (Jugador1)
+                    while (id1 == -1) {
+                        id1 = seleccionar_id_maquina(false);
+                        if(id1<0 | id1>5) id1 = -1;
+                    }
+                    //INFO CONTRICANTES (Jugador2)
+                    while (id2 == -1) {
+                        id2 = seleccionar_id_maquina(true);
+                        if(id2<0 | id2>5) id2 = -1;
+                    }
+                    break;
+
+                case 1: //Persona(siempre negras) vs Maquina
+                    print_contrincantes_maquina();
+                    while (id2 == -1) {
+                        id2 = seleccionar_id_maquina(true);
+                        if(id2<0 | id2>5) id2 = -1;
+                    }
+                    break;
+
+                case 2: //Persona vs Persona
+                    entrarJugador2();
+                    if (bando == 1) {
+                        id2 = id_2;
+                        nick2 = nick_2;
+                    }
+                    else {
+                        id1 = id_2;
+                        nick1 = nick_2;
+                    }
+                    break;
+
+                default:
+                    System.out.println("Modo de juego incorrecto");
+                    break;
+            }
+            //inicializar tablero
         /*int [][] tab = new int[8][8];
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
@@ -358,22 +358,27 @@ public class Main {
         }
         Tablero t = new Tablero(tab);*/
 
-        Partida p = new Partida(idPartida,modo,reglas,id1,nick1,id2,nick2);
-        ejecutarPartida(p); //Ejecutando la partida
+            Partida p = new Partida(idPartida,modo,reglas,id1,nick1,id2,nick2);
+            ejecutarPartida(p); //Ejecutando la partida
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
 
     /**
      * Metodo cargarPartida
      * Carga una partida a partir de un fichero guardado previamente y seguidamente ejecuta dicha partida cargada
-     * @throws IOException en caso de fallo con el fichero Partida
-     * @throws MyException heredado por otro metodo (en este caso ejecutarPartida())
      * */
-    public static void cargarPartida(int idPartida) throws IOException, MyException {
-        int modo = cp.ctrl_leer_modo_partida(idPartida);
-        int res;
-        Partida p = cp.ctrl_cargar_partida(idPartida);
-        ejecutarPartida(p); //Ejecutando la partida
+    public static void cargarPartida(int idPartida) {
+        try {
+            Partida p = cp.ctrl_cargar_partida(idPartida);
+            ejecutarPartida(p); //Ejecutando la partida
+        }
+        catch (Exception e) {
+            System.out.println("Fallo al cargar la partida con ID:" + idPartida);
+        }
     }
 
     /**
@@ -381,28 +386,31 @@ public class Main {
      * y ejecuta dicha accion una vez introducida la partida a jugar o borrar
      * @param id identificador de usuario a comprobar sus partidas guardadas
      * @param nick nickname de usuario a comprobar sus partidas guardadas
-     * @throws IOException en caso de fallo con el fichero de Usuario
-     * @throws MyException heredado por otro metodo
      * */
-    public static void listar_partidas_disponibles(int id, String nick) throws IOException, MyException {
-        System.out.println();
-        int modo = -1;
-        System.out.print("Opcion (1 - Cargar , 2 - Borrar):");
-        modo = scan.nextInt();
-        System.out.println();
-        System.out.println("modo seleccionado:" + modo);
-        if (modo == 1) {
-            cp.ctrl_print_partidas_disponibles(id,nick);
-            System.out.print("Seleccionar ID de partida a cargar:");
-            int idPartida = scan.nextInt();
-            cargarPartida(idPartida);
+    public static void listar_partidas_disponibles(int id, String nick) {
+        try {
+            System.out.println();
+            int modo = -1;
+            System.out.print("Opcion (1 - Cargar , 2 - Borrar):");
+            modo = scan.nextInt();
+            System.out.println();
+            System.out.println("modo seleccionado:" + modo);
+            if (modo == 1) {
+                cp.ctrl_print_partidas_disponibles(id,nick);
+                System.out.print("Seleccionar ID de partida a cargar:");
+                int idPartida = scan.nextInt();
+                cargarPartida(idPartida);
+            }
+            else if (modo == 2) {
+                cp.ctrl_print_partidas_disponibles(id,nick);
+                System.out.print("Seleccionar ID de partida a borrar:");
+                int idPartida = scan.nextInt();
+                if(cp.ctrl_borrar_partida(idPartida)) System.out.println("Partida borrada correctamente");
+                else System.out.println("Problemas al borrar la partida seleccionada");
+            }
         }
-        else if (modo == 2) {
-            cp.ctrl_print_partidas_disponibles(id,nick);
-            System.out.print("Seleccionar ID de partida a borrar:");
-            int idPartida = scan.nextInt();
-            if(cp.ctrl_borrar_partida(idPartida)) System.out.println("Partida borrada correctamente");
-            else System.out.println("Problemas al borrar la partida seleccionada");
+        catch (Exception e) {
+            System.out.println("fallo al listar las partidas disponibles del jugador con ID:" + id +" , nickname: "+ nick);
         }
     }
 
@@ -410,18 +418,22 @@ public class Main {
      * Metodo actualizar_ranking
      * @param p partida de la cual se necesita informacion de los jugadores y del ganador
      * @param ganador incrementar contador de partidas en funcion de [2: empate, 1:gana jugador2, 0:gana jugador1]
-     * @throws MyException heredado por otro metodo
      * */
-    private static void actualizar_ranking(Partida p, int ganador) throws MyException {
-        int modo = p.getModoDeJuegoPartida();
-        if (modo != 0) { //diferente de maquina vs maquina
-            int id1, id2;
-            String nick1, nick2;
-            id1 = p.getID_J1();
-            nick1 = p.getNickJugador1();
-            id2 = p.getID_J2();
-            nick2 = p.getNickJugador2();
-            ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,ganador);
+    private static void actualizar_ranking(Partida p, int ganador){
+        try {
+            int modo = p.getModoDeJuegoPartida();
+            if (modo != 0) { //diferente de maquina vs maquina
+                int id1, id2;
+                String nick1, nick2;
+                id1 = p.getID_J1();
+                nick1 = p.getNickJugador1();
+                id2 = p.getID_J2();
+                nick2 = p.getNickJugador2();
+                ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,ganador);
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Fallo al actualizar el ranking");
         }
     }
 
@@ -447,41 +459,44 @@ public class Main {
     /**
      * Funcion main
      * @param args (argumentos del main)
-     * @throws IOException heredado de otras clases
-     * @throws MyException heredado de otras clases
      * */
-    public static void main(String[] args) throws IOException, MyException {
-        cp = new CtrlPersitencia(true); //activar para utilizar solo 1 fichero de ranking (ranking.txt)
-        ranking = cp.ctrl_importar_ranking();
-        entrar();
-        boolean salir = false;
-        while(!salir){
-            System.out.println("\nElige lo que quieres hacer: \n 1: Empezar una partida \n 2: Cargar/Borrar una partida \n" +
-                    " 3: Consultar el ranquing \n 4: Consultar estadisticas \n 5: salir \n");
-            System.out.print("seleccionar opcion:");
-            int quit = scan.nextInt();
-            System.out.println("");
-            switch (quit){
-                case 1:
-                    iniciarPartida();
-                    break;
-                case 2:
-                    listar_partidas_disponibles(code,nickname);
-                    break;
-                case 3:
-                    consultarRanking();
-                    break;
-                case 4:
-                    consultar_Estadisticas();
-                    break;
-                case 5:
-                    salir = true;
-                    break;
-                default:
-                    System.out.println("Introduce un numero valido");
-                    break;
+    public static void main(String[] args) {
+        try {
+            cp = new CtrlPersitencia(true); //activar para utilizar solo 1 fichero de ranking (ranking.txt)
+            ranking = cp.ctrl_importar_ranking();
+            entrar();
+            boolean salir = false;
+            while(!salir){
+                System.out.println("\nElige lo que quieres hacer: \n 1: Empezar una partida \n 2: Cargar/Borrar una partida \n" +
+                        " 3: Consultar el ranquing \n 4: Consultar estadisticas \n 5: salir \n");
+                System.out.print("seleccionar opcion:");
+                int quit = scan.nextInt();
+                System.out.println("");
+                switch (quit){
+                    case 1:
+                        iniciarPartida();
+                        break;
+                    case 2:
+                        listar_partidas_disponibles(code,nickname);
+                        break;
+                    case 3:
+                        consultarRanking();
+                        break;
+                    case 4:
+                        consultar_Estadisticas();
+                        break;
+                    case 5:
+                        salir = true;
+                        break;
+                    default:
+                        System.out.println("Introduce un numero valido");
+                        break;
+                }
             }
+            cp.ctrl_exportar_ranking(ranking.toArrayList()); //exportar ranking antes de salir del programa
         }
-        cp.ctrl_exportar_ranking(ranking.toArrayList()); //exportar ranking antes de salir del programa
+        catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }
