@@ -2,6 +2,7 @@ package Dominio;
 
 import MyException.MyException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.ServiceConfigurationError;
 import java.util.Set;
 
@@ -20,6 +21,9 @@ public class Partida {
     private Jugador j2;
     /**Tablero de la Partida*/
     private Tablero tablero;
+
+    /**Casillas disponibles para colocar ficha en Partida*/
+    Set<Position> disponibles;
     /**Ganador de la Partida*/
     private int ganador; //indica una vez finalizada la partida quien es el ganador (para despues hacer modificacion de ranking)
     //ganador -> -1 (partida sigue en curso),0 (gana nick1), 1 (gana nick2), 2 (empate), 3 (guardar partida), 4 (finalizar)
@@ -60,6 +64,7 @@ public class Partida {
         }
         this.tablero = new Tablero();
         this.finalizada = 0;
+        this.disponibles= new HashSet<Position>();
     }
 
     /**
@@ -101,6 +106,7 @@ public class Partida {
         this.ganador = -1;
         this.tablero = t;
         this.finalizada = 0;
+        this.disponibles= new HashSet<Position>();
     }
 
     /**
@@ -216,7 +222,7 @@ public class Partida {
         }
         else {
             reglasCasillasDisponibles();
-            Set<Position> disponibles = this.tablero.getCasillasDisponibles();
+            this.disponibles = this.tablero.getCasillasDisponibles();
             if (this.turno == 0) {
                 print_casillas_disponibles(disponibles);
                 print_Tablero();
@@ -389,6 +395,7 @@ public class Partida {
         System.out.println("Reglas(v,h,d): " +  this.reglas[0] + this.reglas[1] + this.reglas[2]);
         System.out.println("Turno: " +  this.turno);
         System.out.println();
+        System.out.println("Tablero:");
         print_Tablero();
         System.out.println();
     }

@@ -90,7 +90,7 @@ public class Main {
         if (id >= 0 && id < 6) System.out.println("Acciones a realizar para la maquina: (ID: " + id + ")");
         else System.out.println("Acciones a realizar para el jugador: (ID: " + id + ", nick: " + nick + ")");
         System.out.println();
-        System.out.println("    - colocar x y (colocar ficha en posicion x, y)");
+        System.out.println("    - colocar x y (enteros x,y entre [0...8])");
         System.out.println("    - paso (pasar el turno)");
         System.out.println("    - info (get info partida)");
         System.out.println("    - guardar (guardar partida y finalizar)");
