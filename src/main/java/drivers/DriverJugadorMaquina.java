@@ -19,7 +19,7 @@ public class DriverJugadorMaquina {
         while (b) {
             System.out.println("DriverJugador (OPCIONES):");
             System.out.println("0 - SALIR DEL DRIVER");
-            System.out.println("1 - Crear Jugador Persona");
+            System.out.println("1 - Crear Jugador Maquina");
             System.out.println();
             System.out.print("Introducir opcion:");
             int i_entrada = Integer.parseInt(scan.next());
@@ -29,7 +29,7 @@ public class DriverJugadorMaquina {
                     b = false;
                     break;
                 case 1:
-                    test_crear_jugadorPersona(6,"aaaa");
+                    test_crear_jugadorMaquina(5,16);
                     break;
                 default:
                     System.out.println("Introducir una opcion correcta");
@@ -40,13 +40,14 @@ public class DriverJugadorMaquina {
 
     /** test_crear_jugadorMaquina (clase hijo)
      * @param idMaquina es el identificador de la Maquina a crear
-     * @param nick nickname de la Maquina a crear
+     * @param profundidad profundidad del algoritmo que utiliza la Maquina a crear para elegir donde colocar cada pieza
      * @throws MyException en caso de fallo con identificadores (id pertenece a Persona)
      * */
-    public static void test_crear_jugadorPersona(int idMaquina, String nick) throws MyException {
-        JugadorPersona res = new JugadorPersona(idMaquina,nick);
+    public static void test_crear_jugadorMaquina(int idMaquina, int profundidad) throws MyException {
+        JugadorMaquina res = new JugadorMaquina(idMaquina, profundidad);
         System.out.println("Maquina creada con ID:" + idMaquina);
-        System.out.println("Prueba get_MaquinaID : " + res.get_PersonaID());
+        System.out.println("Prueba get_MaquinaID : " + res.get_MaquinaID());
         System.out.println("Prueba get_Nickname : " + res.get_Nickname());
+        System.out.println("Prueba get_Nickname : " + res.get_profundidadMaquina());
     }
 }

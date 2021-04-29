@@ -6,6 +6,8 @@ package Dominio;
 *
 * */
 
+import MyException.MyException;
+
 import java.util.Set;
 
 public class JugadorMaquina extends Jugador {
@@ -27,9 +29,9 @@ public class JugadorMaquina extends Jugador {
      * Constructora JugadorMaquina (si tener en cuenta la profundidad del arbol de MinMax)
      * @param idMaquina (id de Jugador = idMaquina)
      * */
-    public JugadorMaquina (int idMaquina) {
+    public JugadorMaquina (int idMaquina) throws MyException{
         super(idMaquina);
-        if (idMaquina > 5)System.out.println("ID no válido");
+        if (idMaquina > 5)throw new MyException("El ID:" + idMaquina + " pertenece a una persona o esta fuera de rango(es negativo)");
     }
 
     @Override
