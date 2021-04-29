@@ -227,7 +227,6 @@ public class Partida {
                 print_casillas_disponibles(disponibles);
                 print_Tablero();
             }
-            //Sergio: Casillas disponibles se imprime desde el MAIN igual que el Tablero
             int disp = disponibles.size();
             switch (modoDeJuego) {
                 case 2: //Persona vs Persona
@@ -250,9 +249,6 @@ public class Partida {
                                 print_Tablero();
                             }
                             this.finalizada = 0;
-                            //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
-                            /*
-                            else { this.ganador = -1;}*/
                             break;
                         case "info": //info partida
                             this.get_info_partida();
@@ -329,7 +325,7 @@ public class Partida {
     /**
      * Operacion que comprueba si la Partida ha finalizado y genera el ganador
      */
-    private void comprobarPartidaFinalizada() {
+    public void comprobarPartidaFinalizada() {
         if (this.tablero.getNumCasillasBlancas() > this.tablero.getNumCasillasNegras() || this.tablero.getNumCasillasNegras() == 0) {
             setGanador(1);
         } else if ((this.tablero.getNumCasillasBlancas() < this.tablero.getNumCasillasNegras()) || this.tablero.getNumCasillasBlancas() == 0) {
@@ -337,6 +333,8 @@ public class Partida {
         } else if (this.tablero.getNumCasillasBlancas() == this.tablero.getNumCasillasNegras()) {
             setGanador(2);
         }
+        if (getGanador() != 0) System.out.println("Ganador: J" + getGanador());
+        System.out.println("Empate!");
     }
 
 

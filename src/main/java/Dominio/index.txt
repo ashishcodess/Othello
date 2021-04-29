@@ -12,7 +12,8 @@ y Totales)
 
 - JugadorPersona:
 
-- Partida:
+- Partida: Clase utilizada para crear partidas y gestionar los diferentes turnos y movimientos de los jugadores durante toda la partida,
+            además de obtener, al finalizar la partida, el resultado.
 
 - Position:
 
