@@ -6,3 +6,4 @@
 de Persistencia (lo que lo hemos denominado a los usuarios registrados)
 
 - modeloFicheroPartida.txt: modelo de ejemplo de como se almacena la informacion respectivamente de una partida
+

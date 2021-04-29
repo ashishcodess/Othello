@@ -1,6 +1,5 @@
 import ControladorPersistencia.CtrlPersitencia;
 
-import Dominio.Tablero;
 import Dominio.Partida;
 import Dominio.Ranking;
 import MyException.MyException;
@@ -13,6 +12,8 @@ import java.util.*;
 public class Main {
     static int code;
     static String nickname;
+    static int id_2;
+    static String nick_2;
     static Scanner scan = new Scanner(System.in);
 
     private static CtrlPersitencia cp;
@@ -20,51 +21,91 @@ public class Main {
 
     /**
      * Metodo entrar(funcion de login de usuario)
-     * @throws IOException en caso de fallo al crear fichero Usuario
-     * @throws MyException en caso de no haber introducido una opcion correcta en la pregunta de si esta registrado (si/no)
      * */
-    public static void entrar() throws IOException, MyException {
-        System.out.println("Estas Registrado/a? si/no ");
-        String in = scan.next();
-        if(in.toLowerCase().equals("no")){
-            System.out.println("Entra tu nombre de usuario");
-            nickname = scan.next();
-            code = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
-            System.out.println("Creado usuario " + nickname + " con ID " + code);
-            cp.ctrl_crear_usuario(code,nickname);
+    public static void entrar(){
+        try {
+            System.out.println("Estas Registrado/a? si/no ");
+            String in = scan.next();
+            if(in.toLowerCase().equals("no")){
+                System.out.println("Entra tu nombre de usuario");
+                nickname = scan.next();
+                code = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
+                System.out.println("Creado usuario " + nickname + " con ID " + code);
+                cp.ctrl_crear_usuario(code,nickname);
+            }
+            else if(in.toLowerCase().equals("si")){
+                System.out.println("Entra tu ID");
+                code = scan.nextInt();
+                System.out.println("Entra tu nombre de usuario");
+                nickname = scan.next();
+                if (cp.ctrl_existe_usuario(code,nickname)) System.out.println("Login Correcto");
+                else throw new MyException("");
+            }
+            else throw new MyException("");
         }
-        else if(in.toLowerCase().equals("si")){
-            System.out.println("Entra tu ID");
-            code = scan.nextInt();
-            System.out.println("Entra tu nombre de usuario");
-            nickname = scan.next();
-            if (cp.ctrl_existe_usuario(code,nickname)) System.out.println("Login Correcto");
+        catch (Exception e) {
+            System.out.println("No se ha introducido una opcion valida (si, no)");
+            entrar();
         }
-        else throw new MyException("No se ha introducido una opcion valida (si, no)");
+    }
+    /**
+     * Metodo entrarJugador2(funcion de login de usuario2)
+     * */
+    public static void entrarJugador2(){
+        try {
+            System.out.println("Introducir informacion de contrincante 2 (Persona)");
+            System.out.println("Estas Registrado/a? si/no ");
+            String in = scan.next();
+            if(in.toLowerCase().equals("no")){
+                System.out.println("Entra tu nombre de usuario");
+                nick_2 = scan.next();
+                id_2 = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
+                System.out.println("Creado usuario " + nick_2 + " con ID " + id_2);
+                cp.ctrl_crear_usuario(id_2,nick_2);
+            }
+            else if(in.toLowerCase().equals("si")){
+                System.out.println("Entra tu ID");
+                id_2 = scan.nextInt();
+                System.out.println("Entra tu nombre de usuario");
+                nick_2 = scan.next();
+                if (cp.ctrl_existe_usuario(id_2,nick_2)) System.out.println("Login Correcto");
+                else throw new MyException("");
+            }
+            else throw new MyException("");
+        }
+        catch (Exception e) {
+            System.out.println("No se ha introducido una opcion valida (si, no)");
+            entrar();
+        }
     }
 
     /**
      * Metodo seleccionar_reglas
      * @return devuelve un array de enteros con valores entre 0 y 1 (mostrando las reglas validas para la partida)
-     * @throws MyException en caso de no haber introducido las reglas de manera incorrecta
      * */
-    private static int[] seleccionar_reglas() throws MyException {
+    private static int[] seleccionar_reglas() {
         int res[] = new int[3];
-        boolean b = false;
-        System.out.println("Seleccionar reglas (vertical horizontal diagonal) -> ej:1 1 1");
-        System.out.print("Introducir reglas:");
-        String s = scan.nextLine(); //evitar bugs (hacerlo 2 veces...)
-        s = scan.nextLine();
-        String s_aux[] = s.split(" ");
-        if (s_aux.length == 3){ //comprobar que este en rango de reglas y valen 0 o 1
-            b = true;
-            for (int i = 0; i < s_aux.length && b; ++i) {
-                int i_aux = Integer.parseInt(s_aux[0]);
-                b = ((i_aux == 1) || (i_aux == 0));
-                if (b) res[i] = i_aux;
+        try {
+            boolean b = false;
+            System.out.println("Seleccionar reglas (vertical horizontal diagonal) -> ej:1 1 1");
+            System.out.print("Introducir reglas:");
+            String s = scan.nextLine(); //evitar bugs (hacerlo 2 veces...)
+            s = scan.nextLine();
+            String s_aux[] = s.split(" ");
+            if (s_aux.length == 3){ //comprobar que este en rango de reglas y valen 0 o 1
+                b = true;
+                for (int i = 0; i < s_aux.length && b; ++i) {
+                    int i_aux = Integer.parseInt(s_aux[0]);
+                    b = ((i_aux == 1) || (i_aux == 0));
+                    if (b) res[i] = i_aux;
+                }
             }
+            else throw new MyException("");
         }
-        else throw new MyException("Reglas incorrectas");
+        catch (Exception e) {
+            System.out.println("No se ha introducido una opcion valida (si, no)");
+            res = seleccionar_reglas();
+        }
         return res;
     }
 
@@ -84,47 +125,53 @@ public class Main {
      * @return devuelve un array de Strings con la accion a realizar en el proximo turno de la partida \
      * dichas acciones pueden ser [colocar x y, paso, info, guardar, y finalizar]
      * */
-    private static String[] generar_accion_partida(int id, String nick) {
-        String[] res;
-        System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
-        if (id >= 0 && id < 6) System.out.println("Acciones a realizar para la maquina: (ID: " + id + ")");
-        else System.out.println("Acciones a realizar para el jugador: (ID: " + id + ", nick: " + nick + ")");
-        System.out.println();
-        System.out.println("    - colocar x y (enteros x,y entre [0...8])");
-        System.out.println("    - paso (pasar el turno)");
-        System.out.println("    - info (get info partida)");
-        System.out.println("    - guardar (guardar partida y finalizar)");
-        System.out.println("    - finalizar (finalizar partida)");
-        System.out.println();
-        System.out.print("Introducir accion a realizar:");
-        String s_aux;
-        while (!scan.hasNextLine()) s_aux = scan.nextLine();
-        s_aux = scan.nextLine();
-        System.out.println();
-        res = s_aux.split(" ");
-        if (res.length == 3) { //colocar x y
-            int x, y;
-            x = Integer.parseInt(res[1]);
-            y = Integer.parseInt(res[2]);
-            boolean b = rango_mapa_correcto(x,y);
-            while (!b) { //solo entra si x y no estan dentro del rango
-                System.out.println("x y fuera de rango");
-                System.out.print("Introducir nueva accion:");
-                s_aux = scan.nextLine();
-                System.out.println();
-                res = s_aux.split(" ");
-                if (res.length == 3) {
-                    x = Integer.parseInt(res[1]);
-                    y = Integer.parseInt(res[2]);
-                    b = rango_mapa_correcto(x,y);
-                }
-                else if ((res[0].equals("guardar")) || (res[0].equals("finalizar"))) b = true; //ha realizado otra accion -> salir bucle
-                else b = false;
-            }
-        }
-        System.out.println();
-        System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
-        return res;
+     private static String[] generar_accion_partida(int id, String nick) {
+         String[] res;
+         try {
+             System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
+             if (id >= 0 && id < 6) System.out.println("Acciones a realizar para la maquina: (ID: " + id + ")");
+             else System.out.println("Acciones a realizar para el jugador: (ID: " + id + ", nick: " + nick + ")");
+             System.out.println();
+             System.out.println("    - colocar x y (enteros x,y entre [0...8])");
+             System.out.println("    - paso (pasar el turno)");
+             System.out.println("    - info (get info partida)");
+             System.out.println("    - guardar (guardar partida y finalizar)");
+             System.out.println("    - finalizar (finalizar partida)");
+             System.out.println();
+             System.out.print("Introducir accion a realizar:");
+             String s_aux;
+             while (!scan.hasNextLine()) s_aux = scan.nextLine();
+             s_aux = scan.nextLine();
+             System.out.println();
+             res = s_aux.split(" ");
+             if (res.length == 3) { //colocar x y
+                 int x, y;
+                 x = Integer.parseInt(res[1]);
+                 y = Integer.parseInt(res[2]);
+                 boolean b = rango_mapa_correcto(x,y);
+                 while (!b) { //solo entra si x y no estan dentro del rango
+                     System.out.println("x y fuera de rango");
+                     System.out.print("Introducir nueva accion:");
+                     s_aux = scan.nextLine();
+                     System.out.println();
+                     res = s_aux.split(" ");
+                     if (res.length == 3) {
+                         x = Integer.parseInt(res[1]);
+                         y = Integer.parseInt(res[2]);
+                         b = rango_mapa_correcto(x,y);
+                     }
+                     else if ((res[0].equals("guardar")) || (res[0].equals("finalizar"))) b = true; //ha realizado otra accion -> salir bucle
+                     else b = false;
+                 }
+             }
+             System.out.println();
+             System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
+         }
+         catch (Exception e) {
+             System.out.println("No has introducido una accion valida");
+             res = generar_accion_partida(id,nick);
+         }
+         return res;
     }
 
     /**
@@ -192,6 +239,7 @@ public class Main {
                 //p.print_Tablero();
             }
             res = p.rondaPartida(generar_accion_partida(id_aux,s_aux));
+
             System.out.println();
         }
         if (res == 2) { //jugador a selecionado guardar partida
@@ -276,45 +324,14 @@ public class Main {
                 break;
 
             case 2: //Persona vs Persona
-                System.out.println("Introducir informacion de contrincante 2 (Persona)");
-                String in;
-
-                int id_temp = -1;
-                String nick_temp = "";
-                System.out.println("Estas Registrado/a? si/no ");
-                in = scan.next();
-                if (in.toLowerCase().equals("no")) {
-                    System.out.println("Entra tu nombre de usuario");
-                    nick_temp = scan.next();
-                    id_temp = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
-                    System.out.println("Creado usuario " + nick_temp + " con ID " + id_temp);
-                    cp.ctrl_crear_usuario(id_temp, nick_temp);
-                } else if (in.toLowerCase().equals("si")) {
-
-                    System.out.println("Entra tu ID");
-                    id_temp = scan.nextInt();
-                    System.out.println("Entra tu nombre de usuario");
-                    nick_temp = scan.next();
-                    boolean b = ((nick_temp.equals(nickname)) && (id_temp == code));
-                    if (b) {
-                        System.out.println("Error se ha introducido la informacion del usuario logueado");
-                        while (b) {
-                            System.out.println("Entra tu ID");
-                            id_temp = scan.nextInt();
-                            System.out.println("Entra tu nombre de usuario");
-                            nick_temp = scan.next();
-                            b = ((nick_temp.equals(nickname)) && (id_temp == code));
-                        }
-                    }
-                    else if (cp.ctrl_existe_usuario(id_temp, nick_temp)) System.out.println("Login Correcto");
-                }
+                entrarJugador2();
                 if (bando == 1) {
-                    id2 = id_temp;
-                    nick2 = nick_temp;
+                    id2 = id_2;
+                    nick2 = nick_2;
                 }
                 else {
-                    id1 = id_temp;
-                    nick1 = nick_temp;
+                    id1 = id_2;
+                    nick1 = nick_2;
                 }
                 break;
 
