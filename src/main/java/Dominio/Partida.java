@@ -264,41 +264,51 @@ public class Partida {
                     }
                     break;
                 case 1: //Persona vs Maquina
-                    switch (accion[0]) {
-                        case "colocar":
-                            //this.tablero.actualizarTablero(x, y, this.turno);
-                            if (this.turno % 2 == 0) {
+                    if (this.turno % 2 == 0) {
+                        switch (accion[0]) {
+                            case "colocar":
+                                //this.tablero.actualizarTablero(x, y, this.turno);
                                 int x = Integer.parseInt(accion[1]);
                                 int y = Integer.parseInt(accion[2]);
                                 j1.colocar_ficha_en_partida(turno, x, y, tablero);
-                            }
-                            else if (this.turno % 2 != 0) {
-                                // AQUI FALTA FUNCION QUE LLAMA AL JUGADOR MAQUINA A MOVER FICHA
-                                //Sergio: esta parte es temporal por ahora (la he puesto para poder hacer pruebas en MAIN)
-                                int x = Integer.parseInt(accion[1]);
-                                int y = Integer.parseInt(accion[2]);
-                                j2.colocar_ficha_en_partida(turno, x, y, tablero);
-                            }
-                            actualizarTablero();
-                            incrementarTurnoPartida();
-                            this.finalizada = 0;
-                            //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
-                            /*
-                            else { this.ganador = -1;}*/
-                            break;
-                        case "info": //info partida
-                            this.get_info_partida();
-                            break;
-                        case "guardar": //guardarPartida
-                            return 2;
-                        case "finalizar": //finalizarPartida
-                            return 3;
-                        case "paso":
-                            if (disp == 0) ++this.finalizada;
-                            incrementarTurnoPartida();
-                            break;
+                                //actualizarTablero();
+                                incrementarTurnoPartida();
+                                if (turno > 0) {
+                                    reglasCasillasDisponibles();
+                                    disponibles = this.tablero.getCasillasDisponibles();
+                                    print_casillas_disponibles(disponibles);
+                                    print_Tablero();
+                                }
+                                this.finalizada = 0;
+                                //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
+                                /*
+                                else { this.ganador = -1;}*/
+                                break;
+                            case "info": //info partida
+                                this.get_info_partida();
+                                break;
+                            case "guardar": //guardarPartida
+                                return 2;
+                            case "finalizar": //finalizarPartida
+                                return 3;
+                            case "paso":
+                                if (disp == 0) ++this.finalizada;
+                                incrementarTurnoPartida();
+                                break;
+                        }
+                    }
+                    else{
+                        this.tablero = j2.posicion(tablero, turno);
+                        incrementarTurnoPartida();
+                        if (turno > 0) {
+                            reglasCasillasDisponibles();
+                            disponibles = this.tablero.getCasillasDisponibles();
+                            print_casillas_disponibles(disponibles);
+                            print_Tablero();
+                        }
                     }
                     break;
+
                 case 0: //Maquina vs Maquina
                     // AQUI FALTA FUNCION QUE LLAMA AL JUGADOR MAQUINA A MOVER FICHA
                     break;

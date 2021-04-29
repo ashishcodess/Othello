@@ -62,4 +62,6 @@ public abstract class Jugador {
     }
 
     public abstract String get_Nickname();
+
+    public abstract Tablero posicion(Tablero tablero, int turno);
 }

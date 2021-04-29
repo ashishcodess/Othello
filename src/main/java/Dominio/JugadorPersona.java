@@ -76,5 +76,8 @@ public class JugadorPersona extends Jugador {
     }
 
 
+    public Tablero posicion(Tablero tablero, int turno){
+        return tablero;
+    }
 
 }

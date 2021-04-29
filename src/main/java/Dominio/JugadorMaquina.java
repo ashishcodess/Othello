@@ -111,13 +111,19 @@ public class JugadorMaquina extends Jugador {
         return mejorHijo;
     }
 
-
-    public Position posicion(Tablero t){
+    @Override
+    public Tablero posicion(Tablero t, int turno){
 
         Set<Position> disponibles = t.getCasillasDisponibles();
-
+        int x = 0;
+        int y = 0;
         for(Position aux : disponibles){
-            return aux;
+             x = aux.getX();
+             y = aux.getY();
+             break;
         }
+        System.out.println("Máquina mueve a " + x + ", " + y);
+        t.actualizarTablero(x, y, turno);
+        return t;
     }
 }
