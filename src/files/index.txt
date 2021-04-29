@@ -6,3 +6,12 @@
 de Persistencia (lo que lo hemos denominado a los usuarios registrados)
 
 - modeloFicheroPartida.txt: modelo de ejemplo de como se almacena la informacion respectivamente de una partida
+
+-Casilla:Una clase donde definimos los tipos de casillas .
+
+-Position: Una clase para definir las cordenadas (x , y).
+
+-Tablero:Una clase donde podemos saber cuales son los fichas negras , blancas. \
+    También podemos saber cuales son los casillas permitidas(disponibles) para colocar las fichas.\
+    Una vez que el jugador en una partida dice colocar la ficha en uno de los posiciones disponibles\
+    el tablero se actualiza modificando todas las fichas que serìan afectado como consecuencia del colocamiento.
