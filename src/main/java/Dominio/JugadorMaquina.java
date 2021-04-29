@@ -112,14 +112,12 @@ public class JugadorMaquina extends Jugador {
     }
 
 
-    public void valorMax(Tablero t, int x, int y){
+    public Position posicion(Tablero t){
 
         Set<Position> disponibles = t.getCasillasDisponibles();
 
         for(Position aux : disponibles){
-            x = aux.getX();
-            y = aux.getY();
-            break;
+            return aux;
         }
     }
 }
