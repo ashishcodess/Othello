@@ -192,10 +192,17 @@ public class Main {
      * @return devuelve el entero en caso de haber introducido por la consola de comandos
      * */
     private static int seleccionar_id_maquina(boolean b) {
-        if (!b) System.out.print("Introducir idMaquina1 (negro):");
-        else System.out.print("Introducir idMaquina2 (blanco):");
-        int res = Integer.parseInt(scan.next());
-        System.out.println();
+        int res = -1;
+        try {
+            if (!b) System.out.print("Introducir idMaquina1 (negro):");
+            else System.out.print("Introducir idMaquina2 (blanco):");
+            res = Integer.parseInt(scan.next());
+            System.out.println();
+        }
+        catch(Exception e) {
+            System.out.println("No se ha introducido un ID valido para una maquina");
+            res = seleccionar_id_maquina(b);
+        }
         return res;
     }
 
@@ -282,6 +289,7 @@ public class Main {
         //Selecionar bando de juego
         if (modo == 2) {
             boolean primero = true;
+            bando = seleccionar_bando();
             while (bando == -1) {
                 if (!primero) System.out.println("Bando equivocado");
                 bando = seleccionar_bando();
