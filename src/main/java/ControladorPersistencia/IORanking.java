@@ -47,57 +47,66 @@ public class IORanking {
      * Operacion importar_ranking
      * @param path_fichero es el path del fichero de Ranking a importar
      * @return devuelve el Ranking ubicado en path_file, caso de no existir devuelve excepcion
-     * @throws IOException en caso de error con el fichero de ranking
-     * @throws MyException en caso de no existir el fichero de ranking
      */
-    public Ranking importar_ranking (String path_fichero) throws IOException, MyException {
-        Ranking rank = new Ranking();
-        File f = new File(path_fichero);
-        if (f.exists()) {
-            BufferedReader bf =new BufferedReader(new FileReader (f));
-            String s1;
-            while ((s1 = bf.readLine()) != null) {
-                String[] s2 = s1.split(" ");
-                int id, total, ganadas, perdidas,empatadas;
-                String nick;
-                if (s2.length == 6) {
-                    id = Integer.parseInt(s2[0]);
-                    nick = s2[1];
-                    ganadas = Integer.parseInt(s2[2]);
-                    perdidas = Integer.parseInt(s2[3]);
-                    empatadas = Integer.parseInt(s2[4]);
-                    total = Integer.parseInt(s2[5]);
-                    ElementoRanking e = new ElementoRanking(id,nick,ganadas,perdidas,empatadas,total);
-                    rank.add_al_ranking(e);
+    public Ranking importar_ranking (String path_fichero) {
+        try {
+            Ranking rank = new Ranking();
+            File f = new File(path_fichero);
+            if (f.exists()) {
+                BufferedReader bf =new BufferedReader(new FileReader (f));
+                String s1;
+                while ((s1 = bf.readLine()) != null) {
+                    String[] s2 = s1.split(" ");
+                    int id, total, ganadas, perdidas,empatadas;
+                    String nick;
+                    if (s2.length == 6) {
+                        id = Integer.parseInt(s2[0]);
+                        nick = s2[1];
+                        ganadas = Integer.parseInt(s2[2]);
+                        perdidas = Integer.parseInt(s2[3]);
+                        empatadas = Integer.parseInt(s2[4]);
+                        total = Integer.parseInt(s2[5]);
+                        ElementoRanking e = new ElementoRanking(id,nick,ganadas,perdidas,empatadas,total);
+                        rank.add_al_ranking(e);
+                    }
                 }
+                bf.close();
             }
-            bf.close();
+            else throw new MyException("Fichero de ranking a importar no existe");
+            return rank;
         }
-        else throw new MyException("Fichero de ranking a importar no existe");
-        return rank;
+        catch (Exception e) {
+            System.out.println("Error en importar_ranking de IORanking");
+            System.out.println(e);
+        }
+        return null;
     }
 
     /**
      * Operacion ctrl_exportar_ranking
      * @param as es ArrayList con los parametros necesarios para guardar la partida (utilizando funcion consultar_all() de cada ElementoRanking)
-     * @throws IOException en caso de fallo con fichero de ranking a exportar
-     * @throws MyException en caso de error con sizes de ranking
      */
-    public void exportar_ranking(ArrayList<String> as) throws IOException, MyException {
-        int tam = as.size();
-        if (tam > 0) {
-            String path = path_ranking + "ranking" + as.size() + ".txt";
-            if(this.modoRanking) path = path_ranking + "ranking.txt";
-            File f = new File(path);
-            if (f.exists()) f.delete();
-            f.createNewFile();
-            PrintWriter fw = new PrintWriter(f);
-            for (int i = 0; i < tam; ++i) {
-                fw.write(as.get(i) + "\n");
+    public void exportar_ranking(ArrayList<String> as) {
+        try {
+            int tam = as.size();
+            if (tam > 0) {
+                String path = path_ranking + "ranking" + as.size() + ".txt";
+                if(this.modoRanking) path = path_ranking + "ranking.txt";
+                File f = new File(path);
+                if (f.exists()) f.delete();
+                f.createNewFile();
+                PrintWriter fw = new PrintWriter(f);
+                for (int i = 0; i < tam; ++i) {
+                    fw.write(as.get(i) + "\n");
+                }
+                fw.close();
             }
-            fw.close();
+            else throw new MyException("Tamaño de ranking a exportar incompatible (menor que 0)");
         }
-        else throw new MyException("Tamaño de ranking a exportar incompatible (menor que 0)");
+        catch (Exception e) {
+            System.out.println("Error en exportar_ranking de IORanking");
+            System.out.println(e);
+        }
     }
 
 

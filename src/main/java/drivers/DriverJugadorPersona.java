@@ -30,29 +30,35 @@ public class DriverJugadorPersona {
     /**
      * funcion main (para poder realizar las pruebas)
      * @param  args (argumentos)
-     @throws MyException heredado de el resto de funciones
      * */
-    public static void main(String[] args) throws MyException {
-        boolean b = true;
-        while (b) {
-            System.out.println("DriverJugador (OPCIONES):");
-            System.out.println("0 - SALIR DEL DRIVER");
-            System.out.println("1 - Crear Jugador Persona");
-            System.out.println();
-            System.out.print("Introducir opcion:");
-            int i_entrada = Integer.parseInt(scan.next());
-            System.out.println();
-            switch(i_entrada) {
-                case 0:
-                    b = false;
-                    break;
-                case 1:
-                    test_crear_jugadorPersona(6,"aaaa");
-                    break;
-                default:
-                    System.out.println("Introducir una opcion correcta");
+    public static void main(String[] args) {
+        try {
+            boolean b = true;
+            while (b) {
+                System.out.println("DriverJugador (OPCIONES):");
+                System.out.println("0 - SALIR DEL DRIVER");
+                System.out.println("1 - Crear Jugador Persona");
+                System.out.println();
+                System.out.print("Introducir opcion:");
+                int i_entrada = Integer.parseInt(scan.next());
+                System.out.println();
+                switch(i_entrada) {
+                    case 0:
+                        b = false;
+                        break;
+                    case 1:
+                        test_crear_jugadorPersona(6,"aaaa");
+                        break;
+                    default:
+                        System.out.println("Introducir una opcion correcta");
+                }
+                System.out.println();
             }
-            System.out.println();
         }
+        catch (Exception e) {
+            System.out.println("Error en main de DriverJugadorPersona");
+            System.out.println(e);
+        }
+
     }
 }

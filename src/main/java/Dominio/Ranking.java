@@ -129,15 +129,20 @@ public class Ranking {
      * @param id2 identificador del Jugador2
      * @param nick2 nickname del Jugador2 (en caso de que tenga nickname)
      * @param ganador incrementar contador en funcion de [2: empate, 1:Ganadas, 0:perdidas]
-     * @throws MyException en caso de fallo al crear ElementoRanking (si es necesario agregar nuevos jugadores en el ranking)
      * */
-    public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, int ganador) throws MyException {
-        if (ganador >= 0 && ganador < 3) {
-            int ganador2 = 2;
-            if (ganador == 0) ganador2 = 1;
-            else if (ganador == 1) ganador2 = 0;
-            if (id1 > 5) incrementar_partida(id1,nick1,ganador);
-            if (id2 > 5) incrementar_partida(id2,nick2,ganador2);
+    public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, int ganador) {
+        try {
+            if (ganador >= 0 && ganador < 3) {
+                int ganador2 = 2;
+                if (ganador == 0) ganador2 = 1;
+                else if (ganador == 1) ganador2 = 0;
+                if (id1 > 5) incrementar_partida(id1,nick1,ganador);
+                if (id2 > 5) incrementar_partida(id2,nick2,ganador2);
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Error en incrementar_ganadas_perdidas de Ranking");
+            System.out.println(e);
         }
     }
 
@@ -149,27 +154,32 @@ public class Ranking {
      * @param id identificador del Jugador2
      * @param nick nickname del Jugador2 (en caso de que tenga nickname)
      * @param ganador incrementar contador en funcion de [2: empate, 1:Ganadas, 0:perdidas]
-     * @throws MyException en caso de fallo al crear ElementoRanking
      * */
-    public void incrementar_partida(int id, String nick, int ganador) throws MyException {
-        int i = existe_en_ranking(id,nick);
-        if (i == -1) {
-            ElementoRanking e = new ElementoRanking(id,nick);
-            this.add_al_ranking(e);
-            i = ranking.size()-1;
+    public void incrementar_partida(int id, String nick, int ganador) {
+        try {
+            int i = existe_en_ranking(id,nick);
+            if (i == -1) {
+                ElementoRanking e = new ElementoRanking(id,nick);
+                this.add_al_ranking(e);
+                i = ranking.size()-1;
+            }
+            switch(ganador) {
+                case 0:
+                    this.ranking.get(i).incrementar_partida_perdida();
+                    break;
+                case 1:
+                    this.ranking.get(i).incrementar_partida_ganada();
+                    break;
+                case 2:
+                    this.ranking.get(i).incrementar_partida_empatada();
+                    break;
+                default:
+                    break;
+            }
         }
-        switch(ganador) {
-            case 0:
-                this.ranking.get(i).incrementar_partida_perdida();
-                break;
-            case 1:
-                this.ranking.get(i).incrementar_partida_ganada();
-                break;
-            case 2:
-                this.ranking.get(i).incrementar_partida_empatada();
-                break;
-            default:
-                break;
+        catch (Exception e) {
+            System.out.println("Error en incrementar_partida de Ranking");
+            System.out.println(e);
         }
     }
 

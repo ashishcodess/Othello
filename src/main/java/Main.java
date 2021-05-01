@@ -2,11 +2,10 @@ import ControladorPersistencia.CtrlPersitencia;
 
 import Dominio.Partida;
 import Dominio.Ranking;
+import Dominio.Tablero;
 import MyException.MyException;
 
 import java.util.*;
-
-
 
 public class Main {
     static int code;
@@ -19,63 +18,35 @@ public class Main {
     private static Ranking ranking;
 
     /**
-     * Metodo entrar(funcion de login de usuario)
+     * Metodo seleccionar_bando
+     * @return devuelve el entero en caso de haber introducido correctamente el bando (1 o 2), caso contrario devuelve -1
      * */
-    public static void entrar(){
-        try {
-            System.out.println("Estas Registrado/a? si/no ");
-            String in = scan.next();
-            if(in.toLowerCase().equals("no")){
-                System.out.println("Entra tu nombre de usuario");
-                nickname = scan.next();
-                code = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
-                System.out.println("Creado usuario " + nickname + " con ID " + code);
-                cp.ctrl_crear_usuario(code,nickname);
-            }
-            else if(in.toLowerCase().equals("si")){
-                System.out.println("Entra tu ID");
-                code = scan.nextInt();
-                System.out.println("Entra tu nombre de usuario");
-                nickname = scan.next();
-                if (cp.ctrl_existe_usuario(code,nickname)) System.out.println("Login Correcto");
-                else throw new MyException("");
-            }
-            else throw new MyException("");
-        }
-        catch (Exception e) {
-            System.out.println("No se ha introducido una opcion valida (si, no)");
-            entrar();
-        }
+    private static int seleccionar_bando() {
+        System.out.print("Seleccionar bando de juego (1 -> negro, 2 -> blanco):");
+        int res = Integer.parseInt(scan.next());
+        System.out.println();
+        if ((res== 1) || (res== 2)) return res;
+        return -1;
     }
+
     /**
-     * Metodo entrarJugador2(funcion de login de usuario2)
+     * Metodo seleccionar_id_maquina
+     * @param b booleano para imprimir que maquina hay que introducir en ese momento
+     * @return devuelve el entero en caso de haber introducido por la consola de comandos
      * */
-    public static void entrarJugador2(){
+    private static int seleccionar_id_maquina(boolean b) {
+        int res = -1;
         try {
-            System.out.println("Introducir informacion de contrincante 2 (Persona)");
-            System.out.println("Estas Registrado/a? si/no ");
-            String in = scan.next();
-            if(in.toLowerCase().equals("no")){
-                System.out.println("Entra tu nombre de usuario");
-                nick_2 = scan.next();
-                id_2 = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
-                System.out.println("Creado usuario " + nick_2 + " con ID " + id_2);
-                cp.ctrl_crear_usuario(id_2,nick_2);
-            }
-            else if(in.toLowerCase().equals("si")){
-                System.out.println("Entra tu ID");
-                id_2 = scan.nextInt();
-                System.out.println("Entra tu nombre de usuario");
-                nick_2 = scan.next();
-                if (cp.ctrl_existe_usuario(id_2,nick_2)) System.out.println("Login Correcto");
-                else throw new MyException("");
-            }
-            else throw new MyException("");
+            if (!b) System.out.print("Introducir idMaquina1 (negro):");
+            else System.out.print("Introducir idMaquina2 (blanco):");
+            res = Integer.parseInt(scan.next());
+            System.out.println();
         }
-        catch (Exception e) {
-            System.out.println("No se ha introducido una opcion valida (si, no)");
-            entrar();
+        catch(Exception e) {
+            System.out.println("No se ha introducido un ID valido para una maquina");
+            res = seleccionar_id_maquina(b);
         }
+        return res;
     }
 
     /**
@@ -108,7 +79,6 @@ public class Main {
         return res;
     }
 
-
     /**
      * Metodo rango_mapa_correcto
      * @param x posicion X de la casilla a comprobar el rango del mapa
@@ -124,86 +94,55 @@ public class Main {
      * @return devuelve un array de Strings con la accion a realizar en el proximo turno de la partida \
      * dichas acciones pueden ser [colocar x y, paso, info, guardar, y finalizar]
      * */
-     private static String[] generar_accion_partida(int id, String nick) {
-         String[] res = new String[3];
-         //try {
-             System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
-             if (id >= 0 && id < 6) System.out.println("Acciones a realizar para la maquina: (ID: " + id + ")");
-             else {
-                 System.out.println("Acciones a realizar para el jugador: (ID: " + id + ", nick: " + nick + ")");
-                 System.out.println();
-                 System.out.println("    - colocar x y (enteros x,y entre [0...8])");
-                 System.out.println("    - paso (pasar el turno)");
-                 System.out.println("    - info (get info partida)");
-                 System.out.println("    - guardar (guardar partida y finalizar)");
-                 System.out.println("    - finalizar (finalizar partida)");
-                 System.out.println();
-                 System.out.print("Introducir accion a realizar:");
-                 String s_aux;
-                 while (!scan.hasNextLine()) s_aux = scan.nextLine();
-                 s_aux = scan.nextLine();
-                 System.out.println();
-                 res = s_aux.split(" ");
-                 if (res.length == 3) { //colocar x y
-                     int x, y;
-                     x = Integer.parseInt(res[1]);
-                     y = Integer.parseInt(res[2]);
-                     boolean b = rango_mapa_correcto(x, y);
-                     while (!b) { //solo entra si x y no estan dentro del rango
-                         System.out.println("x y fuera de rango");
-                         System.out.print("Introducir nueva accion:");
-                         s_aux = scan.nextLine();
-                         System.out.println();
-                         res = s_aux.split(" ");
-                         if (res.length == 3) {
-                             x = Integer.parseInt(res[1]);
-                             y = Integer.parseInt(res[2]);
-                             b = rango_mapa_correcto(x, y);
-                         } else if ((res[0].equals("guardar")) || (res[0].equals("finalizar")))
-                             b = true; //ha realizado otra accion -> salir bucle
-                         else b = false;
-                     }
-                 }
-             }
-             System.out.println();
-             System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
-         //}
-         /*catch (Exception e) {
-             System.out.println("No has introducido una accion valida");
-             res = generar_accion_partida(id,nick);
-         }*/
-         return res;
-    }
-
-    /**
-     * Metodo seleccionar_bando
-     * @return devuelve el entero en caso de haber introducido correctamente el bando (1 o 2), caso contrario devuelve -1
-     * */
-    private static int seleccionar_bando() {
-        System.out.print("Seleccionar bando de juego (1 -> negro, 2 -> blanco):");
-        int res = Integer.parseInt(scan.next());
-        System.out.println();
-        if ((res== 1) || (res== 2)) return res;
-        return -1;
-    }
-
-    /**
-     * Metodo seleccionar_id_maquina
-     * @param b booleano para imprimir que maquina hay que introducir en ese momento
-     * @return devuelve el entero en caso de haber introducido por la consola de comandos
-     * */
-    private static int seleccionar_id_maquina(boolean b) {
-        int res = -1;
+    private static String[] generar_accion_partida(int id, String nick) {
+        String[] res = new String[3];
         try {
-            if (!b) System.out.print("Introducir idMaquina1 (negro):");
-            else System.out.print("Introducir idMaquina2 (blanco):");
-            res = Integer.parseInt(scan.next());
+            System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
+            if (id >= 0 && id < 6) System.out.println("Acciones a realizar para la maquina: (ID: " + id + ")");
+            else {
+                System.out.println("Acciones a realizar para el jugador: (ID: " + id + ", nick: " + nick + ")");
+                System.out.println();
+                System.out.println("    - colocar x y (enteros x,y entre [0...8])");
+                System.out.println("    - paso (pasar el turno)");
+                System.out.println("    - info (get info partida)");
+                System.out.println("    - guardar (guardar partida y finalizar)");
+                System.out.println("    - finalizar (finalizar partida)");
+                System.out.println();
+                System.out.print("Introducir accion a realizar:");
+                String s_aux;
+                while (!scan.hasNextLine()) s_aux = scan.nextLine();
+                s_aux = scan.nextLine();
+                System.out.println();
+                res = s_aux.split(" ");
+                if (res.length == 3 && res[0].equals("colocar")) { //colocar x y
+                    int x, y;
+                    x = Integer.parseInt(res[1]);
+                    y = Integer.parseInt(res[2]);
+                    boolean b = rango_mapa_correcto(x, y);
+                    while (!b) { //solo entra si x y no estan dentro del rango
+                        System.out.println("x y fuera de rango");
+                        System.out.print("Introducir nueva accion:");
+                        s_aux = scan.nextLine();
+                        System.out.println();
+                        res = s_aux.split(" ");
+                        if (res.length == 3) {
+                            x = Integer.parseInt(res[1]);
+                            y = Integer.parseInt(res[2]);
+                            b = rango_mapa_correcto(x, y);
+                        } else if ((res[0].equals("guardar")) || (res[0].equals("finalizar")))
+                            b = true; //ha realizado otra accion -> salir bucle
+                        else b = false;
+                    }
+                }
+            }
             System.out.println();
+            System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
         }
-        catch(Exception e) {
-            System.out.println("No se ha introducido un ID valido para una maquina");
-            res = seleccionar_id_maquina(b);
-        }
+         catch (Exception e) {
+             System.out.println("No has introducido una accion valida");
+             System.out.println(e);
+             res = generar_accion_partida(id,nick);
+         }
         return res;
     }
 
@@ -266,11 +205,214 @@ public class Main {
     }
 
     /**
+     * Metodo generar_accion_crear_tablero
+     * @param turno es el turno de la partida ficticia que se esta jugando para crear un tablero personalizado
+     * @return devuelve un array de Strings con la accion a realizar en el proximo turno de la partida ficticia que se \
+     * esta jugando para poder crear un tablero personalizado
+     * */
+    private static String[] generar_accion_crear_tablero(int turno) {
+        String[] res = new String[3];
+        try {
+            System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
+            if (turno % 2 == 0) System.out.println("Acciones a realizar para las fichas Negras");
+            else System.out.println("Acciones a realizar para las fichas Blancas");
+            System.out.println();
+            System.out.println("    - colocar x y (enteros x,y entre [0...8])");
+            System.out.println("    - info (get info Crear Tablero)");
+            System.out.println("    - guardar (guardar tablero y finalizr)");
+            System.out.println("    - finalizar (finalizar tablero sin guardar)");
+            System.out.println();
+            System.out.print("Introducir accion a realizar:");
+            String s_aux;
+            while (!scan.hasNextLine()) s_aux = scan.nextLine();
+            s_aux = scan.nextLine();
+            System.out.println();
+            res = s_aux.split(" ");
+            if (res.length == 3 && res[0].equals("colocar")) { //colocar x y
+                int x, y;
+                x = Integer.parseInt(res[1]);
+                y = Integer.parseInt(res[2]);
+                boolean b = rango_mapa_correcto(x, y);
+                while (!b) { //solo entra si x y no estan dentro del rango
+                    System.out.println("x y fuera de rango");
+                    System.out.print("Introducir nueva accion:");
+                    s_aux = scan.nextLine();
+                    System.out.println();
+                    res = s_aux.split(" ");
+                    if (res.length == 3) {
+                        x = Integer.parseInt(res[1]);
+                        y = Integer.parseInt(res[2]);
+                        b = rango_mapa_correcto(x, y);
+                    } else if ((res[0].equals("guardar")) || (res[0].equals("finalizar")))
+                        b = true; //ha realizado otra accion -> salir bucle
+                    else b = false;
+                }
+            }
+            System.out.println();
+            System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
+        }
+        catch (Exception e) {
+            System.out.println("No has introducido una accion valida");
+            System.out.println(e);
+            res = generar_accion_crear_tablero(turno);
+        }
+        return res;
+    }
+
+
+    /**
+     * Metodo print_tablero_personalizado
+     * @param tab es la matriz del tablero a mostrar por pantalla
+     * */
+    private static void print_tablero_personalizado(int[][] tab) {
+        for (int i = 0; i < 8; ++i) {
+            String sbuff = new String();
+            for (int j = 0; j < 8; ++j) {
+                sbuff = sbuff + tab[i][j];
+            }
+            System.out.println(sbuff);
+        }
+    }
+
+    /**
+     * Metodo ejecutarPartida
+     * @param p es la partida ha ejecutar (una vez finalizada dicha partida guardara/actualizara el ranking en caso de \
+     * ser necesario)
+     * */
+    private static void ejecutarPartidaTablero(Partida p) {
+        try {
+            int res = -1;
+            int turno = 0;
+            while (res < 0) { //continua la partida
+                turno = p.getTurnoPartida();
+                res = p.rondaPartida(generar_accion_crear_tablero(turno));
+                System.out.println();
+            }
+            if (res == 2) { //jugador a selecionado guardar tablero
+                int [][] tab = p.getTableroPartida().toMatrix();
+                System.out.println("Imprimir tablero personalizado");
+                print_tablero_personalizado(tab);
+                cp.ctrl_guardar_tablero(tab);
+                System.out.println();
+                System.out.println("TABLERO GUARDADO");
+                System.out.println();
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Error al ejecutar partida (crear Tablero)");
+            System.out.println(e);
+        }
+    }
+
+    /**
+     * Metodo cargar_Tablero
+     * @return devuelve un tablero personalizado en caso de seleccionar la opcion si, casoc contrario crea un tablero inicial
+     * */
+    private static Tablero cargar_Tablero() {
+        Tablero t = new Tablero();
+        System.out.println("Quieres cargar un tablero personalizado? si/no");
+        String in = scan.next();
+        System.out.println();
+        if(in.toLowerCase().equals("si")){
+            cp.ctrl_print_tableros_disponibles();
+            System.out.print("Seleccionar tablero:");
+            int idTab = scan.nextInt();
+            int[][]tab = cp.ctrl_cargar_tablero(idTab);
+            t = new Tablero(tab);
+        }
+        else {
+            System.out.println("Cargado tablero inicial");
+        }
+        return t;
+    }
+
+    /**
+     * Metodo actualizar_ranking
+     * @param p partida de la cual se necesita informacion de los jugadores y del ganador
+     * @param ganador incrementar contador de partidas en funcion de [2: empate, 1:gana jugador2, 0:gana jugador1]
+     * */
+    private static void actualizar_ranking(Partida p, int ganador){
+        try {
+            int modo = p.getModoDeJuegoPartida();
+            if (modo != 0) { //diferente de maquina vs maquina
+                int id1, id2;
+                String nick1, nick2;
+                id1 = p.getID_J1();
+                nick1 = p.getNickJugador1();
+                id2 = p.getID_J2();
+                nick2 = p.getNickJugador2();
+                ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,ganador);
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Fallo al actualizar el ranking");
+        }
+    }
+
+
+    /**
+     * Metodo entrar2(funcion de login de usuario)
+     * @param modo2 si modo2==2 introducira la informacion para el Jugador2, caso contrario para el Jugador1
+     * */
+    public static void entrar2(int modo2){
+        try {
+            if (modo2 == 2) System.out.println("Introducir informacion de contrincante 2 (Persona)");
+            System.out.println("Estas Registrado/a? si/no ");
+            String in = scan.next();
+            if(in.toLowerCase().equals("no")){
+                System.out.println("Entra tu nombre de usuario");
+                if (modo2 == 2) {
+                    nick_2 = scan.next();
+                    id_2 = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
+                    if ((nick_2.equals(nickname)) || (code == id_2)) throw new MyException("Se ha introducido informacion de usuarios repetida");
+                    else {
+                        System.out.println("Creado usuario " + nick_2 + " con ID " + id_2);
+                        cp.ctrl_crear_usuario(id_2,nick_2);
+                    }
+                }
+                else {
+                    nickname = scan.next();
+                    code = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
+                    System.out.println("Creado usuario " + nickname + " con ID " + code);
+                    cp.ctrl_crear_usuario(code,nickname);
+                }
+            }
+            else if(in.toLowerCase().equals("si")){
+                System.out.println("Entra tu ID");
+                if (modo2 == 2) {
+                    id_2 = scan.nextInt();
+                    System.out.println("Entra tu nombre de usuario");
+                    nick_2 = scan.next();
+                    if ((nick_2.equals(nickname)) || (code == id_2)) throw new MyException("Se ha introducido informacion de usuarios repetida");
+                    else {
+                        if (cp.ctrl_existe_usuario(id_2,nick_2)) System.out.println("Login Correcto");
+                        else throw new MyException("No existe usuario registrado con esa informacion");
+                    }
+                }
+                else {
+                    code = scan.nextInt();
+                    System.out.println("Entra tu nombre de usuario");
+                    nickname = scan.next();
+                    if (cp.ctrl_existe_usuario(code,nickname)) System.out.println("Login Correcto");
+                    else throw new MyException("No existe usuario registrado con esa informacion");
+                }
+            }
+            else throw new MyException("");
+        }
+        catch (Exception e) {
+            System.out.println("No se ha introducido una opcion valida (si, no)");
+            entrar2(modo2);
+        }
+    }
+
+
+    /**
      * Metodo iniciarPartida
      * Configura lo necesario para crear una partida (idpartida,modo de juego, reglas, contrincantes, tablero) \
      * seguidamente ejecuta dicha partida creada
+     * @return devuelve la partida configurada, caso contrario devuelve null
      * */
-    public static void iniciarPartida() {
+    public static Partida iniciarPartida() {
         try {
             int idPartida = cp.ctrl_get_nuevo_ID_Partida();
             System.out.println("0 - Maquina vs Maquina");
@@ -334,7 +476,7 @@ public class Main {
                     break;
 
                 case 2: //Persona vs Persona
-                    entrarJugador2();
+                    entrar2(2);
                     if (bando == 1) {
                         id2 = id_2;
                         nick2 = nick_2;
@@ -349,39 +491,86 @@ public class Main {
                     System.out.println("Modo de juego incorrecto");
                     break;
             }
-            //inicializar tablero
-        /*int [][] tab = new int[8][8];
-        for (int i = 0; i < 8; ++i) {
-            for (int j = 0; j < 8; ++j) {
-                tab[i][j] = 0;
-                if ((i == 3 & j==3) || (i == 4 & j==4)) tab[i][j] = 3;
-                else if ((i == 3 & j==4) || (i == 4 & j==3)) tab[i][j] = 2;
-            }
-        }
-        Tablero t = new Tablero(tab);*/
-
-            Partida p = new Partida(idPartida,modo,reglas,id1,nick1,id2,nick2);
-            ejecutarPartida(p); //Ejecutando la partida
+            Tablero t = cargar_Tablero();
+            Partida p = new Partida(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
+            return p;
         }
         catch (Exception e) {
             System.out.println(e);
         }
+        return null;
     }
 
 
     /**
      * Metodo cargarPartida
      * Carga una partida a partir de un fichero guardado previamente y seguidamente ejecuta dicha partida cargada
+     * @param idPartida id de partida a cargar
+     * @return devuelve la partida cargada, caso contrario devuelve null
      * */
-    public static void cargarPartida(int idPartida) {
+    public static Partida cargarPartida(int idPartida) {
         try {
             Partida p = cp.ctrl_cargar_partida(idPartida);
-            ejecutarPartida(p); //Ejecutando la partida
+            return p;
         }
         catch (Exception e) {
             System.out.println("Fallo al cargar la partida con ID:" + idPartida);
         }
+        return null;
     }
+
+
+    /**
+     * Metodo TableroPersonalizado
+     * Despliega varias opciones disponibles de tablero (crear,borrar o mostrar un tablero personalizado)
+     * */
+    public static void TableroPersonalizado() {
+        try {
+            System.out.println();
+            int modoT = -1;
+            System.out.println("0 - Crear nuevo Tablero Personalizado");
+            System.out.println("1 - Borrar Tablero Personalizado");
+            System.out.println("2 - Mostrar Tablero Personalizado");
+            System.out.print("Seleccionar opcion de Tablero personalizado:");
+            modoT = scan.nextInt();
+            System.out.println();
+            int idTab = -1;
+            switch (modoT) {
+                case 0:
+                    int idPartida = cp.ctrl_get_nuevo_ID_Partida();
+                    Tablero t = new Tablero();
+                    int[]reg = {1,1,1};
+                    Partida p = new Partida (idPartida, 2,reg,0,code,nickname,code,nickname,t);
+                    ejecutarPartidaTablero(p);
+                    break;
+                case 1:
+                    System.out.println("Opcion borrar tablero personalizado");
+                    cp.ctrl_print_tableros_disponibles();
+                    System.out.print("Seleccionar tablero a realizar la accion:");
+                    idTab = scan.nextInt();
+                    System.out.println();
+                    if (cp.ctrl_borrar_tablero(idTab)) System.out.println("Tablero " + idTab +" borrado con exito");
+                    else System.out.println("Fallo al borrar tablero: " + idTab);
+                    break;
+                case 2:
+                    System.out.println("Opcion mostrar tablero personalizado");
+                    cp.ctrl_print_tableros_disponibles();
+                    System.out.print("Seleccionar tablero a realizar la accion:");
+                    idTab = scan.nextInt();
+                    System.out.println();
+                    System.out.println("Imprimir tablero personalizado");
+                    print_tablero_personalizado(cp.ctrl_cargar_tablero(idTab));
+                    break;
+                default:
+                    throw new MyException("No se ha introducido una opcion valida de las mostradas");
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Fallo en TableroPersonalizado de main");
+            System.out.println(e);
+        }
+    }
+
 
     /**
      * Metodo listar_partidas_disponibles: Muestra opciones de cargar, borrar partida del usuario logueado
@@ -401,7 +590,8 @@ public class Main {
                 cp.ctrl_print_partidas_disponibles(id,nick);
                 System.out.print("Seleccionar ID de partida a cargar:");
                 int idPartida = scan.nextInt();
-                cargarPartida(idPartida);
+                Partida p = cargarPartida(idPartida);
+                ejecutarPartida(p);
             }
             else if (modo == 2) {
                 cp.ctrl_print_partidas_disponibles(id,nick);
@@ -413,29 +603,6 @@ public class Main {
         }
         catch (Exception e) {
             System.out.println("fallo al listar las partidas disponibles del jugador con ID:" + id +" , nickname: "+ nick);
-        }
-    }
-
-    /**
-     * Metodo actualizar_ranking
-     * @param p partida de la cual se necesita informacion de los jugadores y del ganador
-     * @param ganador incrementar contador de partidas en funcion de [2: empate, 1:gana jugador2, 0:gana jugador1]
-     * */
-    private static void actualizar_ranking(Partida p, int ganador){
-        try {
-            int modo = p.getModoDeJuegoPartida();
-            if (modo != 0) { //diferente de maquina vs maquina
-                int id1, id2;
-                String nick1, nick2;
-                id1 = p.getID_J1();
-                nick1 = p.getNickJugador1();
-                id2 = p.getID_J2();
-                nick2 = p.getNickJugador2();
-                ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,ganador);
-            }
-        }
-        catch (Exception e) {
-            System.out.println("Fallo al actualizar el ranking");
         }
     }
 
@@ -466,28 +633,38 @@ public class Main {
         try {
             cp = new CtrlPersitencia(true); //activar para utilizar solo 1 fichero de ranking (ranking.txt)
             ranking = cp.ctrl_importar_ranking();
-            entrar();
+            entrar2(1);
             boolean salir = false;
             while(!salir){
-                System.out.println("\nElige lo que quieres hacer: \n 1: Empezar una partida \n 2: Cargar/Borrar una partida \n" +
-                        " 3: Consultar el ranquing \n 4: Consultar estadisticas \n 5: salir \n");
+                System.out.println();
+                System.out.println("Elige lo que quieres hacer:");
+                System.out.println(" 1: Empezar una partida");
+                System.out.println(" 2: Cargar/Borrar una partida");
+                System.out.println(" 3: Tablero Personalizado [crear, borrar y mostrar]");
+                System.out.println(" 4: Consultar el ranquing");
+                System.out.println(" 5: Consultar estadisticas");
+                System.out.println(" 6: salir");
                 System.out.print("seleccionar opcion:");
                 int quit = scan.nextInt();
                 System.out.println("");
                 switch (quit){
                     case 1:
-                        iniciarPartida();
+                        Partida p = iniciarPartida();
+                        ejecutarPartida(p); //Ejecutando la partida
                         break;
                     case 2:
                         listar_partidas_disponibles(code,nickname);
                         break;
                     case 3:
-                        consultarRanking();
+                        TableroPersonalizado();
                         break;
                     case 4:
-                        consultar_Estadisticas();
+                        consultarRanking();
                         break;
                     case 5:
+                        consultar_Estadisticas();
+                        break;
+                    case 6:
                         salir = true;
                         break;
                     default:

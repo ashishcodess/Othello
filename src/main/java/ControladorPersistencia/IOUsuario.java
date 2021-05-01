@@ -63,15 +63,21 @@ public class IOUsuario {
      * @param idJugador identificador de usuario
      * @param nicknameJugador nickname de de usuario
      * @return devuelve TRUE en caso de haberse creado el fichero Usuario(idJugador,nicknameJugador) con exito, caso contrario (ya existía) devuelve FALSE
-     * @throws IOException en caso de fallo al crear fichero Usuario
      */
-    public boolean crear_usuario(int idJugador,String nicknameJugador) throws IOException {
-        String path = path_users + idJugador + "_" + nicknameJugador;
-        File f = new File(path);
+    public boolean crear_usuario(int idJugador,String nicknameJugador) {
         boolean res = false;
-        if (!f.exists()) {
-            f.createNewFile();
-            res = true;
+        try {
+            String path = path_users + idJugador + "_" + nicknameJugador;
+            File f = new File(path);
+            if (!f.exists()) {
+                f.createNewFile();
+                res = true;
+            }
+            return res;
+        }
+        catch (Exception e) {
+            System.out.println("Error al crear el fichero "+ idJugador + " " + nicknameJugador + "de IOUsuario");
+            System.out.println(e);
         }
         return res;
     }
@@ -93,9 +99,8 @@ public class IOUsuario {
      * @param idJugador identificador de usuario a borrar
      * @param nick nickname de de usuario a borrar
      * @return devuelve TRUE en caso de haberse borrado con exito, caso contrario devuelve FALSE
-     * @throws IOException en caso de fallo con fichero de usuario
      */
-    public boolean borrar_usuario(int idJugador, String nick) throws IOException {
+    public boolean borrar_usuario(int idJugador, String nick) {
         String path = path_users + idJugador + "_" + nick;
         File f = new File(path);
         boolean b = false;
@@ -113,19 +118,25 @@ public class IOUsuario {
      * @param idPartida identificador de Partida a consultar si existe el jugador
      * @return  devuelve TRUE si existe el idPartida dentro del fichero de Usuario, caso contrario (no exista fichero o no encontrado dentro del mismo)
      * devuelve FALSE
-     * @throws IOException en caso de fallo con fichero Usuario
      */
-    public boolean existe_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException {
-        String path = path_users + idJugador + "_" + nicknameJugador;
+    public boolean existe_partida_usuario(int idJugador,String nicknameJugador, int idPartida) {
         boolean res = false;
-        File f = new File(path);
-        if (f.exists()) {
-            BufferedReader bf =new BufferedReader(new FileReader (f));
-            String s1;
-            while (((s1 = bf.readLine()) != null) && !res) {
-                res = (Integer.parseInt(s1) == idPartida);
+        try {
+            String path = path_users + idJugador + "_" + nicknameJugador;
+            File f = new File(path);
+            if (f.exists()) {
+                BufferedReader bf =new BufferedReader(new FileReader (f));
+                String s1;
+                while (((s1 = bf.readLine()) != null) && !res) {
+                    res = (Integer.parseInt(s1) == idPartida);
+                }
+                bf.close();
             }
-            bf.close();
+            return res;
+        }
+        catch (Exception e) {
+            System.out.println("Error en existe_partida_usuario "+ idJugador + " " + nicknameJugador + " " + idPartida + "de IOUsuario");
+            System.out.println(e);
         }
         return res;
     }
@@ -137,19 +148,24 @@ public class IOUsuario {
      * @param nicknameJugador nickname de de usuario
      * @param idPartida identificador de Partida
      * @return devuelve TRUE en caso de haber agregado correctamente la partida con id igual a idPartida dentro del fichero Usuario(idJugador,nicknameJugador), caso contrario devuelve FALSE
-     * @throws IOException en caso de fallo con fichero Usuario
      */
-    public boolean agregar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException {
-        String path = path_users + idJugador + "_" + nicknameJugador;
+    public boolean agregar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) {
         boolean res = false;
-        File f = new File(path);
-        if (f.exists() && (!existe_partida_usuario(idJugador,nicknameJugador,idPartida))) {
-            PrintWriter pw = new PrintWriter(new FileOutputStream(new File(path), true));
-            String s_res = String.valueOf(idPartida) +"\n";
-            pw.append(s_res);
-            pw.flush();
-            pw.close();
-            res = true;
+        try {
+            String path = path_users + idJugador + "_" + nicknameJugador;
+            File f = new File(path);
+            if (f.exists() && (!existe_partida_usuario(idJugador,nicknameJugador,idPartida))) {
+                PrintWriter pw = new PrintWriter(new FileOutputStream(new File(path), true));
+                String s_res = idPartida +"\n";
+                pw.append(s_res);
+                pw.flush();
+                pw.close();
+                res = true;
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Error en agregar_partida_usuario "+ idJugador + " " + nicknameJugador + " " + idPartida + "de IOUsuario");
+            System.out.println(e);
         }
         return res;
     }
@@ -161,26 +177,30 @@ public class IOUsuario {
      * @param nicknameJugador nickname de de usuario
      * @param idPartida identificador de Partida
      * @return devuelve TRUE en caso de haber eliminado la partida con id igual a idPartida dentro del fichero Usuario(idJugador,nicknameJugador), caso contrario devuelve FALSE
-     * @throws IOException en caso de fallo con fichero Usuario
-     * @throws MyException en caso de no existir usuario con idJugador y nicknameJugador
      */
-        public boolean borrar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException, MyException {
-        String path = path_users + idJugador + "_" + nicknameJugador;
-        Boolean res = false;
-        if (existe_partida_usuario(idJugador,nicknameJugador,idPartida)) {
-            ArrayList<String> partidas = listar_partidas_disponibles(idJugador,nicknameJugador);
-            int i = 0;
-            boolean b = false;
-            for (i = 0; (i < partidas.size()) && !b; ++i) { //buscar indice a borrar
-                b = (Integer.parseInt(partidas.get(i)) == idPartida);
-                if (b) partidas.remove(i);
+        public boolean borrar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) {
+            Boolean res = false;
+            try {
+                String path = path_users + idJugador + "_" + nicknameJugador;
+                if (existe_partida_usuario(idJugador, nicknameJugador, idPartida)) {
+                    ArrayList<String> partidas = listar_partidas_disponibles(idJugador, nicknameJugador);
+                    int i = 0;
+                    boolean b = false;
+                    for (i = 0; (i < partidas.size()) && !b; ++i) { //buscar indice a borrar
+                        b = (Integer.parseInt(partidas.get(i)) == idPartida);
+                        if (b) partidas.remove(i);
+                    }
+                    //partidas ahora contiene el nuevo contenido (con la partida seleccionada ya borrada)
+                    PrintWriter pw = new PrintWriter(path);
+                    for (i = 0; i < partidas.size(); ++i) pw.println(partidas.get(i));
+                    pw.flush();
+                    pw.close();
+                }
+                return res;
             }
-            //partidas ahora contiene el nuevo contenido (con la partida seleccionada ya borrada)
-            PrintWriter pw = new PrintWriter(path);
-            for (i = 0; i < partidas.size(); ++i) pw.println(partidas.get(i));
-            pw.flush();
-            pw.close();
-        }
+            catch (Exception e) {
+
+            }
         return res;
     }
 
@@ -190,22 +210,27 @@ public class IOUsuario {
      * @param IDjugador identificador de Jugador
      * @param nick nickname de Jugador
      * @return devuelve la lista de partidas disponibles (partidas donde se encuentra el Jugador dentro)
-     * @throws IOException en caso de fallo con fichero Usuario
-     * @throws MyException en caso de no existir usuario con idJugador y nicknameJugador
      */
-    public ArrayList<String> listar_partidas_disponibles(int IDjugador, String nick) throws IOException, MyException {
-        String path = path_users + IDjugador + "_" + nick;
-        File f = new File(path);
-        if (f.exists()) {
-            ArrayList<String> res = new ArrayList<String>();
-            BufferedReader bf = new BufferedReader(new FileReader (f));
-            String s1;
-            while ((s1 = bf.readLine()) != null) {
-                res.add(s1);
+    public ArrayList<String> listar_partidas_disponibles(int IDjugador, String nick) {
+        try {
+            String path = path_users + IDjugador + "_" + nick;
+            File f = new File(path);
+            if (f.exists()) {
+                ArrayList<String> res = new ArrayList<String>();
+                BufferedReader bf = new BufferedReader(new FileReader (f));
+                String s1;
+                while ((s1 = bf.readLine()) != null) {
+                    res.add(s1);
+                }
+                bf.close();
+                return res;
             }
-            bf.close();
-            return res;
+            else throw new MyException("No existe usuario con ID:" + IDjugador + ", nickname: "+ nick);
         }
-        else throw new MyException("No existe usuario con ID:" + IDjugador + ", nickname: "+ nick);
+        catch (Exception e) {
+            System.out.println("Fallo en funcion listar_partidas_disponibles de IOUsuario");
+            System.out.println(e);
+        }
+        return null;
     }
 }

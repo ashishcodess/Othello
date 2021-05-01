@@ -16,73 +16,10 @@ public class DriverPersistencia {
 
     static Scanner scan = new Scanner(System.in);
 
-    public DriverPersistencia() {}
-
-    /** funcion main (para poder realizar las pruebas)
-     * @param args (argumentos)
-     * @throws IOException heredado de el resto de funciones
-     * @throws MyException heredado de el resto de funciones
-     * */
-    public static void main(String[] args) throws IOException, MyException {
-        cp = new CtrlPersitencia(true); //activar para utilizar solo 1 fichero de ranking
-        boolean b = true;
-        while (b) {
-            System.out.println("DriverPersistencia (OPCIONES):");
-            System.out.println("0 - SALIR DEL DRIVER");
-            System.out.println("1 - CtrlPartidas (Cargar/Guardar partida, toArrayList, listar_partidas_disponibles, borrar_partida)");
-            System.out.println("2 - CtrlRanking (Importar/Exportar Ranking, modificando el Ranking)");
-            System.out.println("3 - CtrlUsuario (Crear, modificar, borrar usuario)");
-            System.out.println("4 - GetNuevoID_User");
-            System.out.println("5 - GetNuevoID_Partida");
-            System.out.println("6 - GetNuevoID_Tablero");
-            System.out.println();
-            System.out.print("Introducir opcion:");
-            int i_entrada = Integer.parseInt(scan.next());
-            System.out.println();
-            switch(i_entrada) {
-                case 0:
-                    b = false;
-                    break;
-                case 1:
-                    System.out.print("seleccionar ID partida(fichero para realizar pruebas):");
-                    i_entrada = Integer.parseInt(scan.next());
-                    System.out.println("Prueba cargar partida");
-                    System.out.println();
-                    test_IOPartidas(i_entrada);
-                    break;
-                case 2:
-                    test_IORanking("ranking");
-                    break;
-                case 3:
-                    System.out.print("Introducir ID de usuario a modificar:");
-                    i_entrada = Integer.parseInt(scan.next());
-                    System.out.println();
-                    System.out.print("Introducir Nickname de usuario a modificar:");
-                    String s = scan.next();
-                    test_IOUsuario(i_entrada,s);
-                    break;
-                case 4:
-                    test_prueba_getID_nuevo_user();
-                    break;
-                case 5:
-                    test_prueba_getID_nueva_partida();
-                    break;
-                case 6:
-                    test_prueba_getID_nueva_tablero();
-                    break;
-                default:
-                    System.out.println("Introducir una opcion correcta");
-            }
-            System.out.println();
-        }
-    }
-
     /** test_IOPartidas
      * @param id es el identificador de la partida para realizar las pruebas
-     * @throws IOException fallo al crear fichero partida
-     * @throws MyException fallo con modo partida (en este caso no es necesario)
      * */
-    public static void test_IOPartidas(int id) throws IOException, MyException {
+    public static void test_IOPartidas(int id) {
         System.out.println("Probar metodos: Cargar/Guardar partida, toArrayList, listar_partidas_disponibles, borrar_partida");
         System.out.println();
         Partida p = cp.ctrl_cargar_partida(id);
@@ -109,10 +46,9 @@ public class DriverPersistencia {
 
     /** test_IORanking
      * @param rk es el nombre del fichero (sin .txt) del ranking a realizar las pruebas
-     * @throws IOException fallo al crear fichero ranking
      * @throws MyException fallo con sizes de ranking
      * */
-    public static void test_IORanking(String rk) throws IOException, MyException {
+    public static void test_IORanking(String rk) throws MyException {
         String path = "./src/files/ranking/" + rk + ".txt";
         Ranking rank= cp.ctrl_importar_ranking2(path);
         System.out.println("Ranking importado correctamente");
@@ -131,10 +67,8 @@ public class DriverPersistencia {
     /** test_IOUsuario
      * @param id es el identificador de usuario a realizar las pruebas
      * @param nick es el nickname de usuario a realizar las pruebas
-     * @throws IOException fallo al crear fichero Usuario
-     * @throws MyException fallo con identificador (id es inferior a 6: pertenece a ID maquina)
      * */
-    public static void test_IOUsuario(int id, String nick) throws IOException, MyException {
+    public static void test_IOUsuario(int id, String nick) {
         if (cp.ctrl_existe_usuario(id,nick)) System.out.println("Fichero usuario ya existe, crear uno diferente para probar...");
         else {
             if (cp.ctrl_crear_usuario(id,nick)) {
@@ -183,6 +117,9 @@ public class DriverPersistencia {
         else System.out.println("Error hay algun ID igual (no deberia ser asi...)");
     }
 
+    public static void test_IOTablero(int id) {
+
+    }
 
     /**test_prueba_getID_nueva_tablero*/
     public static void test_prueba_getID_nueva_tablero() {
@@ -196,6 +133,78 @@ public class DriverPersistencia {
         if (b) System.out.println("Todo correcto (ID's diferentes)");
         else System.out.println("Error hay algun ID igual (no deberia ser asi...)");
     }
+
+
+    /** funcion main (para poder realizar las pruebas)
+     * @param args (argumentos)
+     * */
+    public static void main(String[] args) {
+        try {
+            cp = new CtrlPersitencia(true); //activar para utilizar solo 1 fichero de ranking
+            boolean b = true;
+            while (b) {
+                System.out.println("DriverPersistencia (OPCIONES):");
+                System.out.println("0 - SALIR DEL DRIVER");
+                System.out.println("1 - CtrlPartidas (Cargar/Guardar partida, toArrayList, listar_partidas_disponibles, borrar_partida)");
+                System.out.println("2 - CtrlRanking (Importar/Exportar Ranking, modificando el Ranking)");
+                System.out.println("3 - CtrlUsuario (Crear, modificar, borrar usuario)");
+                System.out.println("4 - GetNuevoID_User");
+                System.out.println("5 - GetNuevoID_Partida");
+                System.out.println("6 - GetNuevoID_Tablero");
+                System.out.println();
+                System.out.print("Introducir opcion:");
+                int i_entrada = Integer.parseInt(scan.next());
+                System.out.println();
+                switch(i_entrada) {
+                    case 0:
+                        b = false;
+                        break;
+                    case 1:
+                        System.out.print("seleccionar ID partida(fichero para realizar pruebas):");
+                        i_entrada = Integer.parseInt(scan.next());
+                        System.out.println("Prueba cargar partida");
+                        System.out.println();
+                        test_IOPartidas(i_entrada);
+                        break;
+                    case 2:
+                        test_IORanking("ranking");
+                        break;
+                    case 3:
+                        System.out.print("Introducir ID de usuario a modificar:");
+                        i_entrada = Integer.parseInt(scan.next());
+                        System.out.println();
+                        System.out.print("Introducir Nickname de usuario a modificar:");
+                        String s = scan.next();
+                        test_IOUsuario(i_entrada,s);
+                        break;
+                    case 4:
+                        test_prueba_getID_nuevo_user();
+                        break;
+                    case 5:
+                        test_prueba_getID_nueva_partida();
+                        break;
+                    case 6:
+                        test_prueba_getID_nueva_tablero();
+                        break;
+                    case 7:
+                        System.out.print("seleccionar ID tablero(fichero para realizar pruebas):");
+                        i_entrada = Integer.parseInt(scan.next());
+                        System.out.println("Pruebas sobre ficheros tablero");
+                        System.out.println();
+                        test_IOTablero(i_entrada);
+                        break;
+                    default:
+                        System.out.println("Introducir una opcion correcta");
+                }
+                System.out.println();
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Error en main de DriverPersitencia");
+            System.out.println(e);
+        }
+    }
+
 
 }
 

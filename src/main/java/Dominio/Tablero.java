@@ -726,4 +726,19 @@ public class Tablero {
         return true; //para poderlo compilar y hacer pruebas
     }
 
+    /**
+     * Operacion toMatrix
+     * @return devuelve la informacion del tablero en una matriz de enteros
+     */
+    //Para Controlador de Persitencia
+    public int[][] toMatrix() {
+        int[][] res = new int[8][8];
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0;j < 8; ++j) {
+                res[i][j]= getCasilla_tipo(i,j);
+            }
+        }
+        return res;
+    }
+
 }
