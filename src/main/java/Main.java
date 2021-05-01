@@ -79,6 +79,31 @@ public class Main {
         return res;
     }
 
+
+    /**
+     * Metodo actualizar_ranking
+     * @param p partida de la cual se necesita informacion de los jugadores y del ganador
+     * @param ganador incrementar contador de partidas en funcion de [2: empate, 1:gana jugador2, 0:gana jugador1]
+     * */
+    private static void actualizar_ranking(Partida p, int ganador){
+        try {
+            int modo = p.getModoDeJuegoPartida();
+            if (modo != 0) { //diferente de maquina vs maquina
+                int id1, id2;
+                String nick1, nick2;
+                id1 = p.getID_J1();
+                nick1 = p.getNickJugador1();
+                id2 = p.getID_J2();
+                nick2 = p.getNickJugador2();
+                ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,ganador);
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Fallo al actualizar el ranking");
+        }
+    }
+
+
     /**
      * Metodo rango_mapa_correcto
      * @param x posicion X de la casilla a comprobar el rango del mapa
@@ -325,30 +350,6 @@ public class Main {
         }
         return t;
     }
-
-    /**
-     * Metodo actualizar_ranking
-     * @param p partida de la cual se necesita informacion de los jugadores y del ganador
-     * @param ganador incrementar contador de partidas en funcion de [2: empate, 1:gana jugador2, 0:gana jugador1]
-     * */
-    private static void actualizar_ranking(Partida p, int ganador){
-        try {
-            int modo = p.getModoDeJuegoPartida();
-            if (modo != 0) { //diferente de maquina vs maquina
-                int id1, id2;
-                String nick1, nick2;
-                id1 = p.getID_J1();
-                nick1 = p.getNickJugador1();
-                id2 = p.getID_J2();
-                nick2 = p.getNickJugador2();
-                ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,ganador);
-            }
-        }
-        catch (Exception e) {
-            System.out.println("Fallo al actualizar el ranking");
-        }
-    }
-
 
     /**
      * Metodo entrar2(funcion de login de usuario)
