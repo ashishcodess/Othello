@@ -448,7 +448,6 @@ public class Main {
                     id2 = code;
                     nick2 = nickname;
                 }
-
             }
             //Seleccionar informacion del contrincante
             switch (modo) {
