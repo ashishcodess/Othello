@@ -213,6 +213,8 @@ public class Ranking {
      * */
     public ArrayList<String> toArrayList() {
         ArrayList<String> as = new ArrayList<String>();
+        String s_aux = "(ID, nickname, Ganadas, Perdidas,Empatadas, Totales)";
+        as.add(s_aux);
         for (int i = 0; i < this.ranking.size(); ++i) {
             as.add(ranking.get(i).consultar_all());
         }
@@ -228,7 +230,7 @@ public class Ranking {
     public void print_persona_ranking(int id ,String nick) {
         int i = existe_en_ranking(id,nick);
         if (i != -1) {
-            System.out.println("(ID, nickname, Ganadas, Perdidas,Empatadas, Totales)");
+            System.out.println("(ID, nickname, Ganadas, Perdidas, Empatadas, Totales)");
             System.out.println(this.ranking.get(i).consultar_all());
         }
         else System.out.println("Error: no existe persona con ID:" + id + " y nick:" + nick + " dentro del Ranking");

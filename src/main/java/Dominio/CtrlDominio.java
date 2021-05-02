@@ -42,12 +42,42 @@ public class CtrlDominio {
         //para los atributos de code y nickname
     }
 
+    /**
+     * Metodo actualizar_ranking
+     * @param p partida de la cual se necesita informacion de los jugadores y del ganador
+     * @param ganador incrementar contador de partidas en funcion de [2: empate, 1:gana jugador2, 0:gana jugador1]
+     * */
+    private static void actualizar_ranking(Partida p, int ganador){
+        try {
+            int modo = p.getModoDeJuegoPartida();
+            if (modo != 0) { //diferente de maquina vs maquina
+                int id1, id2;
+                String nick1, nick2;
+                id1 = p.getID_J1();
+                nick1 = p.getNickJugador1();
+                id2 = p.getID_J2();
+                nick2 = p.getNickJugador2();
+                ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,ganador);
+                cp.ctrl_exportar_ranking(ranking.toArrayList());
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Fallo al actualizar el ranking");
+        }
+    }
 
     /*ejecutar 1 ronda de la partida:
     * mandarle el estado de como va la partida hacia la capa de presentacion
     * */
-    private static int ejecutarPartida(Partida p) {
-        return -1; //por ahora para evitar fallos
+    private static int ejecutarRondaPartida(Partida p, ArrayList<String> argum) {
+        //accion a realizar esta dentro de argum
+        int res = -1;
+        String[] accion = argum.toArray(new String[0]);
+        res = p.rondaPartida(accion);
+        //modificar estadoPartida
+        if (res == 2) cp.ctrl_guardar_partida(p.toArrayList());
+        else if (res != 3) actualizar_ranking(p,res);
+        return res;
     }
 
     //Argum: argumentos/info necesaria para crear la partida
@@ -110,15 +140,29 @@ public class CtrlDominio {
         return null;
     }
 
+    private static ArrayList<String> consultar_Estadisticas(int id, String nick) {
+        ArrayList<String> res = new ArrayList<String>();
+        res.add("(ID, nickname, Ganadas, Perdidas,Empatadas, Totales)");
+        int i = ranking.existe_en_ranking(id,nick);
+        if (i != -1) {
+            res.add(ranking.consultar_info_elemento_i(i));
+        } else { //no existe en el ranking
+            res.add("Error: no existe persona con ID:" + id + " y nick:" + nick + " dentro del Ranking");
+        }
+        return res;
+    }
 
-    //devolvera los mensajes que tendra que imprimir en pantalla
+
+    //devolvera los mensajes que tendra que imprimir en pantalla o alguna info importante para capa Presentacion
     public static ArrayList<String> peticion_menu(int peticion, ArrayList<String> argum) {
         ArrayList<String> as = new ArrayList<String>();
         int idPartida = -1;
         switch (peticion){
+            case -1:
+                ejecutarRondaPartida(partida_activa,argum);
+                break;
             case 1:
                 partida_activa = iniciarPartida(argum);
-                ejecutarPartida(partida_activa);
                 break;
             case 2:
                 as = listar_partidas_disponibles(code,nickname);
@@ -126,7 +170,6 @@ public class CtrlDominio {
             case 3:
                 idPartida = Integer.parseInt(argum.get(0));
                 partida_activa = cargarPartida(idPartida);
-                ejecutarPartida(partida_activa);
                 break;
             case 4:
                 idPartida = Integer.parseInt(argum.get(0));
@@ -136,13 +179,19 @@ public class CtrlDominio {
                 else as.add("No se ha borrado correctamente");
                 break;
             case 5:
+                /*argum[0] opcion submenu de tablero personalizado
+                (0: crear tablero, 1: borrar tablero(id),2: listar tableros, 3: mostrar tablero(id))
+                argum[1] -> id de tablero en caso de escoger subopcion 1 o 3
+                * */
                 //TableroPersonalizado();
                 break;
             case 6:
-                //as = consultarRanking();
+                as = ranking.toArrayList();
                 break;
             case 7:
-                //as = consultar_Estadisticas();
+                //argum[0]: id persona a consultar
+                //argum[1]: nickname
+                as = consultar_Estadisticas(Integer.parseInt(argum.get(0)),argum.get(1));
                 break;
             default:
                 System.out.println("Introduce un numero valido");

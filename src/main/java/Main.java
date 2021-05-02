@@ -96,6 +96,7 @@ public class Main {
                 id2 = p.getID_J2();
                 nick2 = p.getNickJugador2();
                 ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,ganador);
+                cp.ctrl_exportar_ranking(ranking.toArrayList());
             }
         }
         catch (Exception e) {
