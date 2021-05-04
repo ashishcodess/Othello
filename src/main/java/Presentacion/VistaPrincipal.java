@@ -14,7 +14,7 @@ public class VistaPrincipal {
     // Componentes de la interficie grafica
     private JFrame frameVista = new JFrame("Vista Principal"); //ejemplo
 
-    private JFrame frameTablero = new JFrame("Vista Tablero") //ejemplo
+    private JFrame frameTablero = new JFrame("Vista Tablero"); //ejemplo
 
 
     public VistaPrincipal (CtrlPresentacion pCtrlPresentacion) {
