@@ -14,9 +14,15 @@ public class VistaPrincipal {
     // Componentes de la interficie grafica
     private JFrame frameVista = new JFrame("Vista Principal"); //ejemplo
 
+    private JFrame frameTablero = new JFrame("Vista Tablero") //ejemplo
+
 
     public VistaPrincipal (CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
+        frameVista.setLayout(new BorderLayout()); // 5 zonas (North, South, East, West, Center)
+        frameTablero.setLayout(new GridLayout());
+
+
         //inicializarComponentes();
     }
 
