@@ -523,7 +523,7 @@ public class Tablero {
             }
         }
         //if (isOk(x + 1, y) && tablero[x+1][y].getTipoCasilla() == opp_color) {
-        if (isOk(x + 1, y) {
+        if (isOk(x + 1, y)) {
             if (tablero[x+1][y].getTipoCasilla() == opp_color) {
                 for (int i = x + 1; i <= 7 && !found2 && !stop2; ++i) {
                     if (tablero[i][y].getTipoCasilla() == own_color) found2 = true;    //Case of finding the same colour
@@ -563,7 +563,7 @@ public class Tablero {
         else { own_color = 3; opp_color = 2;
         }
         //if (isOk(x, y-1) && tablero[x][y-1].getTipoCasilla() == opp_color) {
-        if (isOk(x, y-1) {
+        if (isOk(x, y-1)) {
             if (tablero[x][y-1].getTipoCasilla() == opp_color) {
                 for (int i = y - 1; i >= 0 && !found1 && !stop1 ; --i) {
                     if (tablero[x][i].getTipoCasilla() == own_color) found1 = true;    //Case of finding the same colour
@@ -586,7 +586,7 @@ public class Tablero {
             }
         }
         //if (isOk(x , y+1) && tablero[x][y+1].getTipoCasilla() == opp_color) {
-        if (isOk(x , y+1) {
+        if (isOk(x , y+1)) {
             if (tablero[x][y+1].getTipoCasilla() == opp_color) {
                 for (int i = y + 1; i <= 7 && !found2 && !stop2; ++i) {
                     if (tablero[x][i].getTipoCasilla() == own_color) found2 = true;    //Case of finding the same colour
@@ -628,7 +628,7 @@ public class Tablero {
         else { own_color = 3; opp_color = 2;
         }
         //if (isOk(x-1, y-1) && tablero[x-1][y-1].getTipoCasilla() == opp_color) {
-        if (isOk(x-1, y-1) {
+        if (isOk(x-1, y-1)) {
             if (tablero[x-1][y-1].getTipoCasilla() == opp_color) {
                 int i = x -1 , j = y-1 ;
                 while ( i >= 0 && y >= 0 && !found1 && !stop1) {
@@ -662,7 +662,7 @@ public class Tablero {
             }
         }
         //if (isOk(x+1, y+1) && tablero[x+1][y+1].getTipoCasilla() == opp_color) {
-        if (isOk(x+1, y+1) {
+        if (isOk(x+1, y+1)) {
             if (tablero[x+1][y+1].getTipoCasilla() == opp_color) {
                 int i = x+1 , j = y+1 ;
                 while ( i <= 7 && j <= 7 && !found2 && !stop2) {
@@ -687,7 +687,7 @@ public class Tablero {
             }
         }
         //if (isOk(x-1, y+1) && tablero[x-1][y+1].getTipoCasilla() == opp_color) {
-        if (isOk(x-1, y+1) {
+        if (isOk(x-1, y+1)) {
             if (tablero[x-1][y+1].getTipoCasilla() == opp_color) {
                 int i = x-1 , j = y+1 ;
                 while ( i >= 0 && j <= 7 && !found3 && !stop3) {
@@ -713,7 +713,7 @@ public class Tablero {
         }
 
         //if (isOk(x+1, y-1) && tablero[x+1][y-1].getTipoCasilla() == opp_color) {
-        if (isOk(x+1, y-1) {
+        if (isOk(x+1, y-1)) {
             if (tablero[x+1][y-1].getTipoCasilla() == opp_color) {
                 int i = x+1 , j = y-1 ;
                 while ( i >= 7 && j <= 0 && !found4 && !stop4) {
