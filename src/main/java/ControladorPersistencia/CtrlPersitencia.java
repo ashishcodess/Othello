@@ -269,6 +269,12 @@ public class CtrlPersitencia {
      * @return devuelve TRUE en caso que se haya guardado con exito, caso contrario devuelve FALSE
      */
     public void ctrl_guardar_tablero(int[][] tab) {
+        //limpiar casillas disponibles (1)
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                if (tab[i][j] == 1) tab[i][j] = 0;
+            }
+        }
         cTablero.guardar_tablero(tab,this.ctrl_get_nuevo_ID_tablero());
     }
 
