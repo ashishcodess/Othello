@@ -499,43 +499,49 @@ public class Tablero {
         }
         else { own_color = 3; opp_color = 2;
         }
-        if (isOk(x - 1, y) && tablero[x-1][y].getTipoCasilla() == opp_color) {
-            for (int i = x - 1; i >= 0 && !found1 && !stop1; --i) {
-                if (tablero[i][y].getTipoCasilla() == own_color) found1 = true;    //Case of finding the same colour
-                else if (tablero[i][y].getTipoCasilla() == 0 || tablero[i][y].getTipoCasilla() == 1)
-                    stop1 = true;   // case of being unable to find any color
-                else {                           //Same color(i.e opposite )
-                    vec1.addElement(new Position(i, y));
+        //if (isOk(x - 1, y) && tablero[x-1][y].getTipoCasilla() == opp_color) {
+        if (isOk(x - 1, y)) {
+            if (tablero[x-1][y].getTipoCasilla() == opp_color) {
+                for (int i = x - 1; i >= 0 && !found1 && !stop1; --i) {
+                    if (tablero[i][y].getTipoCasilla() == own_color) found1 = true;    //Case of finding the same colour
+                    else if (tablero[i][y].getTipoCasilla() == 0 || tablero[i][y].getTipoCasilla() == 1)
+                        stop1 = true;   // case of being unable to find any color
+                    else {                           //Same color(i.e opposite )
+                        vec1.addElement(new Position(i, y));
+                    }
                 }
-            }
-            if (found1) {
-                Object[] arr1 = vec1.toArray();
-                int a, b;
-                for (int i = 0; i < vec1.size(); ++i) {
-                    Position pos = (Position) arr1[i];
-                    a = pos.getX();
-                    b = pos.getY();
-                    tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
+                if (found1) {
+                    Object[] arr1 = vec1.toArray();
+                    int a, b;
+                    for (int i = 0; i < vec1.size(); ++i) {
+                        Position pos = (Position) arr1[i];
+                        a = pos.getX();
+                        b = pos.getY();
+                        tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
+                    }
                 }
             }
         }
-        if (isOk(x + 1, y) && tablero[x+1][y].getTipoCasilla() == opp_color) {
-            for (int i = x + 1; i <= 7 && !found2 && !stop2; ++i) {
-                if (tablero[i][y].getTipoCasilla() == own_color) found2 = true;    //Case of finding the same colour
-                else if (tablero[i][y].getTipoCasilla() == 0 || tablero[i][y].getTipoCasilla() == 1) stop2 = true;   // case of being unable to find any color
-                else {                           //Same color(i.e opposite )
-                    Position ps = new Position(i, y);
-                    vec2.addElement(ps);
+        //if (isOk(x + 1, y) && tablero[x+1][y].getTipoCasilla() == opp_color) {
+        if (isOk(x + 1, y) {
+            if (tablero[x+1][y].getTipoCasilla() == opp_color) {
+                for (int i = x + 1; i <= 7 && !found2 && !stop2; ++i) {
+                    if (tablero[i][y].getTipoCasilla() == own_color) found2 = true;    //Case of finding the same colour
+                    else if (tablero[i][y].getTipoCasilla() == 0 || tablero[i][y].getTipoCasilla() == 1) stop2 = true;   // case of being unable to find any color
+                    else {                           //Same color(i.e opposite )
+                        Position ps = new Position(i, y);
+                        vec2.addElement(ps);
+                    }
                 }
-            }
-            if (found2) {
-                Object[] arr2 = vec2.toArray();
-                int a, b;
-                for (int i = 0; i < vec2.size(); ++i) {
-                    Position pos = (Position) arr2[i];
-                    a = pos.getX();
-                    b = pos.getY();
-                    tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
+                if (found2) {
+                    Object[] arr2 = vec2.toArray();
+                    int a, b;
+                    for (int i = 0; i < vec2.size(); ++i) {
+                        Position pos = (Position) arr2[i];
+                        a = pos.getX();
+                        b = pos.getY();
+                        tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
+                    }
                 }
             }
         }
@@ -556,44 +562,50 @@ public class Tablero {
         }
         else { own_color = 3; opp_color = 2;
         }
-        if (isOk(x, y-1) && tablero[x][y-1].getTipoCasilla() == opp_color) {
-            for (int i = y - 1; i >= 0 && !found1 && !stop1 ; --i) {
-                if (tablero[x][i].getTipoCasilla() == own_color) found1 = true;    //Case of finding the same colour
-                else if (tablero[x][i].getTipoCasilla() == 0 || tablero[x][i].getTipoCasilla() == 1)
-                    stop1 = true;   // case of being unable to find any color
-                else {                           //Same color(i.e opposite )
-                    vec1.addElement(new Position(x, i));
+        //if (isOk(x, y-1) && tablero[x][y-1].getTipoCasilla() == opp_color) {
+        if (isOk(x, y-1) {
+            if (tablero[x][y-1].getTipoCasilla() == opp_color) {
+                for (int i = y - 1; i >= 0 && !found1 && !stop1 ; --i) {
+                    if (tablero[x][i].getTipoCasilla() == own_color) found1 = true;    //Case of finding the same colour
+                    else if (tablero[x][i].getTipoCasilla() == 0 || tablero[x][i].getTipoCasilla() == 1)
+                        stop1 = true;   // case of being unable to find any color
+                    else {                           //Same color(i.e opposite )
+                        vec1.addElement(new Position(x, i));
+                    }
                 }
-            }
-            if (found1) {
-                Object[] arr1 = vec1.toArray();
-                int a, b;
-                for (int i = 0; i < vec1.size(); ++i) {
-                    Position pos = (Position) arr1[i];
-                    a = pos.getX();
-                    b = pos.getY();
-                    tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
+                if (found1) {
+                    Object[] arr1 = vec1.toArray();
+                    int a, b;
+                    for (int i = 0; i < vec1.size(); ++i) {
+                        Position pos = (Position) arr1[i];
+                        a = pos.getX();
+                        b = pos.getY();
+                        tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
+                    }
                 }
             }
         }
-        if (isOk(x , y+1) && tablero[x][y+1].getTipoCasilla() == opp_color) {
-            for (int i = y + 1; i <= 7 && !found2 && !stop2; ++i) {
-                if (tablero[x][i].getTipoCasilla() == own_color) found2 = true;    //Case of finding the same colour
-                else if (tablero[x][i].getTipoCasilla() == 0 || tablero[x][i].getTipoCasilla() == 1) stop2 = true;   // case of being unable to find any color
-                else {//Same color(i.e opposite )
-                    Position ps = new Position(x, i);
-                    vec2.addElement(ps);
+        //if (isOk(x , y+1) && tablero[x][y+1].getTipoCasilla() == opp_color) {
+        if (isOk(x , y+1) {
+            if (tablero[x][y+1].getTipoCasilla() == opp_color) {
+                for (int i = y + 1; i <= 7 && !found2 && !stop2; ++i) {
+                    if (tablero[x][i].getTipoCasilla() == own_color) found2 = true;    //Case of finding the same colour
+                    else if (tablero[x][i].getTipoCasilla() == 0 || tablero[x][i].getTipoCasilla() == 1) stop2 = true;   // case of being unable to find any color
+                    else {//Same color(i.e opposite )
+                        Position ps = new Position(x, i);
+                        vec2.addElement(ps);
 
+                    }
                 }
-            }
-            if (found2) {
-                Object[] arr2 = vec2.toArray();
-                int a, b;
-                for (int i = 0; i < vec2.size(); ++i) {
-                    Position pos = (Position) arr2[i];
-                    a = pos.getX();
-                    b = pos.getY();
-                    tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
+                if (found2) {
+                    Object[] arr2 = vec2.toArray();
+                    int a, b;
+                    for (int i = 0; i < vec2.size(); ++i) {
+                        Position pos = (Position) arr2[i];
+                        a = pos.getX();
+                        b = pos.getY();
+                        tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
+                    }
                 }
             }
         }
@@ -615,26 +627,28 @@ public class Tablero {
         }
         else { own_color = 3; opp_color = 2;
         }
-        if (isOk(x-1, y-1) && tablero[x-1][y-1].getTipoCasilla() == opp_color) {
-            int i = x -1 , j = y-1 ;
-            while ( i >= 0 && y >= 0 && !found1 && !stop1) {
-                if (i<0 || j < 0) stop1 = true; //pos si acaso (evitar fallos)
-                if (tablero[i][j].getTipoCasilla() == own_color) found1 = true;    //Case of finding the same colour
-                else if (tablero[i][j].getTipoCasilla() == 0 || tablero[i][j].getTipoCasilla() == 1)
-                    stop1 = true;   // case of being unable to find any color
-                else {                           //Same color(i.e opposite )
-                    vec1.addElement(new Position(i, j));
+        //if (isOk(x-1, y-1) && tablero[x-1][y-1].getTipoCasilla() == opp_color) {
+        if (isOk(x-1, y-1) {
+            if (tablero[x-1][y-1].getTipoCasilla() == opp_color) {
+                int i = x -1 , j = y-1 ;
+                while ( i >= 0 && y >= 0 && !found1 && !stop1) {
+                    if (i<0 || j < 0) stop1 = true; //pos si acaso (evitar fallos)
+                    if (tablero[i][j].getTipoCasilla() == own_color) found1 = true;    //Case of finding the same colour
+                    else if (tablero[i][j].getTipoCasilla() == 0 || tablero[i][j].getTipoCasilla() == 1)
+                        stop1 = true;   // case of being unable to find any color
+                    else {                           //Same color(i.e opposite )
+                        vec1.addElement(new Position(i, j));
+                    }
+                    --i; --j;
                 }
-                --i; --j;
-            }
-            if (found1) {
-                Object[] arr1 = vec1.toArray();
-                int a, b;
-                for (int k = 0; k < vec1.size(); ++k) {
-                    Position pos = (Position) arr1[k];
-                    a = pos.getX();
-                    b = pos.getY();
-                    tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
+                if (found1) {
+                    Object[] arr1 = vec1.toArray();
+                    int a, b;
+                    for (int k = 0; k < vec1.size(); ++k) {
+                        Position pos = (Position) arr1[k];
+                        a = pos.getX();
+                        b = pos.getY();
+                        tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
                    /* if(own_color == 2) {
                         negras.add(pos);
                         blancas.remove(pos);
@@ -643,77 +657,86 @@ public class Tablero {
                         negras.remove(pos);
                         blancas.add(pos);
                     }*/
+                    }
                 }
             }
         }
-        if (isOk(x+1, y+1) && tablero[x+1][y+1].getTipoCasilla() == opp_color) {
-            int i = x+1 , j = y+1 ;
-            while ( i <= 7 && j <= 7 && !found2 && !stop2) {
-                if (tablero[i][j].getTipoCasilla() == own_color) found2 = true;    //Case of finding the same colour
-                else if (tablero[i][j].getTipoCasilla() == 0 || tablero[i][j].getTipoCasilla() == 1)
-                    stop2 = true;   // case of being unable to find any color
-                else {                           //Same color(i.e opposite )
-                    vec2.addElement(new Position(i, j));
+        //if (isOk(x+1, y+1) && tablero[x+1][y+1].getTipoCasilla() == opp_color) {
+        if (isOk(x+1, y+1) {
+            if (tablero[x+1][y+1].getTipoCasilla() == opp_color) {
+                int i = x+1 , j = y+1 ;
+                while ( i <= 7 && j <= 7 && !found2 && !stop2) {
+                    if (tablero[i][j].getTipoCasilla() == own_color) found2 = true;    //Case of finding the same colour
+                    else if (tablero[i][j].getTipoCasilla() == 0 || tablero[i][j].getTipoCasilla() == 1)
+                        stop2 = true;   // case of being unable to find any color
+                    else {                           //Same color(i.e opposite )
+                        vec2.addElement(new Position(i, j));
+                    }
+                    ++i; ++j;
                 }
-                ++i; ++j;
-            }
-            if (found2) {
-                Object[] arr2 = vec2.toArray();
-                int a, b;
-                for (int k = 0; k < vec2.size(); ++k) {
-                    Position pos = (Position) arr2[k];
-                    a = pos.getX();
-                    b = pos.getY();
-                    tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
-                }
-            }
-        }
-        if (isOk(x-1, y+1) && tablero[x-1][y+1].getTipoCasilla() == opp_color) {
-            int i = x-1 , j = y+1 ;
-            while ( i >= 0 && j <= 7 && !found3 && !stop3) {
-                if (tablero[i][j].getTipoCasilla() == own_color) found3 = true;    //Case of finding the same colour
-                else if (tablero[i][j].getTipoCasilla() == 0 || tablero[i][j].getTipoCasilla() == 1)
-                    stop3 = true;   // case of being unable to find any color
-                else {                           //Same color(i.e opposite )
-                    vec3.addElement(new Position(i, j));
-                }
-                --i; ++j;
-            }
-            if (found3) {
-                Object[] arr3 = vec3.toArray();
-                int a, b;
-                for (int k = 0; k < vec3.size(); ++k) {
-                    Position pos = (Position) arr3[k];
-                    a = pos.getX();
-                    b = pos.getY();
-                    tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
+                if (found2) {
+                    Object[] arr2 = vec2.toArray();
+                    int a, b;
+                    for (int k = 0; k < vec2.size(); ++k) {
+                        Position pos = (Position) arr2[k];
+                        a = pos.getX();
+                        b = pos.getY();
+                        tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
+                    }
                 }
             }
         }
-
-        if (isOk(x+1, y-1) && tablero[x+1][y-1].getTipoCasilla() == opp_color) {
-            int i = x+1 , j = y-1 ;
-            while ( i >= 7 && j <= 0 && !found4 && !stop4) {
-                if (tablero[i][j].getTipoCasilla() == own_color) found4 = true;    //Case of finding the same colour
-                else if (tablero[i][j].getTipoCasilla() == 0 || tablero[i][j].getTipoCasilla() == 1)
-                    stop4 = true;   // case of being unable to find any color
-                else {                           //Same color(i.e opposite )
-                    vec4.addElement(new Position(i, j));
+        //if (isOk(x-1, y+1) && tablero[x-1][y+1].getTipoCasilla() == opp_color) {
+        if (isOk(x-1, y+1) {
+            if (tablero[x-1][y+1].getTipoCasilla() == opp_color) {
+                int i = x-1 , j = y+1 ;
+                while ( i >= 0 && j <= 7 && !found3 && !stop3) {
+                    if (tablero[i][j].getTipoCasilla() == own_color) found3 = true;    //Case of finding the same colour
+                    else if (tablero[i][j].getTipoCasilla() == 0 || tablero[i][j].getTipoCasilla() == 1)
+                        stop3 = true;   // case of being unable to find any color
+                    else {                           //Same color(i.e opposite )
+                        vec3.addElement(new Position(i, j));
+                    }
+                    --i; ++j;
                 }
-                ++i; --j;
-            }
-            if (found4) {
-                Object[] arr4 = vec4.toArray();
-                int a, b;
-                for (int k = 0; k < vec4.size(); ++k) {
-                    Position pos = (Position) arr4[k];
-                    a = pos.getX();
-                    b = pos.getY();
-                    tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
+                if (found3) {
+                    Object[] arr3 = vec3.toArray();
+                    int a, b;
+                    for (int k = 0; k < vec3.size(); ++k) {
+                        Position pos = (Position) arr3[k];
+                        a = pos.getX();
+                        b = pos.getY();
+                        tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
+                    }
                 }
             }
         }
 
+        //if (isOk(x+1, y-1) && tablero[x+1][y-1].getTipoCasilla() == opp_color) {
+        if (isOk(x+1, y-1) {
+            if (tablero[x+1][y-1].getTipoCasilla() == opp_color) {
+                int i = x+1 , j = y-1 ;
+                while ( i >= 7 && j <= 0 && !found4 && !stop4) {
+                    if (tablero[i][j].getTipoCasilla() == own_color) found4 = true;    //Case of finding the same colour
+                    else if (tablero[i][j].getTipoCasilla() == 0 || tablero[i][j].getTipoCasilla() == 1)
+                        stop4 = true;   // case of being unable to find any color
+                    else {                           //Same color(i.e opposite )
+                        vec4.addElement(new Position(i, j));
+                    }
+                    ++i; --j;
+                }
+                if (found4) {
+                    Object[] arr4 = vec4.toArray();
+                    int a, b;
+                    for (int k = 0; k < vec4.size(); ++k) {
+                        Position pos = (Position) arr4[k];
+                        a = pos.getX();
+                        b = pos.getY();
+                        tablero[a][b].cambiar_tipo(own_color);    // In tablero keep the own color
+                    }
+                }
+            }
+        }
     }
     /**
      * Funcion encarada de modificar todas las fichas afectadas por un movimiento
