@@ -268,14 +268,14 @@ public class CtrlPersitencia {
      * @param tab es ArrayList con los parametros necesarios para guardar el tablero (utilizando funcion toArrayList() de Tablero)
      * @return devuelve TRUE en caso que se haya guardado con exito, caso contrario devuelve FALSE
      */
-    public void ctrl_guardar_tablero(int[][] tab) {
+    public void ctrl_guardar_tablero(int[][] tab, int turno) {
         //limpiar casillas disponibles (1)
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 if (tab[i][j] == 1) tab[i][j] = 0;
             }
         }
-        cTablero.guardar_tablero(tab,this.ctrl_get_nuevo_ID_tablero());
+        cTablero.guardar_tablero(tab,this.ctrl_get_nuevo_ID_tablero(),turno);
     }
 
     /** Operacion ctrl_borrar_tablero
@@ -287,12 +287,21 @@ public class CtrlPersitencia {
     }
 
     /**
-     * Operacion ctrl_cargar_tablero2
-     * @param idTablero es el ID de tablero2 a cargar
-     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve null
+     * Operacion ctrl_cargar_tablero
+     * @param idTablero es el ID de tablero a cargar
+     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero inicial
      */
     public int[][] ctrl_cargar_tablero(int idTablero) {
         return cTablero.cargar_tablero(idTablero);
+    }
+
+    /**
+     * Operacion ctrl_cargar_turno_tablero
+     * @param idTablero es el ID de tablero a cargar
+     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve -1
+     */
+    public int ctrl_cargar_turno_tablero(int idTablero) {
+        return cTablero.cargar_turno_tablero(idTablero);
     }
 
     /**

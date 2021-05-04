@@ -1,4 +1,4 @@
 Este Directorio es donde se almacenan los ficheros de Tableros generadas por el Controlador de Persistencia:
 
 
-Nota: Los ficheros vienen a ser los tableros personalizados guardadas por los usuarios
+Nota: Los ficheros vienen a ser los tableros personalizados guardadas por los usuarios y el turno del tablero

@@ -230,6 +230,48 @@ public class Main {
         }
     }
 
+
+    /**
+     * Metodo cargar_id_Tablero
+     * @return devuelve en caso de decidir cargar un tablero el identificador
+     * del tablero personalizado a cargar, caso cotnrario devuelve -1
+     * */
+    private static int cargar_id_tablero() {
+        System.out.println("Quieres cargar un tablero personalizado? si/no");
+        String in = scan.next();
+        System.out.println();
+        int idTab = -1;
+        if(in.toLowerCase().equals("si")){
+            cp.ctrl_print_tableros_disponibles();
+            System.out.print("Seleccionar tablero:");
+            int id_aux = scan.nextInt();
+            if (id_aux > 0) idTab = id_aux;
+        }
+        return idTab;
+    }
+
+    /**
+     * Metodo cargar_Tablero
+     * @param idTablero es el identificador de tablero a cargar
+     * @return devuelve el tablero personalizado con id igual a idTablero, caso contrario devuele tablero inicial
+     * */
+    private static Tablero cargar_Tablero(int idTablero) {
+        int[][]tab = cp.ctrl_cargar_tablero(idTablero);
+        Tablero t  = new Tablero(tab);
+        return t;
+    }
+
+    /**
+     * Metodo cargar_turno_Tablero
+     * @param idTablero es el identificador de tablero a cargar
+     * @return devuelve el turno del tablero personalizado con id igual a idTablero
+     * */
+    private static int cargar_turno_Tablero(int idTablero) {
+        int turnoTab = cp.ctrl_cargar_turno_tablero(idTablero);
+        return turnoTab;
+    }
+
+
     /**
      * Metodo generar_accion_crear_tablero
      * @param turno es el turno de la partida ficticia que se esta jugando para crear un tablero personalizado
@@ -316,9 +358,10 @@ public class Main {
             }
             if (res == 2) { //jugador a selecionado guardar tablero
                 int [][] tab = p.getTableroPartida().toMatrix();
+                int t = p.getTurnoPartida();
                 System.out.println("Imprimir tablero personalizado");
                 print_tablero_personalizado(tab);
-                cp.ctrl_guardar_tablero(tab);
+                cp.ctrl_guardar_tablero(tab,t);
                 System.out.println();
                 System.out.println("TABLERO GUARDADO");
                 System.out.println();
@@ -330,27 +373,6 @@ public class Main {
         }
     }
 
-    /**
-     * Metodo cargar_Tablero
-     * @return devuelve un tablero personalizado en caso de seleccionar la opcion si, casoc contrario crea un tablero inicial
-     * */
-    private static Tablero cargar_Tablero() {
-        Tablero t = new Tablero();
-        System.out.println("Quieres cargar un tablero personalizado? si/no");
-        String in = scan.next();
-        System.out.println();
-        if(in.toLowerCase().equals("si")){
-            cp.ctrl_print_tableros_disponibles();
-            System.out.print("Seleccionar tablero:");
-            int idTab = scan.nextInt();
-            int[][]tab = cp.ctrl_cargar_tablero(idTab);
-            t = new Tablero(tab);
-        }
-        else {
-            System.out.println("Cargado tablero inicial");
-        }
-        return t;
-    }
 
     /**
      * Metodo entrar2(funcion de login de usuario)
@@ -430,7 +452,8 @@ public class Main {
             int id2 = -1;
             String nick1 = nickname; //por defecto anfitrion como J1
             String nick2 = "";
-
+            int idTablero = -1;
+            int turnoPartida = 0;
             int bando = -1;
             //Selecionar bando de juego
             if (modo == 2) {
@@ -469,6 +492,7 @@ public class Main {
                     break;
 
                 case 1: //Persona(siempre negras) vs Maquina
+                    idTablero = cargar_id_tablero();
                     print_contrincantes_maquina();
                     while (id2 == -1) {
                         id2 = seleccionar_id_maquina(true);
@@ -477,6 +501,7 @@ public class Main {
                     break;
 
                 case 2: //Persona vs Persona
+                    idTablero = cargar_id_tablero();
                     entrar2(2);
                     if (bando == 1) {
                         id2 = id_2;
@@ -492,8 +517,12 @@ public class Main {
                     System.out.println("Modo de juego incorrecto");
                     break;
             }
-            Tablero t = cargar_Tablero();
-            Partida p = new Partida(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
+            Tablero t = new Tablero();
+            if (idTablero != -1) {
+                t = cargar_Tablero(idTablero);
+                turnoPartida = cargar_turno_Tablero(idTablero);
+            }
+            Partida p = new Partida(idPartida,modo,reglas,turnoPartida,id1,nick1,id2,nick2,t);
             return p;
         }
         catch (Exception e) {

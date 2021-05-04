@@ -208,21 +208,35 @@ public class Tablero {
             int x = current_pos.getX();
             int y = current_pos.getY();
             q.remove();
-            if (isOk(x+1 , y) && graph_v[x+1][y] == 0 && graph_v[x][y] == color_opp) { // the next is the vacio and the current pos is opposite color to me then disponible.
-                graph_v[x + 1][y] = 1;
-                tablero[x+1][y] = new Casilla(1);
-                disponibles.add(new Position(x+1 , y));
-                graph_v[x][y] = -1 ; // this one is already traversed.
+            //if (isOk(x+1 , y) && graph_v[x+1][y] == 0 && graph_v[x][y] == color_opp) {
+            if (isOk(x+1 , y)) {
+                if (graph_v[x+1][y] == 0 && graph_v[x][y] == color_opp) { // the next is the vacio and the current pos is opposite color to me then disponible.
+                    graph_v[x + 1][y] = 1;
+                    tablero[x+1][y] = new Casilla(1);
+                    disponibles.add(new Position(x+1 , y));
+                    graph_v[x][y] = -1 ; // this one is already traversed.
+                }
             }
-            if (isOk(x-1 , y) &&graph_v[x-1][y] == 0 && graph_v[x][y] == color_opp) {
-                graph_v[x -1][y] = 1;
-                tablero[x-1][y] = new Casilla(1);
-                disponibles.add(new Position(x-1 , y));
-                graph_v[x][y] = -1 ; // this one is already traversed.
+
+            //if (isOk(x-1 , y) &&graph_v[x-1][y] == 0 && graph_v[x][y] == color_opp) {
+            if (isOk(x-1 , y)) {
+                if (graph_v[x-1][y] == 0 && graph_v[x][y] == color_opp) {
+                    graph_v[x -1][y] = 1;
+                    tablero[x-1][y] = new Casilla(1);
+                    disponibles.add(new Position(x-1 , y));
+                    graph_v[x][y] = -1 ; // this one is already traversed.
+                }
             }
             graph_v[x][y] = -1;
-            if(isOk(x+1, y)  &&  ((graph_v[x+1][y] == color_own) || (graph_v[x+1][y] == color_opp)))q.add(new Position(x+1 , y)); // same or different color
-            if(isOk(x-1, y) &&  ((graph_v[x-1][y] == color_own) || (graph_v[x-1 ][y] == color_opp)))q.add(new Position(x-1 , y)); // same color
+            //if(isOk(x+1, y)  &&  ((graph_v[x+1][y] == color_own) || (graph_v[x+1][y] == color_opp))) q.add(new Position(x+1 , y)); // same or different color
+            if(isOk(x+1, y)) {
+                if ((graph_v[x+1][y] == color_own) || (graph_v[x+1][y] == color_opp)) q.add(new Position(x+1 , y)); // same or different color
+            }
+            //if(isOk(x-1, y) &&  ((graph_v[x-1][y] == color_own) || (graph_v[x-1 ][y] == color_opp)))q.add(new Position(x-1 , y)); // same color
+            if(isOk(x-1, y)) {
+                if ((graph_v[x-1][y] == color_own) || (graph_v[x-1 ][y] == color_opp)) q.add(new Position(x-1 , y)); // same color
+            }
+
         }
 
     }
@@ -243,21 +257,33 @@ public class Tablero {
             int x = current_pos.getX();
             int y = current_pos.getY();
             q.remove();
-            if (isOk(x , y+1) && graph_h[x ][y+1] == 0 && graph_h[x][y] == color_opp) { // the next is the vacio and the current pos is opposite color to me then disponible.
-                graph_h[x ][y+1] = 1;
-                tablero[x][y+1] = new Casilla(1);
-                disponibles.add(new Position(x , y+1));
-                graph_h[x][y] = -1 ; // this one is already traversed.
+            //if (isOk(x , y+1) && graph_h[x ][y+1] == 0 && graph_h[x][y] == color_opp) { // the next is the vacio and the current pos is opposite color to me then disponible.
+            if (isOk(x , y+1)) {
+                if (graph_h[x ][y+1] == 0 && graph_h[x][y] == color_opp) {
+                    graph_h[x ][y+1] = 1;
+                    tablero[x][y+1] = new Casilla(1);
+                    disponibles.add(new Position(x , y+1));
+                    graph_h[x][y] = -1 ; // this one is already traversed.
+                }
             }
-            if (isOk(x , y-1) && graph_h[x][y-1] == 0 && graph_h[x][y] == color_opp) {
-                graph_h[x ][y-1] = 1;
-                tablero[x][y-1] = new Casilla(1);
-                disponibles.add(new Position(x, y-1));
-                graph_h[x][y] = -1 ; // this one is already traversed.
+            //if (isOk(x , y-1) && graph_h[x][y-1] == 0 && graph_h[x][y] == color_opp) {
+            if (isOk(x , y-1)) {
+                if (graph_h[x][y-1] == 0 && graph_h[x][y] == color_opp) {
+                    graph_h[x ][y-1] = 1;
+                    tablero[x][y-1] = new Casilla(1);
+                    disponibles.add(new Position(x, y-1));
+                    graph_h[x][y] = -1 ; // this one is already traversed.
+                }
             }
             graph_h[x][y] = -1;
-            if(isOk(x , y+1) && graph_h[x][y+1] != -1 && (graph_h[x ][y+1] == color_own || graph_h[x ][y+1] == color_opp)) q.add(new Position(x , y+1)); // same or different color
-            if(isOk(x, y-1) && graph_h[x][y-1] != -1 && (graph_h[x ][y-1] == color_own || graph_h[x ][y-1] == color_opp))q.add(new Position(x , y-1)); // same color
+            //if(isOk(x , y+1) && graph_h[x][y+1] != -1 && (graph_h[x ][y+1] == color_own || graph_h[x ][y+1] == color_opp)) q.add(new Position(x , y+1)); // same or different color
+            if(isOk(x , y+1)) {
+                if (graph_h[x][y+1] != -1 && (graph_h[x ][y+1] == color_own || graph_h[x ][y+1] == color_opp)) q.add(new Position(x , y+1)); // same or different color
+            }
+            //if(isOk(x, y-1) && graph_h[x][y-1] != -1 && (graph_h[x ][y-1] == color_own || graph_h[x ][y-1] == color_opp))q.add(new Position(x , y-1)); // same color
+            if(isOk(x, y-1)) {
+                if (graph_h[x][y-1] != -1 && (graph_h[x ][y-1] == color_own || graph_h[x ][y-1] == color_opp)) q.add(new Position(x , y-1)); // same color
+            }
         }
     }
 
@@ -276,21 +302,33 @@ public class Tablero {
             int x = current_pos.getX();
             int y = current_pos.getY();
             q.remove();
-            if (isOk(x+1 , y+1) && graph_dl[x+1][y+1] == 0 && graph_dl[x][y] == color_opp) { // the next is the vacio and the current pos is opposite color to me then disponible.
-                graph_dl[x+1][y+1] = 1;
-                tablero[x+1][y+1] = new Casilla(1);
-                disponibles.add(new Position(x+1 , y+1));
-                graph_dl[x][y] = -1 ; // this one is already traversed.
+            //if (isOk(x+1 , y+1) && graph_dl[x+1][y+1] == 0 && graph_dl[x][y] == color_opp) { // the next is the vacio and the current pos is opposite color to me then disponible.
+            if (isOk(x+1 , y+1)) {
+                if (graph_dl[x+1][y+1] == 0 && graph_dl[x][y] == color_opp) {
+                    graph_dl[x+1][y+1] = 1;
+                    tablero[x+1][y+1] = new Casilla(1);
+                    disponibles.add(new Position(x+1 , y+1));
+                    graph_dl[x][y] = -1 ; // this one is already traversed.
+                }
             }
-            if (isOk(x-1 , y-1) && graph_dl[x-1][y-1] == 0 && graph_dl[x][y] == color_opp) {
-                graph_dl[x-1][y-1] = 1;
-                tablero[x-1][y-1] = new Casilla(1);
-                disponibles.add(new Position(x-1 , y-1));
-                graph_dl[x][y] = -1 ; // this one is already traversed.
+            //if (isOk(x-1 , y-1) && graph_dl[x-1][y-1] == 0 && graph_dl[x][y] == color_opp) {
+            if (isOk(x-1 , y-1)) {
+                if (graph_dl[x-1][y-1] == 0 && graph_dl[x][y] == color_opp) {
+                    graph_dl[x-1][y-1] = 1;
+                    tablero[x-1][y-1] = new Casilla(1);
+                    disponibles.add(new Position(x-1 , y-1));
+                    graph_dl[x][y] = -1 ; // this one is already traversed.
+                }
             }
             graph_dl[x][y] = -1;
-            if(isOk(x+1 , y+1) && graph_dl[x+1][y+1] != -1 && (graph_dl[x+1][y+1] == color_own || graph_dl[x+1][y+1] == color_opp))q.add(new Position(x+1 , y+1)); // same or different color
-            if(isOk(x-1 , y-1) && graph_dl[x-1][y-1] != -1 && (graph_dl[x-1][y-1] == color_own || graph_dl[x-1][y-1] == color_opp))q.add(new Position(x-1 , y-1));
+            //if(isOk(x+1 , y+1) && graph_dl[x+1][y+1] != -1 && (graph_dl[x+1][y+1] == color_own || graph_dl[x+1][y+1] == color_opp))q.add(new Position(x+1 , y+1)); // same or different color
+            if(isOk(x+1 , y+1)) {
+                if (graph_dl[x-1][y-1] != -1 && (graph_dl[x-1][y-1] == color_own || graph_dl[x-1][y-1] == color_opp)) q.add(new Position(x+1 , y+1));// same or different color
+            }
+            //if(isOk(x-1 , y-1) && graph_dl[x-1][y-1] != -1 && (graph_dl[x-1][y-1] == color_own || graph_dl[x-1][y-1] == color_opp))q.add(new Position(x-1 , y-1));
+            if(isOk(x-1 , y-1)) {
+                if (graph_dl[x-1][y-1] != -1 && (graph_dl[x-1][y-1] == color_own || graph_dl[x-1][y-1] == color_opp))q.add(new Position(x-1 , y-1));
+            }
         }
     }
     /**
@@ -308,21 +346,33 @@ public class Tablero {
             int x = current_pos.getX();
             int y = current_pos.getY();
             q.remove();
-            if (isOk(x+1 , y-1) && graph_dr[x+1][y-1] == 0 && graph_dr[x][y] == color_opp) {
-                graph_dr[x+1][y-1] = 1;
-                tablero[x+1][y-1] = new Casilla(1);
-                disponibles.add(new Position(x+1 , y-1));
-                graph_dr[x][y] = -1 ; // this one is already traversed.
+            //if (isOk(x+1 , y-1) && graph_dr[x+1][y-1] == 0 && graph_dr[x][y] == color_opp) {
+            if (isOk(x+1 , y-1)) {
+                if (graph_dr[x+1][y-1] == 0 && graph_dr[x][y] == color_opp) {
+                    graph_dr[x+1][y-1] = 1;
+                    tablero[x+1][y-1] = new Casilla(1);
+                    disponibles.add(new Position(x+1 , y-1));
+                    graph_dr[x][y] = -1 ; // this one is already traversed.
+                }
             }
-            if (isOk(x-1 , y+1) && graph_dr[x-1][y+1] == 0 && graph_dr[x][y] == color_opp) {
-                graph_dr[x-1][y+1] = 1;
-                tablero[x-1][y+1] = new Casilla(1);
-                disponibles.add(new Position(x-1 , y+1));
-                graph_dr[x][y] = -1 ; // this one is already traversed.
+            //if (isOk(x-1 , y+1) && graph_dr[x-1][y+1] == 0 && graph_dr[x][y] == color_opp) {
+            if (isOk(x-1 , y+1)) {
+                if (graph_dr[x-1][y+1] == 0 && graph_dr[x][y] == color_opp) {
+                    graph_dr[x-1][y+1] = 1;
+                    tablero[x-1][y+1] = new Casilla(1);
+                    disponibles.add(new Position(x-1 , y+1));
+                    graph_dr[x][y] = -1 ; // this one is already traversed.
+                }
             }
             graph_dr[x][y] = -1;
-            if(isOk(x+1, y-1) && graph_dr[x+1][y-1] != -1 && (graph_dr[x+1][y-1] == color_own || graph_dr[x+1][y-1] == color_opp))q.add(new Position(x+1 , y-1)); // same color
-            if(isOk(x-1 , y+1) && graph_dr[x-1][y+1] != -1 && (graph_dr[x-1][y+1] == color_own || graph_dr[x-1][y+1] == color_opp))q.add(new Position(x-1 , y+1));
+            //if(isOk(x+1, y-1) && graph_dr[x+1][y-1] != -1 && (graph_dr[x+1][y-1] == color_own || graph_dr[x+1][y-1] == color_opp))q.add(new Position(x+1 , y-1)); // same color
+            if(isOk(x+1, y-1)) {
+                if (graph_dr[x+1][y-1] != -1 && (graph_dr[x+1][y-1] == color_own || graph_dr[x+1][y-1] == color_opp))q.add(new Position(x+1 , y-1)); // same color
+            }
+            //if(isOk(x-1 , y+1) && graph_dr[x-1][y+1] != -1 && (graph_dr[x-1][y+1] == color_own || graph_dr[x-1][y+1] == color_opp))q.add(new Position(x-1 , y+1));
+            if(isOk(x-1 , y+1)) {
+                if (graph_dr[x-1][y+1] != -1 && (graph_dr[x-1][y+1] == color_own || graph_dr[x-1][y+1] == color_opp))q.add(new Position(x-1 , y+1));
+            }
         }
     }
     /**
@@ -568,6 +618,7 @@ public class Tablero {
         if (isOk(x-1, y-1) && tablero[x-1][y-1].getTipoCasilla() == opp_color) {
             int i = x -1 , j = y-1 ;
             while ( i >= 0 && y >= 0 && !found1 && !stop1) {
+                if (i<0 || j < 0) stop1 = true; //pos si acaso (evitar fallos)
                 if (tablero[i][j].getTipoCasilla() == own_color) found1 = true;    //Case of finding the same colour
                 else if (tablero[i][j].getTipoCasilla() == 0 || tablero[i][j].getTipoCasilla() == 1)
                     stop1 = true;   // case of being unable to find any color

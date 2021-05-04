@@ -1,5 +1,7 @@
 package ControladorPersistencia;
 
+import Dominio.Casilla;
+import Dominio.Position;
 import Dominio.Tablero;
 
 import java.io.*;
@@ -65,7 +67,7 @@ public class IOTablero {
      * Operacion guardar_tablero
      * @param tab es la informacion del tablero convertida en una matriz de enteros
      */
-    public void guardar_tablero(int[][] tab, int idtablero) {
+    public void guardar_tablero(int[][] tab, int idtablero,int turno) {
         try {
             String path = path_tableros + idtablero + ".txt";
             File f = new File(path);
@@ -79,7 +81,8 @@ public class IOTablero {
                 }
                 fw.write( sbuff+ "\n"); //fila i
             }
-            fw.write("\n");
+            String s_aux = String.valueOf(turno);
+            fw.write(s_aux +"\n");
             fw.flush();
             fw.close();
             ++this.ID_max_tableros;
@@ -93,16 +96,25 @@ public class IOTablero {
     /**
      * Operacion cargar_tablero
      * @param idTablero es el ID de Tablero a cargar
-     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve null
+     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero inicial
      */
     public int[][] cargar_tablero(int idTablero) {
         try {
             String path = path_tableros + idTablero + ".txt";
             File f = new File(path);
+            int[][] map = new int[8][8];
+            //crear tablero inicial
+            for (int i = 0; i < 8; ++i) {
+                for (int j = 0; j < 8; ++j) {
+                    map[i][j] = 0;
+                    if ((i == 3 && j==3) || (i == 4 && j==4)) map[i][j] = 3;
+                    else if ((i == 3 && j==4) || (i == 4 && j==3)) map[i][j] = 2;
+                }
+            }
             if (f.exists()) {
                 BufferedReader bf =new BufferedReader(new FileReader(f));
                 String s1;
-                int[][] map = new int[8][8];
+                //int[][] map = new int[8][8];
                 for (int i = 0; i < 8; ++i) {
                     s1 = bf.readLine();
                     for (int j = 0; j < 8; ++j) {
@@ -110,15 +122,44 @@ public class IOTablero {
                     }
                 }
                 bf.close();
-                return map;
             }
-            else return null;
+            return map;
         }
         catch (Exception e) {
             System.out.println("Fallo al cargar un tablero(2) en IOTablero");
             System.out.println(e);
         }
         return null;
+    }
+
+    /**
+     * Operacion cargar_turno_tablero
+     * @param idTablero es el ID de Tablero a cargar
+     * @return devuelve el turno de un tablero con id igual a idTablero, caso contrario devuelve -1
+     */
+    public int cargar_turno_tablero(int idTablero) {
+        try {
+            String path = path_tableros + idTablero + ".txt";
+            File f = new File(path);
+            if (f.exists()) {
+                BufferedReader bf =new BufferedReader(new FileReader(f));
+                String s1;
+                int res = 0;
+                for (int i = 0; i < 8; ++i) {
+                    s1 = bf.readLine();
+                }
+                s1 = bf.readLine();
+                res = Integer.parseInt(s1);
+                bf.close();
+                return res;
+            }
+            else return -1;
+        }
+        catch (Exception e) {
+            System.out.println("Fallo al cargar un turno de un tablero en IOTablero");
+            System.out.println(e);
+        }
+        return -1;
     }
 
 
