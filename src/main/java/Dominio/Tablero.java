@@ -200,6 +200,7 @@ public class Tablero {
      * @param color_opp el color de una ficha contrario(2 = negras , 3 = blancas)
      */
     public void bfsCalcularCasillasDisponiblesVertical(Position pos , int color_own ,int color_opp) {
+        System.out.println("bfsCalcularCasillasDisponiblesVertical");
         int row = 8, columns = 8;
         Queue<Position> q = new LinkedList<>();
         q.add(pos);
@@ -249,6 +250,7 @@ public class Tablero {
      */
 
     public void bfsCalcularCasillasDisponiblesHorizontal(Position pos , int color_own ,int color_opp){
+        System.out.println("bfsCalcularCasillasDisponiblesHorizontal");
         int row = 8, columns = 8;
         Queue<Position> q = new LinkedList<>();
         q.add(pos);
@@ -294,6 +296,7 @@ public class Tablero {
      * @param color_opp el color de una ficha contrario(2 = negras , 3 = blancas)
      */
     public void bfsCalcularCasillasDisponiblesDiagonalesLeft(Position pos , int color_own ,int color_opp){
+        System.out.println("bfsCalcularCasillasDisponiblesDiagonalLeft");
         int row = 8, columns = 8;
         Queue<Position> q = new LinkedList<>();
         q.add(pos);
@@ -323,7 +326,7 @@ public class Tablero {
             graph_dl[x][y] = -1;
             //if(isOk(x+1 , y+1) && graph_dl[x+1][y+1] != -1 && (graph_dl[x+1][y+1] == color_own || graph_dl[x+1][y+1] == color_opp))q.add(new Position(x+1 , y+1)); // same or different color
             if(isOk(x+1 , y+1)) {
-                if (graph_dl[x-1][y-1] != -1 && (graph_dl[x-1][y-1] == color_own || graph_dl[x-1][y-1] == color_opp)) q.add(new Position(x+1 , y+1));// same or different color
+                if (graph_dl[x+1][y+1] != -1 && (graph_dl[x+1][y+1] == color_own || graph_dl[x+1][y+1] == color_opp))q.add(new Position(x+1 , y+1)); // same or different color
             }
             //if(isOk(x-1 , y-1) && graph_dl[x-1][y-1] != -1 && (graph_dl[x-1][y-1] == color_own || graph_dl[x-1][y-1] == color_opp))q.add(new Position(x-1 , y-1));
             if(isOk(x-1 , y-1)) {
@@ -338,6 +341,7 @@ public class Tablero {
      * @param color_opp el color de una ficha contrario(2 = negras , 3 = blancas)
      */
     public void bfsCalcularCasillasDisponiblesDiagonalesRight(Position pos , int color_own ,int color_opp){
+        System.out.println("bfsCalcularCasillasDisponiblesDiagonalRight");
         int row = 8, columns = 8;
         Queue<Position> q = new LinkedList<>();
         q.add(pos);
@@ -380,6 +384,7 @@ public class Tablero {
      * @param turno es el turno donde estamos (turno par = negras , turno impar = blancas)
      */
     public void calcularCasillasDisponiblesVertical(int turno) {
+        System.out.println("calcularCasillasDisponiblesVertical");
         for(int i = 0 ; i < 8 ; ++i){
             for (int j = 0 ; j < 8 ; ++j){
                 graph_v[i][j]= tablero[i][j].getTipoCasilla();
@@ -411,6 +416,7 @@ public class Tablero {
      * @param turno es el turno donde estamos (turno par = negras , turno impar = blancas)
      */
     public void calcularCasillasDisponiblesHorizontal(int turno){
+        System.out.println("calcularCasillasDisponiblesHorizontal");
         for(int i = 0 ; i < 8 ; ++i){
             for (int j = 0 ; j < 8 ; ++j){
                 graph_h[i][j]= tablero[i][j].getTipoCasilla();
@@ -441,6 +447,7 @@ public class Tablero {
      * @param turno es el turno donde estamos (turno par = negras , turno impar = blancas)
      */
     public void calcularCasillasDisponiblesDiagonales(int turno){
+        System.out.println("calcularCasillasDisponiblesDiagonales");
         for(int i = 0 ; i < 8 ; ++i){
             for (int j = 0 ; j < 8 ; ++j){
                 graph_dl[i][j]= tablero[i][j].getTipoCasilla();
@@ -485,7 +492,7 @@ public class Tablero {
      * @param y la columna del tablero de donde queremos empezar a modificar
      */
     public void modificarCasillasVertical(int x , int y, int turno) {
-
+        System.out.println("modificarCasillasVertical");
         for(int i = 0 ; i < 8 ; ++i){
             for (int j = 0 ; j < 8 ; ++j){
                 graph_v[i][j]= tablero[i][j].getTipoCasilla();
@@ -553,7 +560,7 @@ public class Tablero {
      * @param y la columna del tablero de donde queremos empezar a modificar
      */
     public void modificarCasillasHorizontal(int x , int y , int turno){
-
+        System.out.println("modificarCasillasHorizontal");
         int own_color, opp_color;
         boolean found1 = false, found2 = false, stop1 = false, stop2 = false;
         Vector<Position> vec1 = new Vector<Position>();
@@ -617,6 +624,7 @@ public class Tablero {
      * @param y la columna del tablero de donde queremos empezar a modificar
      */
     public void modificarCasillasDiagonales(int x , int y , int turno){
+        System.out.println("modificarCasillasDiagonales");
         int own_color, opp_color;
         boolean found1 = false, found2 = false, found3 = false, found4 = false,  stop1 = false, stop2 = false , stop3 = false, stop4 = false;
         Vector<Position> vec1 = new Vector<Position>();
