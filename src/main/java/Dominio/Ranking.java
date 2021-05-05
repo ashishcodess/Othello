@@ -83,7 +83,7 @@ public class Ranking {
         for (i = 0; i < tam && !res; ++i) {
             int idAux = this.ranking.get(i).getID();
             String sAux = this.ranking.get(i).getNickname();
-            res = (idAux == id) && (sAux == nick);
+            res = (idAux == id) && (sAux.equals(nick));
         }
         if (!res) return -1; //no ha sido encontrado en el RANKING
         return (i-1);

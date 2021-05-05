@@ -117,15 +117,20 @@ public class Main {
 
     /**
      * Metodo generar_accion_partida()
+     * @param id identificador del jugador que realiza una accion en la partida
+     * @param nick nickname del jugador que realiza una accion en la partida
+     * @param turno de la partida que se esta jugando
      * @return devuelve un array de Strings con la accion a realizar en el proximo turno de la partida \
      * dichas acciones pueden ser [colocar x y, paso, info, guardar, y finalizar]
      * */
-    private static String[] generar_accion_partida(int id, String nick) {
+    private static String[] generar_accion_partida(int id, String nick, int turno) {
         String[] res = new String[3];
         try {
             System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
             if (id >= 0 && id < 6) System.out.println("Acciones a realizar para la maquina: (ID: " + id + ")");
             else {
+                String s_aux;
+                if (turno < 60) {
                 System.out.println("Acciones a realizar para el jugador: (ID: " + id + ", nick: " + nick + ")");
                 System.out.println();
                 System.out.println("    - colocar x y (enteros x,y entre [0...8])");
@@ -135,7 +140,6 @@ public class Main {
                 System.out.println("    - finalizar (finalizar partida)");
                 System.out.println();
                 System.out.print("Introducir accion a realizar:");
-                String s_aux;
                 while (!scan.hasNextLine()) s_aux = scan.nextLine();
                 s_aux = scan.nextLine();
                 System.out.println();
@@ -160,6 +164,14 @@ public class Main {
                         else b = false;
                     }
                 }
+                }
+                else {
+                    System.out.print("Partida finalizada (pulsar enter para acabar):");
+                    while (!scan.hasNextLine()) s_aux = scan.nextLine();
+                    s_aux = scan.nextLine();
+                    System.out.println();
+                    res = s_aux.split(" ");
+                }
             }
             System.out.println();
             System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
@@ -167,7 +179,7 @@ public class Main {
          catch (Exception e) {
              System.out.println("No has introducido una accion valida");
              System.out.println(e);
-             res = generar_accion_partida(id,nick);
+             res = generar_accion_partida(id,nick,turno);
          }
         return res;
     }
@@ -192,11 +204,11 @@ public class Main {
      * */
     private static void ejecutarPartida(Partida p) {
         try {
-            int res = -1;
+            int res = -2;
             int turno = 0;
             int id_aux = -1;
             String s_aux = "";
-            while (res < 0) { //continua la partida
+            while (res <= -1) { //continua la partida
                 turno = p.getTurnoPartida();
                 if (turno % 2 == 0) {
                     id_aux = p.getID_J1();s_aux = p.getNickJugador1();
@@ -210,8 +222,7 @@ public class Main {
                     //p.print_casillas_disponibles();
                     //p.print_Tablero();
                 }
-                res = p.rondaPartida(generar_accion_partida(id_aux,s_aux));
-
+                res = p.rondaPartida(generar_accion_partida(id_aux,s_aux,turno));
                 System.out.println();
             }
             if (res == 2) { //jugador a selecionado guardar partida

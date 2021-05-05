@@ -83,7 +83,6 @@ public class Partida {
     public Partida(int id, int modoJuego, int[] r, int turn, int idj1, String n1, int idj2, String n2, Tablero t) throws MyException{
         this.id = id;
         this.modoDeJuego = modoJuego;
-
         switch (modoJuego){
             case 0:
                 this.j1 = new JugadorMaquina(idj1);
@@ -216,9 +215,9 @@ public class Partida {
      * @return retorna un int con el ganador de la partida o -1 si la partida no ha acabado todavia
      */
     public int rondaPartida(String[] accion) {
-        if (finalizada == 2) {
+        if (finalizada == 2 || (this.turno >= 60 && this.tablero.getCasillasDisponibles().size() == 0)) {
             comprobarPartidaFinalizada();
-            return 3; //si hay dos turnos sin poder mover ningun jugador, la partida se acaba.
+            return this.ganador; //si hay dos turnos sin poder mover ningun jugador, la partida se acaba.
         }
         else {
             reglasCasillasDisponibles();
