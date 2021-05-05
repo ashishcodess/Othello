@@ -158,7 +158,7 @@ public class Ranking {
     public void incrementar_partida(int id, String nick, int ganador) {
         try {
             int i = existe_en_ranking(id,nick);
-            System.out.println("incrementar_partida para "+ id + " , " + nick + " , ganador: "+ ganador + " ,existe:"+i);
+            //System.out.println("incrementar_partida para "+ id + " , " + nick + " , ganador: "+ ganador + " ,existe:"+i);
             if (i == -1) {
                 ElementoRanking e = new ElementoRanking(id,nick);
                 this.add_al_ranking(e);
