@@ -1,4 +1,4 @@
 (ID, nickname, Ganadas, Perdidas,Empatadas, Totales)
-8 aaaa 5 1 0 6
-9 dd 3 1 2 6
+8 aaaa 5 2 0 7
+9 dd 4 1 2 7
 7 as2 1 1 0 2

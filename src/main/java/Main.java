@@ -131,39 +131,42 @@ public class Main {
             else {
                 String s_aux;
                 if (turno < 60) {
-                System.out.println("Acciones a realizar para el jugador: (ID: " + id + ", nick: " + nick + ")");
-                System.out.println();
-                System.out.println("    - colocar x y (enteros x,y entre [0...8])");
-                System.out.println("    - paso (pasar el turno)");
-                System.out.println("    - info (get info partida)");
-                System.out.println("    - guardar (guardar partida y finalizar)");
-                System.out.println("    - finalizar (finalizar partida)");
-                System.out.println();
-                System.out.print("Introducir accion a realizar:");
-                while (!scan.hasNextLine()) s_aux = scan.nextLine();
-                s_aux = scan.nextLine();
-                System.out.println();
-                res = s_aux.split(" ");
-                if (res.length == 3 && res[0].equals("colocar")) { //colocar x y
-                    int x, y;
-                    x = Integer.parseInt(res[1]);
-                    y = Integer.parseInt(res[2]);
-                    boolean b = rango_mapa_correcto(x, y);
-                    while (!b) { //solo entra si x y no estan dentro del rango
-                        System.out.println("x y fuera de rango");
-                        System.out.print("Introducir nueva accion:");
-                        s_aux = scan.nextLine();
-                        System.out.println();
-                        res = s_aux.split(" ");
+                    System.out.println("Acciones a realizar para el jugador: (ID: " + id + ", nick: " + nick + ")");
+                    System.out.println();
+                    System.out.println("    - colocar x y (enteros x,y entre [0...8])");
+                    System.out.println("    - paso (pasar el turno)");
+                    System.out.println("    - info (get info partida)");
+                    System.out.println("    - guardar (guardar partida y finalizar)");
+                    System.out.println("    - finalizar (finalizar partida)");
+                    System.out.println();
+                    System.out.print("Introducir accion a realizar:");
+                    while (!scan.hasNextLine()) s_aux = scan.nextLine();
+                    s_aux = scan.nextLine();
+                    System.out.println();
+                    res = s_aux.split(" ");
+                    if (res[0].equals("colocar")) { //colocar x y
                         if (res.length == 3) {
+                            int x, y;
                             x = Integer.parseInt(res[1]);
                             y = Integer.parseInt(res[2]);
-                            b = rango_mapa_correcto(x, y);
-                        } else if ((res[0].equals("guardar")) || (res[0].equals("finalizar")))
-                            b = true; //ha realizado otra accion -> salir bucle
-                        else b = false;
+                            boolean b = rango_mapa_correcto(x, y);
+                            while (!b) { //solo entra si x y no estan dentro del rango
+                                System.out.println("x y fuera de rango");
+                                System.out.print("Introducir nueva accion:");
+                                s_aux = scan.nextLine();
+                                System.out.println();
+                                res = s_aux.split(" ");
+                                if (res.length == 3) {
+                                    x = Integer.parseInt(res[1]);
+                                    y = Integer.parseInt(res[2]);
+                                    b = rango_mapa_correcto(x, y);
+                                } else if ((res[0].equals("guardar")) || (res[0].equals("finalizar")))
+                                    b = true; //ha realizado otra accion -> salir bucle
+                                else b = false;
+                            }
+                        }
+                        else res = generar_accion_partida(id,nick,turno);
                     }
-                }
                 }
                 else {
                     System.out.print("Partida finalizada (pulsar enter para acabar):");
@@ -177,12 +180,73 @@ public class Main {
             System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
         }
          catch (Exception e) {
+             res = generar_accion_partida(id,nick,turno);
              System.out.println("No has introducido una accion valida");
              System.out.println(e);
-             res = generar_accion_partida(id,nick,turno);
          }
         return res;
     }
+
+    /*private static String[] generar_accion_partida(int id, String nick, int turno) {
+        String[] res = new String[3];
+        try {
+            System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
+            if (id >= 0 && id < 6) System.out.println("Acciones a realizar para la maquina: (ID: " + id + ")");
+            else {
+                String s_aux;
+                if (turno < 60) {
+                    System.out.println("Acciones a realizar para el jugador: (ID: " + id + ", nick: " + nick + ")");
+                    System.out.println();
+                    System.out.println("    - colocar x y (enteros x,y entre [0...8])");
+                    System.out.println("    - paso (pasar el turno)");
+                    System.out.println("    - info (get info partida)");
+                    System.out.println("    - guardar (guardar partida y finalizar)");
+                    System.out.println("    - finalizar (finalizar partida)");
+                    System.out.println();
+                    System.out.print("Introducir accion a realizar:");
+                    while (!scan.hasNextLine()) s_aux = scan.nextLine();
+                    s_aux = scan.nextLine();
+                    System.out.println();
+                    res = s_aux.split(" ");
+                    if (res.length == 3 && res[0].equals("colocar")) { //colocar x y
+                        int x, y;
+                        x = Integer.parseInt(res[1]);
+                        y = Integer.parseInt(res[2]);
+                        boolean b = rango_mapa_correcto(x, y);
+                        while (!b) { //solo entra si x y no estan dentro del rango
+                            System.out.println("x y fuera de rango");
+                            System.out.print("Introducir nueva accion:");
+                            s_aux = scan.nextLine();
+                            System.out.println();
+                            res = s_aux.split(" ");
+                            if (res.length == 3) {
+                                x = Integer.parseInt(res[1]);
+                                y = Integer.parseInt(res[2]);
+                                b = rango_mapa_correcto(x, y);
+                            } else if ((res[0].equals("guardar")) || (res[0].equals("finalizar")))
+                                b = true; //ha realizado otra accion -> salir bucle
+                            else b = false;
+                        }
+                    }
+                }
+                else {
+                    System.out.print("Partida finalizada (pulsar enter para acabar):");
+                    while (!scan.hasNextLine()) s_aux = scan.nextLine();
+                    s_aux = scan.nextLine();
+                    System.out.println();
+                    res = s_aux.split(" ");
+                }
+            }
+            System.out.println();
+            System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
+        }
+         catch (Exception e) {
+             res = generar_accion_partida(id,nick,turno);
+             System.out.println("No has introducido una accion valida");
+             System.out.println(e);
+         }
+        return res;
+    }*/
 
     /**
      * Metodo print_contrincantes_maquina()
@@ -195,6 +259,25 @@ public class Main {
         System.out.println("ID's: 2 , 3 (nivel medio)");
         System.out.println("ID's: 4 , 5 (nivel dificil)");
         System.out.println();
+    }
+
+    //0 (gana jugador 1), 1 (gana jugador 2), 2 (empate)
+    private static void print_resultado_partida(Partida p) {
+        int ganador = p.getGanador();
+        switch (ganador) {
+            case 0:
+                System.out.println("Partida Ganada por Jugador2 : (" + p.getID_J1() + " , " + p.getNickJugador1() + " )" );
+                break;
+            case 1:
+                System.out.println("Partida Ganada por Jugador2 : (" + p.getID_J2() + " , " + p.getNickJugador2() + " )" );
+                break;
+            case 2:
+                System.out.println("Partida EMPATADA");
+                break;
+            default:
+                System.out.println("Fallo al recoger resultado");
+                break;
+        }
     }
 
     /**
@@ -216,7 +299,7 @@ public class Main {
                 else {
                     id_aux = p.getID_J2();s_aux = p.getNickJugador2();
                 }
-                if((res!= 2) || (res!= 3)) {
+                if((res!= 4) || (res!= 5)) {
                     System.out.println("TURNO: " + turno + "  [id:" + id_aux + " ,nick:" + s_aux + "]");
                     System.out.println();
                     //p.print_casillas_disponibles();
@@ -225,15 +308,17 @@ public class Main {
                 res = p.rondaPartida(generar_accion_partida(id_aux,s_aux,turno));
                 System.out.println();
             }
-            if (res == 2) { //jugador a selecionado guardar partida
+            if (res == 4) { //jugador a selecionado guardar partida
                 cp.ctrl_guardar_partida(p.toArrayList());
                 System.out.println();
                 System.out.println("PARTIDA GUARDADA");
                 System.out.println();
             }
-            else if (res != 3) actualizar_ranking(p,res);
+            else if (res != 5) actualizar_ranking(p,res);
+
             System.out.println();
             System.out.println("PARTIDA FINALIZADA");
+            print_resultado_partida(p);
             System.out.println();
         }
         catch (Exception e) {

@@ -253,9 +253,9 @@ public class Partida {
                             this.get_info_partida();
                             break;
                         case "guardar": //guardarPartida
-                            return 2;
+                            return 4;
                         case "finalizar": //finalizarPartida
-                            return 3;
+                            return 5;
                         case "paso":
                             if (disp == 0) ++this.finalizada;
                             incrementarTurnoPartida();
@@ -287,9 +287,9 @@ public class Partida {
                                 this.get_info_partida();
                                 break;
                             case "guardar": //guardarPartida
-                                return 2;
+                                return 4;
                             case "finalizar": //finalizarPartida
-                                return 3;
+                                return 5;
                             case "paso":
                                 if (disp == 0) ++this.finalizada;
                                 incrementarTurnoPartida();
@@ -342,8 +342,6 @@ public class Partida {
         } else if (this.tablero.getNumCasillasBlancas() == this.tablero.getNumCasillasNegras()) {
             setGanador(2);
         }
-        if (getGanador() != 0) System.out.println("Ganador: J" + getGanador());
-        System.out.println("Empate!");
     }
 
 
