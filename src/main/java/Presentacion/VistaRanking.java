@@ -2,6 +2,9 @@ package Presentacion;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class VistaRanking {
 
@@ -19,7 +22,8 @@ public class VistaRanking {
     //COMPONENTES RANKING
     private JPanel panelRanking = new JPanel();
     private JLabel labelPanelRanking = new JLabel("Panel Ranking"); //borrar al final
-    private JTextArea textareaRanking = new JTextArea(15,25);
+    //private JTextArea textareaRanking = new JTextArea(15,25);
+    private JTextArea textareaRanking = new JTextArea(40,55);
     private JPanel panelBotonesRanking = new JPanel();
     private JButton buttonCargarRanking = new JButton("Cargar Ranking");
     private JButton buttonLimpiarTexto= new JButton("Limpiar Texto");
@@ -67,6 +71,7 @@ public class VistaRanking {
         inicializar_panelInfo();
         inicializar_panelBotonesRanking();
         inicializar_panelRanking();
+        asignar_listenersComponentes();
     }
 
     private void inicializar_frameVista() {
@@ -107,7 +112,10 @@ public class VistaRanking {
     private void inicializar_panelRanking() {
         panelRanking.setLayout(new BorderLayout()); //5 zonas
         panelRanking.add(labelPanelRanking,BorderLayout.NORTH);
-        panelRanking.add(panelBotonesRanking,BorderLayout.SOUTH);
+        panelRanking.add(panelBotonesRanking,BorderLayout.EAST);
+        textareaRanking.setText("Prueba text area Ranking");
+        panelRanking.add(new JScrollPane(textareaRanking),BorderLayout.SOUTH);
+
     }
 
 
@@ -122,6 +130,44 @@ public class VistaRanking {
     }
 
     /////////// LISTENERS (+ su asignacion)
+
+    public void actionPerformed_buttonCargarRanking (ActionEvent event) {
+        ArrayList<String> res = iCtrlPresentacion.presentacion_consultar_ranking();
+        textareaRanking.setText("");
+        for (int i = 0; i < res.size(); i++) {
+            textareaRanking.append("\n" + res.get(i));
+        }
+    }
+
+    public void actionPerformed_buttonLimpiarTexto (ActionEvent event) {
+        textareaRanking.setText("");
+    }
+
+    private void asignar_listenersComponentes() {
+
+        buttonCargarRanking.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        actionPerformed_buttonCargarRanking(event);
+                    }
+                });
+
+        buttonLimpiarTexto.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        actionPerformed_buttonLimpiarTexto(event);
+                    }
+                });
+
+        menuItem_consultar_ranking.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        actionPerformed_buttonCargarRanking(event);
+                    }
+                });
+
+    }
+
 
 
     /////////// MAIN (para poder probar)
