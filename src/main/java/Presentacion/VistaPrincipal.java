@@ -21,8 +21,6 @@ public class VistaPrincipal {
         iCtrlPresentacion = pCtrlPresentacion;
         frameVista.setLayout(new BorderLayout()); // 5 zonas (North, South, East, West, Center)
         frameTablero.setLayout(new GridLayout());
-
-
         //inicializarComponentes();
     }
 

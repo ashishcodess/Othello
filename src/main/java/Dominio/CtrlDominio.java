@@ -140,7 +140,7 @@ public class CtrlDominio {
         return null;
     }
 
-    private static ArrayList<String> consultar_Estadisticas(int id, String nick) {
+    public ArrayList<String> consultar_estadisticas(int id, String nick) {
         ArrayList<String> res = new ArrayList<String>();
         res.add("(ID, nickname, Ganadas, Perdidas,Empatadas, Totales)");
         int i = ranking.existe_en_ranking(id,nick);
@@ -152,9 +152,13 @@ public class CtrlDominio {
         return res;
     }
 
+    public ArrayList<String> consultar_ranking() {
+        return ranking.toArrayList();
+    }
+
 
     //devolvera los mensajes que tendra que imprimir en pantalla o alguna info importante para capa Presentacion
-    public static ArrayList<String> peticion_menu(int peticion, ArrayList<String> argum) {
+    /*public static ArrayList<String> peticion_menu(int peticion, ArrayList<String> argum) {
         ArrayList<String> as = new ArrayList<String>();
         int idPartida = -1;
         switch (peticion){
@@ -179,13 +183,10 @@ public class CtrlDominio {
                 else as.add("No se ha borrado correctamente");
                 break;
             case 5:
-                /*argum[0] opcion submenu de tablero personalizado
-                (0: crear tablero, 1: borrar tablero(id),2: listar tableros, 3: mostrar tablero(id))
-                argum[1] -> id de tablero en caso de escoger subopcion 1 o 3
-                * */
+                //argum[0] opcion submenu de tablero personalizado (0: crear tablero, 1: borrar tablero(id),2: listar tableros, 3: mostrar tablero(id))argum[1] -> id de tablero en caso de escoger subopcion 1 o 3
                 //TableroPersonalizado();
                 break;
-            case 6:
+           case 6:
                 as = ranking.toArrayList();
                 break;
             case 7:
@@ -198,6 +199,6 @@ public class CtrlDominio {
                 break;
         }
         return as;
-    }
+    }*/
 
 }
