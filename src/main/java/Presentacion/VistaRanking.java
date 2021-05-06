@@ -18,20 +18,28 @@ public class VistaRanking {
     private JPanel panelPrincipal = new JPanel();
     private JPanel panelInfo = new JPanel();
     private JPanel panelActivo = new JPanel();
-
+    private JPanel panelBotonesGeneral = new JPanel();
+    private JButton buttonConsultarRanking = new JButton("Consultar todo el Ranking");
+    private JButton buttonConsultarEstadisticas = new JButton("Consultar estadisticas de un Jugador");
+    private JLabel labelInfoRanking = new JLabel("Informacion del ranking (ID, nickname, Ganadas, Perdidas,Empatadas, Totales)"); //borrar al final
+    private JLabel labelInfoRanking2 = new JLabel("Informacion del ranking (ID, nickname, Ganadas, Perdidas,Empatadas, Totales)"); //borrar al final
     //COMPONENTES RANKING
     private JPanel panelRanking = new JPanel();
-    private JLabel labelPanelRanking = new JLabel("Panel Ranking"); //borrar al final
-    //private JTextArea textareaRanking = new JTextArea(15,25);
-    private JTextArea textareaRanking = new JTextArea(40,55);
+    private JTextArea textareaRanking = new JTextArea(30,45);
     private JPanel panelBotonesRanking = new JPanel();
     private JButton buttonCargarRanking = new JButton("Cargar Ranking");
     private JButton buttonLimpiarTexto= new JButton("Limpiar Texto");
 
     //COMPONENTES ESTADISTICAS
     private JPanel panelEstadisticas = new JPanel();
-    private JLabel labelPanelEstadisticas = new JLabel("Panel Estadisticas"); //borrar al final
-
+    private JTextArea textareaEstadisticas = new JTextArea(15,20);
+    private JPanel panelBotonesEstadisticas = new JPanel();
+    private JLabel labelID= new JLabel("ID:");
+    private JTextField textoID = new JTextField(3);
+    private JLabel labelNickname= new JLabel("Nickname:");
+    private JTextField textoNickname = new JTextField(15);
+    private JButton buttonBuscarEstadisticas= new JButton("Buscar");
+    private JButton buttonLimpiarEstadisticas= new JButton("Limpiar");
 
     //BARRA DE MENU
     private JMenuBar menubarVista = new JMenuBar();
@@ -67,22 +75,21 @@ public class VistaRanking {
     private void inicializarComponentes() {
         inicializar_frameVista();
         inicializar_menubarVista();
+        inicializar_panelBotonesGeneral();
         inicializar_panelPrincipal();
         inicializar_panelInfo();
         inicializar_panelBotonesRanking();
         inicializar_panelRanking();
+        inicializar_panelEstadisticas();
         asignar_listenersComponentes();
     }
 
     private void inicializar_frameVista() {
-        frameVista.setMinimumSize(new Dimension(1400,800));
+        frameVista.setMinimumSize(new Dimension(700,750));
         frameVista.setPreferredSize(frameVista.getMinimumSize());
         frameVista.setResizable(false);
-        // Posicion y operaciones por defecto
         frameVista.setLocationRelativeTo(null);
         frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // Se agrega panelContenidos al contentPane (el panelContenidos se
-        // podria ahorrar y trabajar directamente sobre el contentPane)
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
     }
@@ -97,11 +104,21 @@ public class VistaRanking {
     }
 
     private void inicializar_panelPrincipal() {
-        // Layout
         panelPrincipal.setLayout(new BorderLayout());
-        // Paneles
+        panelPrincipal.add(panelBotonesGeneral,BorderLayout.NORTH);
         panelPrincipal.add(panelInfo,BorderLayout.CENTER);
     }
+
+
+
+    private void inicializar_panelBotonesGeneral() { //panel inicial
+        panelBotonesGeneral.setLayout(new FlowLayout());
+        panelBotonesGeneral.add(buttonConsultarRanking);
+        panelBotonesGeneral.add(buttonConsultarEstadisticas);
+        buttonConsultarRanking.setToolTipText("Consulta todo el ranking");
+        buttonConsultarEstadisticas.setToolTipText("Consulta las estadisticas de un Jugador en concreto");
+    }
+
 
     private void inicializar_panelInfo() { //panel inicial
         panelActivo = panelRanking;
@@ -111,20 +128,34 @@ public class VistaRanking {
 
     private void inicializar_panelRanking() {
         panelRanking.setLayout(new BorderLayout()); //5 zonas
-        panelRanking.add(labelPanelRanking,BorderLayout.NORTH);
+        panelRanking.add(labelInfoRanking,BorderLayout.NORTH);
         panelRanking.add(panelBotonesRanking,BorderLayout.EAST);
-        textareaRanking.setText("Prueba text area Ranking");
+        textareaRanking.setText("");
+        /*Font font = textareaRanking.getFont();
+        float size = font.getSize();
+        textareaRanking.setFont(font.deriveFont(size));*/
         panelRanking.add(new JScrollPane(textareaRanking),BorderLayout.SOUTH);
+    }
 
+    private void inicializar_panelEstadisticas() {
+        panelBotonesEstadisticas.setLayout(new FlowLayout());
+        panelBotonesEstadisticas.add(labelID);
+        panelBotonesEstadisticas.add(textoID);
+        panelBotonesEstadisticas.add(labelNickname);
+        panelBotonesEstadisticas.add(textoNickname);
+        panelBotonesEstadisticas.add(buttonBuscarEstadisticas);
+        panelBotonesEstadisticas.add(buttonLimpiarEstadisticas);
+        panelEstadisticas.setLayout(new BorderLayout());
+        panelEstadisticas.add(labelInfoRanking2,BorderLayout.NORTH);
+        panelEstadisticas.add(panelBotonesEstadisticas,BorderLayout.EAST);
+        panelEstadisticas.add(textareaEstadisticas,BorderLayout.SOUTH);
     }
 
 
     private void inicializar_panelBotonesRanking() {
-        // Layout
         panelBotonesRanking.setLayout(new FlowLayout());
         panelBotonesRanking.add(buttonCargarRanking);
         panelBotonesRanking.add(buttonLimpiarTexto);
-        // Tooltips
         buttonCargarRanking.setToolTipText("Carga la informacion del ranking en el TextArea");
         buttonLimpiarTexto.setToolTipText("Hace un clear del TextArea");
     }
@@ -139,9 +170,52 @@ public class VistaRanking {
         }
     }
 
+    public void actionPerformed_buttonConsultarRanking (ActionEvent event) {
+            panelInfo.remove(panelActivo);
+            if (iPanelActivo != 1) {
+                iPanelActivo = 1;
+                panelActivo = panelRanking;
+            }
+            panelInfo.add(panelActivo);
+            frameVista.pack();
+            frameVista.repaint();
+    }
+
+    public void actionPerformed_buttonConsultarEstadisticas(ActionEvent event) {
+        panelInfo.remove(panelActivo);
+        if (iPanelActivo != 2) {
+            iPanelActivo = 2;
+            panelActivo = panelEstadisticas;
+        }
+        panelInfo.add(panelActivo);
+        frameVista.pack();
+        frameVista.repaint();
+    }
+
+
     public void actionPerformed_buttonLimpiarTexto (ActionEvent event) {
         textareaRanking.setText("");
     }
+
+    public void actionPerformed_buttonBuscarEstadisticas (ActionEvent event) {
+        int id = -1;
+        try {
+            id = Integer.parseInt(textoID.getText());
+        }
+        catch (Exception e) {} //no hacer nada
+        String nick = textoNickname.getText();
+        ArrayList<String> res = iCtrlPresentacion.presentacion_consultar_estadisticas(id,nick);
+        textareaEstadisticas.setText("");
+        for (int i = 0; i < res.size(); i++) {
+            textareaEstadisticas.append("\n" + res.get(i));
+        }
+    }
+
+    public void actionPerformed_buttonLimpiarTextoEstadisticas (ActionEvent event) {
+        textareaEstadisticas.setText("");
+    }
+
+
 
     private void asignar_listenersComponentes() {
 
@@ -166,8 +240,57 @@ public class VistaRanking {
                     }
                 });
 
-    }
+        menuitemQuit.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        //Poner aqui lo de actualizar ranking (cuando tengamos la interfaz en general)
+                        System.exit(0);
+                    }
+                });
 
+        buttonConsultarRanking.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        actionPerformed_buttonConsultarRanking(event);
+                    }
+                });
+
+        buttonConsultarEstadisticas.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        actionPerformed_buttonConsultarEstadisticas(event);
+                    }
+                });
+
+        buttonLimpiarEstadisticas.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        actionPerformed_buttonLimpiarTextoEstadisticas(event);
+                    }
+                });
+
+        buttonBuscarEstadisticas.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        actionPerformed_buttonBuscarEstadisticas(event);
+                    }
+                });
+
+        menuItem_consultar_ranking.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        actionPerformed_buttonConsultarRanking(event);
+                    }
+                });
+
+        menuItem_consultar_estadisticas.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        actionPerformed_buttonConsultarEstadisticas(event);
+                    }
+                });
+
+    }
 
 
     /////////// MAIN (para poder probar)

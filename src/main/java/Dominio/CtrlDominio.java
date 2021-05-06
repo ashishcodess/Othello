@@ -142,7 +142,7 @@ public class CtrlDominio {
 
     public ArrayList<String> consultar_estadisticas(int id, String nick) {
         ArrayList<String> res = new ArrayList<String>();
-        res.add("(ID, nickname, Ganadas, Perdidas,Empatadas, Totales)");
+        //res.add("(ID, nickname, Ganadas, Perdidas,Empatadas, Totales)");
         int i = ranking.existe_en_ranking(id,nick);
         if (i != -1) {
             res.add(ranking.consultar_info_elemento_i(i));

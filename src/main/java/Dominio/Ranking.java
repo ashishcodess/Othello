@@ -214,8 +214,8 @@ public class Ranking {
      * */
     public ArrayList<String> toArrayList() {
         ArrayList<String> as = new ArrayList<String>();
-        String s_aux = "(ID, nickname, Ganadas, Perdidas,Empatadas, Totales)";
-        as.add(s_aux);
+        //String s_aux = "(ID, nickname, Ganadas, Perdidas,Empatadas, Totales)";
+        //as.add(s_aux);
         for (int i = 0; i < this.ranking.size(); ++i) {
             as.add(ranking.get(i).consultar_all());
         }
