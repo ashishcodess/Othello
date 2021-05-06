@@ -187,11 +187,11 @@ public class Ranking {
 
     /**
      * Operacion ordenar_ranking(orden) en funcion de un orden concreto
-     * @param orden [0 (Ganadas), 1 (ID) , 2 (NICKNAME)]
+     * @param orden [0 (Ganadas), 1 (ID) , 2 (NICKNAME), 3 (ID menor a mayor)]
      * @return devuelve true en caso de que se haya efectuado una ordenacion, caso contrario devuelve falso
      * */
     public Boolean ordenar_ranking(int orden) {
-        if (orden > 2 || orden < 0) return false;
+        if (orden > 3 || orden < 0) return false;
         else {
             switch(orden) {
                 case 0:
@@ -202,6 +202,9 @@ public class Ranking {
                     break;
                 case 2:
                     Collections.sort(this.ranking, new SortbyNICKNAME());
+                    break;
+                case 3:
+                    Collections.sort(this.ranking, new SortbyIDMenor());
                     break;
             }
             return true;
@@ -278,6 +281,15 @@ public class Ranking {
     static class SortbyID implements Comparator<ElementoRanking> {
         public int compare(ElementoRanking e1, ElementoRanking e2) {
             return (e2.getID() - e1.getID());
+        }
+    }
+
+    /**
+     * funcion compare en funcion de ID de los Jugadores
+     * */
+    static class SortbyIDMenor implements Comparator<ElementoRanking> {
+        public int compare(ElementoRanking e1, ElementoRanking e2) {
+            return (e1.getID() - e2.getID());
         }
     }
 

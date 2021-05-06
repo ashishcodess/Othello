@@ -156,6 +156,9 @@ public class CtrlDominio {
         return ranking.toArrayList();
     }
 
+    public boolean ordenar_ranking(int orden) {
+        return ranking.ordenar_ranking(orden);
+    }
 
     //devolvera los mensajes que tendra que imprimir en pantalla o alguna info importante para capa Presentacion
     /*public static ArrayList<String> peticion_menu(int peticion, ArrayList<String> argum) {

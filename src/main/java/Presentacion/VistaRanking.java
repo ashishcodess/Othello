@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+//FALTAN BOTONES DE ORDENACION DEL RANKING
+
+
 public class VistaRanking {
 
     // Controlador de presentacion
@@ -23,12 +26,17 @@ public class VistaRanking {
     private JButton buttonConsultarEstadisticas = new JButton("Consultar estadisticas de un Jugador");
     private JLabel labelInfoRanking = new JLabel("Informacion del ranking (ID, nickname, Ganadas, Perdidas,Empatadas, Totales)"); //borrar al final
     private JLabel labelInfoRanking2 = new JLabel("Informacion del ranking (ID, nickname, Ganadas, Perdidas,Empatadas, Totales)"); //borrar al final
+
     //COMPONENTES RANKING
     private JPanel panelRanking = new JPanel();
     private JTextArea textareaRanking = new JTextArea(30,45);
     private JPanel panelBotonesRanking = new JPanel();
     private JButton buttonCargarRanking = new JButton("Cargar Ranking");
     private JButton buttonLimpiarTexto= new JButton("Limpiar Texto");
+    //Opcion desplegable con3 opciones de ordenar: ID, Partidas Ganadas y Nickname
+    private JComboBox comboBoxOrdenar = new JComboBox();
+    private JButton buttonOrdenar = new JButton("Ordenar");
+
 
     //COMPONENTES ESTADISTICAS
     private JPanel panelEstadisticas = new JPanel();
@@ -151,16 +159,36 @@ public class VistaRanking {
         panelEstadisticas.add(textareaEstadisticas,BorderLayout.SOUTH);
     }
 
-
     private void inicializar_panelBotonesRanking() {
         panelBotonesRanking.setLayout(new FlowLayout());
         panelBotonesRanking.add(buttonCargarRanking);
         panelBotonesRanking.add(buttonLimpiarTexto);
+        comboBoxOrdenar.addItem("ID (mayor a menor)");
+        comboBoxOrdenar.addItem("ID(menor a mayor)");
+        comboBoxOrdenar.addItem("Partidas Ganadas");
+        comboBoxOrdenar.addItem("Nickname");
+        panelBotonesRanking.add(comboBoxOrdenar);
+        panelBotonesRanking.add(buttonOrdenar);
         buttonCargarRanking.setToolTipText("Carga la informacion del ranking en el TextArea");
         buttonLimpiarTexto.setToolTipText("Hace un clear del TextArea");
+        buttonOrdenar.setToolTipText("Ordena la salida en funcion de: ID, partidas ganadas o Nickname");
     }
 
     /////////// LISTENERS (+ su asignacion)
+
+    public void actionPerformed_buttonOrdenar (ActionEvent event) {
+        String s = comboBoxOrdenar.getSelectedItem().toString();
+        int orden = -1;
+        if (s.equals("ID (mayor a menor)")) orden = 1;
+        else if (s.equals("Partidas Ganadas")) orden = 0;
+        else if (s.equals("Nickname")) orden = 2;
+        else if (s.equals("ID(menor a mayor)")) orden = 3;
+        if (iCtrlPresentacion.ordenar_ranking(orden)) actionPerformed_buttonCargarRanking(event);
+        else { //no deberia pasar nunca (por si acaso)
+            textareaRanking.setText("");
+            textareaRanking.append("\n" + "Error orden incorrecto");
+        }
+    }
 
     public void actionPerformed_buttonCargarRanking (ActionEvent event) {
         ArrayList<String> res = iCtrlPresentacion.presentacion_consultar_ranking();
@@ -287,6 +315,13 @@ public class VistaRanking {
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
                         actionPerformed_buttonConsultarEstadisticas(event);
+                    }
+                });
+
+        buttonOrdenar.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        actionPerformed_buttonOrdenar(event);
                     }
                 });
 

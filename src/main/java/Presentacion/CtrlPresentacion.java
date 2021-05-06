@@ -33,6 +33,8 @@ public class CtrlPresentacion {
         return ctrlDominio.consultar_estadisticas(id,nick);
     }
 
-
+    public boolean ordenar_ranking(int orden) {
+        return ctrlDominio.ordenar_ranking(orden);
+    }
 
 }
