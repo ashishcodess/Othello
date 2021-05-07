@@ -69,18 +69,12 @@ public class VistaRanking {
         inicializarComponentes();
     }
 
-    public void hacerVisible() {
+    public void hacerVisible(boolean b) {
         frameVista.pack();
-        frameVista.setVisible(true);
+        frameVista.setVisible(b);
+        frameVista.setEnabled(b);
     }
 
-    public void activar() {
-        frameVista.setEnabled(true);
-    }
-
-    public void desactivar() {
-        frameVista.setEnabled(false);
-    }
 
     /////////// INICIALIZACION DE COMPONENTES
 
@@ -364,7 +358,7 @@ public class VistaRanking {
                     public void run() {
                         CtrlPresentacion ctrlPresentacion = new CtrlPresentacion();
                         ctrlPresentacion.inicializarPresentacion();
-                        new VistaRanking(ctrlPresentacion).hacerVisible();
+                        new VistaRanking(ctrlPresentacion).hacerVisible(true);
                     }});
     }
 }

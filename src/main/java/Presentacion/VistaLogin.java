@@ -37,8 +37,6 @@ public class VistaLogin {
 
     private JTextField textoLoginFinal = new JTextField(15);
 
-    //menu principal
-    private JPanel panelMenu = new JPanel();
 
     //BARRA DE MENU
     private JMenuBar menubarVista = new JMenuBar();
@@ -55,18 +53,12 @@ public class VistaLogin {
         inicializarComponentes();
     }
 
-    public void hacerVisible() {
+    public void hacerVisible(boolean b) {
         frameVista.pack();
-        frameVista.setVisible(true);
+        frameVista.setVisible(b);
+        frameVista.setEnabled(b);
     }
 
-    public void activar() {
-        frameVista.setEnabled(true);
-    }
-
-    public void desactivar() {
-        frameVista.setEnabled(false);
-    }
 
     /////////// INICIALIZACION DE COMPONENTES
 
@@ -228,7 +220,7 @@ public class VistaLogin {
                     public void run() {
                         CtrlPresentacion ctrlPresentacion = new CtrlPresentacion();
                         ctrlPresentacion.inicializarPresentacion();
-                        new VistaLogin(ctrlPresentacion).hacerVisible();
+                        new VistaLogin(ctrlPresentacion).hacerVisible(true);
                     }});
     }
 
