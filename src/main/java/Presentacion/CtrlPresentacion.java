@@ -26,6 +26,13 @@ public class CtrlPresentacion {
         //vistaPrincipal.hacerVisible();
     }
 
+    public int presentacion_login(int id, String nick) {
+        return ctrlDominio.login_inicial_presentacion(id,nick);
+    }
+
+    public int presentacion_registro_usuario(String nick) {
+        return ctrlDominio.dominio_registro_usuario(nick);
+    }
 
     public ArrayList<String> presentacion_consultar_ranking() {
         ArrayList<String> as = ctrlDominio.consultar_ranking();

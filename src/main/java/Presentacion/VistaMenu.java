@@ -2,6 +2,8 @@ package Presentacion;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class VistaMenu {
 
@@ -182,9 +184,69 @@ public class VistaMenu {
 
     /////////// LISTENERS (+ su asignacion)
 
+    public void actionPerformed_buttonLogin (ActionEvent event) {
+        int id = -1;
+        try {
+            id = Integer.parseInt(textoID.getText());
+            String nick = textoNickname.getText();
+            int res = iCtrlPresentacion.presentacion_login(id,nick);
+            if (res == 1) textoLoginFinal.setText("Login correcto");
+            else textoLoginFinal.setText("Login incorrecto (vuelve a introducir los datos)");
+        }
+        catch (Exception e) {
+            textoLoginFinal.setText("Login incorrecto (vuelve a introducir los datos)");
+        }
+    }
+
+    public void actionPerformed_buttonLimpiarLogin (ActionEvent event) {
+        textoID.setText("");
+        textoNickname.setText("");
+        textoRegistroNickname.setText("");
+    }
+
+    public void actionPerformed_buttonRegistrarse (ActionEvent event) {
+        try {
+            String nick = textoRegistroNickname.getText();
+            //FALTA FUNCIONES CTRLDOMINIO
+            int res = iCtrlPresentacion.presentacion_registro_usuario(nick);
+            if (res != -1) {
+                textoLoginFinal.setText("Registro Correcto se te ha asignado el ID: " + res +" , y nickname: " + nick);
+            }
+            else textoLoginFinal.setText("Fallo al Registrarse");
+        }
+        catch (Exception e) {} //no hacer nada
+    }
+
 
     private void asignar_listenersComponentes() {
+        buttonLogin.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        actionPerformed_buttonLogin(event);
+                    }
+                });
 
+        buttonLimpiarLogin.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        actionPerformed_buttonLimpiarLogin (event);
+                    }
+                });
+
+        buttonRegistro.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        actionPerformed_buttonRegistrarse (event);
+                    }
+                });
+
+        menuitemQuit.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        //Poner aqui lo de actualizar ranking (cuando tengamos la interfaz en general)
+                        System.exit(0);
+                    }
+                });
     }
 
     /////////// MAIN (para poder probar)
