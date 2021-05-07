@@ -5,13 +5,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class VistaMenu {
+public class VistaLogin {
 
     // Controlador de presentacion
     private CtrlPresentacion iCtrlPresentacion;
 
     private int iPanelActivo = 0; //para cambiar entre panel Ranking y estadisticas
-
 
     private JFrame frameVista = new JFrame("Vista Menu Principal");
     private JPanel panelPrincipal = new JPanel();
@@ -49,23 +48,8 @@ public class VistaMenu {
     private JMenu menuJugador = new JMenu("Jugador");
     private JMenuItem menuitemLogin = new JMenuItem("Login Usuario");
 
-    private JMenu menuTablero = new JMenu("Tablero");
-    private JMenuItem menuitemCrearTablero = new JMenuItem("Crear Tablero");
-    private JMenuItem menuitemMostrarTablero = new JMenuItem("Mostrar Tablero");
-    private JMenuItem menuitemBorrarTablero = new JMenuItem("Borrar Tablero");
 
-    private JMenu menuPartida = new JMenu("Partida");
-    private JMenuItem menuitemCrearPartida = new JMenuItem("Crear Partida");
-    private JMenuItem menuitemCargarPartida= new JMenuItem("Cargar Partida");
-    private JMenuItem menuitemBorrarPartida = new JMenuItem("Borrar Partida");
-
-    private JMenu menuRanking = new JMenu("Ranking");
-    private JMenuItem menuItem_consultar_ranking = new JMenuItem("Consultar Ranking");
-    private JMenuItem menuItem_consultar_estadisticas = new JMenuItem("Consultar Estadisticas");
-
-
-
-    public VistaMenu (CtrlPresentacion pCtrlPresentacion) {
+    public VistaLogin(CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
         frameVista.setLayout(new BorderLayout()); // 5 zonas (North, South, East, West, Center)
         inicializarComponentes();
@@ -97,7 +81,6 @@ public class VistaMenu {
 
     private void inicializar_frameVista() {
         frameVista.setMinimumSize(new Dimension(700,400)); //cambiar al pasar al menu principal
-
         //frameVista.setMinimumSize(new Dimension(700,750));// menu principal
         frameVista.setPreferredSize(frameVista.getMinimumSize());
         frameVista.setResizable(false);
@@ -112,17 +95,6 @@ public class VistaMenu {
         menubarVista.add(menuFile);
         menuJugador.add(menuitemLogin);
         menubarVista.add(menuJugador);
-        menuPartida.add(menuitemCrearPartida);
-        menuPartida.add(menuitemCargarPartida);
-        menuPartida.add(menuitemBorrarPartida);
-        menubarVista.add(menuPartida);
-        menuTablero.add(menuitemCrearTablero);
-        menuTablero.add(menuitemMostrarTablero);
-        menuTablero.add(menuitemBorrarTablero);
-        menubarVista.add(menuTablero);
-        menuRanking.add(menuItem_consultar_ranking);
-        menuRanking.add(menuItem_consultar_estadisticas);
-        menubarVista.add(menuRanking);
         frameVista.setJMenuBar(menubarVista);
     }
 
@@ -256,7 +228,7 @@ public class VistaMenu {
                     public void run() {
                         CtrlPresentacion ctrlPresentacion = new CtrlPresentacion();
                         ctrlPresentacion.inicializarPresentacion();
-                        new VistaMenu(ctrlPresentacion).hacerVisible();
+                        new VistaLogin(ctrlPresentacion).hacerVisible();
                     }});
     }
 

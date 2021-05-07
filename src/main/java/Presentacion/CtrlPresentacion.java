@@ -10,14 +10,14 @@ public class CtrlPresentacion {
 
     private VistaPrincipal vistaPrincipal = null;
     private VistaRanking vistaRanking = null;
-    private VistaMenu vistaMenu = null;
+    private VistaLogin vistaMenu = null;
 
 
     public CtrlPresentacion() {
         ctrlDominio = new CtrlDominio();
         //vistaPrincipal = new VistaPrincipal(this);
         vistaRanking = new VistaRanking(this);
-        vistaMenu = new VistaMenu(this);
+        vistaMenu = new VistaLogin(this);
     }
 
 
