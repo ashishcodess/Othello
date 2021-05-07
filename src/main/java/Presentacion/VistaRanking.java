@@ -1,6 +1,9 @@
 package Presentacion;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,9 +33,10 @@ public class VistaRanking {
     //COMPONENTES RANKING
     private JPanel panelRanking = new JPanel();
     private JTextArea textareaRanking = new JTextArea(30,45);
+    private JTable tablaRanking = new JTable();
     private JPanel panelBotonesRanking = new JPanel();
     private JButton buttonCargarRanking = new JButton("Cargar Ranking");
-    private JButton buttonLimpiarTexto= new JButton("Limpiar Texto");
+    private JButton buttonLimpiarRanking= new JButton("Limpiar Ranking");
     //Opcion desplegable con3 opciones de ordenar: ID, Partidas Ganadas y Nickname
     private JComboBox comboBoxOrdenar = new JComboBox();
     private JButton buttonOrdenar = new JButton("Ordenar");
@@ -40,7 +44,7 @@ public class VistaRanking {
 
     //COMPONENTES ESTADISTICAS
     private JPanel panelEstadisticas = new JPanel();
-    private JTextArea textareaEstadisticas = new JTextArea(15,20);
+    private JTextArea textareaEstadisticas = new JTextArea(3,8);
     private JPanel panelBotonesEstadisticas = new JPanel();
     private JLabel labelID= new JLabel("ID:");
     private JTextField textoID = new JTextField(3);
@@ -118,7 +122,6 @@ public class VistaRanking {
     }
 
 
-
     private void inicializar_panelBotonesGeneral() { //panel inicial
         panelBotonesGeneral.setLayout(new FlowLayout());
         panelBotonesGeneral.add(buttonConsultarRanking);
@@ -134,15 +137,29 @@ public class VistaRanking {
         panelInfo.add(panelActivo);
     }
 
+    private void limpiar_ranking() {
+        int tam = iCtrlPresentacion.presentacion_consultar_tam_ranking();
+        String column[]={"ID","nickname","ganadas","perdidas","empatadas","totales"};
+        String data[][] = new String[tam+1][6];
+        for (int i = 0; i < column.length; ++i) data[0][i] = column[i];
+        for (int i = 0; i < tam; ++i) {
+            for (int j = 0; j < 6; ++j) {
+                data[i+1][j] = "";
+            }
+        }
+        tablaRanking=new JTable(data,column);
+    }
+
     private void inicializar_panelRanking() {
         panelRanking.setLayout(new BorderLayout()); //5 zonas
         panelRanking.add(labelInfoRanking,BorderLayout.NORTH);
         panelRanking.add(panelBotonesRanking,BorderLayout.EAST);
-        textareaRanking.setText("");
-        /*Font font = textareaRanking.getFont();
-        float size = font.getSize();
-        textareaRanking.setFont(font.deriveFont(size));*/
-        panelRanking.add(new JScrollPane(textareaRanking),BorderLayout.SOUTH);
+        tablaRanking.setFillsViewportHeight(true);
+        limpiar_ranking();
+        tablaRanking.repaint();
+        panelRanking.revalidate();
+        panelRanking.repaint();
+        panelRanking.add(tablaRanking,BorderLayout.SOUTH);
     }
 
     private void inicializar_panelEstadisticas() {
@@ -162,7 +179,7 @@ public class VistaRanking {
     private void inicializar_panelBotonesRanking() {
         panelBotonesRanking.setLayout(new FlowLayout());
         panelBotonesRanking.add(buttonCargarRanking);
-        panelBotonesRanking.add(buttonLimpiarTexto);
+        panelBotonesRanking.add(buttonLimpiarRanking);
         comboBoxOrdenar.addItem("ID (mayor a menor)");
         comboBoxOrdenar.addItem("ID(menor a mayor)");
         comboBoxOrdenar.addItem("Partidas Ganadas");
@@ -170,7 +187,7 @@ public class VistaRanking {
         panelBotonesRanking.add(comboBoxOrdenar);
         panelBotonesRanking.add(buttonOrdenar);
         buttonCargarRanking.setToolTipText("Carga la informacion del ranking en el TextArea");
-        buttonLimpiarTexto.setToolTipText("Hace un clear del TextArea");
+        buttonLimpiarRanking.setToolTipText("Hace un clear del TextArea");
         buttonOrdenar.setToolTipText("Ordena la salida en funcion de: ID, partidas ganadas o Nickname");
     }
 
@@ -183,30 +200,44 @@ public class VistaRanking {
         else if (s.equals("Partidas Ganadas")) orden = 0;
         else if (s.equals("Nickname")) orden = 2;
         else if (s.equals("ID(menor a mayor)")) orden = 3;
-        if (iCtrlPresentacion.ordenar_ranking(orden)) actionPerformed_buttonCargarRanking(event);
-        else { //no deberia pasar nunca (por si acaso)
-            textareaRanking.setText("");
-            textareaRanking.append("\n" + "Error orden incorrecto");
+        if (iCtrlPresentacion.presentacion_ordenar_ranking(orden)) actionPerformed_buttonCargarRanking(event);
+    }
+
+    public void actionPerformed_buttonConsultarRanking (ActionEvent event) {
+        panelInfo.remove(panelActivo);
+        if (iPanelActivo != 1) {
+            iPanelActivo = 1;
+            panelActivo = panelRanking;
         }
+        panelInfo.add(panelActivo);
+        frameVista.pack();
+        frameVista.repaint();
     }
 
     public void actionPerformed_buttonCargarRanking (ActionEvent event) {
         ArrayList<String> res = iCtrlPresentacion.presentacion_consultar_ranking();
-        textareaRanking.setText("");
-        for (int i = 0; i < res.size(); i++) {
-            textareaRanking.append("\n" + res.get(i));
+        int tam = res.size()/6;
+        String column[]={"ID","nickname","ganadas","perdidas","empatadas","totales"};
+        String data[][] = new String[tam+1][6];
+        for (int i = 0; i < column.length; ++i) data[0][i] = column[i];
+        for (int i = 0; i < tam; ++i) {
+            for (int j = 0; j < 6; ++j) {
+                data[i+1][j] = res.get(i*6+j);
+            }
         }
+        panelRanking.remove(tablaRanking);
+        tablaRanking=new JTable(data,column);
+        panelRanking.add(tablaRanking,BorderLayout.SOUTH);
+        panelRanking.revalidate();
+        panelRanking.repaint();
     }
 
-    public void actionPerformed_buttonConsultarRanking (ActionEvent event) {
-            panelInfo.remove(panelActivo);
-            if (iPanelActivo != 1) {
-                iPanelActivo = 1;
-                panelActivo = panelRanking;
-            }
-            panelInfo.add(panelActivo);
-            frameVista.pack();
-            frameVista.repaint();
+    public void actionPerformed_buttonLimpiarRanking (ActionEvent event) {
+        panelRanking.remove(tablaRanking);
+        limpiar_ranking();
+        panelRanking.add(tablaRanking,BorderLayout.SOUTH);
+        panelRanking.revalidate();
+        panelRanking.repaint();
     }
 
     public void actionPerformed_buttonConsultarEstadisticas(ActionEvent event) {
@@ -220,11 +251,6 @@ public class VistaRanking {
         frameVista.repaint();
     }
 
-
-    public void actionPerformed_buttonLimpiarTexto (ActionEvent event) {
-        textareaRanking.setText("");
-    }
-
     public void actionPerformed_buttonBuscarEstadisticas (ActionEvent event) {
         int id = -1;
         try {
@@ -235,12 +261,14 @@ public class VistaRanking {
         ArrayList<String> res = iCtrlPresentacion.presentacion_consultar_estadisticas(id,nick);
         textareaEstadisticas.setText("");
         for (int i = 0; i < res.size(); i++) {
-            textareaEstadisticas.append("\n" + res.get(i));
+            textareaEstadisticas.append("\n     " + res.get(i));
         }
     }
 
     public void actionPerformed_buttonLimpiarTextoEstadisticas (ActionEvent event) {
         textareaEstadisticas.setText("");
+        textoID.setText("");
+        textoNickname.setText("");
     }
 
 
@@ -254,10 +282,10 @@ public class VistaRanking {
                     }
                 });
 
-        buttonLimpiarTexto.addActionListener
+        buttonLimpiarRanking.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
-                        actionPerformed_buttonLimpiarTexto(event);
+                        actionPerformed_buttonLimpiarRanking(event);
                     }
                 });
 

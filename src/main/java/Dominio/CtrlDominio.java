@@ -160,6 +160,8 @@ public class CtrlDominio {
         return ranking.ordenar_ranking(orden);
     }
 
+    public int consultar_tam_ranking() {return ranking.consultar_tam_ranking();}
+
     //devolvera los mensajes que tendra que imprimir en pantalla o alguna info importante para capa Presentacion
     /*public static ArrayList<String> peticion_menu(int peticion, ArrayList<String> argum) {
         ArrayList<String> as = new ArrayList<String>();
