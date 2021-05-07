@@ -293,7 +293,7 @@ public class VistaRanking {
         menuitemQuit.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
-                        //Poner aqui lo de actualizar ranking (cuando tengamos la interfaz en general)
+                        iCtrlPresentacion.presentacion_exportar_ranking();
                         System.exit(0);
                     }
                 });

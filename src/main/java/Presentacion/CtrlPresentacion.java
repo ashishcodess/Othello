@@ -10,14 +10,16 @@ public class CtrlPresentacion {
 
     private VistaPrincipal vistaPrincipal = null;
     private VistaRanking vistaRanking = null;
-    private VistaLogin vistaMenu = null;
+    private VistaLogin vistaLogin= null;
+    private VistaMenu vistaMenu = null;
 
 
     public CtrlPresentacion() {
         ctrlDominio = new CtrlDominio();
         //vistaPrincipal = new VistaPrincipal(this);
         vistaRanking = new VistaRanking(this);
-        vistaMenu = new VistaLogin(this);
+        vistaLogin = new VistaLogin(this);
+        vistaMenu = new VistaMenu(this);
     }
 
 
@@ -55,5 +57,7 @@ public class CtrlPresentacion {
     }
 
     public int presentacion_consultar_tam_ranking() {return ctrlDominio.consultar_tam_ranking();}
+
+    public void presentacion_exportar_ranking() {ctrlDominio.domino_exportar_ranking();}
 
 }

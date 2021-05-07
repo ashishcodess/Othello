@@ -12,7 +12,7 @@ public class VistaLogin {
 
     private int iPanelActivo = 0; //para cambiar entre panel Ranking y estadisticas
 
-    private JFrame frameVista = new JFrame("Vista Menu Principal");
+    private JFrame frameVista = new JFrame("Login");
     private JPanel panelPrincipal = new JPanel();
     private JPanel panelInfo = new JPanel();
     private JPanel panelActivo = new JPanel();
@@ -207,7 +207,7 @@ public class VistaLogin {
         menuitemQuit.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
-                        //Poner aqui lo de actualizar ranking (cuando tengamos la interfaz en general)
+                        iCtrlPresentacion.presentacion_exportar_ranking();
                         System.exit(0);
                     }
                 });

@@ -54,56 +54,9 @@ public class CtrlDominio {
     }
 
 
-    /*public static void entrar2(int modo2){
-        try {
-            if (modo2 == 2) System.out.println("Introducir informacion de contrincante 2 (Persona)");
-            System.out.println("Estas Registrado/a? si/no ");
-            String in = scan.next();
-            if(in.toLowerCase().equals("no")){
-                System.out.println("Entra tu nombre de usuario");
-                if (modo2 == 2) {
-                    nick_2 = scan.next();
-                    id_2 = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
-                    if ((nick_2.equals(nickname)) || (code == id_2)) throw new MyException("Se ha introducido informacion de usuarios repetida");
-                    else {
-                        System.out.println("Creado usuario " + nick_2 + " con ID " + id_2);
-                        cp.ctrl_crear_usuario(id_2,nick_2);
-                    }
-                }
-                else {
-                    nickname = scan.next();
-                    code = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
-                    System.out.println("Creado usuario " + nickname + " con ID " + code);
-                    cp.ctrl_crear_usuario(code,nickname);
-                }
-            }
-            else if(in.toLowerCase().equals("si")){
-                System.out.println("Entra tu ID");
-                if (modo2 == 2) {
-                    id_2 = scan.nextInt();
-                    System.out.println("Entra tu nombre de usuario");
-                    nick_2 = scan.next();
-                    if ((nick_2.equals(nickname)) || (code == id_2)) throw new MyException("Se ha introducido informacion de usuarios repetida");
-                    else {
-                        if (cp.ctrl_existe_usuario(id_2,nick_2)) System.out.println("Login Correcto");
-                        else throw new MyException("No existe usuario registrado con esa informacion");
-                    }
-                }
-                else {
-                    code = scan.nextInt();
-                    System.out.println("Entra tu nombre de usuario");
-                    nickname = scan.next();
-                    if (cp.ctrl_existe_usuario(code,nickname)) System.out.println("Login Correcto");
-                    else throw new MyException("No existe usuario registrado con esa informacion");
-                }
-            }
-            else throw new MyException("");
-        }
-        catch (Exception e) {
-            System.out.println("No se ha introducido una opcion valida (si, no)");
-            entrar2(modo2);
-        }
-    }*/
+    public void domino_exportar_ranking() {
+        cp.ctrl_exportar_ranking(ranking.toArrayList());  //exportar ranking antes de salir del programa
+    }
 
 
     /**
