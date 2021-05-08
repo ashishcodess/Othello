@@ -26,7 +26,6 @@ public class VistaMenu {
     private JMenuBar menubarVista = new JMenuBar();
     private JMenu menuFile = new JMenu("File");
     private JMenuItem menuitemQuit = new JMenuItem("Salir");
-    private JMenu menuJugador = new JMenu("Jugador");
     private JMenuItem menuitemLogin = new JMenuItem("Login Usuario");
     private JMenu menuTablero = new JMenu("Tablero");
     private JMenuItem menuItem_crearTablero = new JMenuItem("Crear Tablero");
@@ -121,10 +120,9 @@ public class VistaMenu {
     }
 
     private void inicializar_menubarVista() {
+        menuFile.add(menuitemLogin);
         menuFile.add(menuitemQuit);
         menubarVista.add(menuFile);
-        menuJugador.add(menuitemLogin);
-        menubarVista.add(menuJugador);
         menuTablero.add(menuItem_crearTablero);
         menuTablero.add(menuItem_MostrarTablero);
         menuTablero.add(menuItem_BorrarTablero);
@@ -147,7 +145,6 @@ public class VistaMenu {
     private void inicializar_panelMenuPartida() {
         panelMenuPartida.setLayout(new BoxLayout(panelMenuPartida,BoxLayout.PAGE_AXIS));
         panelMenuPartida.add(labelPartida);
-        //buttonCrearPartida.setPreferredSize(new Dimension(100,20));
         panelMenuPartida.add(buttonCrearPartida);
         panelMenuPartida.add(buttonBorrarPartida);
         panelMenuPartida.add(buttonCargarPartida);
@@ -156,7 +153,6 @@ public class VistaMenu {
     private void inicializar_panelMenuTablero() {
         panelMenuTablero.setLayout(new BoxLayout(panelMenuTablero,BoxLayout.PAGE_AXIS));
         panelMenuTablero.add(labelTablero);
-        //buttonCrearPartida.setPreferredSize(new Dimension(100,20));
         panelMenuTablero.add(buttonCrearTablero);
         panelMenuTablero.add(buttonBorrarTablero);
         panelMenuTablero.add(buttonMostrarTablero);

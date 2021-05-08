@@ -41,10 +41,8 @@ public class VistaLogin {
     //BARRA DE MENU
     private JMenuBar menubarVista = new JMenuBar();
     private JMenu menuFile = new JMenu("File");
-    private JMenuItem menuitemQuit = new JMenuItem("Salir");
-
-    private JMenu menuJugador = new JMenu("Jugador");
     private JMenuItem menuitemLogin = new JMenuItem("Login Usuario");
+    private JMenuItem menuitemQuit = new JMenuItem("Salir");
 
 
     public VistaLogin(CtrlPresentacion pCtrlPresentacion) {
@@ -72,8 +70,7 @@ public class VistaLogin {
     }
 
     private void inicializar_frameVista() {
-        frameVista.setMinimumSize(new Dimension(700,400)); //cambiar al pasar al menu principal
-        //frameVista.setMinimumSize(new Dimension(700,750));// menu principal
+        frameVista.setMinimumSize(new Dimension(700,400));
         frameVista.setPreferredSize(frameVista.getMinimumSize());
         frameVista.setResizable(false);
         frameVista.setLocationRelativeTo(null);
@@ -83,10 +80,9 @@ public class VistaLogin {
     }
 
     private void inicializar_menubarVista() {
+        menuFile.add(menuitemLogin);
         menuFile.add(menuitemQuit);
         menubarVista.add(menuFile);
-        menuJugador.add(menuitemLogin);
-        menubarVista.add(menuJugador);
         frameVista.setJMenuBar(menubarVista);
     }
 
