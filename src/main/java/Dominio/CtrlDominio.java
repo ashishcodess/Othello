@@ -46,6 +46,12 @@ public class CtrlDominio {
         return res;
     }
 
+    public String get_info_usuario_activo() {
+        String s = "Usuario activo (ID:" + code + " , nickname: " + nickname + ")";
+        return s;
+    }
+
+
     public int dominio_registro_usuario(String nick) {
         int idRes = cp.ctrl_get_nuevo_ID_user();
         if (cp.ctrl_crear_usuario(idRes,nick)) {

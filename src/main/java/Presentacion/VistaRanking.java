@@ -30,6 +30,8 @@ public class VistaRanking {
     private JLabel labelInfoRanking = new JLabel("Informacion del ranking (ID, nickname, Ganadas, Perdidas,Empatadas, Totales)"); //borrar al final
     private JLabel labelInfoRanking2 = new JLabel("Informacion del ranking (ID, nickname, Ganadas, Perdidas,Empatadas, Totales)"); //borrar al final
 
+    private JButton buttonVolverMenu = new JButton("Volver al menu");
+
     //COMPONENTES RANKING
     private JPanel panelRanking = new JPanel();
     private JTextArea textareaRanking = new JTextArea(30,45);
@@ -56,6 +58,7 @@ public class VistaRanking {
     //BARRA DE MENU
     private JMenuBar menubarVista = new JMenuBar();
     private JMenu menuFile = new JMenu("File");
+    private JMenuItem menuitemVolverMenu= new JMenuItem("Volver al menu principal");
     private JMenuItem menuitemQuit = new JMenuItem("Salir");
     private JMenu menuRanking = new JMenu("Ranking");
     private JMenuItem menuItem_consultar_ranking = new JMenuItem("Consultar Ranking");
@@ -101,6 +104,7 @@ public class VistaRanking {
     }
 
     private void inicializar_menubarVista() {
+        menuFile.add(menuitemVolverMenu);
         menuFile.add(menuitemQuit);
         menuRanking.add(menuItem_consultar_ranking);
         menuRanking.add(menuItem_consultar_estadisticas);
@@ -120,8 +124,10 @@ public class VistaRanking {
         panelBotonesGeneral.setLayout(new FlowLayout());
         panelBotonesGeneral.add(buttonConsultarRanking);
         panelBotonesGeneral.add(buttonConsultarEstadisticas);
+        panelBotonesGeneral.add(buttonVolverMenu);
         buttonConsultarRanking.setToolTipText("Consulta todo el ranking");
         buttonConsultarEstadisticas.setToolTipText("Consulta las estadisticas de un Jugador en concreto");
+        buttonVolverMenu.setToolTipText("Volver al menu principal");
     }
 
 
@@ -267,6 +273,7 @@ public class VistaRanking {
 
 
 
+
     private void asignar_listenersComponentes() {
 
         buttonCargarRanking.addActionListener
@@ -287,6 +294,13 @@ public class VistaRanking {
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
                         actionPerformed_buttonCargarRanking(event);
+                    }
+                });
+
+        menuitemVolverMenu.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        iCtrlPresentacion.hacerVisibleVista(1);
                     }
                 });
 
@@ -339,6 +353,12 @@ public class VistaRanking {
                         actionPerformed_buttonConsultarEstadisticas(event);
                     }
                 });
+
+        buttonVolverMenu.addActionListener (new ActionListener() {
+            public void actionPerformed (ActionEvent event) {
+                iCtrlPresentacion.hacerVisibleVista(1);
+            }
+        });
 
         buttonOrdenar.addActionListener
                 (new ActionListener() {

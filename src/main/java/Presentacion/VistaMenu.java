@@ -17,6 +17,8 @@ public class VistaMenu {
     private JPanel panelInfo = new JPanel();
     private JPanel panelActivo = new JPanel();
 
+    private JTextField textoInfoUsuario = new JTextField(15);
+
     //BARRA DE MENU
     private JMenuBar menubarVista = new JMenuBar();
     private JMenu menuFile = new JMenu("File");
@@ -33,7 +35,6 @@ public class VistaMenu {
     private JMenuItem menuItem_BorrarPartida = new JMenuItem("Borrar Partida");
     private JMenu menuRanking = new JMenu("Ranking");
     private JMenuItem menuItem_consultar_ranking = new JMenuItem("Consultar Ranking");
-    private JMenuItem menuItem_consultar_estadisticas = new JMenuItem("Consultar Estadisticas");
 
     //Botones MENU
     private JPanel panelBotonesMenu= new JPanel();
@@ -56,7 +57,7 @@ public class VistaMenu {
 
     private JPanel panelOtrasOpciones= new JPanel();
     private JLabel labelOtros = new JLabel("Otras opciones");
-    private JButton buttonLogin = new JButton("Login");
+    private JButton buttonLogin = new JButton("Login(otro usuario)");
     private JButton buttonSalir = new JButton("Salir del juego");
 
 
@@ -67,12 +68,14 @@ public class VistaMenu {
     }
 
     public void hacerVisible(boolean b) {
+        if (b) incializar_textArea_usuario();
         frameVista.pack();
         frameVista.setVisible(b);
         frameVista.setEnabled(b);
     }
 
     /////////// INICIALIZACION DE COMPONENTES
+
 
     private void inicializarComponentes() {
         inicializar_menubarVista();
@@ -101,6 +104,7 @@ public class VistaMenu {
         panelPrincipal.setLayout(new BorderLayout());
         //Parte central/abajo informacion del usuario logeado
         panelPrincipal.add(panelInfo,BorderLayout.CENTER);
+        panelPrincipal.add(textoInfoUsuario,BorderLayout.NORTH);
     }
 
     private void inicializar_menubarVista() {
@@ -117,7 +121,6 @@ public class VistaMenu {
         menuPartida.add(menuItem_BorrarPartida);
         menubarVista.add(menuPartida);
         menuRanking.add(menuItem_consultar_ranking);
-        menuRanking.add(menuItem_consultar_estadisticas);
         menubarVista.add(menuRanking);
         frameVista.setJMenuBar(menubarVista);
     }
@@ -174,16 +177,60 @@ public class VistaMenu {
 
     }
 
+    private void incializar_textArea_usuario() {
+        textoInfoUsuario.setText(iCtrlPresentacion.presentacion_get_info_usuario_activo());
+        textoInfoUsuario.setEditable(false);
+    }
+
 
     /////////// LISTENERS (+ su asignacion)
 
+    public void actionPerformed_buttonLogin (ActionEvent event) {
+        iCtrlPresentacion.hacerVisibleVista(0);
+    }
+
     private void asignar_listenersComponentes() {
+        buttonLogin.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        actionPerformed_buttonLogin(event);
+                    }
+                });
+
+        buttonSalir.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        iCtrlPresentacion.presentacion_exportar_ranking();
+                        System.exit(0);
+                    }
+                });
 
         menuitemQuit.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
                         iCtrlPresentacion.presentacion_exportar_ranking();
                         System.exit(0);
+                    }
+                });
+
+        menuitemLogin.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        actionPerformed_buttonLogin(event);
+                    }
+                });
+
+        menuItem_consultar_ranking.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        iCtrlPresentacion.hacerVisibleVista(2);
+                    }
+                });
+
+        buttonConsultarRanking.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        iCtrlPresentacion.hacerVisibleVista(2);
                     }
                 });
 

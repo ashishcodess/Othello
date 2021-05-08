@@ -154,7 +154,11 @@ public class VistaLogin {
             id = Integer.parseInt(textoID.getText());
             String nick = textoNickname.getText();
             int res = iCtrlPresentacion.presentacion_login(id,nick);
-            if (res == 1) textoLoginFinal.setText("Login correcto");
+            if (res == 1) {
+                //textoLoginFinal.setText("Login correcto");
+                textoLoginFinal.setText("");
+                iCtrlPresentacion.hacerVisibleVista(1);
+            }
             else textoLoginFinal.setText("Login incorrecto (vuelve a introducir los datos)");
         }
         catch (Exception e) {

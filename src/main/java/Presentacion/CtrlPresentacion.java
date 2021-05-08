@@ -8,29 +8,53 @@ public class CtrlPresentacion {
 
     private CtrlDominio ctrlDominio;
 
-    private VistaPrincipal vistaPrincipal = null;
     private VistaRanking vistaRanking = null;
     private VistaLogin vistaLogin= null;
     private VistaMenu vistaMenu = null;
 
+    int vistaActiva = 0;
+
 
     public CtrlPresentacion() {
         ctrlDominio = new CtrlDominio();
-        //vistaPrincipal = new VistaPrincipal(this);
         vistaRanking = new VistaRanking(this);
         vistaLogin = new VistaLogin(this);
         vistaMenu = new VistaMenu(this);
     }
 
 
+
     public void inicializarPresentacion() {
-        //ctrlDominio.inicializarCtrlDominio();
-        //vistaPrincipal.hacerVisible();
+        hacerVisibleVista(0);
+    }
+
+
+    //en caso de que esta idea falle y haya bugs visuales utilizar creadoras de vistas para resetear estados
+    public void hacerVisibleVista(int t) {
+        switch (t) {
+            case 0:
+                vistaLogin.hacerVisible(true);
+                vistaMenu.hacerVisible(false);
+                vistaRanking.hacerVisible(false);
+                break;
+            case 1:
+                vistaLogin.hacerVisible(false);
+                vistaMenu.hacerVisible(true);
+                vistaRanking.hacerVisible(false);
+                break;
+            case 2:
+                vistaLogin.hacerVisible(false);
+                vistaMenu.hacerVisible(false);
+                vistaRanking.hacerVisible(true);
+                break;
+        }
     }
 
     public int presentacion_login(int id, String nick) {
         return ctrlDominio.login_inicial_presentacion(id,nick);
     }
+
+    public String presentacion_get_info_usuario_activo() {return ctrlDominio.get_info_usuario_activo();}
 
     public int presentacion_registro_usuario(String nick) {
         return ctrlDominio.dominio_registro_usuario(nick);
@@ -59,5 +83,6 @@ public class CtrlPresentacion {
     public int presentacion_consultar_tam_ranking() {return ctrlDominio.consultar_tam_ranking();}
 
     public void presentacion_exportar_ranking() {ctrlDominio.domino_exportar_ranking();}
+
 
 }
