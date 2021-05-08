@@ -170,7 +170,7 @@ public class CtrlDominio {
         if (i != -1) {
             res.add(ranking.consultar_info_elemento_i(i));
         } else { //no existe en el ranking
-            res.add("Error: no existe persona con ID:" + id + " y nick:" + nick + " dentro del Ranking");
+            res.add("ERROR ERROR - - - -");
         }
         return res;
     }

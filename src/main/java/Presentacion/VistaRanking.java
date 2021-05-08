@@ -46,7 +46,6 @@ public class VistaRanking {
 
     //COMPONENTES ESTADISTICAS
     private JPanel panelEstadisticas = new JPanel();
-    private JTextArea textareaEstadisticas = new JTextArea(3,8);
     private JPanel panelBotonesEstadisticas = new JPanel();
     private JLabel labelID= new JLabel("ID:");
     private JTextField textoID = new JTextField(3);
@@ -54,6 +53,7 @@ public class VistaRanking {
     private JTextField textoNickname = new JTextField(15);
     private JButton buttonBuscarEstadisticas= new JButton("Buscar");
     private JButton buttonLimpiarEstadisticas= new JButton("Limpiar");
+    private JTable tablaEstadisticas = new JTable();
 
     //BARRA DE MENU
     private JMenuBar menubarVista = new JMenuBar();
@@ -137,18 +137,6 @@ public class VistaRanking {
         panelInfo.add(panelActivo);
     }
 
-    private void limpiar_ranking() {
-        int tam = iCtrlPresentacion.presentacion_consultar_tam_ranking();
-        String column[]={"ID","nickname","ganadas","perdidas","empatadas","totales"};
-        String data[][] = new String[tam+1][6];
-        for (int i = 0; i < column.length; ++i) data[0][i] = column[i];
-        for (int i = 0; i < tam; ++i) {
-            for (int j = 0; j < 6; ++j) {
-                data[i+1][j] = "";
-            }
-        }
-        tablaRanking=new JTable(data,column);
-    }
 
     private void inicializar_panelRanking() {
         panelRanking.setLayout(new BorderLayout()); //5 zonas
@@ -173,7 +161,10 @@ public class VistaRanking {
         panelEstadisticas.setLayout(new BorderLayout());
         panelEstadisticas.add(labelInfoRanking2,BorderLayout.NORTH);
         panelEstadisticas.add(panelBotonesEstadisticas,BorderLayout.EAST);
-        panelEstadisticas.add(textareaEstadisticas,BorderLayout.SOUTH);
+        tablaEstadisticas.setFillsViewportHeight(true);
+        limpiar_estadisticas();
+        tablaEstadisticas.repaint();
+        panelEstadisticas.add(tablaEstadisticas,BorderLayout.SOUTH);
     }
 
     private void inicializar_panelBotonesRanking() {
@@ -255,24 +246,65 @@ public class VistaRanking {
         int id = -1;
         try {
             id = Integer.parseInt(textoID.getText());
-        }
-        catch (Exception e) {} //no hacer nada
+        } catch (Exception e) {
+        } //no hacer nada
         String nick = textoNickname.getText();
-        ArrayList<String> res = iCtrlPresentacion.presentacion_consultar_estadisticas(id,nick);
-        textareaEstadisticas.setText("");
-        for (int i = 0; i < res.size(); i++) {
-            textareaEstadisticas.append("\n     " + res.get(i));
+        ArrayList<String> res = iCtrlPresentacion.presentacion_consultar_estadisticas(id, nick);
+        String[] sRes = res.get(0).split(" ");
+        String column[] = {"ID", "nickname", "ganadas", "perdidas", "empatadas", "totales"};
+        String data[][] = new String[2][6];
+        for (int i = 0; i < column.length; ++i) data[0][i] = column[i];
+        for (int j = 0; j < 6; ++j) {
+            data[1][j] = sRes[j];
         }
+        panelEstadisticas.remove(tablaEstadisticas);
+        tablaEstadisticas=new JTable(data,column);
+        panelEstadisticas.add(tablaEstadisticas,BorderLayout.SOUTH);
+        panelEstadisticas.revalidate();
+        panelEstadisticas.repaint();
     }
 
-    public void actionPerformed_buttonLimpiarTextoEstadisticas (ActionEvent event) {
-        textareaEstadisticas.setText("");
+    public void actionPerformed_buttonLimpiarEstadisticas (ActionEvent event) {
         textoID.setText("");
         textoNickname.setText("");
+        panelEstadisticas.remove(tablaEstadisticas);
+        limpiar_estadisticas();
+        panelEstadisticas.add(tablaEstadisticas,BorderLayout.SOUTH);
+        panelEstadisticas.revalidate();
+        panelEstadisticas.repaint();
     }
 
 
 
+    private void limpiar_ranking() {
+        int tam = iCtrlPresentacion.presentacion_consultar_tam_ranking();
+        String column[]={"ID","nickname","ganadas","perdidas","empatadas","totales"};
+        String data[][] = new String[tam+1][6];
+        for (int i = 0; i < column.length; ++i) data[0][i] = column[i];
+        for (int i = 0; i < tam; ++i) {
+            for (int j = 0; j < 6; ++j) {
+                data[i+1][j] = "";
+            }
+        }
+        tablaRanking=new JTable(data,column);
+    }
+
+    private void limpiar_estadisticas() {
+        int tam = 1;
+        String column[]={"ID","nickname","ganadas","perdidas","empatadas","totales"};
+        String data[][] = new String[tam+1][6];
+        for (int i = 0; i < column.length; ++i) data[0][i] = column[i];
+        for (int i = 0; i < tam; ++i) {
+            for (int j = 0; j < 6; ++j) {
+                data[i+1][j] = "-";
+            }
+        }
+        panelEstadisticas.remove(tablaEstadisticas);
+        tablaEstadisticas=new JTable(data,column);
+        panelEstadisticas.add(tablaEstadisticas,BorderLayout.SOUTH);
+        panelEstadisticas.revalidate();
+        panelEstadisticas.repaint();
+    }
 
     private void asignar_listenersComponentes() {
 
@@ -329,7 +361,7 @@ public class VistaRanking {
         buttonLimpiarEstadisticas.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
-                        actionPerformed_buttonLimpiarTextoEstadisticas(event);
+                        actionPerformed_buttonLimpiarEstadisticas(event);
                     }
                 });
 

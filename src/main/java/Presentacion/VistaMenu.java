@@ -18,6 +18,9 @@ public class VistaMenu {
     private JPanel panelActivo = new JPanel();
 
     private JTextField textoInfoUsuario = new JTextField(15);
+    private JTextArea infoCreditos = new JTextArea(4,10);
+
+
 
     //BARRA DE MENU
     private JMenuBar menubarVista = new JMenuBar();
@@ -102,9 +105,19 @@ public class VistaMenu {
 
     private void inicializar_panelPrincipal() {
         panelPrincipal.setLayout(new BorderLayout());
-        //Parte central/abajo informacion del usuario logeado
-        panelPrincipal.add(panelInfo,BorderLayout.CENTER);
         panelPrincipal.add(textoInfoUsuario,BorderLayout.NORTH);
+        panelPrincipal.add(panelInfo,BorderLayout.CENTER);
+        inicializar_infoCreditos();
+        panelPrincipal.add(infoCreditos,BorderLayout.EAST);
+    }
+
+    private void inicializar_infoCreditos() {
+        infoCreditos.setText("\n  Creditos: \n");
+        infoCreditos.append("\n    - Sergio Aguado Cobos \n");
+        infoCreditos.append("\n    - Ashish Kshetri \n");
+        infoCreditos.append("\n    - Sergi Cassanmagnago Somoza \n");
+        infoCreditos.append("\n    - Sergi Bosquet Reyes \n");
+        infoCreditos.setEditable(false);
     }
 
     private void inicializar_menubarVista() {
@@ -163,18 +176,11 @@ public class VistaMenu {
     }
 
     private void inicializar_panelBotonesMenu() {
-        /*panelBotonesMenu.setLayout(new FlowLayout());
-        panelBotonesMenu.add(panelMenuTablero);
-        panelBotonesMenu.add(panelMenuPartida);
-        panelBotonesMenu.add(panelMenuRanking);
-        panelBotonesMenu.add(panelOtrasOpciones);*/
-
         panelBotonesMenu.setLayout(new BorderLayout());
         panelBotonesMenu.add(panelMenuTablero,BorderLayout.WEST);
         panelBotonesMenu.add(panelMenuPartida,BorderLayout.CENTER);
         panelBotonesMenu.add(panelMenuRanking,BorderLayout.EAST);
         panelBotonesMenu.add(panelOtrasOpciones,BorderLayout.SOUTH);
-
     }
 
     private void incializar_textArea_usuario() {

@@ -22,12 +22,9 @@ public class CtrlPresentacion {
         vistaMenu = new VistaMenu(this);
     }
 
-
-
     public void inicializarPresentacion() {
         hacerVisibleVista(0);
     }
-
 
     //en caso de que esta idea falle y haya bugs visuales utilizar creadoras de vistas para resetear estados
     public void hacerVisibleVista(int t) {

@@ -143,6 +143,7 @@ public class VistaLogin {
     private void inicializar_panelPrincipal() {
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.add(panelInfo,BorderLayout.NORTH);
+        //panelPrincipal.add(panelLoginPrincipal,BorderLayout.NORTH);
         panelPrincipal.add(infoLogin,BorderLayout.SOUTH);
     }
 
@@ -155,7 +156,6 @@ public class VistaLogin {
             String nick = textoNickname.getText();
             int res = iCtrlPresentacion.presentacion_login(id,nick);
             if (res == 1) {
-                //textoLoginFinal.setText("Login correcto");
                 textoLoginFinal.setText("");
                 iCtrlPresentacion.hacerVisibleVista(1);
             }
@@ -175,7 +175,6 @@ public class VistaLogin {
     public void actionPerformed_buttonRegistrarse (ActionEvent event) {
         try {
             String nick = textoRegistroNickname.getText();
-            //FALTA FUNCIONES CTRLDOMINIO
             int res = iCtrlPresentacion.presentacion_registro_usuario(nick);
             if (res != -1) {
                 textoLoginFinal.setText("Registro Correcto se te ha asignado el ID: " + res +" , y nickname: " + nick);
