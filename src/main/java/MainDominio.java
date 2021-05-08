@@ -7,7 +7,7 @@ import MyException.MyException;
 
 import java.util.*;
 
-public class Main {
+public class MainDominio {
     static int code;
     static String nickname;
     static int id_2;
