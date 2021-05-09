@@ -119,6 +119,9 @@ public class JugadorMaquina extends Jugador {
      * @return devuelve el tablero con la ficha colocada por la IA
      * */
     public Tablero posicion(Tablero t, int turno){
+
+        //t = valorMax(t,turno,-100, 100, this.get_profundidadMaquina());
+        //return t;
         Set<Position> disponibles = t.getCasillasDisponibles();
         int x = 0;
         int y = 0;
