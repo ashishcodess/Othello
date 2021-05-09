@@ -75,7 +75,7 @@ public class JugadorMaquina extends Jugador {
     public int get_profundidadMaquina() { return this.profundidad_MinMax; }
 
     /**
-     * Operacion para tirar ficha ejecutando el algoritmo minMax
+     * Operacion para tirar ficha ejecutando el algoritmo minMax en caso que la maquina sea las fichas negras
      * @param t el tablero de la partida
      * @param turno turno de la partida en ese momento en concreto
      * @param alpha parámetro alfa del algoritmo
@@ -107,7 +107,7 @@ public class JugadorMaquina extends Jugador {
     }
 
     /**
-     * Operacion para tirar ficha ejecutando el algoritmo minMax
+     * Operacion para tirar ficha ejecutando el algoritmo minMax en caso que la maquina sea las fichas blancas
      * @param t el tablero de la partida
      * @param turno turno de la partida en ese momento en concreto
      * @param alpha parámetro alfa del algoritmo
@@ -147,7 +147,8 @@ public class JugadorMaquina extends Jugador {
      * */
     public Tablero posicion(Tablero t, int turno){
 
-        //t = valorMax(t,turno,-100, 100, this.get_profundidadMaquina());
+        //if(turno%2 == 0)t = valorMaxBlancas(t,turno,-100, 100, this.get_profundidadMaquina());
+        //else t = valorMaxNegras(t,turno,-100, 100, this.get_profundidadMaquina());
         //return t;
         Set<Position> disponibles = t.getCasillasDisponibles();
         int x = 0;
