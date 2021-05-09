@@ -21,7 +21,6 @@ public class VistaMenu {
     private JTextArea infoCreditos = new JTextArea(4,10);
 
 
-
     //BARRA DE MENU
     private JMenuBar menubarVista = new JMenuBar();
     private JMenu menuFile = new JMenu("File");
@@ -63,14 +62,24 @@ public class VistaMenu {
     private JButton buttonSalir = new JButton("Salir del juego");
 
 
+    /**
+     * Constructora de VistaMenu
+     * */
     public VistaMenu(CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
         frameVista.setLayout(new BorderLayout());
         inicializarComponentes();
     }
 
+    /**
+     *Metodo hacerVisible
+     * @param b si TRUE entonces el frame sera visible, caso contrario estara desactivado
+     * */
     public void hacerVisible(boolean b) {
-        if (b) incializar_textArea_usuario();
+        if (b) {
+            textoInfoUsuario.setText(iCtrlPresentacion.presentacion_get_info_usuario_activo());
+            textoInfoUsuario.setEditable(false);
+        }
         frameVista.pack();
         frameVista.setVisible(b);
         frameVista.setEnabled(b);
@@ -79,6 +88,9 @@ public class VistaMenu {
     /////////// INICIALIZACION DE COMPONENTES
 
 
+    /**
+     * Metodo para inicializar componentes (menuBar, paneles y frame)
+     * */
     private void inicializarComponentes() {
         inicializar_menubarVista();
         inicializar_frameVista();
@@ -86,6 +98,10 @@ public class VistaMenu {
         asignar_listenersComponentes();
     }
 
+
+    /**
+     * Metodo para inicializar frame
+     * */
     private void inicializar_frameVista() {
         frameVista.setMinimumSize(new Dimension(700,400));
         frameVista.setPreferredSize(frameVista.getMinimumSize());
@@ -96,6 +112,30 @@ public class VistaMenu {
         contentPane.add(panelPrincipal);
     }
 
+    /**
+     * Metodo para inicializar menuBar (barra de menu superior)
+     * */
+    private void inicializar_menubarVista() {
+        menuFile.add(menuitemLogin);
+        menuFile.add(menuitemQuit);
+        menubarVista.add(menuFile);
+        menuTablero.add(menuItem_crearTablero);
+        menuTablero.add(menuItem_MostrarTablero);
+        menuTablero.add(menuItem_BorrarTablero);
+        menubarVista.add(menuTablero);
+        menuPartida.add(menuItem_crearPartida);
+        menuPartida.add(menuItem_CargarPartida);
+        menuPartida.add(menuItem_BorrarPartida);
+        menubarVista.add(menuPartida);
+        menuRanking.add(menuItem_consultar_ranking);
+        menubarVista.add(menuRanking);
+        frameVista.setJMenuBar(menubarVista);
+    }
+
+
+    /**
+     * Metodo para inicializar todos los paneles
+     * */
     private void inicializar_paneles() {
         //PANEL MENU PARTIDA
         panelMenuPartida.setLayout(new BoxLayout(panelMenuPartida,BoxLayout.PAGE_AXIS));
@@ -134,54 +174,36 @@ public class VistaMenu {
         iPanelActivo = 1;
         panelInfo.add(panelActivo);
 
-        //PANEL PRINCIPAL
-        panelPrincipal.setLayout(new BorderLayout());
-        panelPrincipal.add(textoInfoUsuario,BorderLayout.NORTH);
-        panelPrincipal.add(panelInfo,BorderLayout.CENTER);
-        inicializar_infoCreditos();
-        panelPrincipal.add(infoCreditos,BorderLayout.EAST);
-    }
-
-
-
-    private void inicializar_menubarVista() {
-        menuFile.add(menuitemLogin);
-        menuFile.add(menuitemQuit);
-        menubarVista.add(menuFile);
-        menuTablero.add(menuItem_crearTablero);
-        menuTablero.add(menuItem_MostrarTablero);
-        menuTablero.add(menuItem_BorrarTablero);
-        menubarVista.add(menuTablero);
-        menuPartida.add(menuItem_crearPartida);
-        menuPartida.add(menuItem_CargarPartida);
-        menuPartida.add(menuItem_BorrarPartida);
-        menubarVista.add(menuPartida);
-        menuRanking.add(menuItem_consultar_ranking);
-        menubarVista.add(menuRanking);
-        frameVista.setJMenuBar(menubarVista);
-    }
-
-    private void incializar_textArea_usuario() {
-        textoInfoUsuario.setText(iCtrlPresentacion.presentacion_get_info_usuario_activo());
-        textoInfoUsuario.setEditable(false);
-    }
-
-    private void inicializar_infoCreditos() {
+        //INFO CREDITOS
         infoCreditos.setText("\n  Creditos: \n");
         infoCreditos.append("\n    - Sergio Aguado Cobos \n");
         infoCreditos.append("\n    - Ashish Kshetri \n");
         infoCreditos.append("\n    - Sergi Cassanmagnago Somoza \n");
         infoCreditos.append("\n    - Sergi Bosquet Reyes \n");
         infoCreditos.setEditable(false);
+
+        //PANEL PRINCIPAL
+        panelPrincipal.setLayout(new BorderLayout());
+        panelPrincipal.add(textoInfoUsuario,BorderLayout.NORTH);
+        panelPrincipal.add(panelInfo,BorderLayout.CENTER);
+        panelPrincipal.add(infoCreditos,BorderLayout.EAST);
     }
+
 
 
     /////////// LISTENERS (+ su asignacion)
 
+    /**
+     * Metodo actionPerfomed del boton de Login (Para cargar otro usuario diferente al actual)
+     * */
     public void actionPerformed_buttonLogin (ActionEvent event) {
         iCtrlPresentacion.hacerVisibleVista(0);
     }
 
+
+    /**
+     * Metodo para asignar los listeners a cada componente
+     * */
     private void asignar_listenersComponentes() {
         buttonLogin.addActionListener
                 (new ActionListener() {

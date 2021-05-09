@@ -37,7 +37,6 @@ public class VistaLogin {
 
     private JTextField textoLoginFinal = new JTextField(15);
 
-
     //BARRA DE MENU
     private JMenuBar menubarVista = new JMenuBar();
     private JMenu menuFile = new JMenu("File");
@@ -45,12 +44,19 @@ public class VistaLogin {
     private JMenuItem menuitemQuit = new JMenuItem("Salir");
 
 
+    /**
+     * Constructora de VistaLogin
+     * */
     public VistaLogin(CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
         frameVista.setLayout(new BorderLayout()); // 5 zonas (North, South, East, West, Center)
         inicializarComponentes();
     }
 
+    /**
+     *Metodo hacerVisible
+     * @param b si TRUE entonces el frame sera visible, caso contrario estara desactivado
+     * */
     public void hacerVisible(boolean b) {
         frameVista.pack();
         frameVista.setVisible(b);
@@ -60,6 +66,9 @@ public class VistaLogin {
 
     /////////// INICIALIZACION DE COMPONENTES
 
+    /**
+     * Metodo para inicializar componentes (menuBar, paneles y frame)
+     * */
     private void inicializarComponentes() {
         inicializar_frameVista();
         inicializar_menubarVista();
@@ -67,6 +76,9 @@ public class VistaLogin {
         asignar_listenersComponentes();
     }
 
+    /**
+     * Metodo para inicializar frame
+     * */
     private void inicializar_frameVista() {
         frameVista.setMinimumSize(new Dimension(700,400));
         frameVista.setPreferredSize(frameVista.getMinimumSize());
@@ -77,6 +89,9 @@ public class VistaLogin {
         contentPane.add(panelPrincipal);
     }
 
+    /**
+     * Metodo para inicializar menuBar (barra de menu superior)
+     * */
     private void inicializar_menubarVista() {
         menuFile.add(menuitemLogin);
         menuFile.add(menuitemQuit);
@@ -84,6 +99,9 @@ public class VistaLogin {
         frameVista.setJMenuBar(menubarVista);
     }
 
+    /**
+     * Metodo para inicializar todos los paneles
+     * */
     private void inicializar_paneles() {
         //PANEL LOGIN
         infoLogin.setText("\n Informacion de Login:\n");
@@ -138,6 +156,9 @@ public class VistaLogin {
 
     /////////// LISTENERS (+ su asignacion)
 
+    /**
+     * Metodo actionPerfomed del boton de Login
+     * */
     public void actionPerformed_buttonLogin (ActionEvent event) {
         int id = -1;
         try {
@@ -155,12 +176,18 @@ public class VistaLogin {
         }
     }
 
+    /**
+     * Metodo actionPerfomed del boton de Limpiar (borrar contenido de los contenedores de texto)
+     * */
     public void actionPerformed_buttonLimpiarLogin (ActionEvent event) {
         textoID.setText("");
         textoNickname.setText("");
         textoRegistroNickname.setText("");
     }
 
+    /**
+     * Metodo actionPerfomed del boton de Registrarse
+     * */
     public void actionPerformed_buttonRegistrarse (ActionEvent event) {
         try {
             String nick = textoRegistroNickname.getText();
@@ -173,7 +200,9 @@ public class VistaLogin {
         catch (Exception e) {} //no hacer nada
     }
 
-
+    /**
+     * Metodo para asignar los listeners a cada componente
+     * */
     private void asignar_listenersComponentes() {
         buttonLogin.addActionListener
                 (new ActionListener() {

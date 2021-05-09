@@ -64,13 +64,19 @@ public class VistaRanking {
     private JMenuItem menuItem_consultar_estadisticas = new JMenuItem("Consultar Estadisticas");
 
 
-
+    /**
+     * Constructora de VistaRanking
+     * */
     public VistaRanking (CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
         frameVista.setLayout(new BorderLayout()); // 5 zonas (North, South, East, West, Center)
         inicializarComponentes();
     }
 
+     /**
+     *Metodo hacerVisible
+     * @param b si TRUE entonces el frame sera visible, caso contrario estara desactivado
+     * */
     public void hacerVisible(boolean b) {
         frameVista.pack();
         frameVista.setVisible(b);
@@ -80,6 +86,9 @@ public class VistaRanking {
 
     /////////// INICIALIZACION DE COMPONENTES
 
+    /**
+     * Metodo para inicializar componentes (menuBar, paneles y frame)
+     * */
     private void inicializarComponentes() {
         inicializar_frameVista();
         inicializar_menubarVista();
@@ -87,6 +96,9 @@ public class VistaRanking {
         asignar_listenersComponentes();
     }
 
+    /**
+     * Metodo para inicializar frame
+     * */
     private void inicializar_frameVista() {
         frameVista.setMinimumSize(new Dimension(700,750));
         frameVista.setPreferredSize(frameVista.getMinimumSize());
@@ -97,6 +109,9 @@ public class VistaRanking {
         contentPane.add(panelPrincipal);
     }
 
+    /**
+     * Metodo para inicializar menuBar (barra de menu superior)
+     * */
     private void inicializar_menubarVista() {
         menuFile.add(menuitemVolverMenu);
         menuFile.add(menuitemQuit);
@@ -108,6 +123,9 @@ public class VistaRanking {
     }
 
 
+    /**
+     * Metodo para inicializar todos los paneles
+     * */
     private void inicializar_paneles() {
         //PANEL BOTONES_GENERAL
         panelBotonesGeneral.setLayout(new FlowLayout());
@@ -174,16 +192,12 @@ public class VistaRanking {
 
     /////////// LISTENERS (+ su asignacion)
 
-    public void actionPerformed_buttonOrdenar (ActionEvent event) {
-        String s = comboBoxOrdenar.getSelectedItem().toString();
-        int orden = -1;
-        if (s.equals("ID (mayor a menor)")) orden = 1;
-        else if (s.equals("Partidas Ganadas")) orden = 0;
-        else if (s.equals("Nickname")) orden = 2;
-        else if (s.equals("ID(menor a mayor)")) orden = 3;
-        if (iCtrlPresentacion.presentacion_ordenar_ranking(orden)) actionPerformed_buttonCargarRanking(event);
-    }
 
+    //CONSULTAR RANKING
+
+    /**
+     * Metodo actionPerfomed del boton de Consultar Ranking
+     * * */
     public void actionPerformed_buttonConsultarRanking (ActionEvent event) {
         panelInfo.remove(panelActivo);
         if (iPanelActivo != 1) {
@@ -195,6 +209,9 @@ public class VistaRanking {
         frameVista.repaint();
     }
 
+    /**
+     * Metodo actionPerfomed del boton de Cargar Ranking
+     * * */
     public void actionPerformed_buttonCargarRanking (ActionEvent event) {
         ArrayList<String> res = iCtrlPresentacion.presentacion_consultar_ranking();
         int tam = res.size()/6;
@@ -213,6 +230,9 @@ public class VistaRanking {
         panelRanking.repaint();
     }
 
+    /**
+     * Metodo actionPerfomed del boton de Limpiar Ranking
+     * * */
     public void actionPerformed_buttonLimpiarRanking (ActionEvent event) {
         panelRanking.remove(tablaRanking);
         limpiar_ranking();
@@ -221,6 +241,40 @@ public class VistaRanking {
         panelRanking.repaint();
     }
 
+    /**
+     * Metodo actionPerfomed del boton de Ordenar (Para ordenar el ranking en funcion de ID, ganadas o Nickname)
+     * */
+    public void actionPerformed_buttonOrdenar (ActionEvent event) {
+        String s = comboBoxOrdenar.getSelectedItem().toString();
+        int orden = -1;
+        if (s.equals("ID (mayor a menor)")) orden = 1;
+        else if (s.equals("Partidas Ganadas")) orden = 0;
+        else if (s.equals("Nickname")) orden = 2;
+        else if (s.equals("ID(menor a mayor)")) orden = 3;
+        if (iCtrlPresentacion.presentacion_ordenar_ranking(orden)) actionPerformed_buttonCargarRanking(event);
+    }
+
+    /**
+     * Metodo limpiar_ranking (vacia la tabla del ranking)
+     * * */
+    private void limpiar_ranking() {
+        int tam = iCtrlPresentacion.presentacion_consultar_tam_ranking();
+        String column[]={"ID","nickname","ganadas","perdidas","empatadas","totales"};
+        String data[][] = new String[tam+1][6];
+        for (int i = 0; i < column.length; ++i) data[0][i] = column[i];
+        for (int i = 0; i < tam; ++i) {
+            for (int j = 0; j < 6; ++j) {
+                data[i+1][j] = "";
+            }
+        }
+        tablaRanking=new JTable(data,column);
+    }
+
+    //CONSULTAR ESTADISTICAS
+
+    /**
+     * Metodo actionPerfomed del boton de Consultar Estadisticas
+     * * */
     public void actionPerformed_buttonConsultarEstadisticas(ActionEvent event) {
         panelInfo.remove(panelActivo);
         if (iPanelActivo != 2) {
@@ -232,6 +286,9 @@ public class VistaRanking {
         frameVista.repaint();
     }
 
+    /**
+     * Metodo actionPerfomed del boton de Buscar Estadisticas
+     * * */
     public void actionPerformed_buttonBuscarEstadisticas (ActionEvent event) {
         int id = -1;
         try {
@@ -254,6 +311,9 @@ public class VistaRanking {
         panelEstadisticas.repaint();
     }
 
+    /**
+     * Metodo actionPerfomed del boton de Limpiar Estadisticas
+     * * */
     public void actionPerformed_buttonLimpiarEstadisticas (ActionEvent event) {
         textoID.setText("");
         textoNickname.setText("");
@@ -264,21 +324,9 @@ public class VistaRanking {
         panelEstadisticas.repaint();
     }
 
-
-
-    private void limpiar_ranking() {
-        int tam = iCtrlPresentacion.presentacion_consultar_tam_ranking();
-        String column[]={"ID","nickname","ganadas","perdidas","empatadas","totales"};
-        String data[][] = new String[tam+1][6];
-        for (int i = 0; i < column.length; ++i) data[0][i] = column[i];
-        for (int i = 0; i < tam; ++i) {
-            for (int j = 0; j < 6; ++j) {
-                data[i+1][j] = "";
-            }
-        }
-        tablaRanking=new JTable(data,column);
-    }
-
+    /**
+     * Metodo limpiar_estadisticas (vacia la tabla de estadisticas)
+     * * */
     private void limpiar_estadisticas() {
         int tam = 1;
         String column[]={"ID","nickname","ganadas","perdidas","empatadas","totales"};
@@ -296,6 +344,9 @@ public class VistaRanking {
         panelEstadisticas.repaint();
     }
 
+    /**
+     * Metodo para asignar los listeners a cada componente
+     * */
     private void asignar_listenersComponentes() {
 
         buttonCargarRanking.addActionListener

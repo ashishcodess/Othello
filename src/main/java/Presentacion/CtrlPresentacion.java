@@ -56,6 +56,10 @@ public class CtrlPresentacion {
     }
 
 
+    /**
+     * Metodo login (desde Capa Presentacion)
+     * @param id
+     * */
     public int presentacion_login(int id, String nick) {
         return ctrlDominio.login_inicial_presentacion(id,nick);
     }
