@@ -82,13 +82,7 @@ public class VistaMenu {
     private void inicializarComponentes() {
         inicializar_menubarVista();
         inicializar_frameVista();
-        inicializar_panelPrincipal();
-        inicializar_panelInfo();
-        inicializar_panelMenuPartida();
-        inicializar_panelMenuTablero();
-        inicializar_panelMenuRanking();
-        inicializar_panelMenuOtrasOpciones();
-        inicializar_panelBotonesMenu();
+        inicializar_paneles();
         asignar_listenersComponentes();
     }
 
@@ -102,7 +96,45 @@ public class VistaMenu {
         contentPane.add(panelPrincipal);
     }
 
-    private void inicializar_panelPrincipal() {
+    private void inicializar_paneles() {
+        //PANEL MENU PARTIDA
+        panelMenuPartida.setLayout(new BoxLayout(panelMenuPartida,BoxLayout.PAGE_AXIS));
+        panelMenuPartida.add(labelPartida);
+        panelMenuPartida.add(buttonCrearPartida);
+        panelMenuPartida.add(buttonBorrarPartida);
+        panelMenuPartida.add(buttonCargarPartida);
+
+        //PANEL MENU TABLERO
+        panelMenuTablero.setLayout(new BoxLayout(panelMenuTablero,BoxLayout.PAGE_AXIS));
+        panelMenuTablero.add(labelTablero);
+        panelMenuTablero.add(buttonCrearTablero);
+        panelMenuTablero.add(buttonBorrarTablero);
+        panelMenuTablero.add(buttonMostrarTablero);
+
+        //PANEL MENU RANKING
+        panelMenuRanking.setLayout(new BoxLayout(panelMenuRanking,BoxLayout.PAGE_AXIS));
+        panelMenuRanking.add(labelRanking);
+        panelMenuRanking.add(buttonConsultarRanking);
+
+        //PANEL MENU OTRAS OPCIONES
+        panelOtrasOpciones.setLayout(new FlowLayout());
+        panelOtrasOpciones.add(labelOtros);
+        panelOtrasOpciones.add(buttonLogin);
+        panelOtrasOpciones.add(buttonSalir);
+
+        //PANEL BOTONES GENERAL
+        panelBotonesMenu.setLayout(new BorderLayout());
+        panelBotonesMenu.add(panelMenuTablero,BorderLayout.WEST);
+        panelBotonesMenu.add(panelMenuPartida,BorderLayout.CENTER);
+        panelBotonesMenu.add(panelMenuRanking,BorderLayout.EAST);
+        panelBotonesMenu.add(panelOtrasOpciones,BorderLayout.SOUTH);
+
+        //PANEL INFO
+        panelActivo = panelBotonesMenu;
+        iPanelActivo = 1;
+        panelInfo.add(panelActivo);
+
+        //PANEL PRINCIPAL
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.add(textoInfoUsuario,BorderLayout.NORTH);
         panelPrincipal.add(panelInfo,BorderLayout.CENTER);
@@ -110,14 +142,7 @@ public class VistaMenu {
         panelPrincipal.add(infoCreditos,BorderLayout.EAST);
     }
 
-    private void inicializar_infoCreditos() {
-        infoCreditos.setText("\n  Creditos: \n");
-        infoCreditos.append("\n    - Sergio Aguado Cobos \n");
-        infoCreditos.append("\n    - Ashish Kshetri \n");
-        infoCreditos.append("\n    - Sergi Cassanmagnago Somoza \n");
-        infoCreditos.append("\n    - Sergi Bosquet Reyes \n");
-        infoCreditos.setEditable(false);
-    }
+
 
     private void inicializar_menubarVista() {
         menuFile.add(menuitemLogin);
@@ -136,52 +161,18 @@ public class VistaMenu {
         frameVista.setJMenuBar(menubarVista);
     }
 
-    private void inicializar_panelInfo() { //panel inicial
-        panelActivo = panelBotonesMenu;
-        iPanelActivo = 1;
-        panelInfo.add(panelActivo);
-    }
-
-    private void inicializar_panelMenuPartida() {
-        panelMenuPartida.setLayout(new BoxLayout(panelMenuPartida,BoxLayout.PAGE_AXIS));
-        panelMenuPartida.add(labelPartida);
-        panelMenuPartida.add(buttonCrearPartida);
-        panelMenuPartida.add(buttonBorrarPartida);
-        panelMenuPartida.add(buttonCargarPartida);
-    }
-
-    private void inicializar_panelMenuTablero() {
-        panelMenuTablero.setLayout(new BoxLayout(panelMenuTablero,BoxLayout.PAGE_AXIS));
-        panelMenuTablero.add(labelTablero);
-        panelMenuTablero.add(buttonCrearTablero);
-        panelMenuTablero.add(buttonBorrarTablero);
-        panelMenuTablero.add(buttonMostrarTablero);
-    }
-
-    private void inicializar_panelMenuRanking() {
-        panelMenuRanking.setLayout(new BoxLayout(panelMenuRanking,BoxLayout.PAGE_AXIS));
-        panelMenuRanking.add(labelRanking);
-        panelMenuRanking.add(buttonConsultarRanking);
-    }
-
-    private void inicializar_panelMenuOtrasOpciones() {
-        panelOtrasOpciones.setLayout(new FlowLayout());
-        panelOtrasOpciones.add(labelOtros);
-        panelOtrasOpciones.add(buttonLogin);
-        panelOtrasOpciones.add(buttonSalir);
-    }
-
-    private void inicializar_panelBotonesMenu() {
-        panelBotonesMenu.setLayout(new BorderLayout());
-        panelBotonesMenu.add(panelMenuTablero,BorderLayout.WEST);
-        panelBotonesMenu.add(panelMenuPartida,BorderLayout.CENTER);
-        panelBotonesMenu.add(panelMenuRanking,BorderLayout.EAST);
-        panelBotonesMenu.add(panelOtrasOpciones,BorderLayout.SOUTH);
-    }
-
     private void incializar_textArea_usuario() {
         textoInfoUsuario.setText(iCtrlPresentacion.presentacion_get_info_usuario_activo());
         textoInfoUsuario.setEditable(false);
+    }
+
+    private void inicializar_infoCreditos() {
+        infoCreditos.setText("\n  Creditos: \n");
+        infoCreditos.append("\n    - Sergio Aguado Cobos \n");
+        infoCreditos.append("\n    - Ashish Kshetri \n");
+        infoCreditos.append("\n    - Sergi Cassanmagnago Somoza \n");
+        infoCreditos.append("\n    - Sergi Bosquet Reyes \n");
+        infoCreditos.setEditable(false);
     }
 
 

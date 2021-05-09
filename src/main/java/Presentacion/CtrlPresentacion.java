@@ -15,6 +15,9 @@ public class CtrlPresentacion {
     int vistaActiva = 0;
 
 
+    /**
+     * Creadora por defecto de CtrlPresentacion
+     * */
     public CtrlPresentacion() {
         ctrlDominio = new CtrlDominio();
         vistaRanking = new VistaRanking(this);
@@ -22,11 +25,16 @@ public class CtrlPresentacion {
         vistaMenu = new VistaMenu(this);
     }
 
+
     public void inicializarPresentacion() {
         hacerVisibleVista(0);
     }
 
     //en caso de que esta idea falle y haya bugs visuales utilizar creadoras de vistas para resetear estados
+    /**
+     * Metodo hacerVisibleVista
+     * @param t dependiendo del entero hace visible una vista u otra (para gestion de vistas)
+     * */
     public void hacerVisibleVista(int t) {
         switch (t) {
             case 0:
@@ -46,6 +54,7 @@ public class CtrlPresentacion {
                 break;
         }
     }
+
 
     public int presentacion_login(int id, String nick) {
         return ctrlDominio.login_inicial_presentacion(id,nick);

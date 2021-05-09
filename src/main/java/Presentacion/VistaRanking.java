@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-//FALTAN BOTONES DE ORDENACION DEL RANKING
 
 
 public class VistaRanking {
@@ -84,12 +83,7 @@ public class VistaRanking {
     private void inicializarComponentes() {
         inicializar_frameVista();
         inicializar_menubarVista();
-        inicializar_panelBotonesGeneral();
-        inicializar_panelPrincipal();
-        inicializar_panelInfo();
-        inicializar_panelBotonesRanking();
-        inicializar_panelRanking();
-        inicializar_panelEstadisticas();
+        inicializar_paneles();
         asignar_listenersComponentes();
     }
 
@@ -113,14 +107,9 @@ public class VistaRanking {
         frameVista.setJMenuBar(menubarVista);
     }
 
-    private void inicializar_panelPrincipal() {
-        panelPrincipal.setLayout(new BorderLayout());
-        panelPrincipal.add(panelBotonesGeneral,BorderLayout.NORTH);
-        panelPrincipal.add(panelInfo,BorderLayout.CENTER);
-    }
 
-
-    private void inicializar_panelBotonesGeneral() { //panel inicial
+    private void inicializar_paneles() {
+        //PANEL BOTONES_GENERAL
         panelBotonesGeneral.setLayout(new FlowLayout());
         panelBotonesGeneral.add(buttonConsultarRanking);
         panelBotonesGeneral.add(buttonConsultarEstadisticas);
@@ -128,17 +117,8 @@ public class VistaRanking {
         buttonConsultarRanking.setToolTipText("Consulta todo el ranking");
         buttonConsultarEstadisticas.setToolTipText("Consulta las estadisticas de un Jugador en concreto");
         buttonVolverMenu.setToolTipText("Volver al menu principal");
-    }
 
-
-    private void inicializar_panelInfo() { //panel inicial
-        panelActivo = panelRanking;
-        iPanelActivo = 1;
-        panelInfo.add(panelActivo);
-    }
-
-
-    private void inicializar_panelRanking() {
+        //PANEL RANKING
         panelRanking.setLayout(new BorderLayout()); //5 zonas
         panelRanking.add(labelInfoRanking,BorderLayout.NORTH);
         panelRanking.add(panelBotonesRanking,BorderLayout.EAST);
@@ -148,9 +128,22 @@ public class VistaRanking {
         panelRanking.revalidate();
         panelRanking.repaint();
         panelRanking.add(tablaRanking,BorderLayout.SOUTH);
-    }
 
-    private void inicializar_panelEstadisticas() {
+        //PANEL BOTONES RANKING
+        panelBotonesRanking.setLayout(new FlowLayout());
+        panelBotonesRanking.add(buttonCargarRanking);
+        panelBotonesRanking.add(buttonLimpiarRanking);
+        comboBoxOrdenar.addItem("ID (mayor a menor)");
+        comboBoxOrdenar.addItem("ID(menor a mayor)");
+        comboBoxOrdenar.addItem("Partidas Ganadas");
+        comboBoxOrdenar.addItem("Nickname");
+        panelBotonesRanking.add(comboBoxOrdenar);
+        panelBotonesRanking.add(buttonOrdenar);
+        buttonCargarRanking.setToolTipText("Carga la informacion del ranking en el TextArea");
+        buttonLimpiarRanking.setToolTipText("Hace un clear del TextArea");
+        buttonOrdenar.setToolTipText("Ordena la salida en funcion de: ID, partidas ganadas o Nickname");
+
+        //PANEL ESTADISTICAS
         panelBotonesEstadisticas.setLayout(new FlowLayout());
         panelBotonesEstadisticas.add(labelID);
         panelBotonesEstadisticas.add(textoID);
@@ -165,22 +158,19 @@ public class VistaRanking {
         limpiar_estadisticas();
         tablaEstadisticas.repaint();
         panelEstadisticas.add(tablaEstadisticas,BorderLayout.SOUTH);
+
+        //PANEL INFO
+        panelActivo = panelRanking;
+        iPanelActivo = 1;
+        panelInfo.add(panelActivo);
+
+        //PANEL PRINCIPAL
+        panelPrincipal.setLayout(new BorderLayout());
+        panelPrincipal.add(panelBotonesGeneral,BorderLayout.NORTH);
+        panelPrincipal.add(panelInfo,BorderLayout.CENTER);
     }
 
-    private void inicializar_panelBotonesRanking() {
-        panelBotonesRanking.setLayout(new FlowLayout());
-        panelBotonesRanking.add(buttonCargarRanking);
-        panelBotonesRanking.add(buttonLimpiarRanking);
-        comboBoxOrdenar.addItem("ID (mayor a menor)");
-        comboBoxOrdenar.addItem("ID(menor a mayor)");
-        comboBoxOrdenar.addItem("Partidas Ganadas");
-        comboBoxOrdenar.addItem("Nickname");
-        panelBotonesRanking.add(comboBoxOrdenar);
-        panelBotonesRanking.add(buttonOrdenar);
-        buttonCargarRanking.setToolTipText("Carga la informacion del ranking en el TextArea");
-        buttonLimpiarRanking.setToolTipText("Hace un clear del TextArea");
-        buttonOrdenar.setToolTipText("Ordena la salida en funcion de: ID, partidas ganadas o Nickname");
-    }
+
 
     /////////// LISTENERS (+ su asignacion)
 

@@ -63,9 +63,7 @@ public class VistaLogin {
     private void inicializarComponentes() {
         inicializar_frameVista();
         inicializar_menubarVista();
-        inicializar_panelLogin();
-        inicializar_panelInfo();
-        inicializar_panelPrincipal();
+        inicializar_paneles();
         asignar_listenersComponentes();
     }
 
@@ -86,9 +84,8 @@ public class VistaLogin {
         frameVista.setJMenuBar(menubarVista);
     }
 
-
-    private void inicializar_panelLogin() {
-
+    private void inicializar_paneles() {
+        //PANEL LOGIN
         infoLogin.setText("\n Informacion de Login:\n");
         infoLogin.append("\n         - Registro: si no estas registrado introducir un Nickname " +
                 "y el sistema le asignara un ID para futuros usos del juego \n");
@@ -125,23 +122,19 @@ public class VistaLogin {
         panelLoginPrincipal.add(panelRegistro, BorderLayout.CENTER);
         textoLoginFinal.setEditable(false);
         panelLoginPrincipal.add(textoLoginFinal,BorderLayout.SOUTH);
-    }
 
-
-
-    private void inicializar_panelInfo() { //panel inicial
+        //PANEL INFO
         panelActivo = panelLoginPrincipal;
         iPanelActivo = 1;
         panelInfo.add(panelActivo);
-    }
 
-
-    private void inicializar_panelPrincipal() {
+        //PANEL PRINCIPAL
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.add(panelInfo,BorderLayout.NORTH);
         //panelPrincipal.add(panelLoginPrincipal,BorderLayout.NORTH);
         panelPrincipal.add(infoLogin,BorderLayout.SOUTH);
     }
+
 
     /////////// LISTENERS (+ su asignacion)
 

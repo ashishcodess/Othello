@@ -185,48 +185,5 @@ public class CtrlDominio {
 
     public int consultar_tam_ranking() {return ranking.consultar_tam_ranking();}
 
-    //devolvera los mensajes que tendra que imprimir en pantalla o alguna info importante para capa Presentacion
-    /*public static ArrayList<String> peticion_menu(int peticion, ArrayList<String> argum) {
-        ArrayList<String> as = new ArrayList<String>();
-        int idPartida = -1;
-        switch (peticion){
-            case -1:
-                ejecutarRondaPartida(partida_activa,argum);
-                break;
-            case 1:
-                partida_activa = iniciarPartida(argum);
-                break;
-            case 2:
-                as = listar_partidas_disponibles(code,nickname);
-                break;
-            case 3:
-                idPartida = Integer.parseInt(argum.get(0));
-                partida_activa = cargarPartida(idPartida);
-                break;
-            case 4:
-                idPartida = Integer.parseInt(argum.get(0));
-                if(cp.ctrl_borrar_partida(idPartida)) {
-                    as.add("Partida Borrada correctamente");
-                }
-                else as.add("No se ha borrado correctamente");
-                break;
-            case 5:
-                //argum[0] opcion submenu de tablero personalizado (0: crear tablero, 1: borrar tablero(id),2: listar tableros, 3: mostrar tablero(id))argum[1] -> id de tablero en caso de escoger subopcion 1 o 3
-                //TableroPersonalizado();
-                break;
-           case 6:
-                as = ranking.toArrayList();
-                break;
-            case 7:
-                //argum[0]: id persona a consultar
-                //argum[1]: nickname
-                as = consultar_Estadisticas(Integer.parseInt(argum.get(0)),argum.get(1));
-                break;
-            default:
-                System.out.println("Introduce un numero valido");
-                break;
-        }
-        return as;
-    }*/
 
 }
