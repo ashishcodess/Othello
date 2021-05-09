@@ -813,4 +813,22 @@ public class Tablero {
         return res;
     }
 
+    /**
+     * Método de la máquina para poder evaluar la calidad de cada estado,
+     * en caso de que la máquina este jugando con las fichas blancas
+     * @return retorna la diferencia entre el número de fichas blancas y el número de fichas negras
+     */
+    public int getHeuristicValueBlancas(){
+        return this.blancas.size()-this.negras.size();
+    }
+
+    /**
+     * Método de la máquina para poder evaluar la calidad de cada estado,
+     * en caso de que la máquina este jugando con las fichas negras
+     * @return retorna la diferencia entre el número de fichas negras y el número de fichas blancas
+     */
+    public int getHeuristicValueNegras(){
+        return this.negras.size()-this.blancas.size();
+    }
+
 }
