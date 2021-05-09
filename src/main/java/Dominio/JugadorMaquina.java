@@ -44,8 +44,9 @@ public class JugadorMaquina extends Jugador {
      * @param idMaquina (id de Jugador = idMaquina)
      * @param profundidad (profundidad_IA = profundidad)
      * */
-    public JugadorMaquina (int idMaquina, int profundidad) {
+    public JugadorMaquina (int idMaquina, int profundidad) throws MyException{
         super(idMaquina);
+        if (idMaquina > 5)throw new MyException("El ID:" + idMaquina + " pertenece a una persona o esta fuera de rango(es negativo)");
         this.profundidad_MinMax = profundidad;
     }
 

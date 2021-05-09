@@ -48,11 +48,53 @@ public class Partida {
         this.ganador = -1;
         switch (modoJuego){
             case 0:
+                switch(idj1){
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                }
                 this.j1 = new JugadorMaquina(idj1);
+                switch(idj2){
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                }
                 this.j2 = new JugadorMaquina(idj2);
                 break;
             case 1:
                 this.j1 = new JugadorPersona(idj1, n1);
+                switch(idj2){
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                }
                 this.j2 = new JugadorMaquina(idj2);
                 break;
             case 2:
@@ -85,11 +127,31 @@ public class Partida {
         this.modoDeJuego = modoJuego;
         switch (modoJuego){
             case 0:
+                switch(idj1){
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                }
                 this.j1 = new JugadorMaquina(idj1);
+                switch (idj2){
+
+                }
                 this.j2 = new JugadorMaquina(idj2);
                 break;
             case 1:
                 this.j1 = new JugadorPersona(idj1, n1);
+                switch(idj2){
+
+                }
                 this.j2 = new JugadorMaquina(idj2);
                 break;
             case 2:
