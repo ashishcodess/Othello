@@ -187,7 +187,7 @@ public class Ranking {
 
     /**
      * Operacion ordenar_ranking(orden) en funcion de un orden concreto
-     * @param orden [0 (Ganadas), 1 (ID) , 2 (NICKNAME), 3 (ID menor a mayor)]
+     * @param orden [0 (Ganadas), 1 (ID mayor a menor) , 2 (NICKNAME), 3 (ID menor a mayor)]
      * @return devuelve true en caso de que se haya efectuado una ordenacion, caso contrario devuelve falso
      * */
     public Boolean ordenar_ranking(int orden) {
