@@ -21,7 +21,6 @@ public class VistaMenu {
     private JTextArea infoCreditos = new JTextArea(4,10);
 
 
-
     //BARRA DE MENU
     private JMenuBar menubarVista = new JMenuBar();
     private JMenu menuFile = new JMenu("File");
@@ -63,14 +62,24 @@ public class VistaMenu {
     private JButton buttonSalir = new JButton("Salir del juego");
 
 
+    /**
+     * Constructora de VistaMenu
+     * */
     public VistaMenu(CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
         frameVista.setLayout(new BorderLayout());
         inicializarComponentes();
     }
 
+    /**
+     *Metodo hacerVisible
+     * @param b si TRUE entonces el frame sera visible, caso contrario estara desactivado
+     * */
     public void hacerVisible(boolean b) {
-        if (b) incializar_textArea_usuario();
+        if (b) {
+            textoInfoUsuario.setText(iCtrlPresentacion.presentacion_get_info_usuario_activo());
+            textoInfoUsuario.setEditable(false);
+        }
         frameVista.pack();
         frameVista.setVisible(b);
         frameVista.setEnabled(b);
@@ -79,19 +88,20 @@ public class VistaMenu {
     /////////// INICIALIZACION DE COMPONENTES
 
 
+    /**
+     * Metodo para inicializar componentes (menuBar, paneles y frame)
+     * */
     private void inicializarComponentes() {
         inicializar_menubarVista();
         inicializar_frameVista();
-        inicializar_panelPrincipal();
-        inicializar_panelInfo();
-        inicializar_panelMenuPartida();
-        inicializar_panelMenuTablero();
-        inicializar_panelMenuRanking();
-        inicializar_panelMenuOtrasOpciones();
-        inicializar_panelBotonesMenu();
+        inicializar_paneles();
         asignar_listenersComponentes();
     }
 
+
+    /**
+     * Metodo para inicializar frame
+     * */
     private void inicializar_frameVista() {
         frameVista.setMinimumSize(new Dimension(700,400));
         frameVista.setPreferredSize(frameVista.getMinimumSize());
@@ -102,23 +112,9 @@ public class VistaMenu {
         contentPane.add(panelPrincipal);
     }
 
-    private void inicializar_panelPrincipal() {
-        panelPrincipal.setLayout(new BorderLayout());
-        panelPrincipal.add(textoInfoUsuario,BorderLayout.NORTH);
-        panelPrincipal.add(panelInfo,BorderLayout.CENTER);
-        inicializar_infoCreditos();
-        panelPrincipal.add(infoCreditos,BorderLayout.EAST);
-    }
-
-    private void inicializar_infoCreditos() {
-        infoCreditos.setText("\n  Creditos: \n");
-        infoCreditos.append("\n    - Sergio Aguado Cobos \n");
-        infoCreditos.append("\n    - Ashish Kshetri \n");
-        infoCreditos.append("\n    - Sergi Cassanmagnago Somoza \n");
-        infoCreditos.append("\n    - Sergi Bosquet Reyes \n");
-        infoCreditos.setEditable(false);
-    }
-
+    /**
+     * Metodo para inicializar menuBar (barra de menu superior)
+     * */
     private void inicializar_menubarVista() {
         menuFile.add(menuitemLogin);
         menuFile.add(menuitemQuit);
@@ -136,61 +132,78 @@ public class VistaMenu {
         frameVista.setJMenuBar(menubarVista);
     }
 
-    private void inicializar_panelInfo() { //panel inicial
-        panelActivo = panelBotonesMenu;
-        iPanelActivo = 1;
-        panelInfo.add(panelActivo);
-    }
 
-    private void inicializar_panelMenuPartida() {
+    /**
+     * Metodo para inicializar todos los paneles
+     * */
+    private void inicializar_paneles() {
+        //PANEL MENU PARTIDA
         panelMenuPartida.setLayout(new BoxLayout(panelMenuPartida,BoxLayout.PAGE_AXIS));
         panelMenuPartida.add(labelPartida);
         panelMenuPartida.add(buttonCrearPartida);
         panelMenuPartida.add(buttonBorrarPartida);
         panelMenuPartida.add(buttonCargarPartida);
-    }
 
-    private void inicializar_panelMenuTablero() {
+        //PANEL MENU TABLERO
         panelMenuTablero.setLayout(new BoxLayout(panelMenuTablero,BoxLayout.PAGE_AXIS));
         panelMenuTablero.add(labelTablero);
         panelMenuTablero.add(buttonCrearTablero);
         panelMenuTablero.add(buttonBorrarTablero);
         panelMenuTablero.add(buttonMostrarTablero);
-    }
 
-    private void inicializar_panelMenuRanking() {
+        //PANEL MENU RANKING
         panelMenuRanking.setLayout(new BoxLayout(panelMenuRanking,BoxLayout.PAGE_AXIS));
         panelMenuRanking.add(labelRanking);
         panelMenuRanking.add(buttonConsultarRanking);
-    }
 
-    private void inicializar_panelMenuOtrasOpciones() {
+        //PANEL MENU OTRAS OPCIONES
         panelOtrasOpciones.setLayout(new FlowLayout());
         panelOtrasOpciones.add(labelOtros);
         panelOtrasOpciones.add(buttonLogin);
         panelOtrasOpciones.add(buttonSalir);
-    }
 
-    private void inicializar_panelBotonesMenu() {
+        //PANEL BOTONES GENERAL
         panelBotonesMenu.setLayout(new BorderLayout());
         panelBotonesMenu.add(panelMenuTablero,BorderLayout.WEST);
         panelBotonesMenu.add(panelMenuPartida,BorderLayout.CENTER);
         panelBotonesMenu.add(panelMenuRanking,BorderLayout.EAST);
         panelBotonesMenu.add(panelOtrasOpciones,BorderLayout.SOUTH);
+
+        //PANEL INFO
+        panelActivo = panelBotonesMenu;
+        iPanelActivo = 1;
+        panelInfo.add(panelActivo);
+
+        //INFO CREDITOS
+        infoCreditos.setText("\n  Creditos: \n");
+        infoCreditos.append("\n    - Sergio Aguado Cobos \n");
+        infoCreditos.append("\n    - Ashish Kshetri \n");
+        infoCreditos.append("\n    - Sergi Cassanmagnago Somoza \n");
+        infoCreditos.append("\n    - Sergi Bosquet Reyes \n");
+        infoCreditos.setEditable(false);
+
+        //PANEL PRINCIPAL
+        panelPrincipal.setLayout(new BorderLayout());
+        panelPrincipal.add(textoInfoUsuario,BorderLayout.NORTH);
+        panelPrincipal.add(panelInfo,BorderLayout.CENTER);
+        panelPrincipal.add(infoCreditos,BorderLayout.EAST);
     }
 
-    private void incializar_textArea_usuario() {
-        textoInfoUsuario.setText(iCtrlPresentacion.presentacion_get_info_usuario_activo());
-        textoInfoUsuario.setEditable(false);
-    }
 
 
     /////////// LISTENERS (+ su asignacion)
 
+    /**
+     * Metodo actionPerfomed del boton de Login (Para cargar otro usuario diferente al actual)
+     * */
     public void actionPerformed_buttonLogin (ActionEvent event) {
         iCtrlPresentacion.hacerVisibleVista(0);
     }
 
+
+    /**
+     * Metodo para asignar los listeners a cada componente
+     * */
     private void asignar_listenersComponentes() {
         buttonLogin.addActionListener
                 (new ActionListener() {
