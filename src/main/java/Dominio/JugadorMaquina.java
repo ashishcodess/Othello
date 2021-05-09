@@ -83,7 +83,39 @@ public class JugadorMaquina extends Jugador {
      * @param depth profundidad que nos falta por recorrer
      * devuelve el tablero(estado hijo) resultante de haber ejecutado el turno que nos es más conveniente
      */
-    public Tablero valorMax(Tablero t, int turno, int alpha, int beta, int depth){
+    public Tablero valorMaxNegras(Tablero t, int turno, int alpha, int beta, int depth){
+
+        Tablero mejorHijo = t;
+        SuccessorFunction succesores = new SuccessorFunction();
+        Set<Tablero> estados_hijos = succesores.genera_succesores(t, turno);
+
+        /*if(turno%2 == 0){
+            int maxeval = -1000;
+            for(Tablero aux : estados_hijos){
+
+            }
+        }
+
+        else {
+            int mineval = 1000;
+            for(Tablero aux : estados_hijos){
+
+            }
+        }*/
+
+        return mejorHijo;
+    }
+
+    /**
+     * Operacion para tirar ficha ejecutando el algoritmo minMax
+     * @param t el tablero de la partida
+     * @param turno turno de la partida en ese momento en concreto
+     * @param alpha parámetro alfa del algoritmo
+     * @param beta parámetro beta del algoritmo
+     * @param depth profundidad que nos falta por recorrer
+     * devuelve el tablero(estado hijo) resultante de haber ejecutado el turno que nos es más conveniente
+     */
+    public Tablero valorMaxBlancas(Tablero t, int turno, int alpha, int beta, int depth){
 
         Tablero mejorHijo = t;
         SuccessorFunction succesores = new SuccessorFunction();
