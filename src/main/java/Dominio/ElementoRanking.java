@@ -6,7 +6,7 @@ public class ElementoRanking {
     /*Atributos*/
 
     private final int idJugador;
-    private String nickJugador;
+    private final String nickJugador;
     private int partidasGanadas;
     private int partidasPerdidas;
     private int partidasEmpatadas;
@@ -16,10 +16,6 @@ public class ElementoRanking {
 
 
     /*Constructora*/
-    /**
-     * Constructora de ElementoRanking(id,nick) con contadores de partidas a 0
-     * */
-
     /**
      * Constructora de ElementoRanking(id,nick) con contadores de partidas a 0
      * @param id identificador de Usuario
@@ -38,10 +34,6 @@ public class ElementoRanking {
         }
     }
 
-
-    /**
-     * Constructora de ElementoRanking(id,nick) con asignacion de contadores de partidas (pasados como parametros)
-     * */
 
     /**
      * Constructora de ElementoRanking(id,nick) con contadores inicializados
@@ -68,11 +60,6 @@ public class ElementoRanking {
     }
 
 
-    /**
-     * Operacion set del atributo nickJugador
-     * @param nick indica el valor que tomara el atributo nickJugador
-     */
-    public void modificar_nickname(String nick){ this.nickJugador=nick; }
 
     /**
      * Este metodo incrementa el contador de partidas ganadas y partidas jugadas
@@ -135,31 +122,6 @@ public class ElementoRanking {
      * @return devuelve el contador de partidas totales del Jugador
      */
     public int getTotales() {return this.totalPartidasJugadas;}
-
-    /**
-     * Este metodo genera una String con la informacion del Jugador y las partidas ganadas
-     * @return devuelve la String con la informacion de idJugador, nickJugador y partidasGanadas
-     */
-    public String consultar_ganadas() {
-        return (this.idJugador + " " + this.nickJugador + " " + this.partidasGanadas);
-    }
-
-
-    /**
-     * Este metodo genera una String con la informacion del Jugador y las partidas perdidas
-     * @return devuelve la String con la informacion de idJugador, nickJugador y partidasPerdidas
-     */
-    public String consultar_perdidas() {
-        return (this.idJugador + " " + this.nickJugador + " " + this.partidasPerdidas);
-    }
-
-    /**
-     * Este metodo genera una String con la informacion del Jugador y las partidas empatadas
-     * @return devuelve la String con la informacion de idJugador, nickJugador y partidasEmpatadas
-     */
-    public String consultar_empatadas() {
-        return (this.idJugador + " " + this.nickJugador + " " + this.partidasEmpatadas);
-    }
 
     /**
      * Este metodo genera una String con la informacion del Jugador y toda la informacion sobre las partidas de esta misma

@@ -3,64 +3,60 @@ package Presentacion;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class VistaMenu {
     // Controlador de presentacion
-    private CtrlPresentacion iCtrlPresentacion;
+    private final CtrlPresentacion iCtrlPresentacion;
 
-    private int iPanelActivo = 0; //para cambiar entre panel Ranking y estadisticas
 
-    private JFrame frameVista = new JFrame("Menu Principal");
+    private final JFrame frameVista = new JFrame("Menu Principal");
 
-    private JPanel panelPrincipal = new JPanel();
-    private JPanel panelInfo = new JPanel();
-    private JPanel panelActivo = new JPanel();
+    private final JPanel panelPrincipal = new JPanel();
+    private final JPanel panelInfo = new JPanel();
 
-    private JTextField textoInfoUsuario = new JTextField(15);
-
+    private final JTextField textoInfoUsuario = new JTextField(15);
 
     //BARRA DE MENU
-    private JMenuBar menubarVista = new JMenuBar();
-    private JMenu menuFile = new JMenu("File");
-    private JMenuItem menuitemQuit = new JMenuItem("Salir");
-    private JMenuItem menuitemCreditos = new JMenuItem("Creditos");
-    private JMenuItem menuitemLogin = new JMenuItem("Login Usuario");
-    private JMenu menuTablero = new JMenu("Tablero");
-    private JMenuItem menuItem_crearTablero = new JMenuItem("Crear Tablero");
-    private JMenuItem menuItem_MostrarTablero = new JMenuItem("Mostrar Tablero");
-    private JMenuItem menuItem_BorrarTablero = new JMenuItem("Borrar Tablero");
-    private JMenu menuPartida = new JMenu("Partida");
-    private JMenuItem menuItem_crearPartida = new JMenuItem("Crear Paritda");
-    private JMenuItem menuItem_CargarPartida = new JMenuItem("Cargar Partida");
-    private JMenuItem menuItem_BorrarPartida = new JMenuItem("Borrar Partida");
-    private JMenu menuRanking = new JMenu("Ranking");
-    private JMenuItem menuItem_consultar_ranking = new JMenuItem("Consultar Ranking");
+    private final JMenuBar menubarVista = new JMenuBar();
+    private final JMenu menuFile = new JMenu("File");
+    private final JMenuItem menuitemQuit = new JMenuItem("Salir");
+    private final JMenuItem menuitemCreditos = new JMenuItem("Creditos");
+    private final JMenuItem menuitemLogin = new JMenuItem("Login Usuario");
+    private final JMenu menuTablero = new JMenu("Tablero");
+    private final JMenuItem menuItem_crearTablero = new JMenuItem("Crear Tablero");
+    private final JMenuItem menuItem_MostrarTablero = new JMenuItem("Mostrar Tablero");
+    private final JMenuItem menuItem_BorrarTablero = new JMenuItem("Borrar Tablero");
+    private final JMenu menuPartida = new JMenu("Partida");
+    private final JMenuItem menuItem_crearPartida = new JMenuItem("Crear Paritda");
+    private final JMenuItem menuItem_CargarPartida = new JMenuItem("Cargar Partida");
+    private final JMenuItem menuItem_BorrarPartida = new JMenuItem("Borrar Partida");
+    private final JMenu menuRanking = new JMenu("Ranking");
+    private final JMenuItem menuItem_consultar_ranking = new JMenuItem("Consultar Ranking");
 
     //Botones MENU
-    private JPanel panelBotonesMenu= new JPanel();
+    private final JPanel panelBotonesMenu= new JPanel();
 
-    private JPanel panelMenuPartida= new JPanel();
-    private JLabel labelPartida = new JLabel("Partida");
-    private JButton buttonCrearPartida = new JButton("Crear");
-    private JButton buttonCargarPartida = new JButton("Cargar");
-    private JButton buttonBorrarPartida = new JButton("Borrar");
+    private final JPanel panelMenuPartida= new JPanel();
+    private final JLabel labelPartida = new JLabel("Partida");
+    private final JButton buttonCrearPartida = new JButton("Crear");
+    private final JButton buttonCargarPartida = new JButton("Cargar");
+    private final JButton buttonBorrarPartida = new JButton("Borrar");
 
-    private JPanel panelMenuTablero= new JPanel();
-    private JLabel labelTablero = new JLabel("Tablero");
-    private JButton buttonCrearTablero = new JButton("  Crear");
-    private JButton buttonMostrarTablero = new JButton("Mostrar");
-    private JButton buttonBorrarTablero = new JButton("Borrar");
+    private final JPanel panelMenuTablero= new JPanel();
+    private final JLabel labelTablero = new JLabel("Tablero");
+    private final JButton buttonCrearTablero = new JButton("  Crear");
+    private final JButton buttonMostrarTablero = new JButton("Mostrar");
+    private final JButton buttonBorrarTablero = new JButton("Borrar");
 
-    private JPanel panelMenuRanking= new JPanel();
-    private JLabel labelRanking = new JLabel("Ranking");
-    private JButton buttonConsultarRanking = new JButton("Consultar Ranking");
+    private final JPanel panelMenuRanking= new JPanel();
+    private final JLabel labelRanking = new JLabel("Ranking");
+    private final JButton buttonConsultarRanking = new JButton("Consultar Ranking");
 
-    private JPanel panelOtrasOpciones= new JPanel();
-    private JLabel labelOtros = new JLabel("Otras opciones");
-    private JButton buttonLogin = new JButton("Login(otro usuario)");
-    private JButton buttonCreditos = new JButton("Creditos");
-    private JButton buttonSalir = new JButton("Salir del juego");
+    private final JPanel panelOtrasOpciones= new JPanel();
+    private final JLabel labelOtros = new JLabel("Otras opciones");
+    private final JButton buttonLogin = new JButton("Login(otro usuario)");
+    private final JButton buttonCreditos = new JButton("Creditos");
+    private final JButton buttonSalir = new JButton("Salir del juego");
 
 
     /**
@@ -173,9 +169,7 @@ public class VistaMenu {
         panelBotonesMenu.add(panelOtrasOpciones,BorderLayout.SOUTH);
 
         //PANEL INFO
-        panelActivo = panelBotonesMenu;
-        iPanelActivo = 1;
-        panelInfo.add(panelActivo);
+        panelInfo.add(panelBotonesMenu);
 
 
         //PANEL PRINCIPAL
@@ -193,7 +187,7 @@ public class VistaMenu {
      * Metodo actionPerfomed del boton de Login (Para cargar otro usuario diferente al actual)
      * */
     public void actionPerformed_buttonLogin (ActionEvent event) {
-        iCtrlPresentacion.hacerVisibleVista(0);
+        iCtrlPresentacion.hacerVisibleVista(vistaActiva.LOGIN);
     }
 
 
@@ -202,64 +196,36 @@ public class VistaMenu {
      * */
     private void asignar_listenersComponentes() {
         buttonLogin.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        actionPerformed_buttonLogin(event);
-                    }
-                });
+                (this::actionPerformed_buttonLogin);
 
         buttonCreditos.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        iCtrlPresentacion.hacerVisibleVista(3);
-                    }
-                });
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CREDITOS));
 
         buttonSalir.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        iCtrlPresentacion.presentacion_exportar_ranking();
-                        System.exit(0);
-                    }
+                (event -> {
+                    iCtrlPresentacion.presentacion_exportar_ranking();
+                    System.exit(0);
                 });
 
         menuitemQuit.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        iCtrlPresentacion.presentacion_exportar_ranking();
-                        System.exit(0);
-                    }
+                (event -> {
+                    iCtrlPresentacion.presentacion_exportar_ranking();
+                    System.exit(0);
                 });
 
 
 
         menuitemLogin.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        actionPerformed_buttonLogin(event);
-                    }
-                });
+                (this::actionPerformed_buttonLogin);
 
         menuitemCreditos.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        iCtrlPresentacion.hacerVisibleVista(3);
-                    }
-                });
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CREDITOS));
 
         menuItem_consultar_ranking.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        iCtrlPresentacion.hacerVisibleVista(2);
-                    }
-                });
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.RANKING));
 
         buttonConsultarRanking.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        iCtrlPresentacion.hacerVisibleVista(2);
-                    }
-                });
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.RANKING));
 
     }
 

@@ -1,11 +1,8 @@
 package drivers;
 
-import Dominio.Jugador;
-import Dominio.JugadorMaquina;
 import Dominio.JugadorPersona;
 import MyException.MyException;
 
-import java.io.IOException;
 import java.util.*;
 
 
@@ -57,7 +54,6 @@ public class DriverJugadorPersona {
         }
         catch (Exception e) {
             System.out.println("Error en main de DriverJugadorPersona");
-            System.out.println(e);
         }
 
     }

@@ -3,18 +3,18 @@ package Presentacion;
 import Dominio.CtrlDominio;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
+enum vistaActiva{LOGIN, MENU, RANKING, CREDITOS} //agregar en funcion de las necesidades
 
 public class CtrlPresentacion {
 
-    private CtrlDominio ctrlDominio;
+    private final CtrlDominio ctrlDominio;
 
-    private VistaRanking vistaRanking = null;
-    private VistaLogin vistaLogin= null;
-    private VistaMenu vistaMenu = null;
-    private VistaCreditos vistaCreditos = null;
-
-    int vistaActiva = 0;
-
+    private final VistaRanking vistaRanking;
+    private final VistaLogin vistaLogin;
+    private final VistaMenu vistaMenu;
+    private final VistaCreditos vistaCreditos;
 
     /**
      * Creadora por defecto de CtrlPresentacion
@@ -33,17 +33,17 @@ public class CtrlPresentacion {
      * inicializa la vista (con la VistaLogin como ventana inicial)
      * */
     public void inicializarPresentacion() {
-        hacerVisibleVista(0);
+        hacerVisibleVista(vistaActiva.LOGIN);
     }
 
 
     /**
      * Metodo hacerVisibleVista
-     * @param t dependiendo del entero hace visible una vista u otra (para gestion de vistas)
+     * @param a dependiendo de la enumeracion de vistaActiva hace visible una vista u otra (para gestion de vistas)
      * */
-    public void hacerVisibleVista(int t) {
-        switch (t) {
-            case 0:
+    public void hacerVisibleVista(vistaActiva a) {
+        switch (a) {
+            case LOGIN:
                 vistaLogin.hacerVisible(true);
                 vistaMenu.hacerVisible(false);
                 //vistaConfigPartida.hacerVisible(false);
@@ -51,27 +51,32 @@ public class CtrlPresentacion {
                 vistaRanking.hacerVisible(false);
                 vistaCreditos.hacerVisible(false);
                 break;
-            case 1:
+            case MENU:
                 vistaLogin.hacerVisible(false);
                 vistaMenu.hacerVisible(true);
+                //vistaConfigPartida.hacerVisible(false);
+                //vistaPartida.hacerVisible(false);
                 vistaRanking.hacerVisible(false);
                 vistaCreditos.hacerVisible(false);
                 break;
-            case 2:
+            case RANKING:
                 vistaLogin.hacerVisible(false);
                 vistaMenu.hacerVisible(false);
+                //vistaConfigPartida.hacerVisible(false);
+                //vistaPartida.hacerVisible(false);
                 vistaRanking.hacerVisible(true);
                 vistaCreditos.hacerVisible(false);
                 break;
-            case 3:
+            case CREDITOS:
                 vistaLogin.hacerVisible(false);
                 vistaMenu.hacerVisible(false);
+                //vistaConfigPartida.hacerVisible(false);
+                //vistaPartida.hacerVisible(false);
                 vistaRanking.hacerVisible(false);
                 vistaCreditos.hacerVisible(true);
                 break;
         }
     }
-
 
     /**
      * Metodo login (desde Capa Presentacion)
@@ -123,12 +128,10 @@ public class CtrlPresentacion {
      * */
     public ArrayList<String> presentacion_consultar_ranking() {
         ArrayList<String> as = ctrlDominio.consultar_ranking();
-        ArrayList<String> res = new ArrayList<String>();
-        for (int i = 0; i < as.size(); ++i) {
-            String[] rs= as.get(i).split(" ");
-            for (int j = 0; j < rs.length; ++j) { //length tendria que ser siempre de 6 elementos
-                res.add(rs[j]);
-            }
+        ArrayList<String> res = new ArrayList<>();
+        for (String a : as) {
+            String[] rs = a.split(" ");
+            Collections.addAll(res, rs);
         }
         return res;
     }

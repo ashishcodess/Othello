@@ -35,7 +35,7 @@ public class MainDominio {
      * @return devuelve el entero en caso de haber introducido por la consola de comandos
      * */
     private static int seleccionar_id_maquina(boolean b) {
-        int res = -1;
+        int res;
         try {
             if (!b) System.out.print("Introducir idMaquina1 (negro):");
             else System.out.print("Introducir idMaquina2 (blanco):");
@@ -54,14 +54,14 @@ public class MainDominio {
      * @return devuelve un array de enteros con valores entre 0 y 1 (mostrando las reglas validas para la partida)
      * */
     private static int[] seleccionar_reglas() {
-        int res[] = new int[3];
+        int[] res = new int[3];
         try {
-            boolean b = false;
+            boolean b;
             System.out.println("Seleccionar reglas (vertical horizontal diagonal) -> ej:1 1 1");
             System.out.print("Introducir reglas:");
             String s = scan.nextLine(); //evitar bugs (hacerlo 2 veces...)
             s = scan.nextLine();
-            String s_aux[] = s.split(" ");
+            String[] s_aux = s.split(" ");
             if (s_aux.length == 3){ //comprobar que este en rango de reglas y valen 0 o 1
                 b = true;
                 for (int i = 0; i < s_aux.length && b; ++i) {
@@ -160,9 +160,7 @@ public class MainDominio {
                                     x = Integer.parseInt(res[1]);
                                     y = Integer.parseInt(res[2]);
                                     b = rango_mapa_correcto(x, y);
-                                } else if ((res[0].equals("guardar")) || (res[0].equals("finalizar")))
-                                    b = true; //ha realizado otra accion -> salir bucle
-                                else b = false;
+                                } else b = (res[0].equals("guardar")) || (res[0].equals("finalizar")); //ha realizado otra accion -> salir bucle
                             }
                         }
                         else res = generar_accion_partida(id,nick,turno);
@@ -182,7 +180,7 @@ public class MainDominio {
          catch (Exception e) {
              res = generar_accion_partida(id,nick,turno);
              System.out.println("No has introducido una accion valida");
-             System.out.println(e);
+             //System.out.println(e);
          }
         return res;
     }
@@ -288,9 +286,9 @@ public class MainDominio {
     private static void ejecutarPartida(Partida p) {
         try {
             int res = -2;
-            int turno = 0;
-            int id_aux = -1;
-            String s_aux = "";
+            int turno;
+            int id_aux;
+            String s_aux;
             while (res <= -1) { //continua la partida
                 turno = p.getTurnoPartida();
                 if (turno % 2 == 0) {
@@ -322,7 +320,7 @@ public class MainDominio {
             System.out.println();
         }
         catch (Exception e) {
-            System.out.println(e);
+            //System.out.println(e);
         }
     }
 
@@ -337,7 +335,7 @@ public class MainDominio {
         String in = scan.next();
         System.out.println();
         int idTab = -1;
-        if(in.toLowerCase().equals("si")){
+        if(in.equalsIgnoreCase("si")){
             cp.ctrl_print_tableros_disponibles();
             System.out.print("Seleccionar tablero:");
             int id_aux = scan.nextInt();
@@ -353,8 +351,7 @@ public class MainDominio {
      * */
     private static Tablero cargar_Tablero(int idTablero) {
         int[][]tab = cp.ctrl_cargar_tablero(idTablero);
-        Tablero t  = new Tablero(tab);
-        return t;
+        return new Tablero(tab);
     }
 
     /**
@@ -363,8 +360,7 @@ public class MainDominio {
      * @return devuelve el turno del tablero personalizado con id igual a idTablero
      * */
     private static int cargar_turno_Tablero(int idTablero) {
-        int turnoTab = cp.ctrl_cargar_turno_tablero(idTablero);
-        return turnoTab;
+        return cp.ctrl_cargar_turno_tablero(idTablero);
     }
 
 
@@ -375,7 +371,7 @@ public class MainDominio {
      * esta jugando para poder crear un tablero personalizado
      * */
     private static String[] generar_accion_crear_tablero(int turno) {
-        String[] res = new String[3];
+        String[] res;
         try {
             System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
             if (turno % 2 == 0) System.out.println("Acciones a realizar para las fichas Negras");
@@ -407,9 +403,7 @@ public class MainDominio {
                         x = Integer.parseInt(res[1]);
                         y = Integer.parseInt(res[2]);
                         b = rango_mapa_correcto(x, y);
-                    } else if ((res[0].equals("guardar")) || (res[0].equals("finalizar")))
-                        b = true; //ha realizado otra accion -> salir bucle
-                    else b = false;
+                    } else b = (res[0].equals("guardar")) || (res[0].equals("finalizar")); //ha realizado otra accion -> salir bucle
                 }
             }
             System.out.println();
@@ -417,7 +411,7 @@ public class MainDominio {
         }
         catch (Exception e) {
             System.out.println("No has introducido una accion valida");
-            System.out.println(e);
+            //System.out.println(e);
             res = generar_accion_crear_tablero(turno);
         }
         return res;
@@ -430,9 +424,9 @@ public class MainDominio {
      * */
     private static void print_tablero_personalizado(int[][] tab) {
         for (int i = 0; i < 8; ++i) {
-            String sbuff = new String();
+            StringBuilder sbuff = new StringBuilder();
             for (int j = 0; j < 8; ++j) {
-                sbuff = sbuff + tab[i][j];
+                sbuff.append(tab[i][j]);
             }
             System.out.println(sbuff);
         }
@@ -446,7 +440,7 @@ public class MainDominio {
     private static void ejecutarPartidaTablero(Partida p) {
         try {
             int res = -1;
-            int turno = 0;
+            int turno;
             while (res < 0) { //continua la partida
                 turno = p.getTurnoPartida();
                 res = p.rondaPartida(generar_accion_crear_tablero(turno));
@@ -465,7 +459,7 @@ public class MainDominio {
         }
         catch (Exception e) {
             System.out.println("Error al ejecutar partida (crear Tablero)");
-            System.out.println(e);
+            //System.out.println(e);
         }
     }
 
@@ -479,7 +473,7 @@ public class MainDominio {
             if (modo2 == 2) System.out.println("Introducir informacion de contrincante 2 (Persona)");
             System.out.println("Estas Registrado/a? si/no ");
             String in = scan.next();
-            if(in.toLowerCase().equals("no")){
+            if(in.equalsIgnoreCase("no")){
                 System.out.println("Entra tu nombre de usuario");
                 if (modo2 == 2) {
                     nick_2 = scan.next();
@@ -497,7 +491,7 @@ public class MainDominio {
                     cp.ctrl_crear_usuario(code,nickname);
                 }
             }
-            else if(in.toLowerCase().equals("si")){
+            else if(in.equalsIgnoreCase("si")){
                 System.out.println("Entra tu ID");
                 if (modo2 == 2) {
                     id_2 = scan.nextInt();
@@ -542,7 +536,7 @@ public class MainDominio {
             int modo = Integer.parseInt(scan.next());
             if (modo<0 || modo > 2) throw new MyException("Modo de juego incorrecto");
             System.out.println();
-            int reglas[] = seleccionar_reglas();
+            int[] reglas = seleccionar_reglas();
 
             int id1 = code; //por defecto anfitrion como J1
             int id2 = -1;
@@ -618,11 +612,10 @@ public class MainDominio {
                 t = cargar_Tablero(idTablero);
                 turnoPartida = cargar_turno_Tablero(idTablero);
             }
-            Partida p = new Partida(idPartida,modo,reglas,turnoPartida,id1,nick1,id2,nick2,t);
-            return p;
+            return new Partida(idPartida,modo,reglas,turnoPartida,id1,nick1,id2,nick2,t);
         }
         catch (Exception e) {
-            System.out.println(e);
+            //System.out.println(e);
         }
         return null;
     }
@@ -636,8 +629,7 @@ public class MainDominio {
      * */
     public static Partida cargarPartida(int idPartida) {
         try {
-            Partida p = cp.ctrl_cargar_partida(idPartida);
-            return p;
+            return cp.ctrl_cargar_partida(idPartida);
         }
         catch (Exception e) {
             System.out.println("Fallo al cargar la partida con ID:" + idPartida);
@@ -653,14 +645,14 @@ public class MainDominio {
     public static void TableroPersonalizado() {
         try {
             System.out.println();
-            int modoT = -1;
+            int modoT;
             System.out.println("0 - Crear nuevo Tablero Personalizado");
             System.out.println("1 - Borrar Tablero Personalizado");
             System.out.println("2 - Mostrar Tablero Personalizado");
             System.out.print("Seleccionar opcion de Tablero personalizado:");
             modoT = scan.nextInt();
             System.out.println();
-            int idTab = -1;
+            int idTab;
             switch (modoT) {
                 case 0:
                     int idPartida = cp.ctrl_get_nuevo_ID_Partida();
@@ -693,7 +685,6 @@ public class MainDominio {
         }
         catch (Exception e) {
             System.out.println("Fallo en TableroPersonalizado de main");
-            System.out.println(e);
         }
     }
 
@@ -707,7 +698,7 @@ public class MainDominio {
     public static void listar_partidas_disponibles(int id, String nick) {
         try {
             System.out.println();
-            int modo = -1;
+            int modo;
             System.out.print("Opcion (1 - Cargar , 2 - Borrar):");
             modo = scan.nextInt();
             System.out.println();
@@ -772,7 +763,7 @@ public class MainDominio {
                 System.out.println(" 6: salir");
                 System.out.print("seleccionar opcion:");
                 int quit = scan.nextInt();
-                System.out.println("");
+                System.out.println();
                 switch (quit){
                     case 1:
                         Partida p = iniciarPartida();
@@ -801,7 +792,7 @@ public class MainDominio {
             cp.ctrl_exportar_ranking(ranking.toArrayList()); //exportar ranking antes de salir del programa
         }
         catch (Exception e) {
-            System.out.println(e);
+            //System.out.println(e);
         }
     }
 }

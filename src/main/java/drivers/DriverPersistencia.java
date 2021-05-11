@@ -6,7 +6,6 @@ import Dominio.Partida;
 import Dominio.Ranking;
 import MyException.MyException;
 
-import java.io.IOException;
 import java.util.*;
 
 
@@ -96,9 +95,9 @@ public class DriverPersistencia {
         int id1 = cp.ctrl_get_nuevo_ID_user();
         int id2 = cp.ctrl_get_nuevo_ID_user();
         int id3 = cp.ctrl_get_nuevo_ID_user();
-        System.out.println("ID_usuario1: " + String.valueOf(id1));
-        System.out.println("ID_usuario2: " + String.valueOf(id2));
-        System.out.println("ID_usuario3: " + String.valueOf(id3));
+        System.out.println("ID_usuario1: " + id1);
+        System.out.println("ID_usuario2: " + id2);
+        System.out.println("ID_usuario3: " + id3);
         boolean b = (id1 != id2) && (id2 != id3) && (id1 != id3);
         if (b) System.out.println("Todo correcto (ID's diferentes)");
         else System.out.println("Error hay algun ID igual (no deberia ser asi...)");
@@ -109,9 +108,9 @@ public class DriverPersistencia {
         int id1 = cp.ctrl_get_nuevo_ID_Partida();
         int id2 = cp.ctrl_get_nuevo_ID_Partida();
         int id3 = cp.ctrl_get_nuevo_ID_Partida();
-        System.out.println("ID_partida1: " + String.valueOf(id1));
-        System.out.println("ID_partida2: " + String.valueOf(id2));
-        System.out.println("ID_partida3: " + String.valueOf(id3));
+        System.out.println("ID_partida1: " + id1);
+        System.out.println("ID_partida2: " + id2);
+        System.out.println("ID_partida3: " + id3);
         boolean b = (id1 != id2) && (id2 != id3) && (id1 != id3);
         if (b) System.out.println("Todo correcto (ID's diferentes)");
         else System.out.println("Error hay algun ID igual (no deberia ser asi...)");
@@ -126,9 +125,9 @@ public class DriverPersistencia {
         int id1 = cp.ctrl_get_nuevo_ID_tablero();
         int id2 = cp.ctrl_get_nuevo_ID_tablero();
         int id3 = cp.ctrl_get_nuevo_ID_tablero();
-        System.out.println("ID_tablero1: " + String.valueOf(id1));
-        System.out.println("ID_tablero2: " + String.valueOf(id2));
-        System.out.println("ID_tablero3: " + String.valueOf(id3));
+        System.out.println("ID_tablero1: " + id1);
+        System.out.println("ID_tablero2: " + id2);
+        System.out.println("ID_tablero3: " + id3);
         boolean b = (id1 != id2) && (id2 != id3) && (id1 != id3);
         if (b) System.out.println("Todo correcto (ID's diferentes)");
         else System.out.println("Error hay algun ID igual (no deberia ser asi...)");
@@ -201,7 +200,6 @@ public class DriverPersistencia {
         }
         catch (Exception e) {
             System.out.println("Error en main de DriverPersitencia");
-            System.out.println(e);
         }
     }
 

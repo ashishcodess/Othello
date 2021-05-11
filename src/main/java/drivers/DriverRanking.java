@@ -5,7 +5,6 @@ import Dominio.Ranking;
 import Dominio.ElementoRanking;
 
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class DriverRanking {
@@ -66,7 +65,6 @@ public class DriverRanking {
         }
         catch (Exception e) {
             System.out.println("Fallo en main de DriverRanking");
-            System.out.println(e);
         }
     }
 
