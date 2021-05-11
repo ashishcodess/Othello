@@ -121,22 +121,29 @@ public class JugadorMaquina extends Jugador {
         Tablero mejorHijo = t;
         SuccessorFunction succesores = new SuccessorFunction();
         Set<Tablero> estados_hijos = succesores.genera_succesores(t, turno);
+        int evaluacion;
 
-        /*if(turno%2 == 0){
+        //if(depth == 0 || t.finalizada())return t.getHeuristicValueBlancas();
+
+        if(turno%2 != 0){
             int maxeval = -1000;
             for(Tablero aux : estados_hijos){
-
+                 evaluacion = aux.getHeuristicValueBlancas();
+                 if(maxeval < evaluacion){
+                     maxeval = evaluacion;
+                     mejorHijo = aux;
+                 }
             }
+            return mejorHijo;
         }
 
         else {
             int mineval = 1000;
             for(Tablero aux : estados_hijos){
-
+                evaluacion = aux.getHeuristicValueBlancas();
             }
-        }*/
-
-        return mejorHijo;
+            return mejorHijo;
+        }
     }
 
     @Override
@@ -148,10 +155,12 @@ public class JugadorMaquina extends Jugador {
      * */
     public Tablero posicion(Tablero t, int turno){
 
-        //if(turno%2 == 0)t = valorMaxBlancas(t,turno,-100, 100, this.get_profundidadMaquina());
-        //else t = valorMaxNegras(t,turno,-100, 100, this.get_profundidadMaquina());
-        //return t;
-        Set<Position> disponibles = t.getCasillasDisponibles();
+        if(turno%2 == 0)t = valorMaxBlancas(t,turno,-100, 100, this.get_profundidadMaquina());
+        else t = valorMaxNegras(t,turno,-100, 100, this.get_profundidadMaquina());
+        return t;
+
+
+        /*Set<Position> disponibles = t.getCasillasDisponibles();
         int x = 0;
         int y = 0;
         for(Position aux : disponibles){
@@ -161,6 +170,6 @@ public class JugadorMaquina extends Jugador {
         }
         System.out.println("Máquina mueve a " + x + ", " + y);
         t.actualizarTablero(x, y, turno);
-        return t;
+        return t;*/
     }
 }
