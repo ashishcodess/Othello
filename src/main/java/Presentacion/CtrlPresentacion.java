@@ -24,6 +24,8 @@ public class CtrlPresentacion {
         vistaRanking = new VistaRanking(this);
         vistaLogin = new VistaLogin(this);
         vistaMenu = new VistaMenu(this);
+        //vistaConfigPartida = new VistaConfigPartida(this);
+        //vistaPartida = new VistaPartida(this);
         vistaCreditos = new VistaCreditos(this);
     }
 
@@ -44,6 +46,8 @@ public class CtrlPresentacion {
             case 0:
                 vistaLogin.hacerVisible(true);
                 vistaMenu.hacerVisible(false);
+                //vistaConfigPartida.hacerVisible(false);
+                //vistaPartida.hacerVisible(false);
                 vistaRanking.hacerVisible(false);
                 vistaCreditos.hacerVisible(false);
                 break;
