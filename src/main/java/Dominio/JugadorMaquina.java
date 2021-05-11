@@ -118,12 +118,12 @@ public class JugadorMaquina extends Jugador {
      */
     public Tablero valorMaxBlancas(Tablero t, int turno, int alpha, int beta, int depth){
 
+        if(depth == 0 || t.finalizada())return t;
+
         Tablero mejorHijo = t;
         SuccessorFunction succesores = new SuccessorFunction();
         Set<Tablero> estados_hijos = succesores.genera_succesores(t, turno);
         int evaluacion;
-
-        //if(depth == 0 || t.finalizada())return t.getHeuristicValueBlancas();
 
         if(turno%2 != 0){
             int maxeval = -1000;
@@ -141,6 +141,10 @@ public class JugadorMaquina extends Jugador {
             int mineval = 1000;
             for(Tablero aux : estados_hijos){
                 evaluacion = aux.getHeuristicValueBlancas();
+                if(mineval > evaluacion){
+                    mineval = evaluacion;
+                    mejorHijo = aux;
+                }
             }
             return mejorHijo;
         }
