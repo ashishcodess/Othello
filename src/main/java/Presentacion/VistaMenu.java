@@ -18,13 +18,13 @@ public class VistaMenu {
     private JPanel panelActivo = new JPanel();
 
     private JTextField textoInfoUsuario = new JTextField(15);
-    private JTextArea infoCreditos = new JTextArea(4,10);
 
 
     //BARRA DE MENU
     private JMenuBar menubarVista = new JMenuBar();
     private JMenu menuFile = new JMenu("File");
     private JMenuItem menuitemQuit = new JMenuItem("Salir");
+    private JMenuItem menuitemCreditos = new JMenuItem("Creditos");
     private JMenuItem menuitemLogin = new JMenuItem("Login Usuario");
     private JMenu menuTablero = new JMenu("Tablero");
     private JMenuItem menuItem_crearTablero = new JMenuItem("Crear Tablero");
@@ -59,6 +59,7 @@ public class VistaMenu {
     private JPanel panelOtrasOpciones= new JPanel();
     private JLabel labelOtros = new JLabel("Otras opciones");
     private JButton buttonLogin = new JButton("Login(otro usuario)");
+    private JButton buttonCreditos = new JButton("Creditos");
     private JButton buttonSalir = new JButton("Salir del juego");
 
 
@@ -103,7 +104,7 @@ public class VistaMenu {
      * Metodo para inicializar frame
      * */
     private void inicializar_frameVista() {
-        frameVista.setMinimumSize(new Dimension(700,400));
+        frameVista.setMinimumSize(new Dimension(600,300));
         frameVista.setPreferredSize(frameVista.getMinimumSize());
         frameVista.setResizable(false);
         frameVista.setLocationRelativeTo(null);
@@ -117,6 +118,7 @@ public class VistaMenu {
      * */
     private void inicializar_menubarVista() {
         menuFile.add(menuitemLogin);
+        menuFile.add(menuitemCreditos);
         menuFile.add(menuitemQuit);
         menubarVista.add(menuFile);
         menuTablero.add(menuItem_crearTablero);
@@ -160,6 +162,7 @@ public class VistaMenu {
         panelOtrasOpciones.setLayout(new FlowLayout());
         panelOtrasOpciones.add(labelOtros);
         panelOtrasOpciones.add(buttonLogin);
+        panelOtrasOpciones.add(buttonCreditos);
         panelOtrasOpciones.add(buttonSalir);
 
         //PANEL BOTONES GENERAL
@@ -174,19 +177,12 @@ public class VistaMenu {
         iPanelActivo = 1;
         panelInfo.add(panelActivo);
 
-        //INFO CREDITOS
-        infoCreditos.setText("\n  Creditos: \n");
-        infoCreditos.append("\n    - Sergio Aguado Cobos \n");
-        infoCreditos.append("\n    - Ashish Kshetri \n");
-        infoCreditos.append("\n    - Sergi Cassanmagnago Somoza \n");
-        infoCreditos.append("\n    - Sergi Bosquet Reyes \n");
-        infoCreditos.setEditable(false);
 
         //PANEL PRINCIPAL
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.add(textoInfoUsuario,BorderLayout.NORTH);
         panelPrincipal.add(panelInfo,BorderLayout.CENTER);
-        panelPrincipal.add(infoCreditos,BorderLayout.EAST);
+
     }
 
 
@@ -212,6 +208,13 @@ public class VistaMenu {
                     }
                 });
 
+        buttonCreditos.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        iCtrlPresentacion.hacerVisibleVista(3);
+                    }
+                });
+
         buttonSalir.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
@@ -228,10 +231,19 @@ public class VistaMenu {
                     }
                 });
 
+
+
         menuitemLogin.addActionListener
                 (new ActionListener() {
                     public void actionPerformed (ActionEvent event) {
                         actionPerformed_buttonLogin(event);
+                    }
+                });
+
+        menuitemCreditos.addActionListener
+                (new ActionListener() {
+                    public void actionPerformed (ActionEvent event) {
+                        iCtrlPresentacion.hacerVisibleVista(3);
                     }
                 });
 

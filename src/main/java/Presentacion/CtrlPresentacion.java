@@ -11,6 +11,7 @@ public class CtrlPresentacion {
     private VistaRanking vistaRanking = null;
     private VistaLogin vistaLogin= null;
     private VistaMenu vistaMenu = null;
+    private VistaCreditos vistaCreditos = null;
 
     int vistaActiva = 0;
 
@@ -23,6 +24,7 @@ public class CtrlPresentacion {
         vistaRanking = new VistaRanking(this);
         vistaLogin = new VistaLogin(this);
         vistaMenu = new VistaMenu(this);
+        vistaCreditos = new VistaCreditos(this);
     }
 
     /**
@@ -43,16 +45,25 @@ public class CtrlPresentacion {
                 vistaLogin.hacerVisible(true);
                 vistaMenu.hacerVisible(false);
                 vistaRanking.hacerVisible(false);
+                vistaCreditos.hacerVisible(false);
                 break;
             case 1:
                 vistaLogin.hacerVisible(false);
                 vistaMenu.hacerVisible(true);
                 vistaRanking.hacerVisible(false);
+                vistaCreditos.hacerVisible(false);
                 break;
             case 2:
                 vistaLogin.hacerVisible(false);
                 vistaMenu.hacerVisible(false);
                 vistaRanking.hacerVisible(true);
+                vistaCreditos.hacerVisible(false);
+                break;
+            case 3:
+                vistaLogin.hacerVisible(false);
+                vistaMenu.hacerVisible(false);
+                vistaRanking.hacerVisible(false);
+                vistaCreditos.hacerVisible(true);
                 break;
         }
     }

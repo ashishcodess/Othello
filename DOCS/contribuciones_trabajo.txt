@@ -33,3 +33,4 @@ Sergio Aguado:
 	    - VistaRanking
 	    - VistaMenu
 	    - VistaLogin
+	    - VistaCreditos
