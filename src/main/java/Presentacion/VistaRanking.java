@@ -445,7 +445,7 @@ public class VistaRanking {
 
     /////////// MAIN (para poder probar)
 
-    public static void main (String[] args) {
+    /*public static void main (String[] args) {
         javax.swing.SwingUtilities.invokeLater (
                 new Runnable() {
                     public void run() {
@@ -453,5 +453,5 @@ public class VistaRanking {
                         ctrlPresentacion.inicializarPresentacion();
                         new VistaRanking(ctrlPresentacion).hacerVisible(true);
                     }});
-    }
+    }*/
 }

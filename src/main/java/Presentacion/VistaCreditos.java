@@ -23,7 +23,9 @@ public class VistaCreditos {
     private JMenuItem menuitemQuit = new JMenuItem("Salir");
     private JMenuItem menuitemVolver = new JMenuItem("Volver al menu principal");
 
-
+    /**
+     * Constructora de VistaCreditos (inicializa panel y botones)
+     * */
     public VistaCreditos(CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
         infoCreditos.setText(strTexto);
@@ -31,7 +33,6 @@ public class VistaCreditos {
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.add(infoCreditos,BorderLayout.CENTER);
         panelPrincipal.add(buttonOK,BorderLayout.SOUTH);
-
 
         frameVista.setMinimumSize(new Dimension(300,250));
         frameVista.setPreferredSize(frameVista.getMinimumSize());
@@ -49,6 +50,11 @@ public class VistaCreditos {
         frameVista.setJMenuBar(menubarVista);
     }
 
+
+    /**
+     *Metodo hacerVisible
+     * @param b si TRUE entonces el frame sera visible, caso contrario estara desactivado
+     * */
     public void hacerVisible(boolean b) {
         frameVista.pack();
         frameVista.setVisible(b);
@@ -56,6 +62,9 @@ public class VistaCreditos {
     }
 
 
+    /**
+     * Metodo para asignar los listeners a cada componente
+     * */
     private void asignar_listenersComponentes() {
         buttonOK.addActionListener
                 (new ActionListener() {
