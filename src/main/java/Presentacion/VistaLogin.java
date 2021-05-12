@@ -3,45 +3,41 @@ package Presentacion;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class VistaLogin {
 
     // Controlador de presentacion
-    private CtrlPresentacion iCtrlPresentacion;
+    private final CtrlPresentacion iCtrlPresentacion;
 
-    private int iPanelActivo = 0; //para cambiar entre panel Ranking y estadisticas
+    private final JFrame frameVista = new JFrame("Login");
+    private final JPanel panelPrincipal = new JPanel();
+    private final JPanel panelInfo = new JPanel();
 
-    private JFrame frameVista = new JFrame("Login");
-    private JPanel panelPrincipal = new JPanel();
-    private JPanel panelInfo = new JPanel();
-    private JPanel panelActivo = new JPanel();
-
-    private JTextArea infoLogin = new JTextArea(10,10);
+    private final JTextArea infoLogin = new JTextArea(10,10);
 
     //login/registro
-    private JPanel panelLoginPrincipal = new JPanel();
+    private final JPanel panelLoginPrincipal = new JPanel();
     JPanel pLogin2 = new JPanel();
-    private JPanel panelRegistro = new JPanel();
-    private JLabel labelRegistroNickname= new JLabel("Introducir Nickname a registrar:");
-    private JTextField textoRegistroNickname = new JTextField(15);
-    private JButton buttonRegistro= new JButton("Registrarse");
-    private JPanel panelLogin = new JPanel();
+    private final JPanel panelRegistro = new JPanel();
+    private final JLabel labelRegistroNickname= new JLabel("Introducir Nickname a registrar:");
+    private final JTextField textoRegistroNickname = new JTextField(15);
+    private final JButton buttonRegistro= new JButton("Registrarse");
+    private final JPanel panelLogin = new JPanel();
     JPanel pLogin1 = new JPanel();
-    private JLabel labelID= new JLabel("ID:");
-    private JTextField textoID = new JTextField(3);
-    private JLabel labelNickname= new JLabel("Nickname:");
-    private JTextField textoNickname = new JTextField(15);
-    private JButton buttonLogin= new JButton("Login");
-    private JButton buttonLimpiarLogin= new JButton("Limpiar");
+    private final JLabel labelID= new JLabel("ID:");
+    private final JTextField textoID = new JTextField(3);
+    private final JLabel labelNickname= new JLabel("Nickname:");
+    private final JTextField textoNickname = new JTextField(15);
+    private final JButton buttonLogin= new JButton("Login");
+    private final JButton buttonLimpiarLogin= new JButton("Limpiar");
 
-    private JTextField textoLoginFinal = new JTextField(15);
+    private final JTextField textoLoginFinal = new JTextField(15);
 
     //BARRA DE MENU
-    private JMenuBar menubarVista = new JMenuBar();
-    private JMenu menuFile = new JMenu("File");
-    private JMenuItem menuitemLogin = new JMenuItem("Login Usuario");
-    private JMenuItem menuitemQuit = new JMenuItem("Salir");
+    private final JMenuBar menubarVista = new JMenuBar();
+    private final JMenu menuFile = new JMenu("File");
+    private final JMenuItem menuitemLogin = new JMenuItem("Login Usuario");
+    private final JMenuItem menuitemQuit = new JMenuItem("Salir");
 
 
     /**
@@ -142,9 +138,7 @@ public class VistaLogin {
         panelLoginPrincipal.add(textoLoginFinal,BorderLayout.SOUTH);
 
         //PANEL INFO
-        panelActivo = panelLoginPrincipal;
-        iPanelActivo = 1;
-        panelInfo.add(panelActivo);
+        panelInfo.add(panelLoginPrincipal);
 
         //PANEL PRINCIPAL
         panelPrincipal.setLayout(new BorderLayout());
@@ -160,14 +154,14 @@ public class VistaLogin {
      * Metodo actionPerfomed del boton de Login
      * */
     public void actionPerformed_buttonLogin (ActionEvent event) {
-        int id = -1;
+        int id;
         try {
             id = Integer.parseInt(textoID.getText());
             String nick = textoNickname.getText();
             int res = iCtrlPresentacion.presentacion_login(id,nick);
             if (res == 1) {
                 textoLoginFinal.setText("");
-                iCtrlPresentacion.hacerVisibleVista(1);
+                iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU);
             }
             else textoLoginFinal.setText("Login incorrecto (vuelve a introducir los datos)");
         }
@@ -189,15 +183,12 @@ public class VistaLogin {
      * Metodo actionPerfomed del boton de Registrarse
      * */
     public void actionPerformed_buttonRegistrarse (ActionEvent event) {
-        try {
-            String nick = textoRegistroNickname.getText();
-            int res = iCtrlPresentacion.presentacion_registro_usuario(nick);
-            if (res != -1) {
-                textoLoginFinal.setText("Registro Correcto se te ha asignado el ID: " + res +" , y nickname: " + nick);
-            }
-            else textoLoginFinal.setText("Fallo al Registrarse");
+        String nick = textoRegistroNickname.getText();
+        int res = iCtrlPresentacion.presentacion_registro_usuario(nick);
+        if (res != -1) {
+            textoLoginFinal.setText("Registro Correcto se te ha asignado el ID: " + res +" , y nickname: " + nick);
         }
-        catch (Exception e) {} //no hacer nada
+        else textoLoginFinal.setText("Fallo al Registrarse");
     }
 
     /**
@@ -205,44 +196,20 @@ public class VistaLogin {
      * */
     private void asignar_listenersComponentes() {
         buttonLogin.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        actionPerformed_buttonLogin(event);
-                    }
-                });
+                (this::actionPerformed_buttonLogin);
 
         buttonLimpiarLogin.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        actionPerformed_buttonLimpiarLogin (event);
-                    }
-                });
+                (this::actionPerformed_buttonLimpiarLogin);
 
         buttonRegistro.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        actionPerformed_buttonRegistrarse (event);
-                    }
-                });
+                (this::actionPerformed_buttonRegistrarse);
 
         menuitemQuit.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        iCtrlPresentacion.presentacion_exportar_ranking();
-                        System.exit(0);
-                    }
+                (event -> {
+                    iCtrlPresentacion.presentacion_exportar_ranking();
+                    System.exit(0);
                 });
     }
 
-    /////////// MAIN (para poder probar)
-    /*public static void main (String[] args) {
-        javax.swing.SwingUtilities.invokeLater (
-                new Runnable() {
-                    public void run() {
-                        CtrlPresentacion ctrlPresentacion = new CtrlPresentacion();
-                        ctrlPresentacion.inicializarPresentacion();
-                        new VistaLogin(ctrlPresentacion).hacerVisible(true);
-                    }});
-    }*/
 
 }

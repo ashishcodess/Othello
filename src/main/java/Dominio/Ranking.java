@@ -1,10 +1,7 @@
 package Dominio;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-
-import MyException.MyException;
 
 
 public class Ranking {
@@ -15,7 +12,7 @@ public class Ranking {
      * Constructora por defecto (ranking vacio)
      * */
     public Ranking () {
-        this.ranking = new ArrayList<ElementoRanking>();
+        this.ranking = new ArrayList<>();
     }
 
 
@@ -35,15 +32,11 @@ public class Ranking {
     /**
      * Este metodo inserta en la ultima posicion "i" el ElementoRanking "e"
      * @param i posicion dentro del ranking
-     * @param e Elemento tipo ElementoRanking a modificar en el ranking
-     * @return devuelve falso si el entero "i" no pertenece al rango permitido dentro del ArrayList
-     * */
-    public Boolean modificar_elemento_ranking(int i, ElementoRanking e) {
+     * @param e Elemento tipo ElementoRanking a modificar en el ranking */
+    public void modificar_elemento_ranking(int i, ElementoRanking e) {
         if (i >= 0 && i < ranking.size()) {
             this.ranking.set(i,e);
-            return true;
         }
-        else return false;
     }
 
     /**
@@ -57,17 +50,12 @@ public class Ranking {
     /**
      * Este metodo inserta en la ultima posicion "i" el ElementoRanking "e"
      * @param id identificador de Persona a borrar
-     * @param nick nickname de Persona a borrar
-     * @return devuelve falso si el entero "i" no pertenece al rango permitido dentro del ArrayList
-     * */
-    public Boolean eliminar_elemento_ranking(int id, String nick) {
+     * @param nick nickname de Persona a borrar */
+    public void eliminar_elemento_ranking(int id, String nick) {
         int ires = existe_en_ranking(id,nick);
-        Boolean res = false;
         if (ires != -1) {
             this.ranking.remove(ires);
-            res = true;
         }
-        return res;
     }
 
     /**
@@ -78,8 +66,8 @@ public class Ranking {
      * */
     public int existe_en_ranking(int id, String nick) {
         int tam = ranking.size();
-        int i = -1;
-        Boolean res = false;
+        int i ;
+        boolean res = false;
         for (i = 0; i < tam && !res; ++i) {
             int idAux = this.ranking.get(i).getID();
             String sAux = this.ranking.get(i).getNickname();
@@ -89,27 +77,6 @@ public class Ranking {
         return (i-1);
     }
 
-    /**
-     * Operacion consultar_ranking(id,nick)
-     * @param id identificador de Persona a consultar
-     * @param nick nickname de Persona a consultar
-     * @return devuelve el elemento del ranking con identificadores (id,nick) en caso de que exista, caso contrario devuelve -1
-     * */
-    public ElementoRanking consultar_ranking(int id, String nick) {
-        int i = existe_en_ranking(id,nick);
-        if (i != -1) return this.ranking.get(i); //existe en el ranking
-        else return null;
-    }
-
-    /**
-     * Operacion consultar_elemento_i(i)
-     * @param i posicion dentro del ranking
-     * @return devuelve el elemento del ranking en la posicion i de ArrayList
-     * */
-    public ElementoRanking consultar_elemento_i(int i) {
-        if (i >= 0 && i < ranking.size()) return this.ranking.get(i);
-        else return null;
-    }
 
     /**
      * Operacion consultar_info_elemento_i(i)
@@ -142,7 +109,6 @@ public class Ranking {
         }
         catch (Exception e) {
             System.out.println("Error en incrementar_ganadas_perdidas de Ranking");
-            System.out.println(e);
         }
     }
 
@@ -180,7 +146,6 @@ public class Ranking {
         }
         catch (Exception e) {
             System.out.println("Error en incrementar_partida de Ranking");
-            System.out.println(e);
         }
     }
 
@@ -195,16 +160,16 @@ public class Ranking {
         else {
             switch(orden) {
                 case 0:
-                    Collections.sort(this.ranking, new SortbyGanadas());
+                    this.ranking.sort(new SortbyGanadas());
                     break;
                 case 1:
-                    Collections.sort(this.ranking, new SortbyID());
+                    this.ranking.sort(new SortbyID());
                     break;
                 case 2:
-                    Collections.sort(this.ranking, new SortbyNICKNAME());
+                    this.ranking.sort(new SortbyNICKNAME());
                     break;
                 case 3:
-                    Collections.sort(this.ranking, new SortbyIDMenor());
+                    this.ranking.sort(new SortbyIDMenor());
                     break;
             }
             return true;
@@ -216,11 +181,9 @@ public class Ranking {
      * @return devuelve toda la información del Ranking en un ArrayList de Strings
      * */
     public ArrayList<String> toArrayList() {
-        ArrayList<String> as = new ArrayList<String>();
-        //String s_aux = "(ID, nickname, Ganadas, Perdidas,Empatadas, Totales)";
-        //as.add(s_aux);
-        for (int i = 0; i < this.ranking.size(); ++i) {
-            as.add(ranking.get(i).consultar_all());
+        ArrayList<String> as = new ArrayList<>();
+        for (ElementoRanking elementoRanking : this.ranking) {
+            as.add(elementoRanking.consultar_all());
         }
         return as;
     }
@@ -244,10 +207,9 @@ public class Ranking {
      * Este metodo muestra por salida estandar la informacion disponible de todos los jugadores dentro del Ranking
      * */
     public void print_ranking() {
-        int tam = this.ranking.size();
         System.out.println("(ID, nickname, Ganadas, Perdidas,Empatadas, Totales)");
-        for (int i = 0; i < tam; ++i) {
-            System.out.println(this.ranking.get(i).consultar_all());
+        for (ElementoRanking elementoRanking : this.ranking) {
+            System.out.println(elementoRanking.consultar_all());
         }
         System.out.println();
     }
@@ -258,10 +220,9 @@ public class Ranking {
      * */
     public void print_ranking_orden(int orden) {
         ordenar_ranking(orden);
-        int tam = this.ranking.size();
         System.out.println("(ID, nickname, Ganadas, Perdidas,Empatadas, Totales)");
-        for (int i = 0; i < tam; ++i) {
-            System.out.println(this.ranking.get(i).consultar_all());
+        for (ElementoRanking elementoRanking : this.ranking) {
+            System.out.println(elementoRanking.consultar_all());
         }
         System.out.println();
     }

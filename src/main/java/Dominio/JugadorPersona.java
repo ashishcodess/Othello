@@ -3,8 +3,6 @@ package Dominio;
 
 import MyException.MyException;
 
-import java.io.*;
-
 public class JugadorPersona extends Jugador {
     /*Atributos*/
     /** Atributo nickname de JugadorPersona*/
@@ -41,22 +39,6 @@ public class JugadorPersona extends Jugador {
     }
 
     /*Sets y Gets*/
-
-    /**
-     * Operacion set del atributo ID
-     * @param nuevoID indica el nuevo valor que tomara el atributo id de Jugador
-     */
-    public void modificar_IDJugador(int nuevoID) {
-        super.modificar_id(nuevoID);
-    }
-
-    /**
-     * Operacion set del atributo nickName
-     * @param nuevoNick indica el nuevo valor que tomara el atributo nickname de JugadorPersona
-     */
-    public void modificar_nickname(String nuevoNick) {
-        this.nickname = nuevoNick;
-    }
 
     /**
      * Operacion get del atributo nickname

@@ -1,67 +1,64 @@
 package Presentacion;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
+import java.util.Arrays;
+import java.util.Objects;
 
 
 public class VistaRanking {
 
     // Controlador de presentacion
-    private CtrlPresentacion iCtrlPresentacion;
+    private final CtrlPresentacion iCtrlPresentacion;
 
     private int iPanelActivo = 0; //para cambiar entre panel Ranking y estadisticas
 
     // Componentes de la interficie grafica
-    private JFrame frameVista = new JFrame("Vista Ranking");
-    private JPanel panelPrincipal = new JPanel();
-    private JPanel panelInfo = new JPanel();
+    private final JFrame frameVista = new JFrame("Vista Ranking");
+    private final  JPanel panelPrincipal = new JPanel();
+    private final  JPanel panelInfo = new JPanel();
     private JPanel panelActivo = new JPanel();
-    private JPanel panelBotonesGeneral = new JPanel();
-    private JButton buttonConsultarRanking = new JButton("Consultar todo el Ranking");
-    private JButton buttonConsultarEstadisticas = new JButton("Consultar estadisticas de un Jugador");
-    private JLabel labelInfoRanking = new JLabel("Informacion del ranking (ID, nickname, Ganadas, Perdidas,Empatadas, Totales)"); //borrar al final
-    private JLabel labelInfoRanking2 = new JLabel("Informacion del ranking (ID, nickname, Ganadas, Perdidas,Empatadas, Totales)"); //borrar al final
+    private final JPanel panelBotonesGeneral = new JPanel();
+    private final JButton buttonConsultarRanking = new JButton("Consultar todo el Ranking");
+    private final JButton buttonConsultarEstadisticas = new JButton("Consultar estadisticas de un Jugador");
+    private final JLabel labelInfoRanking = new JLabel("Informacion del ranking (ID, nickname, Ganadas, Perdidas,Empatadas, Totales)"); //borrar al final
+    private final JLabel labelInfoRanking2 = new JLabel("Informacion del ranking (ID, nickname, Ganadas, Perdidas,Empatadas, Totales)"); //borrar al final
 
-    private JButton buttonVolverMenu = new JButton("Volver al menu");
+    private final JButton buttonVolverMenu = new JButton("Volver al menu");
 
     //COMPONENTES RANKING
-    private JPanel panelRanking = new JPanel();
-    private JTextArea textareaRanking = new JTextArea(30,45);
+    private final JPanel panelRanking = new JPanel();
     private JTable tablaRanking = new JTable();
-    private JPanel panelBotonesRanking = new JPanel();
-    private JButton buttonCargarRanking = new JButton("Cargar Ranking");
-    private JButton buttonLimpiarRanking= new JButton("Limpiar Ranking");
+    private final JPanel panelBotonesRanking = new JPanel();
+    private final JButton buttonCargarRanking = new JButton("Cargar Ranking");
+    private final JButton buttonLimpiarRanking= new JButton("Limpiar Ranking");
     //Opcion desplegable con3 opciones de ordenar: ID, Partidas Ganadas y Nickname
-    private JComboBox comboBoxOrdenar = new JComboBox();
-    private JButton buttonOrdenar = new JButton("Ordenar");
+    private final JComboBox comboBoxOrdenar = new JComboBox();
+    private final JButton buttonOrdenar = new JButton("Ordenar");
 
 
     //COMPONENTES ESTADISTICAS
-    private JPanel panelEstadisticas = new JPanel();
-    private JPanel panelBotonesEstadisticas = new JPanel();
-    private JLabel labelID= new JLabel("ID:");
-    private JTextField textoID = new JTextField(3);
-    private JLabel labelNickname= new JLabel("Nickname:");
-    private JTextField textoNickname = new JTextField(15);
-    private JButton buttonBuscarEstadisticas= new JButton("Buscar");
-    private JButton buttonLimpiarEstadisticas= new JButton("Limpiar");
+    private final JPanel panelEstadisticas = new JPanel();
+    private final JPanel panelBotonesEstadisticas = new JPanel();
+    private final JLabel labelID= new JLabel("ID:");
+    private final JTextField textoID = new JTextField(3);
+    private final JLabel labelNickname= new JLabel("Nickname:");
+    private final JTextField textoNickname = new JTextField(15);
+    private final JButton buttonBuscarEstadisticas= new JButton("Buscar");
+    private final JButton buttonLimpiarEstadisticas= new JButton("Limpiar");
     private JTable tablaEstadisticas = new JTable();
 
     //BARRA DE MENU
-    private JMenuBar menubarVista = new JMenuBar();
-    private JMenu menuFile = new JMenu("File");
-    private JMenuItem menuitemVolverMenu= new JMenuItem("Volver al menu principal");
-    private JMenuItem menuitemQuit = new JMenuItem("Salir");
-    private JMenu menuRanking = new JMenu("Ranking");
-    private JMenuItem menuItem_consultar_ranking = new JMenuItem("Consultar Ranking");
-    private JMenuItem menuItem_consultar_estadisticas = new JMenuItem("Consultar Estadisticas");
+    private final JMenuBar menubarVista = new JMenuBar();
+    private final JMenu menuFile = new JMenu("File");
+    private final JMenuItem menuitemVolverMenu= new JMenuItem("Volver al menu principal");
+    private final JMenuItem menuitemQuit = new JMenuItem("Salir");
+    private final JMenu menuRanking = new JMenu("Ranking");
+    private final JMenuItem menuItem_consultar_ranking = new JMenuItem("Consultar Ranking");
+    private final JMenuItem menuItem_consultar_estadisticas = new JMenuItem("Consultar Estadisticas");
 
 
     /**
@@ -151,10 +148,9 @@ public class VistaRanking {
         panelBotonesRanking.setLayout(new FlowLayout());
         panelBotonesRanking.add(buttonCargarRanking);
         panelBotonesRanking.add(buttonLimpiarRanking);
-        comboBoxOrdenar.addItem("ID (mayor a menor)");
-        comboBoxOrdenar.addItem("ID(menor a mayor)");
-        comboBoxOrdenar.addItem("Partidas Ganadas");
-        comboBoxOrdenar.addItem("Nickname");
+        for (String s : Arrays.asList("ID (mayor a menor)", "ID(menor a mayor)", "Partidas Ganadas", "Nickname")) {
+            comboBoxOrdenar.addItem(s);
+        }
         panelBotonesRanking.add(comboBoxOrdenar);
         panelBotonesRanking.add(buttonOrdenar);
         buttonCargarRanking.setToolTipText("Carga la informacion del ranking en el TextArea");
@@ -198,7 +194,7 @@ public class VistaRanking {
     /**
      * Metodo actionPerfomed del boton de Consultar Ranking
      * * */
-    public void actionPerformed_buttonConsultarRanking (ActionEvent event) {
+    public void actionPerformed_buttonConsultarRanking() {
         panelInfo.remove(panelActivo);
         if (iPanelActivo != 1) {
             iPanelActivo = 1;
@@ -215,9 +211,9 @@ public class VistaRanking {
     public void actionPerformed_buttonCargarRanking (ActionEvent event) {
         ArrayList<String> res = iCtrlPresentacion.presentacion_consultar_ranking();
         int tam = res.size()/6;
-        String column[]={"ID","nickname","ganadas","perdidas","empatadas","totales"};
-        String data[][] = new String[tam+1][6];
-        for (int i = 0; i < column.length; ++i) data[0][i] = column[i];
+        String[] column ={"ID","nickname","ganadas","perdidas","empatadas","totales"};
+        String[][] data = new String[tam+1][6];
+        System.arraycopy(column, 0, data[0], 0, column.length);
         for (int i = 0; i < tam; ++i) {
             for (int j = 0; j < 6; ++j) {
                 data[i+1][j] = res.get(i*6+j);
@@ -245,12 +241,22 @@ public class VistaRanking {
      * Metodo actionPerfomed del boton de Ordenar (Para ordenar el ranking en funcion de ID, ganadas o Nickname)
      * */
     public void actionPerformed_buttonOrdenar (ActionEvent event) {
-        String s = comboBoxOrdenar.getSelectedItem().toString();
+        String s = Objects.requireNonNull(comboBoxOrdenar.getSelectedItem()).toString();
         int orden = -1;
-        if (s.equals("ID (mayor a menor)")) orden = 1;
-        else if (s.equals("Partidas Ganadas")) orden = 0;
-        else if (s.equals("Nickname")) orden = 2;
-        else if (s.equals("ID(menor a mayor)")) orden = 3;
+        switch (s) {
+            case "ID (mayor a menor)":
+                orden = 1;
+                break;
+            case "Partidas Ganadas":
+                orden = 0;
+                break;
+            case "Nickname":
+                orden = 2;
+                break;
+            case "ID(menor a mayor)":
+                orden = 3;
+                break;
+        }
         if (iCtrlPresentacion.presentacion_ordenar_ranking(orden)) actionPerformed_buttonCargarRanking(event);
     }
 
@@ -259,9 +265,9 @@ public class VistaRanking {
      * * */
     private void limpiar_ranking() {
         int tam = iCtrlPresentacion.presentacion_consultar_tam_ranking();
-        String column[]={"ID","nickname","ganadas","perdidas","empatadas","totales"};
-        String data[][] = new String[tam+1][6];
-        for (int i = 0; i < column.length; ++i) data[0][i] = column[i];
+        String[] column ={"ID","nickname","ganadas","perdidas","empatadas","totales"};
+        String[][] data = new String[tam+1][6];
+        System.arraycopy(column, 0, data[0], 0, column.length);
         for (int i = 0; i < tam; ++i) {
             for (int j = 0; j < 6; ++j) {
                 data[i+1][j] = "";
@@ -293,17 +299,15 @@ public class VistaRanking {
         int id = -1;
         try {
             id = Integer.parseInt(textoID.getText());
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         } //no hacer nada
         String nick = textoNickname.getText();
         ArrayList<String> res = iCtrlPresentacion.presentacion_consultar_estadisticas(id, nick);
         String[] sRes = res.get(0).split(" ");
-        String column[] = {"ID", "nickname", "ganadas", "perdidas", "empatadas", "totales"};
-        String data[][] = new String[2][6];
-        for (int i = 0; i < column.length; ++i) data[0][i] = column[i];
-        for (int j = 0; j < 6; ++j) {
-            data[1][j] = sRes[j];
-        }
+        String[] column = {"ID", "nickname", "ganadas", "perdidas", "empatadas", "totales"};
+        String[][] data = new String[2][6];
+        System.arraycopy(column, 0, data[0], 0, column.length);
+        System.arraycopy(sRes, 0, data[1], 0, 6);
         panelEstadisticas.remove(tablaEstadisticas);
         tablaEstadisticas=new JTable(data,column);
         panelEstadisticas.add(tablaEstadisticas,BorderLayout.SOUTH);
@@ -329,9 +333,9 @@ public class VistaRanking {
      * * */
     private void limpiar_estadisticas() {
         int tam = 1;
-        String column[]={"ID","nickname","ganadas","perdidas","empatadas","totales"};
-        String data[][] = new String[tam+1][6];
-        for (int i = 0; i < column.length; ++i) data[0][i] = column[i];
+        String[] column ={"ID","nickname","ganadas","perdidas","empatadas","totales"};
+        String[][] data = new String[tam+1][6];
+        System.arraycopy(column, 0, data[0], 0, column.length);
         for (int i = 0; i < tam; ++i) {
             for (int j = 0; j < 6; ++j) {
                 data[i+1][j] = "-";
@@ -350,95 +354,45 @@ public class VistaRanking {
     private void asignar_listenersComponentes() {
 
         buttonCargarRanking.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        actionPerformed_buttonCargarRanking(event);
-                    }
-                });
+                (this::actionPerformed_buttonCargarRanking);
 
         buttonLimpiarRanking.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        actionPerformed_buttonLimpiarRanking(event);
-                    }
-                });
+                (this::actionPerformed_buttonLimpiarRanking);
 
         menuItem_consultar_ranking.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        actionPerformed_buttonCargarRanking(event);
-                    }
-                });
+                (this::actionPerformed_buttonCargarRanking);
 
         menuitemVolverMenu.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        iCtrlPresentacion.hacerVisibleVista(1);
-                    }
-                });
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
 
         menuitemQuit.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        iCtrlPresentacion.presentacion_exportar_ranking();
-                        System.exit(0);
-                    }
+                (event -> {
+                    iCtrlPresentacion.presentacion_exportar_ranking();
+                    System.exit(0);
                 });
 
         buttonConsultarRanking.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        actionPerformed_buttonConsultarRanking(event);
-                    }
-                });
+                (event -> actionPerformed_buttonConsultarRanking());
 
         buttonConsultarEstadisticas.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        actionPerformed_buttonConsultarEstadisticas(event);
-                    }
-                });
+                (this::actionPerformed_buttonConsultarEstadisticas);
 
         buttonLimpiarEstadisticas.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        actionPerformed_buttonLimpiarEstadisticas(event);
-                    }
-                });
+                (this::actionPerformed_buttonLimpiarEstadisticas);
 
         buttonBuscarEstadisticas.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        actionPerformed_buttonBuscarEstadisticas(event);
-                    }
-                });
+                (this::actionPerformed_buttonBuscarEstadisticas);
 
         menuItem_consultar_ranking.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        actionPerformed_buttonConsultarRanking(event);
-                    }
-                });
+                (event -> actionPerformed_buttonConsultarRanking());
 
         menuItem_consultar_estadisticas.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        actionPerformed_buttonConsultarEstadisticas(event);
-                    }
-                });
+                (this::actionPerformed_buttonConsultarEstadisticas);
 
-        buttonVolverMenu.addActionListener (new ActionListener() {
-            public void actionPerformed (ActionEvent event) {
-                iCtrlPresentacion.hacerVisibleVista(1);
-            }
-        });
+        buttonVolverMenu.addActionListener (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
 
         buttonOrdenar.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        actionPerformed_buttonOrdenar(event);
-                    }
-                });
+                (this::actionPerformed_buttonOrdenar);
 
     }
 

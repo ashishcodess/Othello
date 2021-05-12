@@ -92,7 +92,7 @@ public class RankingTest_JUnit {
      * Test sobre Ranking (Funcion incrementar_ganadas_perdidas, en caso de no existir en el ranking los crea y los agrega)
      * @throws MyException caso de fallo de elementoRanking con id inferior a 6 (tiene que ser una Persona)
      * */
-    public void test_incrementar_ganadas_perdidas() throws MyException {
+    public void test_incrementar_ganadas_perdidas() {
         Ranking rank = new Ranking();
         rank.incrementar_ganadas_perdidas(6, "a", 7, "b", 1);
         String[] resultados = {"6 a 1 0 0 1", "7 b 0 1 0 1"};

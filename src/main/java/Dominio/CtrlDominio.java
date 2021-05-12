@@ -4,7 +4,6 @@ import ControladorPersistencia.CtrlPersitencia;
 import MyException.MyException;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 
 public class CtrlDominio {
@@ -18,7 +17,6 @@ public class CtrlDominio {
     static int id_2; //ID jugador2
     static String nick_2; //nickname jugador2
 
-    static Scanner scan = new Scanner(System.in); //temporal por ahora
 
     private static int estado_partida; //para conocer el estado de la partida desde la capa de Presentacion
     private static Partida partida_activa;
@@ -28,8 +26,8 @@ public class CtrlDominio {
      * Creadora por defecto de CtrlDominio
      * */
     public CtrlDominio() {
-        this.code = -1;
-        this.nickname = "";
+        code = -1;
+        nickname = "";
         cp = new CtrlPersitencia(true);
         ranking = cp.ctrl_importar_ranking();
     }
@@ -55,8 +53,7 @@ public class CtrlDominio {
      * @return devuelve la informacion que esta logueado dentro del juego
      * */
     public String get_info_usuario_activo() {
-        String s = "Usuario activo (ID:" + code + " , nickname: " + nickname + ")";
-        return s;
+        return "Usuario activo (ID:" + code + " , nickname: " + nickname + ")";
     }
 
     /**
@@ -87,7 +84,7 @@ public class CtrlDominio {
      * caso contrario devuelve string con informacion de ERROR
      * */
     public ArrayList<String> consultar_estadisticas(int id, String nick) {
-        ArrayList<String> res = new ArrayList<String>();
+        ArrayList<String> res = new ArrayList<>();
         int i = ranking.existe_en_ranking(id,nick);
         if (i != -1) {
             res.add(ranking.consultar_info_elemento_i(i));
@@ -133,11 +130,10 @@ public class CtrlDominio {
      * */
     private static Partida cargarPartida(int idPartida) {
         try {
-            Partida p = cp.ctrl_cargar_partida(idPartida);
-            return p;
+            return cp.ctrl_cargar_partida(idPartida);
         }
         catch (Exception e) {
-            String s = ("Fallo al cargar la partida con ID:" + idPartida);
+            //String s = ("Fallo al cargar la partida con ID:" + idPartida);
             //llamar a CtrlPresentacion con el mensaje de s
         }
         return null;
@@ -173,7 +169,7 @@ public class CtrlDominio {
     * */
     private static int ejecutarRondaPartida(Partida p, ArrayList<String> argum) {
         //accion a realizar esta dentro de argum
-        int res = -1;
+        int res;
         String[] accion = argum.toArray(new String[0]);
         res = p.rondaPartida(accion);
         //modificar estadoPartida
@@ -187,11 +183,11 @@ public class CtrlDominio {
         try {
             int idPartida = cp.ctrl_get_nuevo_ID_Partida();
             int id1, id2;
-            String nick1 = new String();
-            String nick2 = new String();
+            String nick1;
+            String nick2;
             int modo = Integer.parseInt(argum.get(0));
             if (modo<0 || modo > 2) throw new MyException("Modo de juego incorrecto");
-            int reglas[] = new int[3];
+            int[] reglas = new int[3];
             reglas[0] = Integer.parseInt(argum.get(1));
             reglas[1] = Integer.parseInt(argum.get(2));
             reglas[2] = Integer.parseInt(argum.get(3));
@@ -204,12 +200,10 @@ public class CtrlDominio {
             id2 = Integer.parseInt(argum.get(6));
             nick2 = argum.get(7);
             Tablero t = new Tablero();//por ahora, diferenciar si se quiere cargar un tablero nuevo
-            Partida p = new Partida(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
-            return p;
+            return new Partida(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
         }
         catch (Exception e) {
             //que hacer cuando salta alguna excepcion
-            System.out.println(e); //por ahora para pruebas
         }
         return null; //por ahora para pruebas
     }

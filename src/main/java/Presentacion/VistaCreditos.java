@@ -2,33 +2,29 @@ package Presentacion;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class VistaCreditos {
 
-    private CtrlPresentacion iCtrlPresentacion;
+    private final CtrlPresentacion iCtrlPresentacion;
 
     String strTexto = "\n  Creditos: \n" + "\n    - Sergio Aguado Cobos \n"
             +"\n    - Ashish Kshetri \n" + "\n    - Sergi Cassanmagnago Somoza \n"
             + "\n    - Sergi Bosquet Reyes \n";
 
-    private JTextArea infoCreditos = new JTextArea(4,10);
-    private JFrame frameVista = new JFrame("Creditos");
-    private JButton buttonOK = new JButton("OK");
-    private  JPanel panelPrincipal = new JPanel();
+    private final JFrame frameVista = new JFrame("Creditos");
+    private final JButton buttonOK = new JButton("OK");
 
-    private JMenuBar menubarVista = new JMenuBar();
-    private JMenu menuFile = new JMenu("File");
-    private JMenuItem menuitemQuit = new JMenuItem("Salir");
-    private JMenuItem menuitemVolver = new JMenuItem("Volver al menu principal");
+    private final JMenuItem menuitemQuit = new JMenuItem("Salir");
+    private final JMenuItem menuitemVolver = new JMenuItem("Volver al menu principal");
 
     /**
      * Constructora de VistaCreditos (inicializa panel y botones)
      * */
     public VistaCreditos(CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
+        JTextArea infoCreditos = new JTextArea(4, 10);
         infoCreditos.setText(strTexto);
+        JPanel panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new BoxLayout(panelPrincipal,BoxLayout.PAGE_AXIS));
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.add(infoCreditos,BorderLayout.CENTER);
@@ -44,8 +40,10 @@ public class VistaCreditos {
 
         asignar_listenersComponentes();
 
+        JMenu menuFile = new JMenu("File");
         menuFile.add(menuitemVolver);
         menuFile.add(menuitemQuit);
+        JMenuBar menubarVista = new JMenuBar();
         menubarVista.add(menuFile);
         frameVista.setJMenuBar(menubarVista);
     }
@@ -67,25 +65,15 @@ public class VistaCreditos {
      * */
     private void asignar_listenersComponentes() {
         buttonOK.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        iCtrlPresentacion.hacerVisibleVista(1);
-                    }
-                });
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
 
         menuitemVolver.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        iCtrlPresentacion.hacerVisibleVista(1);
-                    }
-                });
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
 
         menuitemQuit.addActionListener
-                (new ActionListener() {
-                    public void actionPerformed (ActionEvent event) {
-                        iCtrlPresentacion.presentacion_exportar_ranking();
-                        System.exit(0);
-                    }
+                (event -> {
+                    iCtrlPresentacion.presentacion_exportar_ranking();
+                    System.exit(0);
                 });
     }
 
