@@ -136,10 +136,7 @@ public class RankingTest_JUnit {
      * @throws MyException caso de fallo de elementoRanking con id inferior a 6 (tiene que ser una Persona)
      * */
     public void test_ordenarGanadas() throws MyException{
-        Ranking rank = new Ranking();
-        rank.add_al_ranking(new ElementoRanking(7, "b", 2,1,0,3));
-        rank.add_al_ranking(new ElementoRanking(8, "c", 0,1,0,1));
-        rank.add_al_ranking(new ElementoRanking(6, "a", 1,0,0,1));
+        Ranking rank = test_Ranking();
         rank.ordenar_ranking(0);
         String[] resultados = {"7 b 2 1 0 3","6 a 1 0 0 1","8 c 0 1 0 1"};
         for (int i = 0; i < rank.consultar_tam_ranking(); ++i) {
@@ -154,15 +151,20 @@ public class RankingTest_JUnit {
      * @throws MyException caso de fallo de elementoRanking con id inferior a 6 (tiene que ser una Persona)
      * */
     public void test_ordenarID() throws MyException{
-        Ranking rank = new Ranking();
-        rank.add_al_ranking(new ElementoRanking(7, "b", 2,1,0,3));
-        rank.add_al_ranking(new ElementoRanking(8, "c", 0,1,0,1));
-        rank.add_al_ranking(new ElementoRanking(6, "a", 1,0,0,1));
+        Ranking rank = test_Ranking();
         rank.ordenar_ranking(1);
         String[] resultados = {"8 c 0 1 0 1", "7 b 2 1 0 3","6 a 1 0 0 1"};
         for (int i = 0; i < rank.consultar_tam_ranking(); ++i) {
             assertEquals(resultados[i],rank.consultar_info_elemento_i(i));
         }
+    }
+
+    private Ranking test_Ranking() throws MyException {
+        Ranking rank = new Ranking();
+        rank.add_al_ranking(new ElementoRanking(7, "b", 2,1,0,3));
+        rank.add_al_ranking(new ElementoRanking(8, "c", 0,1,0,1));
+        rank.add_al_ranking(new ElementoRanking(6, "a", 1,0,0,1));
+        return rank;
     }
 
     @Test
@@ -171,10 +173,7 @@ public class RankingTest_JUnit {
      * @throws MyException caso de fallo de elementoRanking con id inferior a 6 (tiene que ser una Persona)
      * */
     public void test_ordenarNickname() throws MyException{
-        Ranking rank = new Ranking();
-        rank.add_al_ranking(new ElementoRanking(7, "b", 2,1,0,3));
-        rank.add_al_ranking(new ElementoRanking(8, "c", 0,1,0,1));
-        rank.add_al_ranking(new ElementoRanking(6, "a", 1,0,0,1));
+        Ranking rank = test_Ranking();
         rank.ordenar_ranking(2);
         String[] resultados = {"6 a 1 0 0 1","7 b 2 1 0 3", "8 c 0 1 0 1"};
         for (int i = 0; i < rank.consultar_tam_ranking(); ++i) {

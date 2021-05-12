@@ -177,11 +177,11 @@ public class MainDominio {
             System.out.println();
             System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
         }
-         catch (Exception e) {
-             res = generar_accion_partida(id,nick,turno);
-             System.out.println("No has introducido una accion valida");
-             //System.out.println(e);
-         }
+        catch (Exception e) {
+            res = generar_accion_partida(id,nick,turno);
+            System.out.println("No has introducido una accion valida");
+            //System.out.println(e);
+        }
         return res;
     }
 
@@ -264,7 +264,7 @@ public class MainDominio {
         int ganador = p.getGanador();
         switch (ganador) {
             case 0:
-                System.out.println("Partida Ganada por Jugador2 : (" + p.getID_J1() + " , " + p.getNickJugador1() + " )" );
+                System.out.println("Partida Ganada por Jugador1 : (" + p.getID_J1() + " , " + p.getNickJugador1() + " )" );
                 break;
             case 1:
                 System.out.println("Partida Ganada por Jugador2 : (" + p.getID_J2() + " , " + p.getNickJugador2() + " )" );

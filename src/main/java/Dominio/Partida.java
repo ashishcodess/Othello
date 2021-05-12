@@ -1,10 +1,8 @@
 package Dominio;
 
 import MyException.MyException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.ServiceConfigurationError;
-import java.util.Set;
+
+import java.util.*;
 
 public class Partida {
     /**identificador de Partida*/
@@ -15,7 +13,7 @@ public class Partida {
     private int turno;
     /**Reglas de la Partida*/
     private final int[] reglas; //array de 2 enteros para las reglas; {1,0} vertical/horizontal; {0,1} diagonales; {1,1} normal
-    /**J ugador1 de la Partida*/
+    /**Jugador1 de la Partida*/
     private Jugador j1;
     /** Jugador2 de la Partida*/
     private Jugador j2;
@@ -309,7 +307,28 @@ public class Partida {
                     break;
 
                 case 0: //Maquina vs Maquina
-                    // AQUI FALTA FUNCION QUE LLAMA AL JUGADOR MAQUINA A MOVER FICHA
+                    if (this.turno % 2 == 0) {
+                        this.tablero = j1.posicion(tablero, turno);
+                    }
+                    else{
+                        this.tablero = j2.posicion(tablero, turno);
+                    }
+                    incrementarTurnoPartida();
+                    if (turno > 0) {
+                        reglasCasillasDisponibles();
+                        disponibles = this.tablero.getCasillasDisponibles();
+                        print_casillas_disponibles(disponibles);
+                        print_Tablero();
+                        System.out.print("Siguiente turno? (pulsar Enter para pasar):");
+                        Scanner scanner = new Scanner(System.in);
+                        String entrada  ="";
+                        do{
+                            entrada  = scanner.nextLine();
+                            System.out.println(entrada);
+                        }
+                        while(!entrada.equals(""));
+                        System.out.println("SE PRESIONÓ LA TECLA ENTER");;
+                    }
                     break;
             }
         }
