@@ -266,7 +266,7 @@ public class MainDominio {
         int ganador = p.getGanador();
         switch (ganador) {
             case 0:
-                System.out.println("Partida Ganada por Jugador2 : (" + p.getID_J1() + " , " + p.getNickJugador1() + " )" );
+                System.out.println("Partida Ganada por Jugador1 : (" + p.getID_J1() + " , " + p.getNickJugador1() + " )" );
                 break;
             case 1:
                 System.out.println("Partida Ganada por Jugador2 : (" + p.getID_J2() + " , " + p.getNickJugador2() + " )" );
