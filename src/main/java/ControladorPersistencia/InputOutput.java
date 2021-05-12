@@ -58,7 +58,7 @@ public class InputOutput {
     }
 
     public void guardarInfoFichero(String pathF, ArrayList<String> as, tipoFichero a) {
-        //PARTIDA, TABLERO (convertir a arraylist de strings), RANKING
+        //PARTIDA, TABLERO (convertir a arraylist de strings), ranking
         try {
             File f = new File(pathF);
             if (f.exists()) f.delete();
