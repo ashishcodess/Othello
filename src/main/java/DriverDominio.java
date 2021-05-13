@@ -5,14 +5,17 @@ import Dominio.Ranking;
 import Dominio.Tablero;
 import MyException.MyException;
 
+import java.io.IOException;
 import java.util.*;
 
-public class MainDominio {
+public class DriverDominio {
     static int code;
     static String nickname;
     static int id_2;
     static String nick_2;
     static Scanner scan = new Scanner(System.in);
+
+    static String f = "ranking.txt"; //nombre del fichero de ranking
 
     private static CtrlPersitencia cp;
     private static Ranking ranking;
@@ -85,7 +88,7 @@ public class MainDominio {
      * @param p partida de la cual se necesita informacion de los jugadores y del ganador
      * @param ganador incrementar contador de partidas en funcion de [2: empate, 1:gana jugador2, 0:gana jugador1]
      * */
-    private static void actualizar_ranking(Partida p, int ganador){
+    private static void actualizar_ranking(Partida p, int ganador, String f){
         try {
             int modo = p.getModoDeJuegoPartida();
             if (modo != 0) { //diferente de maquina vs maquina
@@ -96,7 +99,7 @@ public class MainDominio {
                 id2 = p.getID_J2();
                 nick2 = p.getNickJugador2();
                 ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,ganador);
-                cp.ctrl_exportar_ranking(ranking.toArrayList());
+                cp.ctrl_exportar_ranking(ranking.toArrayList(),f);
             }
         }
         catch (Exception e) {
@@ -185,67 +188,6 @@ public class MainDominio {
         return res;
     }
 
-    /*private static String[] generar_accion_partida(int id, String nick, int turno) {
-        String[] res = new String[3];
-        try {
-            System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
-            if (id >= 0 && id < 6) System.out.println("Acciones a realizar para la maquina: (ID: " + id + ")");
-            else {
-                String s_aux;
-                if (turno < 60) {
-                    System.out.println("Acciones a realizar para el jugador: (ID: " + id + ", nick: " + nick + ")");
-                    System.out.println();
-                    System.out.println("    - colocar x y (enteros x,y entre [0...8])");
-                    System.out.println("    - paso (pasar el turno)");
-                    System.out.println("    - info (get info partida)");
-                    System.out.println("    - guardar (guardar partida y finalizar)");
-                    System.out.println("    - finalizar (finalizar partida)");
-                    System.out.println();
-                    System.out.print("Introducir accion a realizar:");
-                    while (!scan.hasNextLine()) s_aux = scan.nextLine();
-                    s_aux = scan.nextLine();
-                    System.out.println();
-                    res = s_aux.split(" ");
-                    if (res.length == 3 && res[0].equals("colocar")) { //colocar x y
-                        int x, y;
-                        x = Integer.parseInt(res[1]);
-                        y = Integer.parseInt(res[2]);
-                        boolean b = rango_mapa_correcto(x, y);
-                        while (!b) { //solo entra si x y no estan dentro del rango
-                            System.out.println("x y fuera de rango");
-                            System.out.print("Introducir nueva accion:");
-                            s_aux = scan.nextLine();
-                            System.out.println();
-                            res = s_aux.split(" ");
-                            if (res.length == 3) {
-                                x = Integer.parseInt(res[1]);
-                                y = Integer.parseInt(res[2]);
-                                b = rango_mapa_correcto(x, y);
-                            } else if ((res[0].equals("guardar")) || (res[0].equals("finalizar")))
-                                b = true; //ha realizado otra accion -> salir bucle
-                            else b = false;
-                        }
-                    }
-                }
-                else {
-                    System.out.print("Partida finalizada (pulsar enter para acabar):");
-                    while (!scan.hasNextLine()) s_aux = scan.nextLine();
-                    s_aux = scan.nextLine();
-                    System.out.println();
-                    res = s_aux.split(" ");
-                }
-            }
-            System.out.println();
-            System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
-        }
-         catch (Exception e) {
-             res = generar_accion_partida(id,nick,turno);
-             System.out.println("No has introducido una accion valida");
-             System.out.println(e);
-         }
-        return res;
-    }*/
-
     /**
      * Metodo print_contrincantes_maquina()
      * Esta funcion unicamente imprime los identificadores disponibles de las maquinas con la dificultad del juego
@@ -312,7 +254,7 @@ public class MainDominio {
                 System.out.println("PARTIDA GUARDADA");
                 System.out.println();
             }
-            else if (res != 5) actualizar_ranking(p,res);
+            else if (res != 5) actualizar_ranking(p,res,f);
 
             System.out.println();
             System.out.println("PARTIDA FINALIZADA");
@@ -349,7 +291,7 @@ public class MainDominio {
      * @param idTablero es el identificador de tablero a cargar
      * @return devuelve el tablero personalizado con id igual a idTablero, caso contrario devuele tablero inicial
      * */
-    private static Tablero cargar_Tablero(int idTablero) {
+    private static Tablero cargar_Tablero(int idTablero) throws IOException {
         int[][]tab = cp.ctrl_cargar_tablero(idTablero);
         return new Tablero(tab);
     }
@@ -360,7 +302,9 @@ public class MainDominio {
      * @return devuelve el turno del tablero personalizado con id igual a idTablero
      * */
     private static int cargar_turno_Tablero(int idTablero) {
-        return cp.ctrl_cargar_turno_tablero(idTablero);
+        try {return cp.ctrl_cargar_turno_tablero(idTablero);}
+        catch (Exception e) {}
+        return -1;
     }
 
 
@@ -748,8 +692,9 @@ public class MainDominio {
      * */
     public static void main(String[] args) {
         try {
-            cp = new CtrlPersitencia(true); //activar para utilizar solo 1 fichero de ranking (ranking.txt)
-            ranking = cp.ctrl_importar_ranking();
+            cp = new CtrlPersitencia(); //activar para utilizar solo 1 fichero de ranking (ranking.txt)
+            ranking = cp.ctrl_importar_ranking("ranking.txt");
+            //ranking.print_ranking();
             entrar2(1);
             boolean salir = false;
             while(!salir){
@@ -789,7 +734,7 @@ public class MainDominio {
                         break;
                 }
             }
-            cp.ctrl_exportar_ranking(ranking.toArrayList()); //exportar ranking antes de salir del programa
+            cp.ctrl_exportar_ranking(ranking.toArrayList(),"ranking.txt"); //exportar ranking antes de salir del programa
         }
         catch (Exception e) {
             //System.out.println(e);

@@ -6,6 +6,7 @@ import Dominio.Partida;
 import Dominio.Ranking;
 import MyException.MyException;
 
+import java.io.IOException;
 import java.util.*;
 
 
@@ -18,20 +19,28 @@ public class DriverPersistencia {
     /** test_IOPartidas
      * @param id es el identificador de la partida para realizar las pruebas
      * */
-    public static void test_IOPartidas(int id) {
+    public static void test_IOPartidas(int id) throws IOException, MyException {
         System.out.println("Probar metodos: Cargar/Guardar partida, toArrayList, listar_partidas_disponibles, borrar_partida");
         System.out.println();
         Partida p = cp.ctrl_cargar_partida(id);
         p.get_info_partida();
+        System.out.println("modificar la partida");
         ArrayList<String> as = p.toArrayList();
         System.out.println();
         System.out.println("sizes: " + as.size() + ", correcto? " + (as.size() == 15));
         as.set(0,"4");
         as.set(1,"9 dd");
+
+        //IDEA EXTRAER IDENTIFICADOR Y PASARLO COMO PARAMETRO EN GUARDAR PARTIDA
+
         cp.ctrl_guardar_partida(as);
         System.out.println("Se ha creado partida con ID partida: 4");
         System.out.println();
+        p = cp.ctrl_cargar_partida(4);
+        System.out.println("OK");
+        p.get_info_partida();
         cp.ctrl_print_partidas_disponibles(7,"as2");
+        cp.ctrl_print_partidas_disponibles(9,"dd");
         System.out.println("Prueba: borrar partida creada anteriormente ID(4)");
         if (cp.ctrl_borrar_partida(4)) System.out.println("Partida 4 borrada con exito");
         else System.out.println("Fallo al borrar Partida 4");
@@ -47,27 +56,27 @@ public class DriverPersistencia {
      * @param rk es el nombre del fichero (sin .txt) del ranking a realizar las pruebas
      * @throws MyException fallo con sizes de ranking
      * */
-    public static void test_IORanking(String rk) throws MyException {
-        String path = "./src/files/ranking/" + rk + ".txt";
-        Ranking rank= cp.ctrl_importar_ranking2(path);
+    public static void test_IORanking(String rk) throws MyException, IOException {
+        Ranking rank= cp.ctrl_importar_ranking(rk);
         System.out.println("Ranking importado correctamente");
         rank.print_ranking();
-        ElementoRanking e = new ElementoRanking(8,"aaaa",4, 1,0, 5);
+        ElementoRanking e = new ElementoRanking(8,"aaaa",4, 1,0);
         rank.incrementar_ganadas_perdidas(8,"aaaa",9,"dd", 2);
         rank.add_al_ranking(e);
-        e = new ElementoRanking(9,"dd",2, 1,2, 5);
+        e = new ElementoRanking(9,"dd",2, 1,2);
         rank.add_al_ranking(e);
         rank.print_ranking();
         rank.incrementar_ganadas_perdidas(8,"aaaa",9,"dd", 1);
         ArrayList<String> ar = rank.toArrayList();
-        cp.ctrl_exportar_ranking(ar);
+        cp.ctrl_exportar_ranking(ar,"test.txt");
     }
 
     /** test_IOUsuario
      * @param id es el identificador de usuario a realizar las pruebas
      * @param nick es el nickname de usuario a realizar las pruebas
      * */
-    public static void test_IOUsuario(int id, String nick) {
+    public static void test_IOUsuario(int id, String nick) throws IOException{
+        System.out.println("Introducir datos usuario a crear para hacer las pruebas");
         if (cp.ctrl_existe_usuario(id,nick)) System.out.println("Fichero usuario ya existe, crear uno diferente para probar...");
         else {
             if (cp.ctrl_crear_usuario(id,nick)) {
@@ -139,7 +148,7 @@ public class DriverPersistencia {
      * */
     public static void main(String[] args) {
         try {
-            cp = new CtrlPersitencia(true); //activar para utilizar solo 1 fichero de ranking
+            cp = new CtrlPersitencia(); //activar para utilizar solo 1 fichero de ranking
             boolean b = true;
             while (b) {
                 System.out.println("DriverPersistencia (OPCIONES):");
@@ -166,7 +175,7 @@ public class DriverPersistencia {
                         test_IOPartidas(i_entrada);
                         break;
                     case 2:
-                        test_IORanking("ranking");
+                        test_IORanking("test.txt");
                         break;
                     case 3:
                         System.out.print("Introducir ID de usuario a modificar:");
@@ -199,7 +208,7 @@ public class DriverPersistencia {
             }
         }
         catch (Exception e) {
-            System.out.println("Error en main de DriverPersitencia");
+            //System.out.println("Error en main de DriverPersitencia");
         }
     }
 

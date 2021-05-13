@@ -42,23 +42,17 @@ public class ElementoRanking {
      * @param ganadas contador de Partidas Ganadas
      * @param perdidas contador de Partidas perdidas
      * @param empatadas contador de Partidas empatadas
-     * @param total contador de Partidas totales
      * @throws MyException en caso de fallo con el identificador [pertenece a un ID de maquina: id menor 6]
      * */
-    public ElementoRanking (int id, String nick,  int ganadas, int perdidas, int empatadas,int total) throws MyException {
+    public ElementoRanking (int id, String nick,  int ganadas, int perdidas, int empatadas) throws MyException {
         if (id < 6) throw new MyException("El ID:" + id + " pertenece a una maquina o esta fuera de rango(es negativo)");
-        /*Se puede eliminar esta excepcion haciendo eliminando parametro totales*/
-        else if (total != (ganadas+perdidas+empatadas)) throw new MyException("Error al introducir partidas totales");
-        else {
-            this.idJugador = id;
-            this.nickJugador = nick;
-            this.totalPartidasJugadas = total;
-            this.partidasEmpatadas = empatadas;
-            this.partidasGanadas = ganadas;
-            this.partidasPerdidas = perdidas;
-        }
+        this.idJugador = id;
+        this.nickJugador = nick;
+        this.totalPartidasJugadas = ganadas+empatadas+perdidas;
+        this.partidasEmpatadas = empatadas;
+        this.partidasGanadas = ganadas;
+        this.partidasPerdidas = perdidas;
     }
-
 
 
     /**
@@ -89,7 +83,7 @@ public class ElementoRanking {
      * Operacion get del atributo idJugador
      * @return devuelve el id del Jugador
      */
-    public int getID() {
+    public int consultar_ID() {
         return this.idJugador;
     }
 
@@ -97,37 +91,37 @@ public class ElementoRanking {
      * Operacion get del atributo nickJugador
      * @return devuelve el nickname del Jugador
      */
-    public String getNickname() {return this.nickJugador;}
+    public String consultar_Nickname() {return this.nickJugador;}
 
     /**
      * Operacion get del atributo partidas ganadas
      * @return devuelve el contador de partidas ganadas del Jugador
      */
-    public int getGanadas() {return this.partidasGanadas;}
+    public int consultar_Ganadas() {return this.partidasGanadas;}
 
     /**
      * Operacion get del atributo partidas perdidas
      * @return devuelve el contador de partidas perdidas del Jugador
      */
-    public int getPerdidas() {return this.partidasPerdidas;}
+    public int consultar_Perdidas() {return this.partidasPerdidas;}
 
     /**
      * Operacion get del atributo partidas empatadas
      * @return devuelve el contador de partidas empatadas del Jugador
      */
-    public int getEmpatadas() {return this.partidasEmpatadas;}
+    public int consultar_Empatadas() {return this.partidasEmpatadas;}
 
     /**
      * Operacion get del atributo partidas totales jugadas
      * @return devuelve el contador de partidas totales del Jugador
      */
-    public int getTotales() {return this.totalPartidasJugadas;}
+    public int consultar_Totales() {return this.totalPartidasJugadas;}
 
     /**
      * Este metodo genera una String con la informacion del Jugador y toda la informacion sobre las partidas de esta misma
      * @return devuelve la String con la informacion de idJugador, nickJugador y todos los contadores de partidas
      */
-    public String consultar_all() {
+    public String consultar_todo() {
         return (this.idJugador + " " + this.nickJugador + " " + this.partidasGanadas + " " + this.partidasPerdidas + " " + this.partidasEmpatadas + " " + this.totalPartidasJugadas);
     }
 }

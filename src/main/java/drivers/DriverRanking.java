@@ -18,9 +18,9 @@ public class DriverRanking {
         ElementoRanking e = new ElementoRanking(6,"aaa");
         rank.add_al_ranking(e);
         rank.incrementar_partida(6, "aaa",1);
-        e = new ElementoRanking(7,"bbb",2, 3,0,5);
+        e = new ElementoRanking(7,"bbb",2, 3,0);
         rank.add_al_ranking(e);
-        e = new ElementoRanking(8,"c",4, 1,0, 5);
+        e = new ElementoRanking(8,"c",4, 1,0);
         rank.add_al_ranking(e);
         rank.incrementar_partida(8, "c",0);
         rank.incrementar_partida(8, "c",1);

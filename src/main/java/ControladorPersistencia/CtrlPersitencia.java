@@ -3,129 +3,82 @@ package ControladorPersistencia;
 import Dominio.*;
 import MyException.MyException;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class CtrlPersitencia {
 
-    /** Objeto IOPartidas*/
-    private final IOPartidas cPartidas;
-    /** Objeto IORanking*/
-    private final IORanking cRanking;
-    /** Objeto IOUsuario*/
-    private final IOUsuario cUsuario;
-    /** Objeto IOtablero*/
-    private final IOTablero cTablero;
-
-    /** Ubicacion de directorio de ficheros para CtrlPersitencia*/
-    private final String path;
-    /** Ubicacion de directorio de las partidas para CtrlPersitencia*/
-    private final String path_partidas;
-    /** Ubicacion de directorio del ranking para CtrlPersitencia*/
-    private final String path_ranking;
-    /** Ubicacion de directorio de los usuarios para CtrlPersitencia*/
-    private final String path_users;
-    /** Ubicacion de directorio de los tableros para CtrlPersitencia*/
-    private final String path_tableros;
 
 
-    /**
-     * Constructora por defecto
-     */
+    private final InputOutput io = new InputOutput();
+
+    private final String dirIni;
+    private final String dir_usuarios;
+    private final String dir_partidas;
+    private final String dir_ranking;
+    private final String dir_tablero;
+
+    private int idMax_usuario;
+    private int idMax_partida;
+    private int idMax_tablero;
+
+
+
+
     public CtrlPersitencia() {
-        this.path = "./src/files/";
-        this.path_partidas = this.path + "partidas/";
-        this.path_ranking =  this.path + "ranking/";
-        this.path_users = this.path + "users/";
-        this.path_tableros =  this.path + "tableros/";
-        this.cPartidas = new IOPartidas(this.path_partidas);
+        this.dirIni = "./src/files/";
+        this.dir_partidas = this.dirIni + "partidas/";
+        this.dir_usuarios = this.dirIni + "users/";
+        this.dir_ranking =  this.dirIni + "ranking/";
+        this.dir_tablero =  this.dirIni + "tableros/";
+
+
+        /*this.cPartidas = new IOPartidas(this.path_partidas);
         this.cRanking = new IORanking(this.path_ranking);
         this.cUsuario = new IOUsuario(this.path_users);
-        this.cTablero = new IOTablero(this.path_tableros);
+        this.cTablero = new IOTablero(this.path_tableros);*/
         InicializarDirPersitencia();
-    }
-
-    /**
-     * Constructora con opcion a cambiar el modoRanking)
-     * @param bRank [TRUE: solo utiliza fichero ranking.txt; FALSE:genera varios ficheros en funcion del size del ranking (usado en las pruebas DriverRanking)]
-     */
-    public CtrlPersitencia(boolean bRank) {
-
-        this.path = "./src/files/";
-        this.path_partidas = this.path + "partidas/";
-        this.path_ranking =  this.path + "ranking/";
-        this.path_users = this.path + "users/";
-        this.path_tableros =  this.path + "tableros/";
-        this.cPartidas = new IOPartidas(this.path_partidas);
-        this.cRanking = new IORanking(this.path_ranking,bRank);
-        this.cUsuario = new IOUsuario(this.path_users);
-        this.cTablero = new IOTablero(this.path_tableros);
-        InicializarDirPersitencia();
+        calcular_IDs_maximos();
     }
 
 
-    /**
-     * Constructora con s_path
-     * @param s_path path de el directorio de files (para Persistencia)
-     */
+
     public CtrlPersitencia(String s_path) {
-        this.path = s_path;
-        this.path_partidas =  this.path + "partidas/";
-        this.path_ranking =   this.path + "ranking/";
-        this.path_users =  this.path + "users/";
-        this.path_tableros =   this.path + "tableros/";
-        this.cPartidas = new IOPartidas(path_partidas);
-        this.cRanking = new IORanking(path_ranking);
-        this.cUsuario = new IOUsuario(path_users);
-        this.cTablero = new IOTablero(this.path_tableros);
+        this.dirIni = s_path;
+        this.dir_partidas = this.dirIni + "partidas/";
+        this.dir_usuarios = this.dirIni + "users/";
+        this.dir_ranking =  this.dirIni + "ranking/";
+        this.dir_tablero =  this.dirIni + "tableros/";
+
+        /*
+        this.cPartidas = new IOPartidas(dir_partidas);
+        this.cRanking = new IORanking(dir_ranking);
+        this.cUsuario = new IOUsuario(dir_usuarios);
+        this.cTablero = new IOTablero(dir_tablero);*/
         InicializarDirPersitencia();
+        calcular_IDs_maximos();
     }
 
-    /**
-     * Constructora con s_path y modoRanking
-     * @param s_path path de el directorio de files (para Persistencia)
-     * @param bRank [TRUE: solo utiliza fichero ranking.txt; FALSE:genera varios ficheros en funcion del size del ranking (usado en las pruebas DriverRanking)]
-     */
-    public CtrlPersitencia(String s_path, boolean bRank) {
-        this.path = s_path;
-        this.path_partidas =  this.path + "partidas/";
-        this.path_ranking =   this.path + "ranking/";
-        this.path_users =  this.path + "users/";
-        this.path_tableros =   this.path + "tableros/";
-        this.cPartidas = new IOPartidas( this.path_partidas);
-        this.cRanking = new IORanking( this.path_ranking,bRank);
-        this.cUsuario = new IOUsuario( this.path_users);
-        this.cTablero = new IOTablero(this.path_tableros);
-        InicializarDirPersitencia();
+
+    private void calcular_IDs_maximos() {
+        this.idMax_usuario = io.calcularID_Ficheros(dir_usuarios,tipoFichero.USUARIO);
+        this.idMax_partida = io.calcularID_Ficheros(dir_partidas,tipoFichero.PARTIDA);
+        this.idMax_tablero = io.calcularID_Ficheros(dir_tablero,tipoFichero.TABLERO);
     }
 
-    /**
-     * Este crea el directorio en caso de no existir
-     * @param s_path path del directorio a crear
-     * @return devuelve cierto en caso de haberlo creado correctamente, caso contrario (fallo o ya existia) devuelve falso
-     * */
-    private boolean crearDirectorio(String s_path) {
-        boolean b = false;
-        File f = new File(s_path);
-        if (!f.exists()) {
-            b = f.mkdir();
-        }
-        return b;
-    }
 
-    /**
-     * Este metodo inicializa los directorios de la Capa de Persitencia, crea los directorios en caso de no existir
-     * */
     private boolean InicializarDirPersitencia() {
         boolean b = true;
-        File f = new File(path);
+        File f = new File(this.dirIni);
         if (!f.exists()) {
-            b = crearDirectorio(path);
-            b = b && crearDirectorio(path_partidas);
-            b = b && crearDirectorio(path_ranking);
-            b = b && crearDirectorio(path_users);
-            b = b && crearDirectorio(path_tableros);
+            b = io.crearDirectorio(dirIni);
+            b = b && io.crearDirectorio(dir_partidas);
+            b = b && io.crearDirectorio(dir_ranking);
+            b = b && io.crearDirectorio(dir_usuarios);
+            b = b && io.crearDirectorio(dir_tablero);
         }
         return b;
     }
@@ -135,7 +88,7 @@ public class CtrlPersitencia {
      * @return devuelve el siguente ID disponible para asignarselo a un Usuario
      * */
     public int ctrl_get_nuevo_ID_user() {
-        return cUsuario.get_nuevo_ID_user();
+        return (++idMax_usuario);
     }
 
     /**
@@ -143,7 +96,7 @@ public class CtrlPersitencia {
      * @return devuelve el siguente ID disponible para asignarselo a una Partida
      * */
     public int ctrl_get_nuevo_ID_Partida() {
-        return cPartidas.get_nuevo_ID_Partida();
+        return (++idMax_partida);
     }
 
     /**
@@ -151,8 +104,11 @@ public class CtrlPersitencia {
      * @return devuelve el siguente ID disponible para asignarselo a un tablero a guardar
      * */
     public int ctrl_get_nuevo_ID_tablero() {
-        return cTablero.get_nuevo_ID_tablero();
+        return (++idMax_tablero);
     }
+
+
+
 
     //Controlador de Partidas (cPartidas)
 
@@ -161,8 +117,15 @@ public class CtrlPersitencia {
      * @param idPartida es el ID de partida a cargar
      * @return devuelve el modo de la partida con igual a idPartida, caso contrario (no existe partida) devuelve -1
      */
-    public int ctrl_leer_modo_partida(int idPartida) {
-        return cPartidas.leer_modo_partida(idPartida);
+    public int ctrl_leer_modo_partida(int idPartida) throws IOException {
+        //return cPartidas.leer_modo_partida(idPartida);
+        int modo = -1;
+        String s_fichero = dir_partidas +idPartida + ".txt";
+        ArrayList<String> as = io.leerFichero(s_fichero);
+        if (as.size() > 3) {
+            modo = Integer.parseInt(as.get(2));
+        }
+        return modo;
     }
 
     /**
@@ -170,31 +133,49 @@ public class CtrlPersitencia {
      * @param idPartida es el ID de partida a cargar
      * @return devuelve Partida con id igual a idPartida, caso contrario devuelve null
      */
-    public Partida ctrl_cargar_partida(int idPartida) {
-        try {
-            Partida p = cPartidas.cargar_partida(idPartida);
-            if (p != null) {
-                int id1, id2, id_partida;
-                String nick1 = new String();
-                String nick2 = new String();
-                id1 = p.getID_J1(); nick1 = p.getNickJugador1();
-                if (id1 > 5) {
-                    cUsuario.crear_usuario(id1,nick1);
-                    if (!cUsuario.existe_partida_usuario(id1,nick1,idPartida)) cUsuario.agregar_partida_usuario(id1,nick1,idPartida);
-                }
-                id2 = p.getID_J2(); nick2 = p.getNickJugador2();
-                if (id2 > 5) {
-                    cUsuario.crear_usuario(id2,nick2);
-                    if (!cUsuario.existe_partida_usuario(id2,nick2,idPartida)) cUsuario.agregar_partida_usuario(id2,nick2,idPartida);
-                }
-                return p;
+    public Partida ctrl_cargar_partida(int idPartida) throws IOException, MyException{
+        String pathF = dir_partidas + idPartida + ".txt";
+        ArrayList<String> as = io.leerFichero(pathF);
+        int id1, id2, modo, turno;
+        int reglas[] = new int[3];
+        String nick1 = "";
+        String nick2 = "";
+        String s1 = as.get(0);
+        String[] s2 = s1.split(" ");
+        id1 = Integer.parseInt(s2[0]);
+        if (s2.length != 1) nick1 = s2[1];
+        s1 = as.get(1);
+        s2 = s1.split(" ");
+
+        id2 = Integer.parseInt(s2[0]);
+        if (s2.length != 1) nick2 = s2[1];
+        modo = Integer.parseInt(as.get(2));
+        s1 = as.get(3);
+        s2 = s1.split(" ");
+        reglas[0] = Integer.parseInt(s2[0]);
+        reglas[1] = Integer.parseInt(s2[1]);
+        reglas[2] = Integer.parseInt(s2[2]);
+        turno = Integer.parseInt(as.get(4));
+        int[][] map = new int[8][8];
+        for (int i = 0; i < 8; ++i) {
+            s1 = as.get(i+6);
+            for (int j = 0; j < 8; ++j) {
+                map[i][j] = Integer.parseInt(String.valueOf(s1.charAt(j)));
             }
-            else throw new MyException("");
         }
-        catch (Exception e) {
-            System.out.println("No existe fichero de partida seleccionada por el ID:" + idPartida);
+        Tablero t = new Tablero(map);
+        Partida res = new Partida(idPartida,modo,reglas,turno,id1,nick1,id2,nick2,t);
+
+        if (id1 > 5) {
+            ctrl_crear_usuario(id1,nick1);
+            if (!ctrl_existe_partida_usuario(id1,nick1,idPartida)) ctrl_agregar_partida_usuario(id1,nick1,idPartida);
         }
-        return null;
+        if (id2 > 5) {
+            ctrl_crear_usuario(id2,nick2);
+            if (!ctrl_existe_partida_usuario(id2,nick2,idPartida)) ctrl_agregar_partida_usuario(id2,nick2,idPartida);
+        }
+        return res;
+
     }
 
 
@@ -202,63 +183,58 @@ public class CtrlPersitencia {
      * Operacion ctrl_guardar_partida
      * @param as es ArrayList con los parametros necesarios para guardar la partida (utilizando funcion toArrayList() de Partida)
      */
-    public void ctrl_guardar_partida(ArrayList<String> as) {
-        if (cPartidas.guardar_partida(as)) {
-            int id_partida = Integer.parseInt(as.get(0));
-
-            int id1;
-            String nick1 = new String();
-            String s_aux[] = as.get(1).split(" ");
-            id1 = Integer.parseInt(s_aux[0]);
-            if (s_aux.length != 1) nick1 = s_aux[1];
-
-            int id2;
-            String nick2 = new String();
-            s_aux= as.get(2).split(" ");
-            id2 = Integer.parseInt(s_aux[0]);
-            if (s_aux.length != 1) nick2 = s_aux[1];
-
+        public void ctrl_guardar_partida(ArrayList<String> as) throws IOException {
+            int id_partida  = Integer.parseInt(as.get(0));
+            String pathF = dir_partidas + id_partida + ".txt";
+            io.guardarInfoFichero(pathF,as,tipoFichero.PARTIDA);
+            int id1, id2;
+            String nick1= "";
+            String nick2 = "";
+            String s1 = as.get(1);
+            String[] s2 = s1.split(" ");
+            id1 = Integer.parseInt(s2[0]);
+            if (s2.length != 1) nick1 = s2[1];
+            s1 = as.get(3);
+            s2 = s1.split(" ");
+            id2 = Integer.parseInt(s2[0]);
+            if (s2.length != 1) nick2 = s2[1];
             if (id1 > 5) {
-                cUsuario.crear_usuario(id1,nick1);
-                if (!cUsuario.existe_partida_usuario(id1,nick1,id_partida)) cUsuario.agregar_partida_usuario(id1,nick1,id_partida);
+                if (!ctrl_existe_partida_usuario(id1,nick1,id_partida)) ctrl_agregar_partida_usuario(id1,nick1,id_partida);
             }
             if (id2 > 5) {
-                cUsuario.crear_usuario(id2,nick2);
-                if (!cUsuario.existe_partida_usuario(id2,nick2,id_partida)) cUsuario.agregar_partida_usuario(id2,nick2,id_partida);
+                if (!ctrl_existe_partida_usuario(id2,nick2,id_partida)) ctrl_agregar_partida_usuario(id2,nick2,id_partida);
             }
-        }
     }
 
     /** Operacion ctrl_borrar_partida
      * @param idPartida es el identificador de partida a borrar
      * @return devuelve TRUE en caso que se haya borrado con exito, caso contrario devuelve excepcion
      */
-    public boolean ctrl_borrar_partida(int idPartida) {
-        boolean b = false;
-        try {
-            Partida p = cPartidas.cargar_partida(idPartida);
-            if (p != null) {
-                int id1, id2;
-                String nick1 = new String();
-                String nick2 = new String();
-                id1 = p.getID_J1(); nick1 = p.getNickJugador1();
-                id2 = p.getID_J2(); nick2 = p.getNickJugador2();
-                if (b =cPartidas.borrar_partida(idPartida)) {
-                    if (id1 > 5) {
-                        cUsuario.borrar_partida_usuario(id1,nick1,idPartida);
-                    }
-                    if (id2 > 5) {
-                        cUsuario.borrar_partida_usuario(id2,nick2,idPartida);
-                    }
-                }
-                return b;
-            }
-            else throw new MyException("");
+    public boolean ctrl_borrar_partida(int idPartida) throws IOException {
+        boolean b;
+        int id1, id2;
+        String nick1= "";
+        String nick2= "";
+        String pathF = dir_partidas + idPartida + ".txt";
+        ArrayList<String> as = io.leerFichero(pathF);
+
+        String[] s2 = as.get(0).split(" ");
+        id1 = Integer.parseInt(s2[0]);
+        if (s2.length != 1) nick1 = s2[1];
+
+        s2 = as.get(1).split(" ");
+        id2 = Integer.parseInt(s2[0]);
+        if (s2.length != 1) nick2 = s2[1];
+
+        if (id1 > 5) {
+            io.borrar_de_fichero(dir_usuarios + id1 + "_"+ nick1, String.valueOf(idPartida));
         }
-        catch (Exception e) {
-            System.out.println("No existe fichero de partida seleccionada por el ID:" + idPartida);
-            System.out.println(e);
+        if (id2 > 5) {
+            io.borrar_de_fichero(dir_usuarios + id2 + "_"+ nick2, String.valueOf(idPartida));
         }
+
+        //borrar fichero de partida
+        b = io.borrarFichero(pathF);
         return b;
     }
 
@@ -268,14 +244,30 @@ public class CtrlPersitencia {
      * @param tab es ArrayList con los parametros necesarios para guardar el tablero (utilizando funcion toArrayList() de Tablero)
      * @return devuelve TRUE en caso que se haya guardado con exito, caso contrario devuelve FALSE
      */
-    public void ctrl_guardar_tablero(int[][] tab, int turno) {
+    public void ctrl_guardar_tablero(int[][] tab, int turno) throws IOException {
+        int idTablero = ctrl_get_nuevo_ID_tablero();
+
         //limpiar casillas disponibles (1)
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 if (tab[i][j] == 1) tab[i][j] = 0;
             }
         }
-        cTablero.guardar_tablero(tab,this.ctrl_get_nuevo_ID_tablero(),turno);
+        ArrayList<String> as = new ArrayList<String>();
+        for (int i = 0; i < 8; ++i) {
+            String sbuff = new String();
+            for (int j = 0; j < 8; ++j) {
+                sbuff = sbuff + tab[i][j];
+            }
+            as.add( sbuff); //fila i
+        }
+        String s_aux = String.valueOf(turno);
+        as.add(s_aux);
+
+        String pathF = dir_tablero + idTablero + ".txt";
+
+        io.guardarInfoFichero(pathF,as,tipoFichero.TABLERO);
+
     }
 
     /** Operacion ctrl_borrar_tablero
@@ -283,7 +275,8 @@ public class CtrlPersitencia {
      * @return devuelve TRUE en caso que se haya borrado con exito, caso contrario devuelve excepcion
      */
     public boolean ctrl_borrar_tablero(int idTablero) {
-        return cTablero.borrar_tablero(idTablero);
+        String pathF = dir_tablero + idTablero + ".txt";
+        return io.borrarFichero(pathF);
     }
 
     /**
@@ -291,8 +284,30 @@ public class CtrlPersitencia {
      * @param idTablero es el ID de tablero a cargar
      * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero inicial
      */
-    public int[][] ctrl_cargar_tablero(int idTablero) {
-        return cTablero.cargar_tablero(idTablero);
+    public int[][] ctrl_cargar_tablero(int idTablero) throws IOException {
+        int[][] map = new int[8][8];
+        //crear tablero inicial
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                map[i][j] = 0;
+                if ((i == 3 && j==3) || (i == 4 && j==4)) map[i][j] = 3;
+                else if ((i == 3 && j==4) || (i == 4 && j==3)) map[i][j] = 2;
+            }
+        }
+        String pathF = dir_tablero + idTablero + ".txt";
+        File f = new File(pathF);
+        if (f.exists()) {
+            BufferedReader bf =new BufferedReader(new FileReader(f));
+            String s1;
+            for (int i = 0; i < 8; ++i) {
+                s1 = bf.readLine();
+                for (int j = 0; j < 8; ++j) {
+                    map[i][j] = Integer.parseInt(String.valueOf(s1.charAt(j)));
+                }
+            }
+            bf.close();
+        }
+        return map;
     }
 
     /**
@@ -300,16 +315,20 @@ public class CtrlPersitencia {
      * @param idTablero es el ID de tablero a cargar
      * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve -1
      */
-    public int ctrl_cargar_turno_tablero(int idTablero) {
-        return cTablero.cargar_turno_tablero(idTablero);
+    public int ctrl_cargar_turno_tablero(int idTablero) throws IOException {
+        int turno = -1;
+        String pathF = dir_tablero + idTablero + ".txt";
+        ArrayList<String> as = io.leerFichero(pathF);
+        turno = Integer.parseInt(as.get(as.size()-1));
+        return turno;
     }
 
     /**
      * Operacion ctrl_tableros_disponibles
      * @return devuelve el Arraylist de tableros disponibles (ficheros de tipo tablero)
      */
-    public ArrayList<String > ctrl_tableros_disponibles() {
-        return cTablero.listar_tableros_disponibles();
+    public String[] ctrl_tableros_disponibles() {
+        return io.listarFicherosDeDirectorio(dir_tablero);
     }
 
     /**
@@ -318,11 +337,12 @@ public class CtrlPersitencia {
      */
     public void ctrl_print_tableros_disponibles() {
         System.out.println("Tableros disponibles");
-        ArrayList<String> as = cTablero.listar_tableros_disponibles();
+        String[] as= io.listarFicherosDeDirectorio(dir_tablero);
         if (as != null) {
-            System.out.print(as.get(0));
-            for (int i = 1; i < as.size(); ++i) {
-                System.out.print(", " + as.get(i));
+            System.out.print(as[0]);
+            for (int i = 1; i < as.length; ++i) {
+                String s_aux = as[i];
+                if (!s_aux.equals("index.txt")) System.out.print(", " + as[i]);
             }
             System.out.println();
         }
@@ -335,22 +355,33 @@ public class CtrlPersitencia {
     //Controlador de Ranking (cRanking)
     /**
      * Operacion ctrl_importar_ranking
-     * @return devuelve el Ranking ubicado en el fichero ranking.txt, caso de no existir devuelve excepcion
+     * @return devuelve el Ranking ubicado en el fichero apuntado por s,caso de no existir devuelve excepcion
      */
-    public Ranking ctrl_importar_ranking() {
-        String path_file = path_ranking + "ranking.txt";
-        return cRanking.importar_ranking(path_file);
+    public Ranking ctrl_importar_ranking(String s) throws MyException, IOException {
+            String pathF = dir_ranking + s;
+            ArrayList<String> as = io.leerFichero(pathF);
+            Ranking rank = new Ranking();
+            int tam = as.size(); //modificar el bucle cuando tengamos o de los records
+            int i;
+            for (i=0; i<tam; ++i) {
+                String[] s2 = as.get(i).split(" ");
+                int id, total, ganadas, perdidas,empatadas;
+                String nick;
+                if (s2.length == 6) {
+                    id = Integer.parseInt(s2[0]);
+                    nick = s2[1];
+                    ganadas = Integer.parseInt(s2[2]);
+                    perdidas = Integer.parseInt(s2[3]);
+                    empatadas = Integer.parseInt(s2[4]);
+                    //total = Integer.parseInt(s2[5]);
+                    ElementoRanking e = new ElementoRanking(id,nick,ganadas,perdidas,empatadas);
+                    //ElementoRanking e = new ElementoRanking(id,nick,ganadas,perdidas,empatadas,total);
+                    rank.add_al_ranking(e);
+                }
+            }
+            return rank;
     }
 
-
-    /**
-     * Operacion ctrl_importar_ranking2
-     * @param path_file es el path del fichero de Ranking a importar
-     * @return devuelve el Ranking ubicado en path_file, caso de no existir devuelve excepcion
-     */
-    public Ranking ctrl_importar_ranking2(String path_file) {
-        return cRanking.importar_ranking(path_file);
-    }
 
 
 
@@ -358,9 +389,11 @@ public class CtrlPersitencia {
      * Operacion ctrl_exportar_ranking
      * @param as es ArrayList con los parametros necesarios para guardar la partida (utilizando funcion consultar_all() de cada ElementoRanking)
      */
-    public void ctrl_exportar_ranking(ArrayList<String> as) {
-        cRanking.exportar_ranking(as);
+    public void ctrl_exportar_ranking(ArrayList<String> as, String f) throws IOException {
+        String pathf = dir_ranking + f;
+        io.guardarInfoFichero(pathf,as,tipoFichero.RANKING);
     }
+
 
     //Controlador de Usuarios (cUsuario)
     /**
@@ -370,8 +403,9 @@ public class CtrlPersitencia {
      * @return devuelve TRUE en caso de haberse creado el fichero Usuario(idJugador,nicknameJugador) con
      * exito, caso contrario (ya existía) devuelve FALSE
      */
-    public boolean ctrl_crear_usuario(int idJugador,String nicknameJugador) {
-        return (cUsuario.crear_usuario(idJugador,nicknameJugador));
+    public boolean ctrl_crear_usuario(int idJugador,String nicknameJugador) throws IOException {
+        String pathF = dir_usuarios + idJugador + "_" + nicknameJugador;
+        return io.crearFichero(pathF);
     }
 
     /**
@@ -381,7 +415,8 @@ public class CtrlPersitencia {
      * @return devuelve TRUE en caso de existir el fichero Usuario(idJugador,nicknameJugador) caso contrario devuelve FALSE
      */
     public boolean ctrl_existe_usuario(int idJugador,String nicknameJugador) {
-        return (cUsuario.existe_usuario(idJugador,nicknameJugador));
+        String pathF = dir_usuarios + idJugador + "_" + nicknameJugador;
+        return io.existeFichero(pathF);
     }
 
     /**
@@ -392,8 +427,8 @@ public class CtrlPersitencia {
      * caso contrario devuelve FALSE
      */
     public boolean ctrl_borrar_usuario(int idJugador,String nicknameJugador) {
-        boolean b = cUsuario.borrar_usuario(idJugador,nicknameJugador);
-        return b;
+        String pathF = dir_usuarios + idJugador + "_" + nicknameJugador;
+        return io.borrarFichero(pathF);
     }
 
     /**
@@ -404,8 +439,12 @@ public class CtrlPersitencia {
      * @return devuelve TRUE en caso de existir una partida con id igual a idPartida dentro del fichero Usuario(idJugador,nicknameJugador),
      * caso contrario devuelve FALSE
      */
-    public boolean ctrl_existe_partida_usuario(int idJugador,String nicknameJugador, int idPartida) {
-        return (cUsuario.existe_partida_usuario(idJugador,nicknameJugador,idPartida));
+    public boolean ctrl_existe_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException {
+        String pathF = dir_usuarios + idJugador + "_" + nicknameJugador;
+        boolean b;
+        String s = String.valueOf(idPartida);
+        b = io.existe_en_fichero(pathF,s);
+        return b;
     }
 
     /**
@@ -416,8 +455,15 @@ public class CtrlPersitencia {
      * @return devuelve TRUE en caso de haber agregado correctamente la partida con id igual a idPartida dentro del fichero Usuario(idJugador,nicknameJugador),
      * caso contrario devuelve FALSE
      */
-    public boolean ctrl_agregar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) {
-        return (cUsuario.agregar_partida_usuario(idJugador,nicknameJugador,idPartida));
+    public boolean ctrl_agregar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException {
+        boolean res = false;
+        String pathF = dir_usuarios + idJugador + "_" + nicknameJugador;
+        String s = String.valueOf(idPartida);
+        if (!io.existe_en_fichero(pathF,s)) {
+            res = io.agregar_a_fichero(pathF,s);
+        }
+
+        return res;
     }
 
     /**
@@ -428,19 +474,26 @@ public class CtrlPersitencia {
      * @return devuelve TRUE en caso de haber eliminado la partida con id igual a idPartida dentro del fichero Usuario(idJugador,nicknameJugador),
      * caso contrario devuelve FALSE
      */
-    public boolean ctrl_borrar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) {
-        return (cUsuario.borrar_partida_usuario(idJugador,nicknameJugador,idPartida));
+    public boolean ctrl_borrar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException {
+        boolean res;
+        String pathF = dir_usuarios + idJugador + "_" + nicknameJugador;
+        String s = String.valueOf(idPartida);
+        res = io.borrar_de_fichero(pathF,s);
+        return res;
     }
 
     /**
      * Operacion ctrl_listar_partidas_disponibles
-     * @param IDjugador identificador de Jugador
-     * @param nick nickname de Jugador
+     * @param idJugador identificador de Jugador
+     * @param nicknameJugador nickname de Jugador
      * @return devuelve la lista de partidas disponibles (partidas donde se encuentra el Jugador dentro)
 
      */
-    public ArrayList<String> ctrl_listar_partidas_disponibles(int IDjugador, String nick) {
-        return cUsuario.listar_partidas_disponibles(IDjugador,nick);
+    public ArrayList<String> ctrl_listar_partidas_disponibles(int idJugador, String nicknameJugador) throws IOException {
+        ArrayList<String> as;
+        String pathF = dir_usuarios + idJugador + "_" + nicknameJugador;
+        as = io.leerFichero(pathF);
+        return as;
     }
 
     /**
@@ -449,9 +502,9 @@ public class CtrlPersitencia {
      * @param nick nickname de Jugador
      * muestra por salida estandar las partidas disponibles por el Jugador (IDjugador,nick)
      */
-    public void ctrl_print_partidas_disponibles(int IDjugador, String nick) {
+    public void ctrl_print_partidas_disponibles(int IDjugador, String nick) throws IOException {
         System.out.println("Partidas disponibles de ID: "+ IDjugador + " ,nickname: " + nick);
-        ArrayList<String> partidas = cUsuario.listar_partidas_disponibles(IDjugador,nick);
+        ArrayList<String> partidas = ctrl_listar_partidas_disponibles(IDjugador,nick);
         if (partidas.size() > 0) {
             System.out.print(partidas.get(0));
             for (int i = 1; i < partidas.size(); ++i) {

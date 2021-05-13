@@ -18,8 +18,8 @@ public class RankingTest_JUnit {
      * */
     @Test
     public void test_crearElementoRanking_1() throws MyException {
-        ElementoRanking e = new ElementoRanking(6,"aa",2,2,3,7);
-        String s = e.consultar_all();
+        ElementoRanking e = new ElementoRanking(6,"aa",2,2,3);
+        String s = e.consultar_todo();
         assertEquals("6 aa 2 2 3 7",s);
     }
 
@@ -30,7 +30,7 @@ public class RankingTest_JUnit {
     @Test
     public void test_crearElementoRanking_2() throws MyException {
         ElementoRanking e = new ElementoRanking(7,"ba");
-        String s = e.consultar_all();
+        String s = e.consultar_todo();
         assertEquals("7 ba 0 0 0 0",s);
     }
 
@@ -42,7 +42,7 @@ public class RankingTest_JUnit {
     public void test_incrementarGanadas() throws MyException {
         ElementoRanking e = new ElementoRanking(7,"ba");
         e.incrementar_partida_ganada();
-        String s = e.consultar_all();
+        String s = e.consultar_todo();
         assertEquals("7 ba 1 0 0 1",s);
     }
 
@@ -54,7 +54,7 @@ public class RankingTest_JUnit {
     public void test_incrementarPerdidas() throws MyException {
         ElementoRanking e = new ElementoRanking(7,"ba");
         e.incrementar_partida_perdida();
-        String s = e.consultar_all();
+        String s = e.consultar_todo();
         assertEquals("7 ba 0 1 0 1",s);
     }
 
@@ -66,7 +66,7 @@ public class RankingTest_JUnit {
     public void test_incrementarEmpatadas() throws MyException {
         ElementoRanking e = new ElementoRanking(7,"ba");
         e.incrementar_partida_empatada();
-        String s = e.consultar_all();
+        String s = e.consultar_todo();
         assertEquals("7 ba 0 0 1 1",s);
     }
 
@@ -79,7 +79,7 @@ public class RankingTest_JUnit {
      * @throws MyException caso de fallo de elementoRanking con id inferior a 6 (tiene que ser una Persona)
      * */
     public void test_agregarAlRanking() throws MyException {
-        ElementoRanking e = new ElementoRanking(9,"aa",2,2,3,7);
+        ElementoRanking e = new ElementoRanking(9,"aa",2,2,3);
         Ranking rank = new Ranking();
         rank.add_al_ranking(e);
         rank.incrementar_partida(9,"aa",1);
@@ -142,7 +142,6 @@ public class RankingTest_JUnit {
         for (int i = 0; i < rank.consultar_tam_ranking(); ++i) {
             assertEquals(resultados[i],rank.consultar_info_elemento_i(i));
         }
-
     }
 
     @Test
@@ -161,9 +160,9 @@ public class RankingTest_JUnit {
 
     private Ranking test_Ranking() throws MyException {
         Ranking rank = new Ranking();
-        rank.add_al_ranking(new ElementoRanking(7, "b", 2,1,0,3));
-        rank.add_al_ranking(new ElementoRanking(8, "c", 0,1,0,1));
-        rank.add_al_ranking(new ElementoRanking(6, "a", 1,0,0,1));
+        rank.add_al_ranking(new ElementoRanking(7, "b", 2,1,0));
+        rank.add_al_ranking(new ElementoRanking(8, "c", 0,1,0));
+        rank.add_al_ranking(new ElementoRanking(6, "a", 1,0,0));
         return rank;
     }
 

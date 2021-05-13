@@ -11,9 +11,7 @@ public class VistaLogin {
 
     private final JFrame frameVista = new JFrame("Login");
     private final JPanel panelPrincipal = new JPanel();
-    private final JPanel panelInfo = new JPanel();
 
-    private final JTextArea infoLogin = new JTextArea(10,10);
 
     //login/registro
     private final JPanel panelLoginPrincipal = new JPanel();
@@ -76,7 +74,7 @@ public class VistaLogin {
      * Metodo para inicializar frame
      * */
     private void inicializar_frameVista() {
-        frameVista.setMinimumSize(new Dimension(700,400));
+        frameVista.setMinimumSize(new Dimension(650,250));
         frameVista.setPreferredSize(frameVista.getMinimumSize());
         frameVista.setResizable(false);
         frameVista.setLocationRelativeTo(null);
@@ -99,14 +97,6 @@ public class VistaLogin {
      * Metodo para inicializar todos los paneles
      * */
     private void inicializar_paneles() {
-        //PANEL LOGIN
-        infoLogin.setText("\n Informacion de Login:\n");
-        infoLogin.append("\n         - Registro: si no estas registrado introducir un Nickname " +
-                "y el sistema le asignara un ID para futuros usos del juego \n");
-        infoLogin.append("\n         - Login: en caso de saber el ID y Nickname introducir estos " +
-                "campos y pulsar boton de login");
-        infoLogin.setEditable(false);
-
         panelLogin.setLayout(new BorderLayout());
         JLabel aa= new JLabel("Login de jugador:");
         panelLogin.add(aa, BorderLayout.NORTH);
@@ -116,20 +106,20 @@ public class VistaLogin {
         pLogin1.add(labelNickname);
         pLogin1.add(textoNickname);
         pLogin1.add(buttonLogin);
+        buttonLogin.setToolTipText("Hace login con el usuario introducido por el campo de ID y de Nickname");
         pLogin1.add(buttonLimpiarLogin);
+        buttonLimpiarLogin.setToolTipText("Hace un clear de los TextArea's");
         panelLogin.add(pLogin1, BorderLayout.SOUTH);
-
         panelRegistro.setLayout(new BorderLayout());
         JLabel a2= new JLabel("Registro de jugador:");
         panelRegistro.add(a2,BorderLayout.NORTH);
-
 
         pLogin2.setLayout(new FlowLayout());
         pLogin2.add(labelRegistroNickname);
         pLogin2.add(textoRegistroNickname);
         pLogin2.add(buttonRegistro);
+        buttonRegistro.setToolTipText("Introducir nickname a registrar, el sistema le asignara un ID para futuros usos del juego");
         panelRegistro.add(pLogin2, BorderLayout.SOUTH);
-
 
         panelLoginPrincipal.setLayout(new BorderLayout());
         panelLoginPrincipal.add(panelLogin, BorderLayout.NORTH);
@@ -137,14 +127,10 @@ public class VistaLogin {
         textoLoginFinal.setEditable(false);
         panelLoginPrincipal.add(textoLoginFinal,BorderLayout.SOUTH);
 
-        //PANEL INFO
-        panelInfo.add(panelLoginPrincipal);
-
         //PANEL PRINCIPAL
-        panelPrincipal.setLayout(new BorderLayout());
-        panelPrincipal.add(panelInfo,BorderLayout.NORTH);
-        //panelPrincipal.add(panelLoginPrincipal,BorderLayout.NORTH);
-        panelPrincipal.add(infoLogin,BorderLayout.SOUTH);
+        panelPrincipal.setLayout(new FlowLayout());
+        panelPrincipal.add(panelLoginPrincipal);
+
     }
 
 

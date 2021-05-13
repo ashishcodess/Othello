@@ -418,8 +418,6 @@ public class Partida {
         System.out.println("Modo de juego: " +  this.modoDeJuego);
         System.out.println("Reglas(v,h,d): " +  this.reglas[0] + this.reglas[1] + this.reglas[2]);
         System.out.println("Turno: " +  this.turno);
-        System.out.println();
-        System.out.println("Tablero:");
         print_Tablero();
         System.out.println();
     }
