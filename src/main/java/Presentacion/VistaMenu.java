@@ -24,12 +24,10 @@ public class VistaMenu {
     private final JMenuItem menuitemLogin = new JMenuItem("Login Usuario");
     private final JMenu menuTablero = new JMenu("Tablero");
     private final JMenuItem menuItem_crearTablero = new JMenuItem("Crear Tablero");
-    private final JMenuItem menuItem_MostrarTablero = new JMenuItem("Mostrar Tablero");
     private final JMenuItem menuItem_BorrarTablero = new JMenuItem("Borrar Tablero");
     private final JMenu menuPartida = new JMenu("Partida");
     private final JMenuItem menuItem_crearPartida = new JMenuItem("Crear Paritda");
-    private final JMenuItem menuItem_CargarPartida = new JMenuItem("Cargar Partida");
-    private final JMenuItem menuItem_BorrarPartida = new JMenuItem("Borrar Partida");
+    private final JMenuItem menuItem_CargarBorrarPartida = new JMenuItem("Cargar/Borrar Partida");
     private final JMenu menuRanking = new JMenu("Ranking");
     private final JMenuItem menuItem_consultar_ranking = new JMenuItem("Consultar Ranking");
 
@@ -39,13 +37,11 @@ public class VistaMenu {
     private final JPanel panelMenuPartida= new JPanel();
     private final JLabel labelPartida = new JLabel("Partida");
     private final JButton buttonCrearPartida = new JButton("Crear");
-    private final JButton buttonCargarPartida = new JButton("Cargar");
-    private final JButton buttonBorrarPartida = new JButton("Borrar");
+    private final JButton buttonCargarBorrarPartida = new JButton("Cargar/Borrar");
 
     private final JPanel panelMenuTablero= new JPanel();
     private final JLabel labelTablero = new JLabel("Tablero");
     private final JButton buttonCrearTablero = new JButton("  Crear");
-    private final JButton buttonMostrarTablero = new JButton("Mostrar");
     private final JButton buttonBorrarTablero = new JButton("Borrar");
 
     private final JPanel panelMenuRanking= new JPanel();
@@ -118,12 +114,10 @@ public class VistaMenu {
         menuFile.add(menuitemQuit);
         menubarVista.add(menuFile);
         menuTablero.add(menuItem_crearTablero);
-        menuTablero.add(menuItem_MostrarTablero);
         menuTablero.add(menuItem_BorrarTablero);
         menubarVista.add(menuTablero);
         menuPartida.add(menuItem_crearPartida);
-        menuPartida.add(menuItem_CargarPartida);
-        menuPartida.add(menuItem_BorrarPartida);
+        menuPartida.add(menuItem_CargarBorrarPartida);
         menubarVista.add(menuPartida);
         menuRanking.add(menuItem_consultar_ranking);
         menubarVista.add(menuRanking);
@@ -139,15 +133,13 @@ public class VistaMenu {
         panelMenuPartida.setLayout(new BoxLayout(panelMenuPartida,BoxLayout.PAGE_AXIS));
         panelMenuPartida.add(labelPartida);
         panelMenuPartida.add(buttonCrearPartida);
-        panelMenuPartida.add(buttonBorrarPartida);
-        panelMenuPartida.add(buttonCargarPartida);
+        panelMenuPartida.add(buttonCargarBorrarPartida);
 
         //PANEL MENU TABLERO
         panelMenuTablero.setLayout(new BoxLayout(panelMenuTablero,BoxLayout.PAGE_AXIS));
         panelMenuTablero.add(labelTablero);
         panelMenuTablero.add(buttonCrearTablero);
         panelMenuTablero.add(buttonBorrarTablero);
-        panelMenuTablero.add(buttonMostrarTablero);
 
         //PANEL MENU RANKING
         panelMenuRanking.setLayout(new BoxLayout(panelMenuRanking,BoxLayout.PAGE_AXIS));

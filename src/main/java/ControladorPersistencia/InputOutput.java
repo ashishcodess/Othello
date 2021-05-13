@@ -111,7 +111,7 @@ public class InputOutput {
         boolean res = false;
         File f = new File(pathF);
         if (f.exists()) {
-            PrintWriter pw = new PrintWriter(new FileOutputStream(new File(pathF), true));
+            PrintWriter pw = new PrintWriter(new FileOutputStream(pathF, true));
             String sres = s + "\n";
             pw.append(sres);
             pw.flush();
@@ -121,12 +121,10 @@ public class InputOutput {
         return res;
     }
 
-    public boolean borrar_de_fichero(String pathF, String s) throws IOException {
-        boolean res = false;
+    public void borrar_de_fichero(String pathF, String s) throws IOException {
         if (existe_en_fichero(pathF,s)) {
             ArrayList<String> as = leerFichero(pathF);
-
-            int i = 0;
+            int i;
             boolean b = false;
             for (i = 0; ((i < as.size()) && (!b)); ++i) {
                 b = (as.get(i)).equals(s);
@@ -138,28 +136,29 @@ public class InputOutput {
             for (i = 0; i < as.size(); ++i) pw.println(as.get(i));
             pw.flush();
             pw.close();
-
         }
-        return res;
     }
 
     /**
      * Este crea el directorio en caso de no existir
-     * @param s_path path del directorio a crear
-     * @return devuelve cierto en caso de haberlo creado correctamente, caso contrario (fallo o ya existia) devuelve falso
-     * */
-    public boolean crearDirectorio(String s_path) {
-        boolean b = false;
+     * @param s_path path del directorio a crear */
+    public void crearDirectorio(String s_path) {
         File f = new File(s_path);
         if (!f.exists()) {
-            b = f.mkdir();
+            f.mkdir();
         }
-        return b;
     }
 
-    public String[] listarFicherosDeDirectorio(String pathDir) {
+    public ArrayList<String> listarFicherosDeDirectorio(String pathDir) {
         File f = new File(pathDir);
-        return f.list();
+        String[] s = f.list();
+        ArrayList<String> res = new ArrayList<>();
+        for (String sAux : s) {
+            if (!sAux.equals("index.txt")) res.add(sAux);
+        }
+
+        return res;
+
     }
 
 }
