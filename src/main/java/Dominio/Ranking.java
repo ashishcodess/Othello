@@ -100,6 +100,16 @@ public class Ranking {
     }
 
     /**
+     * Operacion consultar_elemento_i(i)
+     * @param i posicion dentro del ranking
+     * @return devuelve el elemento del ranking en la posicion i de ArrayList
+     * */
+    public ElementoRanking consultar_elemento_i(int i) {
+        if (i >= 0 && i < ranking.size()) return this.ranking.get(i);
+        else return null;
+    }
+
+    /**
      * Operacion incrementar_ganadas_perdidas()
      * Este metodo es el encargado de incrementar las partidas de cada jugador (en caso de que no exista creara los Elementos del Ranking de cada jugador respectivamente)
      * @param id1 identificador del Jugador1
@@ -124,6 +134,7 @@ public class Ranking {
                 break;
 
         }
+        comprueba_logros_jugadores(nick1,id1,nick2,id2);
     }
 
     /**
@@ -266,6 +277,31 @@ public class Ranking {
     public String consultar_max_capturas() {
         return log.consultar_max_capturas();
     }
+
+    private void comprueba_logro(Logros.tipoLogro tipo, ElementoRanking e) {
+        int partidas_aux = e.consultar_Totales();
+        if (log.comprueba_logro_partidas(tipo,partidas_aux)) {
+            log.cambiar_logro_jugador(tipo,e.consultar_Nickname(),e.consultar_ID(),partidas_aux);
+        }
+    }
+
+    private void comprueba_logros_jugadores(String nick1, int id1, String nick2, int id2) {
+        int i = existe_en_ranking(id1,nick1);
+        if (i != -1) { //Jugador1
+            ElementoRanking e_aux = consultar_elemento_i(i);
+            comprueba_logro(Logros.tipoLogro.PARTIDAS_TOTALES,e_aux);
+            comprueba_logro(Logros.tipoLogro.PARTIDAS_GANADAS,e_aux);
+            comprueba_logro(Logros.tipoLogro.PARTIDAS_PERDIDAS,e_aux);
+        }
+        i = existe_en_ranking(id2,nick2);
+        if (i != -1) { //Jugador2
+            ElementoRanking e_aux = consultar_elemento_i(i);
+            comprueba_logro(Logros.tipoLogro.PARTIDAS_TOTALES,e_aux);
+            comprueba_logro(Logros.tipoLogro.PARTIDAS_GANADAS,e_aux);
+            comprueba_logro(Logros.tipoLogro.PARTIDAS_PERDIDAS,e_aux);
+        }
+    }
+
 
 
     /**
