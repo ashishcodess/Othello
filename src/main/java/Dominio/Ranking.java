@@ -5,9 +5,12 @@ import MyException.MyException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-enum ganador {EMPATE, GANA_J1, GANA_J2}
+
 
 public class Ranking {
+
+    public enum tipoGanador {EMPATE, PIERDE, GANA, GANA_J1, GANA_J2}
+
     /**ArrayList de elementos tipo ElementoRanking*/
     private final ArrayList<ElementoRanking> ranking;
 
@@ -98,15 +101,23 @@ public class Ranking {
      * @param nick1 nickname del Jugador1 (en caso de que tenga nickname)
      * @param id2 identificador del Jugador2
      * @param nick2 nickname del Jugador2 (en caso de que tenga nickname)
-     * @param ganador incrementar contador en funcion de [2: empate, 1:Ganadas, 0:perdidas]
+     * @param ganador incrementar contador en funcion del tipo de ganador
      * */
-    public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, int ganador) throws MyException {
-        if (ganador >= 0 && ganador < 3) {
-            int ganador2 = 2;
-            if (ganador == 0) ganador2 = 1;
-            else if (ganador == 1) ganador2 = 0;
-            if (id1 > 5) incrementar_partida(id1,nick1,ganador);
-            if (id2 > 5) incrementar_partida(id2,nick2,ganador2);
+    public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, tipoGanador ganador) throws MyException {
+        switch (ganador) {
+            case EMPATE:
+                if (id1 > 5) incrementar_partida(id1,nick1,tipoGanador.EMPATE);
+                if (id2 > 5) incrementar_partida(id2,nick2,tipoGanador.EMPATE);
+                break;
+            case GANA_J1:
+                if (id1 > 5) incrementar_partida(id1,nick1,tipoGanador.GANA);
+                if (id2 > 5) incrementar_partida(id2,nick2,tipoGanador.PIERDE);
+                break;
+            case GANA_J2:
+                if (id1 > 5) incrementar_partida(id1,nick1,tipoGanador.PIERDE);
+                if (id2 > 5) incrementar_partida(id2,nick2,tipoGanador.GANA);
+                break;
+
         }
     }
 
@@ -117,24 +128,23 @@ public class Ranking {
      * e incrementa los contadores de partidas respetivamente en funcion del entero "ganador"
      * @param id identificador del Jugador2
      * @param nick nickname del Jugador2 (en caso de que tenga nickname)
-     * @param ganador incrementar contador en funcion de [2: empate, 1:Ganadas, 0:perdidas]
+     * @param ganador incrementar contador en funcion del tipo de ganador
      * */
-    public void incrementar_partida(int id, String nick, int ganador) throws MyException {
+    public void incrementar_partida(int id, String nick, tipoGanador ganador) throws MyException {
         int i = existe_en_ranking(id,nick);
-        //System.out.println("incrementar_partida para "+ id + " , " + nick + " , ganador: "+ ganador + " ,existe:"+i);
         if (i == -1) {
             ElementoRanking e = new ElementoRanking(id,nick);
             this.add_al_ranking(e);
             i = ranking.size()-1;
         }
         switch(ganador) {
-            case 0:
+            case PIERDE:
                 this.ranking.get(i).incrementar_partida_perdida();
                 break;
-            case 1:
+            case GANA:
                 this.ranking.get(i).incrementar_partida_ganada();
                 break;
-            case 2:
+            case EMPATE:
                 this.ranking.get(i).incrementar_partida_empatada();
                 break;
             default:

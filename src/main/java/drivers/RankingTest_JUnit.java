@@ -5,7 +5,6 @@ import Dominio.Ranking;
 import MyException.MyException;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -76,7 +75,7 @@ public class RankingTest_JUnit {
     @Test
     public void test_agregarAlRanking_e_incrementar_partida() throws MyException {
         rank.add_al_ranking(e1);
-        rank.incrementar_partida(6,"aa",1);
+        rank.incrementar_partida(6,"aa", Ranking.tipoGanador.GANA);
         String s = rank.consultar_info_elemento_i(0);
         assertEquals("6 aa 3 2 3 8",s);
     }
@@ -85,7 +84,7 @@ public class RankingTest_JUnit {
 
     @Test
     public void test_incrementar_ganadas_perdidas() throws MyException {
-        rank.incrementar_ganadas_perdidas(6, "a", 7, "b", 1);
+        rank.incrementar_ganadas_perdidas(6, "a", 7, "b", Ranking.tipoGanador.GANA_J1);
         String[] resultados = {"6 a 1 0 0 1", "7 b 0 1 0 1"};
         for (int i = 0; i < 2; ++i) {
             assertEquals(resultados[i],rank.consultar_info_elemento_i(i));
@@ -104,7 +103,7 @@ public class RankingTest_JUnit {
 
     @Test
     public void test_eliminarDelRanking() throws MyException {
-        rank.incrementar_ganadas_perdidas(6, "a", 7, "b", 1);
+        rank.incrementar_ganadas_perdidas(6, "a", 7, "b", Ranking.tipoGanador.GANA_J1);
         rank.add_al_ranking(new ElementoRanking(10, "aa"));
         rank.eliminar_elemento_ranking(6, "a");
         String[] resultados = {"7 b 0 1 0 1", "10 aa 0 0 0 0"};

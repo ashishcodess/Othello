@@ -99,7 +99,17 @@ public class DriverDominio {
                 nick1 = p.getNickJugador1();
                 id2 = p.getID_J2();
                 nick2 = p.getNickJugador2();
-                ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,ganador);
+                switch (ganador) {
+                    case 0:
+                        ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,Ranking.tipoGanador.GANA_J1);
+                        break;
+                    case 1:
+                        ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,Ranking.tipoGanador.GANA_J2);
+                        break;
+                    case 2:
+                        ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,Ranking.tipoGanador.EMPATE);
+                        break;
+                }
                 cp.ctrl_exportar_ranking(ranking.toArrayList(),f);
             }
         }

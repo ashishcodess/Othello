@@ -17,14 +17,14 @@ public class DriverRanking {
         Ranking rank= new Ranking();
         ElementoRanking e = new ElementoRanking(6,"aaa");
         rank.add_al_ranking(e);
-        rank.incrementar_partida(6, "aaa",1);
+        rank.incrementar_partida(6, "aaa", Ranking.tipoGanador.GANA);
         e = new ElementoRanking(7,"bbb",2, 3,0);
         rank.add_al_ranking(e);
         e = new ElementoRanking(8,"c",4, 1,0);
         rank.add_al_ranking(e);
-        rank.incrementar_partida(8, "c",0);
-        rank.incrementar_partida(8, "c",1);
-        rank.incrementar_partida(8, "c",2);
+        rank.incrementar_partida(8, "c",Ranking.tipoGanador.PIERDE);
+        rank.incrementar_partida(8, "c", Ranking.tipoGanador.GANA);
+        rank.incrementar_partida(8, "c", Ranking.tipoGanador.EMPATE);
         System.out.println();
         System.out.println("orden normal");
         rank.print_ranking();

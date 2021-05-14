@@ -116,7 +116,6 @@ public class CtrlPersitencia {
      * @return devuelve el modo de la partida con igual a idPartida, caso contrario (no existe partida) devuelve -1
      */
     public int ctrl_leer_modo_partida(int idPartida) throws IOException {
-        //return cPartidas.leer_modo_partida(idPartida);
         int modo = -1;
         String s_fichero = dir_partidas +idPartida + ".txt";
         ArrayList<String> as = io.leerFichero(s_fichero);
