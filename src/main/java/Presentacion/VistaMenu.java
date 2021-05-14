@@ -201,6 +201,8 @@ public class VistaMenu {
         buttonCreditos.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CREDITOS));
 
+
+
         buttonSalir.addActionListener
                 (event -> {
                     iCtrlPresentacion.presentacion_exportar_ranking();
@@ -213,6 +215,11 @@ public class VistaMenu {
                     System.exit(0);
                 });
 
+        buttonCrearPartida.addActionListener
+                (event -> {
+                    iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);
+                    System.exit(0);
+                });
 
 
         menuitemLogin.addActionListener
