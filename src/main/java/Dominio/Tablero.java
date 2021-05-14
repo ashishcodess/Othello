@@ -26,6 +26,8 @@ public class Tablero {
     private Set<Position> blancas;
     /**set que contiene fichas disponibles*/
     private Set<Position> disponibles;
+    /** Parámetro necesario para saber si la partida ha finalizado*/
+    private boolean disponibles_anterior;
 
     /*Constructora*/
     /**
@@ -795,7 +797,8 @@ public class Tablero {
     }
 
     public boolean finalizada(){
-        return true; //para poderlo compilar y hacer pruebas
+
+        return (this.num_vacia == 0 || this.blancas.size() == 0 || this.negras.size() == 0 || (this.disponibles.size() == 0 && !this.disponibles_anterior));
     }
 
     /**

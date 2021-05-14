@@ -8,6 +8,7 @@ package Dominio;
 
 import MyException.MyException;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class JugadorMaquina extends Jugador {
@@ -17,12 +18,20 @@ public class JugadorMaquina extends Jugador {
     /** atributo profundidad (para IA) */
     private int profundidad_MinMax;
 
+    /**atributo estados succesores para la implementación del algoritmo de la IA*/
+    private Set<Tablero> succesores;
+
+    /**atributo posiciones disponibles para la implementación del algoritmo de la IA*/
+    private Set<Position> disponibles;
+
     /*Constructora*/
     /**
      * Constructora por defecto (vacia) de JugadorMaquina
      * */
     public JugadorMaquina () {
         super();
+        this.succesores = new HashSet<Tablero>();
+        Set<Position> disponibles= new HashSet<Position>();
     }
 
     /**
@@ -32,6 +41,8 @@ public class JugadorMaquina extends Jugador {
     public JugadorMaquina (int idMaquina) throws MyException{
         super(idMaquina);
         if (idMaquina > 5)throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idMaquina);
+        this.succesores = new HashSet<Tablero>();
+        Set<Position> disponibles= new HashSet<Position>();
     }
 
     @Override
@@ -48,6 +59,8 @@ public class JugadorMaquina extends Jugador {
         super(idMaquina);
         if (idMaquina > 5)throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idMaquina);
         this.profundidad_MinMax = profundidad;
+        this.succesores = new HashSet<Tablero>();
+        Set<Position> disponibles= new HashSet<Position>();
     }
 
     /*Sets y Gets*/
@@ -87,8 +100,7 @@ public class JugadorMaquina extends Jugador {
     public Tablero valorMaxNegras(Tablero t, int turno, int alpha, int beta, int depth){
 
         Tablero mejorHijo = t;
-        SuccessorFunction succesores = new SuccessorFunction();
-        Set<Tablero> estados_hijos = succesores.genera_succesores(t, turno);
+        Set<Tablero> estados_hijos = this.genera_succesores(t, turno);
 
         /*if(turno%2 == 0){
             int maxeval = -1000;
@@ -121,8 +133,7 @@ public class JugadorMaquina extends Jugador {
         if(depth == 0 || t.finalizada())return t;
 
         Tablero mejorHijo = t;
-        SuccessorFunction succesores = new SuccessorFunction();
-        Set<Tablero> estados_hijos = succesores.genera_succesores(t, turno);
+        Set<Tablero> estados_hijos = this.genera_succesores(t, turno);
         int evaluacion;
 
         if(turno%2 != 0){
@@ -134,6 +145,7 @@ public class JugadorMaquina extends Jugador {
                      maxeval = evaluacion;
                      mejorHijo = aux;
                  }
+                 if(beta<=alpha)break;
             }
             return mejorHijo;
         }
@@ -147,6 +159,7 @@ public class JugadorMaquina extends Jugador {
                     mineval = evaluacion;
                     mejorHijo = aux;
                 }
+                if(beta<=alpha)break;
             }
             return mejorHijo;
         }
@@ -177,5 +190,30 @@ public class JugadorMaquina extends Jugador {
         System.out.println("Máquina mueve a " + x + ", " + y);
         t.actualizarTablero(x, y, turno);
         return t;*/
+    }
+
+    /**
+     * Función que genera los estados succesores del tablero que recibe como parámetro
+     * @param t es el tablero a partir del cual generamos su lista de estados succesores
+     * @param turno es el turno del tablero t
+     * @return retorna la lista de estados hijos de ese tablero, resultantes de cada uno de los posibles movimientos de este
+     */
+    public Set<Tablero> genera_succesores(Tablero t, int turno){
+
+        Tablero aux; Casilla disponible;
+        t.calcularCasillasDisponiblesDiagonales(turno);
+        t.calcularCasillasDisponiblesHorizontal(turno);
+        t.calcularCasillasDisponiblesVertical(turno);
+        disponibles = t.getCasillasDisponibles();
+
+        for(Position pos : disponibles){
+
+            aux = t;
+            if(turno %2 == 0) aux.setCasilla_tipo(pos.getX(), pos.getY(), 2);
+            else aux.setCasilla_tipo(pos.getX(), pos.getY(), 3);
+            succesores.add(aux);
+        }
+
+        return succesores;
     }
 }
