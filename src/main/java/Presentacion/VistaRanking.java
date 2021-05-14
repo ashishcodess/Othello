@@ -405,16 +405,4 @@ public class VistaRanking {
 
     }
 
-
-    /////////// MAIN (para poder probar)
-
-    /*public static void main (String[] args) {
-        javax.swing.SwingUtilities.invokeLater (
-                new Runnable() {
-                    public void run() {
-                        CtrlPresentacion ctrlPresentacion = new CtrlPresentacion();
-                        ctrlPresentacion.inicializarPresentacion();
-                        new VistaRanking(ctrlPresentacion).hacerVisible(true);
-                    }});
-    }*/
 }

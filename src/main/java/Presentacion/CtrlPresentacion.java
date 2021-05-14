@@ -2,7 +2,6 @@ package Presentacion;
 
 import Dominio.CtrlDominio;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
