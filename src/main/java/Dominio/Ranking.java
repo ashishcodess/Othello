@@ -22,7 +22,7 @@ public class Ranking {
      * @param e Elemento tipo ElementoRanking a agregar al ranking
      * */
     public void add_al_ranking(ElementoRanking e) {
-        int b = existe_en_ranking(e.getID(),e.getNickname());
+        int b = existe_en_ranking(e.consultar_ID(),e.consultar_Nickname());
         if (b != -1) {
             modificar_elemento_ranking(b,e);
         }
@@ -69,8 +69,8 @@ public class Ranking {
         int i ;
         boolean res = false;
         for (i = 0; i < tam && !res; ++i) {
-            int idAux = this.ranking.get(i).getID();
-            String sAux = this.ranking.get(i).getNickname();
+            int idAux = this.ranking.get(i).consultar_ID();
+            String sAux = this.ranking.get(i).consultar_Nickname();
             res = (idAux == id) && (sAux.equals(nick));
         }
         if (!res) return -1; //no ha sido encontrado en el RANKING
@@ -84,7 +84,7 @@ public class Ranking {
      * @return devuelve la informacion del  elemento del ranking en la posicion i de ArrayList
      * */
     public String consultar_info_elemento_i(int i) {
-        if (i >= 0 && i < ranking.size()) return this.ranking.get(i).consultar_all();
+        if (i >= 0 && i < ranking.size()) return this.ranking.get(i).consultar_todo();
         else return null;
     }
 
@@ -152,11 +152,11 @@ public class Ranking {
 
     /**
      * Operacion ordenar_ranking(orden) en funcion de un orden concreto
-     * @param orden [0 (Ganadas), 1 (ID mayor a menor) , 2 (NICKNAME), 3 (ID menor a mayor)]
+     * @param orden [0 (Ganadas), 1 (ID mayor a menor) , 2 (NICKNAME), 3 (ID menor a mayor), 4 (Perdidas), 5 (empatadas),6 (Totales)]
      * @return devuelve true en caso de que se haya efectuado una ordenacion, caso contrario devuelve falso
      * */
     public Boolean ordenar_ranking(int orden) {
-        if (orden > 3 || orden < 0) return false;
+        if (orden > 6 || orden < 0) return false;
         else {
             switch(orden) {
                 case 0:
@@ -171,6 +171,15 @@ public class Ranking {
                 case 3:
                     this.ranking.sort(new SortbyIDMenor());
                     break;
+                case 4:
+                    this.ranking.sort(new SortbyPerdidas());
+                    break;
+                case 5:
+                    this.ranking.sort(new SortbyEmpatadas());
+                    break;
+                case 6:
+                    this.ranking.sort(new SortbyTotales());
+                    break;
             }
             return true;
         }
@@ -183,7 +192,7 @@ public class Ranking {
     public ArrayList<String> toArrayList() {
         ArrayList<String> as = new ArrayList<>();
         for (ElementoRanking elementoRanking : this.ranking) {
-            as.add(elementoRanking.consultar_all());
+            as.add(elementoRanking.consultar_todo());
         }
         return as;
     }
@@ -198,7 +207,7 @@ public class Ranking {
         int i = existe_en_ranking(id,nick);
         if (i != -1) {
             System.out.println("(ID, nickname, Ganadas, Perdidas, Empatadas, Totales)");
-            System.out.println(this.ranking.get(i).consultar_all());
+            System.out.println(this.ranking.get(i).consultar_todo());
         }
         else System.out.println("Error: no existe persona con ID:" + id + " y nick:" + nick + " dentro del Ranking");
     }
@@ -209,7 +218,7 @@ public class Ranking {
     public void print_ranking() {
         System.out.println("(ID, nickname, Ganadas, Perdidas,Empatadas, Totales)");
         for (ElementoRanking elementoRanking : this.ranking) {
-            System.out.println(elementoRanking.consultar_all());
+            System.out.println(elementoRanking.consultar_todo());
         }
         System.out.println();
     }
@@ -222,7 +231,7 @@ public class Ranking {
         ordenar_ranking(orden);
         System.out.println("(ID, nickname, Ganadas, Perdidas,Empatadas, Totales)");
         for (ElementoRanking elementoRanking : this.ranking) {
-            System.out.println(elementoRanking.consultar_all());
+            System.out.println(elementoRanking.consultar_todo());
         }
         System.out.println();
     }
@@ -232,7 +241,34 @@ public class Ranking {
      * */
     static class SortbyGanadas implements Comparator<ElementoRanking> {
         public int compare(ElementoRanking e1, ElementoRanking e2) {
-            return (e2.getGanadas() - e1.getGanadas());
+            return (e2.consultar_Ganadas() - e1.consultar_Ganadas());
+        }
+    }
+
+    /**
+     * funcion compare en funcion de PartidasPerdidas
+     * */
+    static class SortbyPerdidas implements Comparator<ElementoRanking> {
+        public int compare(ElementoRanking e1, ElementoRanking e2) {
+            return (e2.consultar_Perdidas() - e1.consultar_Perdidas());
+        }
+    }
+
+    /**
+     * funcion compare en funcion de PartidasEmpatadas
+     * */
+    static class SortbyEmpatadas implements Comparator<ElementoRanking> {
+        public int compare(ElementoRanking e1, ElementoRanking e2) {
+            return (e2.consultar_Empatadas() - e1.consultar_Empatadas());
+        }
+    }
+
+    /**
+     * funcion compare en funcion de PartidasTotales
+     * */
+    static class SortbyTotales implements Comparator<ElementoRanking> {
+        public int compare(ElementoRanking e1, ElementoRanking e2) {
+            return (e2.consultar_Totales() - e1.consultar_Totales());
         }
     }
 
@@ -241,7 +277,7 @@ public class Ranking {
      * */
     static class SortbyID implements Comparator<ElementoRanking> {
         public int compare(ElementoRanking e1, ElementoRanking e2) {
-            return (e2.getID() - e1.getID());
+            return (e2.consultar_ID() - e1.consultar_ID());
         }
     }
 
@@ -250,7 +286,7 @@ public class Ranking {
      * */
     static class SortbyIDMenor implements Comparator<ElementoRanking> {
         public int compare(ElementoRanking e1, ElementoRanking e2) {
-            return (e1.getID() - e2.getID());
+            return (e1.consultar_ID() - e2.consultar_ID());
         }
     }
 
@@ -259,7 +295,7 @@ public class Ranking {
      * */
     static class SortbyNICKNAME implements Comparator<ElementoRanking> {
         public int compare(ElementoRanking e1, ElementoRanking e2) {
-            return e1.getNickname().compareTo(e2.getNickname());
+            return e1.consultar_Nickname().compareTo(e2.consultar_Nickname());
         }
     }
 }

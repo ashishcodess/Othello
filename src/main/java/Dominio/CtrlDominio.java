@@ -3,6 +3,7 @@ package Dominio;
 import ControladorPersistencia.CtrlPersitencia;
 import MyException.MyException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -28,8 +29,9 @@ public class CtrlDominio {
     public CtrlDominio() {
         code = -1;
         nickname = "";
-        cp = new CtrlPersitencia(true);
-        ranking = cp.ctrl_importar_ranking();
+        cp = new CtrlPersitencia();
+        try {ranking = cp.ctrl_importar_ranking("ranking.txt");}
+        catch (Exception e) {ranking = new Ranking();}
     }
 
     /**
@@ -63,17 +65,24 @@ public class CtrlDominio {
      * caso contrario devuelve -1
      * */
     public int dominio_registro_usuario(String nick) {
-        int idRes = cp.ctrl_get_nuevo_ID_user();
-        if (cp.ctrl_crear_usuario(idRes,nick)) {
-            return idRes;
-        }else return -1;
+        int idRes = -1;
+        try {
+            idRes = cp.ctrl_get_nuevo_ID_user();
+            if (cp.ctrl_crear_usuario(idRes,nick)) {
+                return idRes;
+            }
+        }catch (Exception e) {}
+        return idRes;
     }
 
     /**
     * Metodo exportar ranking (desde Dominio)
     * */
     public void domino_exportar_ranking() {
-        cp.ctrl_exportar_ranking(ranking.toArrayList());  //exportar ranking antes de salir del programa
+        try {
+            cp.ctrl_exportar_ranking(ranking.toArrayList(), "ranking.txt");
+        }
+        catch (Exception e) {}
     }
 
     /**
@@ -104,7 +113,7 @@ public class CtrlDominio {
 
     /**
      * Metodo ordenar ranking
-     * @param orden [0 (Ganadas), 1 (ID mayor a menor) , 2 (NICKNAME), 3 (ID menor a mayor)]
+     * @param orden [0 (Ganadas), 1 (ID mayor a menor) , 2 (NICKNAME), 3 (ID menor a mayor), 4 (Perdidas), 5 (empatadas),6 (Totales)]
      * @return devuelve true en caso de que se haya efectuado una ordenacion, caso contrario devuelve falso
      * */
     public boolean ordenar_ranking(int orden) {
@@ -118,13 +127,9 @@ public class CtrlDominio {
      * */
     public int consultar_tam_ranking() {return ranking.consultar_tam_ranking();}
 
-
-    //FUNCIONES NO TESTEADAS....
-
-
     /**
      * Metodo cargarPartida
-     * Carga una partida a partir de un fichero guardado previamente y seguidamente ejecuta dicha partida cargada
+     * Carga una partida a partir de un fichero guardado previamente
      * @param idPartida id de partida a cargar
      * @return devuelve la partida cargada, caso contrario devuelve null
      * */
@@ -138,6 +143,12 @@ public class CtrlDominio {
         }
         return null;
     }
+
+
+    //FUNCIONES NO TESTEADAS....
+
+
+
 
 
     /**
@@ -156,7 +167,7 @@ public class CtrlDominio {
                 id2 = p.getID_J2();
                 nick2 = p.getNickJugador2();
                 ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,ganador);
-                cp.ctrl_exportar_ranking(ranking.toArrayList());
+                cp.ctrl_exportar_ranking(ranking.toArrayList(), "ranking.txt");
             }
         }
         catch (Exception e) {
@@ -168,13 +179,19 @@ public class CtrlDominio {
     * mandarle el estado de como va la partida hacia la capa de presentacion
     * */
     private static int ejecutarRondaPartida(Partida p, ArrayList<String> argum) {
-        //accion a realizar esta dentro de argum
-        int res;
-        String[] accion = argum.toArray(new String[0]);
-        res = p.rondaPartida(accion);
-        //modificar estadoPartida
-        if (res == 2) cp.ctrl_guardar_partida(p.toArrayList());
-        else if (res != 3) actualizar_ranking(p,res);
+        int res = -1;
+        try {
+            //accion a realizar esta dentro de argum
+            String[] accion = argum.toArray(new String[0]);
+            res = p.rondaPartida(accion);
+            //modificar estadoPartida
+            if (res == 2) cp.ctrl_guardar_partida(p.toArrayList());
+            else if (res != 3) actualizar_ranking(p,res);
+
+        }
+        catch (Exception e) {
+
+        }
         return res;
     }
 
@@ -208,7 +225,7 @@ public class CtrlDominio {
         return null; //por ahora para pruebas
     }
 
-    private static ArrayList<String> listar_partidas_disponibles(int id, String nick) {
+    private static ArrayList<String> listar_partidas_disponibles(int id, String nick) throws IOException {
         //enviara al Controlador de Presentacion (para mostrar que partidas puede cargar/borrar el jugador)
         return cp.ctrl_listar_partidas_disponibles(id,nick);
     }

@@ -1,10 +1,4 @@
 - CtrlPersistencia: Clase del Controlador De Persistencia (donde se utilizan las funciones
 de las clases: IOPartidas,IORanking e IOUsuario) es lo unico visible por la capa de Dominio
 
-- IOPartidas: Clase de operaciones de IO y de Persistencia referentes a las partidas
-
-- IORanking: Clase de operaciones de IO y de Persistencia referentes al ranking
-
-- IOUsuario: Clase de operaciones de IO y de Persistencia referentes a los Usuarios (Personas Registradas)
-
-- IOTablero: Clase de operaciones de IO y de Persistencia referentes a los tableros
+- InputOutput: Clase para leer/escribir/borrar ficheros y directorios

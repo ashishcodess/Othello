@@ -148,7 +148,7 @@ public class VistaRanking {
         panelBotonesRanking.setLayout(new FlowLayout());
         panelBotonesRanking.add(buttonCargarRanking);
         panelBotonesRanking.add(buttonLimpiarRanking);
-        for (String s : Arrays.asList("ID (mayor a menor)", "ID(menor a mayor)", "Partidas Ganadas", "Nickname")) {
+        for (String s : Arrays.asList("ID (mayor a menor)", "ID(menor a mayor)", "Partidas Ganadas", "Nickname","Perdidas","Empatadas","Totales")) {
             comboBoxOrdenar.addItem(s);
         }
         panelBotonesRanking.add(comboBoxOrdenar);
@@ -255,6 +255,15 @@ public class VistaRanking {
                 break;
             case "ID(menor a mayor)":
                 orden = 3;
+                break;
+            case "Perdidas":
+                orden = 4;
+                break;
+            case "Empatadas":
+                orden = 5;
+                break;
+            case "Totales":
+                orden = 6;
                 break;
         }
         if (iCtrlPresentacion.presentacion_ordenar_ranking(orden)) actionPerformed_buttonCargarRanking(event);
