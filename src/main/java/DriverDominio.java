@@ -1,5 +1,6 @@
 import ControladorPersistencia.CtrlPersitencia;
 
+import Dominio.Logros;
 import Dominio.Partida;
 import Dominio.Ranking;
 import Dominio.Tablero;
@@ -99,6 +100,12 @@ public class DriverDominio {
                 nick1 = p.getNickJugador1();
                 id2 = p.getID_J2();
                 nick2 = p.getNickJugador2();
+
+                //logros
+                int turnos = p.getTurnoPartida();
+                boolean b = ranking.comprueba_logro_partida(turnos);
+                if (b) ranking.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,nick1,id1,nick2,id2,turnos);
+
                 switch (ganador) {
                     case 0:
                         ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,Ranking.tipoGanador.GANA_J1);

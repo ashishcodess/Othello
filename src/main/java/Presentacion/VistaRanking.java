@@ -23,7 +23,7 @@ public class VistaRanking {
     private JPanel panelActivo = new JPanel();
     private final JPanel panelBotonesGeneral = new JPanel();
     private final JButton buttonConsultarRanking = new JButton("Consultar todo el Ranking");
-    private final JButton buttonConsultarEstadisticas = new JButton("Consultar estadisticas de un Jugador");
+    private final JButton buttonConsultarEstadisticas = new JButton("Consultar Logros /Consultar estadisticas");
     private final JLabel labelInfoRanking = new JLabel("Informacion del ranking (ID, nickname, Ganadas, Perdidas,Empatadas, Totales)"); //borrar al final
     private final JLabel labelInfoRanking2 = new JLabel("Informacion del ranking (ID, nickname, Ganadas, Perdidas,Empatadas, Totales)"); //borrar al final
 
@@ -40,7 +40,7 @@ public class VistaRanking {
     private final JButton buttonOrdenar = new JButton("Ordenar");
 
 
-    //COMPONENTES ESTADISTICAS
+    //COMPONENTES ESTADISTICAS / LOGROS
     private final JPanel panelEstadisticas = new JPanel();
     private final JPanel panelBotonesEstadisticas = new JPanel();
     private final JLabel labelID= new JLabel("ID:");
@@ -50,6 +50,9 @@ public class VistaRanking {
     private final JButton buttonBuscarEstadisticas= new JButton("Buscar");
     private final JButton buttonLimpiarEstadisticas= new JButton("Limpiar");
     private JTable tablaEstadisticas = new JTable();
+
+
+
 
     //BARRA DE MENU
     private final JMenuBar menubarVista = new JMenuBar();
@@ -130,7 +133,7 @@ public class VistaRanking {
         panelBotonesGeneral.add(buttonConsultarEstadisticas);
         panelBotonesGeneral.add(buttonVolverMenu);
         buttonConsultarRanking.setToolTipText("Consulta todo el ranking");
-        buttonConsultarEstadisticas.setToolTipText("Consulta las estadisticas de un Jugador en concreto");
+        buttonConsultarEstadisticas.setToolTipText("Consultar logros o Consulta las estadisticas de un Jugador en concreto");
         buttonVolverMenu.setToolTipText("Volver al menu principal");
 
         //PANEL RANKING

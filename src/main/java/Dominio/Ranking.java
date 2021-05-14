@@ -14,11 +14,16 @@ public class Ranking {
     /**ArrayList de elementos tipo ElementoRanking*/
     private final ArrayList<ElementoRanking> ranking;
 
+    /**Logros*/
+    private final Logros log;
+
+
     /**
      * Constructora por defecto (ranking vacio)
      * */
     public Ranking () {
         this.ranking = new ArrayList<>();
+        this.log = new Logros();
     }
 
 
@@ -238,6 +243,30 @@ public class Ranking {
         }
         System.out.println();
     }
+
+
+    //FUNCIONES DE LOGROS
+
+    public void cambiar_logro_partida(Logros.tipoLogro tipo, String nick1, int id1, String nick2, int id2, int t) {
+        log.cambiar_logro_partida(tipo,nick1,id1,nick2,id2,t);
+    }
+
+    public boolean comprueba_logro_partida(int turno) {
+        return log.comprueba_logro_partida(turno);
+    }
+
+    public boolean comprueba_logro_capturas(int cap) {
+        return log.comprueba_logro_capturas(cap);
+    }
+
+    public String consultar_partida_corta() {
+        return log.consultar_partida_corta();
+    }
+
+    public String consultar_max_capturas() {
+        return log.consultar_max_capturas();
+    }
+
 
     /**
      * funcion compare en funcion de PartidasGanadas
