@@ -203,7 +203,7 @@ public class CtrlDominio {
             String nick1;
             String nick2;
             int modo = Integer.parseInt(argum.get(0));
-            if (modo<0 || modo > 2) throw new MyException("Modo de juego incorrecto");
+            if (modo<0 || modo > 2) throw new MyException(MyException.tipoExcepcion.MODO_INCORRECTO,modo);
             int[] reglas = new int[3];
             reglas[0] = Integer.parseInt(argum.get(1));
             reglas[1] = Integer.parseInt(argum.get(2));

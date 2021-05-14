@@ -1,6 +1,8 @@
 package Dominio;
 
 
+import MyException.MyException;
+
 public abstract class Jugador {
 
     /*Atributos*/
@@ -19,7 +21,8 @@ public abstract class Jugador {
      * Constructora de Jugador
      * @param idJugador (id igual a idJugador)
      */
-    public Jugador (int idJugador) {
+    public Jugador (int idJugador) throws MyException {
+        if (idJugador < 0) throw new MyException(MyException.tipoExcepcion.ID_NEGATIVO,idJugador);
         this.id = idJugador;
     }
 

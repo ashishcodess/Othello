@@ -23,7 +23,7 @@ public class JugadorPersona extends Jugador {
      * */
     public JugadorPersona (int idJugador) throws MyException {
         super(idJugador);
-        if (idJugador < 6) throw new MyException("El ID:" + idJugador + " pertenece a una maquina o esta fuera de rango(es negativo)");
+        if (idJugador < 6 && idJugador >= 0) throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idJugador);
     }
 
     /**
@@ -34,7 +34,7 @@ public class JugadorPersona extends Jugador {
      * */
     public JugadorPersona (int idJugador,String nicknameJugador) throws MyException {
         super(idJugador);
-        if (idJugador < 6) throw new MyException("El ID:" + idJugador + " pertenece a una maquina o esta fuera de rango(es negativo)");
+        if (idJugador < 6 && idJugador >= 0) throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idJugador);
         this.nickname = nicknameJugador;
     }
 

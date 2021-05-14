@@ -31,7 +31,7 @@ public class JugadorMaquina extends Jugador {
      * */
     public JugadorMaquina (int idMaquina) throws MyException{
         super(idMaquina);
-        if (idMaquina > 5)throw new MyException("El ID:" + idMaquina + " pertenece a una persona o esta fuera de rango(es negativo)");
+        if (idMaquina > 5)throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idMaquina);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class JugadorMaquina extends Jugador {
      * */
     public JugadorMaquina (int idMaquina, int profundidad) throws MyException{
         super(idMaquina);
-        if (idMaquina > 5)throw new MyException("El ID:" + idMaquina + " pertenece a una persona o esta fuera de rango(es negativo)");
+        if (idMaquina > 5)throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idMaquina);
         this.profundidad_MinMax = profundidad;
     }
 
