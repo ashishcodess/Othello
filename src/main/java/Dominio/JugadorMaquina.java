@@ -145,6 +145,7 @@ public class JugadorMaquina extends Jugador {
                      maxeval = evaluacion;
                      mejorHijo = aux;
                  }
+                 if(beta<=alpha)break;
             }
             return mejorHijo;
         }
@@ -158,6 +159,7 @@ public class JugadorMaquina extends Jugador {
                     mineval = evaluacion;
                     mejorHijo = aux;
                 }
+                if(beta<=alpha)break;
             }
             return mejorHijo;
         }
