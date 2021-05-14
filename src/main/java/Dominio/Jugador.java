@@ -54,14 +54,11 @@ public abstract class Jugador {
      * @param x posicionX valor entre 0 y 8
      * @param y posicionY valor entre 0 y 8
      * @param t Tablero donde se realiza la accion de colocar la ficha
-     * @return True en caso haber colocado correctamente la ficha, caso contrario devuelve FALSO
      */
-    public boolean colocar_ficha_en_partida(int turno, int x, int y, Tablero t) {
+    public void colocar_ficha_en_partida(int turno, int x, int y, Tablero t) {
         if (t.es_possible(x, y)) {
             t.actualizarTablero(x,y,turno);
-            return true;
         }
-        else return false;
     }
 
     public abstract String get_Nickname();

@@ -5,6 +5,7 @@ import MyException.MyException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+enum ganador {EMPATE, GANA_J1, GANA_J2}
 
 public class Ranking {
     /**ArrayList de elementos tipo ElementoRanking*/

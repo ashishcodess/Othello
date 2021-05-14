@@ -24,7 +24,7 @@ public class ElementoRanking {
      * */
     public ElementoRanking (int id, String nick) throws MyException {
         if (id < 0) throw new MyException(MyException.tipoExcepcion.ID_NEGATIVO,id);
-        else if (id < 6 && id >= 0) throw new MyException(MyException.tipoExcepcion.ID_MAQUINA,id);
+        else if (id < 6) throw new MyException(MyException.tipoExcepcion.ID_MAQUINA,id);
         else {
             this.idJugador = id;
             this.nickJugador = nick;
@@ -47,7 +47,7 @@ public class ElementoRanking {
      * */
     public ElementoRanking (int id, String nick,  int ganadas, int perdidas, int empatadas) throws MyException {
         if (id < 0) throw new MyException(MyException.tipoExcepcion.ID_NEGATIVO,id);
-        else if (id < 6 && id >= 0) throw new MyException(MyException.tipoExcepcion.ID_MAQUINA,id);
+        else if (id < 6) throw new MyException(MyException.tipoExcepcion.ID_MAQUINA,id);
         else {
             this.idJugador = id;
             this.nickJugador = nick;
