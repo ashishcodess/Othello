@@ -2,6 +2,7 @@ package Dominio;
 
 import ControladorPersistencia.CtrlPersitencia;
 import MyException.MyException;
+import Dominio.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -78,11 +79,8 @@ public class CtrlDominio {
     /**
     * Metodo exportar ranking (desde Dominio)
     * */
-    public void domino_exportar_ranking() {
-        try {
-            cp.ctrl_exportar_ranking(ranking.toArrayList(), "ranking.txt");
-        }
-        catch (Exception e) {}
+    public void domino_exportar_ranking() throws IOException {
+        cp.ctrl_exportar_ranking(ranking.toArrayList(), "ranking.txt");
     }
 
     /**
@@ -101,6 +99,32 @@ public class CtrlDominio {
             res.add("ERROR ERROR - - - -");
         }
         return res;
+    }
+
+    /**
+     * Metodo consultar logros
+     * @return devuelve un arraylist de strings con la informacion de los logros
+     * */
+    public ArrayList<String> consultar_logros() {
+        ArrayList<String> as = new ArrayList<>();
+        String[] sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDA_CORTA)).split(" ");
+        String s = "";
+        if (sAux.length == 5) s = ("Turnos: " + sAux[0] + " , logrado en Partida con jugadores J1[" + sAux[1] + " , " + sAux[2] + "] - J2[" + sAux[3] + " , " + sAux[4] + "]");
+        as.add(s);
+
+        sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDAS_TOTALES)).split(" ");
+        if (sAux.length == 3) s = ("Partidas totales: " + sAux[0] + " , jugador [" + sAux[1] + " , " + sAux[2] + "]");
+        as.add(s);
+
+        sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDAS_GANADAS)).split(" ");
+        if (sAux.length == 3) s = ("Partidas Ganadas: " + sAux[0] + " , jugador [" + sAux[1] + " , " + sAux[2] + "]");
+        as.add(s);
+
+        sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDAS_PERDIDAS)).split(" ");
+        if (sAux.length == 3) s = ("Partidas Perdidas: " + sAux[0] + " , jugador [" + sAux[1] + " , " + sAux[2] + "]");
+        as.add(s);
+
+        return as;
     }
 
     /**
@@ -156,7 +180,7 @@ public class CtrlDominio {
      * @param p partida de la cual se necesita informacion de los jugadores y del ganador
      * @param ganador incrementar contador de partidas en funcion de [2: empate, 1:gana jugador2, 0:gana jugador1]
      * */
-    private static void actualizar_ranking(Partida p, int ganador){
+    private static void actualizar_ranking(Partida p, Ranking.tipoGanador ganador){
         try {
             int modo = p.getModoDeJuegoPartida();
             if (modo != 0) { //diferente de maquina vs maquina
@@ -186,7 +210,22 @@ public class CtrlDominio {
             res = p.rondaPartida(accion);
             //modificar estadoPartida
             if (res == 2) cp.ctrl_guardar_partida(p.toArrayList());
-            else if (res != 3) actualizar_ranking(p,res);
+            else if (res != 3) {
+                //0 (gana nick1), 1 (gana nick2), 2 (empate), 3 (guardar partida), 4 (finalizar)
+                switch (res) {
+                    case 0:
+                        actualizar_ranking(p, Ranking.tipoGanador.GANA_J1);
+                        break;
+                    case 1:
+                        actualizar_ranking(p, Ranking.tipoGanador.GANA_J2);
+                        break;
+                    case 2:
+                        actualizar_ranking(p, Ranking.tipoGanador.EMPATE);
+                        break;
+                    default:
+                        break;
+                }
+            }
 
         }
         catch (Exception e) {
@@ -203,7 +242,7 @@ public class CtrlDominio {
             String nick1;
             String nick2;
             int modo = Integer.parseInt(argum.get(0));
-            if (modo<0 || modo > 2) throw new MyException("Modo de juego incorrecto");
+            if (modo<0 || modo > 2) throw new MyException(MyException.tipoExcepcion.MODO_INCORRECTO,modo);
             int[] reglas = new int[3];
             reglas[0] = Integer.parseInt(argum.get(1));
             reglas[1] = Integer.parseInt(argum.get(2));

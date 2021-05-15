@@ -58,7 +58,7 @@ public class Partida {
                 this.j2 = new JugadorPersona(idj2, n2);
                 break;
             default:
-                throw new MyException("Error en el modo de juego");
+                throw new MyException(MyException.tipoExcepcion.MODO_INCORRECTO,modoJuego);
         }
         this.tablero = new Tablero();
         this.finalizada = 0;
@@ -95,7 +95,7 @@ public class Partida {
                 this.j2 = new JugadorPersona(idj2, n2);
                 break;
             default:
-                throw new MyException("Error en el modo de juego");
+                throw new MyException(MyException.tipoExcepcion.MODO_INCORRECTO,modoJuego);
         }
 
         this.reglas = r;

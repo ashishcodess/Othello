@@ -61,12 +61,12 @@ public class DriverPersistencia {
         System.out.println("Ranking importado correctamente");
         rank.print_ranking();
         ElementoRanking e = new ElementoRanking(8,"aaaa",4, 1,0);
-        rank.incrementar_ganadas_perdidas(8,"aaaa",9,"dd", 2);
+        rank.incrementar_ganadas_perdidas(8,"aaaa",9,"dd", Ranking.tipoGanador.EMPATE);
         rank.add_al_ranking(e);
         e = new ElementoRanking(9,"dd",2, 1,2);
         rank.add_al_ranking(e);
         rank.print_ranking();
-        rank.incrementar_ganadas_perdidas(8,"aaaa",9,"dd", 1);
+        rank.incrementar_ganadas_perdidas(8,"aaaa",9,"dd", Ranking.tipoGanador.GANA_J1);
         ArrayList<String> ar = rank.toArrayList();
         cp.ctrl_exportar_ranking(ar,"test.txt");
     }
@@ -126,7 +126,7 @@ public class DriverPersistencia {
     }
 
     public static void test_IOTablero(int id) {
-
+        //FALTA POR HACER
     }
 
     /**test_prueba_getID_nueva_tablero*/

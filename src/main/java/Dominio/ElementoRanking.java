@@ -23,7 +23,8 @@ public class ElementoRanking {
      * @throws MyException en caso de fallo con el identificador [pertenece a un ID de maquina: id menor a 6]
      * */
     public ElementoRanking (int id, String nick) throws MyException {
-        if (id < 6) throw new MyException("El ID:" + id + " pertenece a una maquina o esta fuera de rango(es negativo)");
+        if (id < 0) throw new MyException(MyException.tipoExcepcion.ID_NEGATIVO,id);
+        else if (id < 6) throw new MyException(MyException.tipoExcepcion.ID_MAQUINA,id);
         else {
             this.idJugador = id;
             this.nickJugador = nick;
@@ -45,13 +46,16 @@ public class ElementoRanking {
      * @throws MyException en caso de fallo con el identificador [pertenece a un ID de maquina: id menor 6]
      * */
     public ElementoRanking (int id, String nick,  int ganadas, int perdidas, int empatadas) throws MyException {
-        if (id < 6) throw new MyException("El ID:" + id + " pertenece a una maquina o esta fuera de rango(es negativo)");
-        this.idJugador = id;
-        this.nickJugador = nick;
-        this.totalPartidasJugadas = ganadas+empatadas+perdidas;
-        this.partidasEmpatadas = empatadas;
-        this.partidasGanadas = ganadas;
-        this.partidasPerdidas = perdidas;
+        if (id < 0) throw new MyException(MyException.tipoExcepcion.ID_NEGATIVO,id);
+        else if (id < 6) throw new MyException(MyException.tipoExcepcion.ID_MAQUINA,id);
+        else {
+            this.idJugador = id;
+            this.nickJugador = nick;
+            this.totalPartidasJugadas = ganadas + empatadas + perdidas;
+            this.partidasEmpatadas = empatadas;
+            this.partidasGanadas = ganadas;
+            this.partidasPerdidas = perdidas;
+        }
     }
 
 

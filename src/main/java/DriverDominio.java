@@ -1,5 +1,6 @@
 import ControladorPersistencia.CtrlPersitencia;
 
+import Dominio.Logros;
 import Dominio.Partida;
 import Dominio.Ranking;
 import Dominio.Tablero;
@@ -62,7 +63,8 @@ public class DriverDominio {
             boolean b;
             System.out.println("Seleccionar reglas (vertical horizontal diagonal) -> ej:1 1 1");
             System.out.print("Introducir reglas:");
-            String s = scan.nextLine(); //evitar bugs (hacerlo 2 veces...)
+            String s;
+            scan.nextLine(); //evitar bugs (hacerlo 2 veces...)
             s = scan.nextLine();
             String[] s_aux = s.split(" ");
             if (s_aux.length == 3){ //comprobar que este en rango de reglas y valen 0 o 1
@@ -89,16 +91,32 @@ public class DriverDominio {
      * @param ganador incrementar contador de partidas en funcion de [2: empate, 1:gana jugador2, 0:gana jugador1]
      * */
     private static void actualizar_ranking(Partida p, int ganador, String f){
+        int id1, id2;
         try {
             int modo = p.getModoDeJuegoPartida();
             if (modo != 0) { //diferente de maquina vs maquina
-                int id1, id2;
                 String nick1, nick2;
                 id1 = p.getID_J1();
                 nick1 = p.getNickJugador1();
                 id2 = p.getID_J2();
                 nick2 = p.getNickJugador2();
-                ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,ganador);
+
+                //logros
+                int turnos = p.getTurnoPartida();
+                boolean b = ranking.comprobar_logro(Logros.tipoLogro.PARTIDA_CORTA,turnos);
+                if (b) ranking.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,nick1,id1,nick2,id2,turnos);
+
+                switch (ganador) {
+                    case 0:
+                        ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,Ranking.tipoGanador.GANA_J1);
+                        break;
+                    case 1:
+                        ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,Ranking.tipoGanador.GANA_J2);
+                        break;
+                    case 2:
+                        ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,Ranking.tipoGanador.EMPATE);
+                        break;
+                }
                 cp.ctrl_exportar_ranking(ranking.toArrayList(),f);
             }
         }
@@ -239,12 +257,8 @@ public class DriverDominio {
                 else {
                     id_aux = p.getID_J2();s_aux = p.getNickJugador2();
                 }
-                if((res!= 4) || (res!= 5)) {
-                    System.out.println("TURNO: " + turno + "  [id:" + id_aux + " ,nick:" + s_aux + "]");
-                    System.out.println();
-                    //p.print_casillas_disponibles();
-                    //p.print_Tablero();
-                }
+                System.out.println("TURNO: " + turno + "  [id:" + id_aux + " ,nick:" + s_aux + "]");
+                System.out.println();
                 res = p.rondaPartida(generar_accion_partida(id_aux,s_aux,turno));
                 System.out.println();
             }
@@ -301,10 +315,8 @@ public class DriverDominio {
      * @param idTablero es el identificador de tablero a cargar
      * @return devuelve el turno del tablero personalizado con id igual a idTablero
      * */
-    private static int cargar_turno_Tablero(int idTablero) {
-        try {return cp.ctrl_cargar_turno_tablero(idTablero);}
-        catch (Exception e) {}
-        return -1;
+    private static int cargar_turno_Tablero(int idTablero) throws IOException {
+        return cp.ctrl_cargar_turno_tablero(idTablero);
     }
 
 
@@ -316,6 +328,7 @@ public class DriverDominio {
      * */
     private static String[] generar_accion_crear_tablero(int turno) {
         String[] res;
+        int x, y;
         try {
             System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
             if (turno % 2 == 0) System.out.println("Acciones a realizar para las fichas Negras");
@@ -324,8 +337,7 @@ public class DriverDominio {
             System.out.println("    - colocar x y (enteros x,y entre [0...8])");
             System.out.println("    - info (get info Crear Tablero)");
             System.out.println("    - guardar (guardar tablero y finalizr)");
-            System.out.println("    - finalizar (finalizar tablero sin guardar)");
-            System.out.println();
+            System.out.println("    - finalizar (finalizar tablero sin guardar)\n");
             System.out.print("Introducir accion a realizar:");
             String s_aux;
             while (!scan.hasNextLine()) s_aux = scan.nextLine();
@@ -333,7 +345,6 @@ public class DriverDominio {
             System.out.println();
             res = s_aux.split(" ");
             if (res.length == 3 && res[0].equals("colocar")) { //colocar x y
-                int x, y;
                 x = Integer.parseInt(res[1]);
                 y = Integer.parseInt(res[2]);
                 boolean b = rango_mapa_correcto(x, y);

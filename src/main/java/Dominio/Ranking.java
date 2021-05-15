@@ -1,18 +1,29 @@
 package Dominio;
 
+import MyException.MyException;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 
 
+
 public class Ranking {
+
+    public enum tipoGanador {EMPATE, PIERDE, GANA, GANA_J1, GANA_J2}
+
     /**ArrayList de elementos tipo ElementoRanking*/
     private final ArrayList<ElementoRanking> ranking;
+
+    /**Logros*/
+    private final Logros log;
+
 
     /**
      * Constructora por defecto (ranking vacio)
      * */
     public Ranking () {
         this.ranking = new ArrayList<>();
+        this.log = new Logros();
     }
 
 
@@ -89,27 +100,41 @@ public class Ranking {
     }
 
     /**
+     * Operacion consultar_elemento_i(i)
+     * @param i posicion dentro del ranking
+     * @return devuelve el elemento del ranking en la posicion i de ArrayList
+     * */
+    public ElementoRanking consultar_elemento_i(int i) {
+        if (i >= 0 && i < ranking.size()) return this.ranking.get(i);
+        else return null;
+    }
+
+    /**
      * Operacion incrementar_ganadas_perdidas()
      * Este metodo es el encargado de incrementar las partidas de cada jugador (en caso de que no exista creara los Elementos del Ranking de cada jugador respectivamente)
+     * Ademas hace la comprobacion de los logros en caso de necesitarse actualizarlos
      * @param id1 identificador del Jugador1
      * @param nick1 nickname del Jugador1 (en caso de que tenga nickname)
      * @param id2 identificador del Jugador2
      * @param nick2 nickname del Jugador2 (en caso de que tenga nickname)
-     * @param ganador incrementar contador en funcion de [2: empate, 1:Ganadas, 0:perdidas]
+     * @param ganador incrementar contador en funcion del tipoGanador de ganador
      * */
-    public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, int ganador) {
-        try {
-            if (ganador >= 0 && ganador < 3) {
-                int ganador2 = 2;
-                if (ganador == 0) ganador2 = 1;
-                else if (ganador == 1) ganador2 = 0;
-                if (id1 > 5) incrementar_partida(id1,nick1,ganador);
-                if (id2 > 5) incrementar_partida(id2,nick2,ganador2);
-            }
+    public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, tipoGanador ganador) throws MyException {
+        switch (ganador) {
+            case EMPATE:
+                if (id1 > 5) incrementar_partida(id1,nick1,tipoGanador.EMPATE);
+                if (id2 > 5) incrementar_partida(id2,nick2,tipoGanador.EMPATE);
+                break;
+            case GANA_J1:
+                if (id1 > 5) incrementar_partida(id1,nick1,tipoGanador.GANA);
+                if (id2 > 5) incrementar_partida(id2,nick2,tipoGanador.PIERDE);
+                break;
+            case GANA_J2:
+                if (id1 > 5) incrementar_partida(id1,nick1,tipoGanador.PIERDE);
+                if (id2 > 5) incrementar_partida(id2,nick2,tipoGanador.GANA);
+                break;
         }
-        catch (Exception e) {
-            System.out.println("Error en incrementar_ganadas_perdidas de Ranking");
-        }
+        comprueba_logros_jugadores(nick1,id1,nick2,id2);
     }
 
     /**
@@ -119,33 +144,27 @@ public class Ranking {
      * e incrementa los contadores de partidas respetivamente en funcion del entero "ganador"
      * @param id identificador del Jugador2
      * @param nick nickname del Jugador2 (en caso de que tenga nickname)
-     * @param ganador incrementar contador en funcion de [2: empate, 1:Ganadas, 0:perdidas]
+     * @param ganador incrementar contador en funcion del tipo de ganador
      * */
-    public void incrementar_partida(int id, String nick, int ganador) {
-        try {
-            int i = existe_en_ranking(id,nick);
-            //System.out.println("incrementar_partida para "+ id + " , " + nick + " , ganador: "+ ganador + " ,existe:"+i);
-            if (i == -1) {
-                ElementoRanking e = new ElementoRanking(id,nick);
-                this.add_al_ranking(e);
-                i = ranking.size()-1;
-            }
-            switch(ganador) {
-                case 0:
-                    this.ranking.get(i).incrementar_partida_perdida();
-                    break;
-                case 1:
-                    this.ranking.get(i).incrementar_partida_ganada();
-                    break;
-                case 2:
-                    this.ranking.get(i).incrementar_partida_empatada();
-                    break;
-                default:
-                    break;
-            }
+    public void incrementar_partida(int id, String nick, tipoGanador ganador) throws MyException {
+        int i = existe_en_ranking(id,nick);
+        if (i == -1) {
+            ElementoRanking e = new ElementoRanking(id,nick);
+            this.add_al_ranking(e);
+            i = ranking.size()-1;
         }
-        catch (Exception e) {
-            System.out.println("Error en incrementar_partida de Ranking");
+        switch(ganador) {
+            case PIERDE:
+                this.ranking.get(i).incrementar_partida_perdida();
+                break;
+            case GANA:
+                this.ranking.get(i).incrementar_partida_ganada();
+                break;
+            case EMPATE:
+                this.ranking.get(i).incrementar_partida_empatada();
+                break;
+            default:
+                break;
         }
     }
 
@@ -191,6 +210,14 @@ public class Ranking {
      * */
     public ArrayList<String> toArrayList() {
         ArrayList<String> as = new ArrayList<>();
+        //logros
+        as.add(consultar_logro(Logros.tipoLogro.PARTIDA_CORTA));
+        as.add("*");
+        as.add(consultar_logro(Logros.tipoLogro.PARTIDAS_TOTALES));
+        as.add(consultar_logro(Logros.tipoLogro.PARTIDAS_GANADAS));
+        as.add(consultar_logro(Logros.tipoLogro.PARTIDAS_PERDIDAS));
+        as.add("***");
+        //RANKING
         for (ElementoRanking elementoRanking : this.ranking) {
             as.add(elementoRanking.consultar_todo());
         }
@@ -235,6 +262,145 @@ public class Ranking {
         }
         System.out.println();
     }
+
+
+    //FUNCIONES DE LOGROS
+
+    /**
+     * Cambiar logro partida (menos turnos o mas capturas)
+     * @param tipo tipo de logro a realizar el cambio (PARTIDA_CORTA o CAPTURAS)
+     * @param nick1 nickname del Jugador1 (en caso de que tenga nickname)
+     * @param id1 identificador del Jugador1
+     * @param nick2 nickname del Jugador2 (en caso de que tenga nickname)
+     * @param id2 identificador del Jugador2
+     * @param t es el numero entero a reemplazar dependiendo del tipo seleccionado
+     * */
+    public void cambiar_logro_partida(Logros.tipoLogro tipo, String nick1, int id1, String nick2, int id2, int t) {
+        log.cambiar_logro_partida(tipo,nick1,id1,nick2,id2,t);
+    }
+
+    /**
+     * Comprobar logro jugadores
+     * @param tipo tipo de Logro de jugadores a comprobar (PARTIDAS_TOTALES, PARTIDAS_GANADAS, PARTIDAS_PERDIDAS)
+     * @param t entero a comprobar la condicion
+     * @return devuelve TRUE en caso de que se cumpla la condicion de que el entero pasado por parametro sea mayor
+     * al que hay almacenado
+     * */
+    public void cambiar_logro_jugador(Logros.tipoLogro tipo, String nick1, int id1, int t) {
+        log.cambiar_logro_jugador(tipo,nick1,id1,t);
+    }
+
+    /**
+     * Comprobar logro
+     * @param tipo tipo de Logro
+     * @param i entero a comprobar la condicion3
+     * @return devuelve TRUE en caso de que se cumpla la condicion del logro a probar
+     * */
+    public boolean comprobar_logro(Logros.tipoLogro tipo, int i) {
+        boolean b = false;
+        switch (tipo) {
+            case PARTIDA_CORTA:
+                b = log.comprueba_logro_partida(i);
+                break;
+
+            case CAPTURAS:
+                b = log.comprueba_logro_capturas(i);
+                break;
+
+            case PARTIDAS_TOTALES:
+                b = log.comprueba_logro_jugadores(tipo,i);
+                break;
+
+            case PARTIDAS_GANADAS:
+                b = log.comprueba_logro_jugadores(tipo,i);
+                break;
+
+            case PARTIDAS_PERDIDAS:
+                b = log.comprueba_logro_jugadores(tipo,i);
+                break;
+        }
+        return b;
+    }
+
+    /**
+     * Consultar logro
+     * @param tipo es el tipo de logro a consultar [PARTIDA_CORTA, PARTIDAS_TOTALES, PARTIDAS_GANADAS, PARTIDAS_PERDIDAS, CAPTURAS]
+     * @return devuelve la informacion del logro dependiendo del tipoLogro pasado como parametro
+     * */
+    public String consultar_logro(Logros.tipoLogro tipo) {
+        String res = "";
+        switch (tipo) {
+            case PARTIDA_CORTA:
+                res = log.consultar_partida_corta();
+                break;
+
+            case CAPTURAS:
+                res = log.consultar_max_capturas();
+                break;
+
+            case PARTIDAS_TOTALES:
+                res = log.consultar_jugador_Totales();
+                break;
+
+            case PARTIDAS_GANADAS:
+                res = log.consultar_jugador_Ganadas();
+                break;
+
+            case PARTIDAS_PERDIDAS:
+                res = log.consultar_jugador_perdidas();
+                break;
+        }
+        return res;
+    }
+
+
+    /**
+     * Comprueba logro : comprueba el logro y se modifica el logro si es necesario
+     * @param tipo es el tipo de logro a consultar para jugador[PARTIDAS_TOTALES, PARTIDAS_GANADAS, PARTIDAS_PERDIDAS]
+     * @param e ElementoRanking a comprobar dependiendo del tipo de logro
+     * */
+    private void comprueba_logro(Logros.tipoLogro tipo, ElementoRanking e) {
+        int partidas_aux = 0;
+        switch (tipo) {
+            case PARTIDAS_TOTALES:
+                partidas_aux = e.consultar_Totales();
+                break;
+            case PARTIDAS_GANADAS:
+                partidas_aux = e.consultar_Ganadas();
+                break;
+            case PARTIDAS_PERDIDAS:
+                partidas_aux = e.consultar_Perdidas();
+                break;
+        }
+        if (log.comprueba_logro_jugadores(tipo,partidas_aux)) {
+            log.cambiar_logro_jugador(tipo,e.consultar_Nickname(),e.consultar_ID(),partidas_aux);
+        }
+    }
+
+    /**
+     * Comprueba los logros de partidas totales, ganadas y perdidas y modifica en caso de ser necesario
+     * @param nick1 nickname del Jugador1 (en caso de que tenga nickname)
+     * @param id1 identificador del Jugador1
+     * @param nick2 nickname del Jugador2 (en caso de que tenga nickname)
+     * @param id2 identificador del Jugador2
+     * */
+    private void comprueba_logros_jugadores(String nick1, int id1, String nick2, int id2) {
+        int i = existe_en_ranking(id1,nick1);
+        if (i != -1) { //Jugador1
+            ElementoRanking e_aux = consultar_elemento_i(i);
+            comprueba_logro(Logros.tipoLogro.PARTIDAS_TOTALES,e_aux);
+            comprueba_logro(Logros.tipoLogro.PARTIDAS_GANADAS,e_aux);
+            comprueba_logro(Logros.tipoLogro.PARTIDAS_PERDIDAS,e_aux);
+        }
+        i = existe_en_ranking(id2,nick2);
+        if (i != -1) { //Jugador2
+            ElementoRanking e_aux = consultar_elemento_i(i);
+            comprueba_logro(Logros.tipoLogro.PARTIDAS_TOTALES,e_aux);
+            comprueba_logro(Logros.tipoLogro.PARTIDAS_GANADAS,e_aux);
+            comprueba_logro(Logros.tipoLogro.PARTIDAS_PERDIDAS,e_aux);
+        }
+    }
+
 
     /**
      * funcion compare en funcion de PartidasGanadas

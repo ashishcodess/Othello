@@ -23,7 +23,8 @@ public class VistaRanking {
     private JPanel panelActivo = new JPanel();
     private final JPanel panelBotonesGeneral = new JPanel();
     private final JButton buttonConsultarRanking = new JButton("Consultar todo el Ranking");
-    private final JButton buttonConsultarEstadisticas = new JButton("Consultar estadisticas de un Jugador");
+    private final JButton buttonConsultarEstadisticas = new JButton("Consultar estadisticas (1 jugador)");
+    private final JButton buttonConsultarLogros = new JButton("Consultar logros");
     private final JLabel labelInfoRanking = new JLabel("Informacion del ranking (ID, nickname, Ganadas, Perdidas,Empatadas, Totales)"); //borrar al final
     private final JLabel labelInfoRanking2 = new JLabel("Informacion del ranking (ID, nickname, Ganadas, Perdidas,Empatadas, Totales)"); //borrar al final
 
@@ -35,12 +36,11 @@ public class VistaRanking {
     private final JPanel panelBotonesRanking = new JPanel();
     private final JButton buttonCargarRanking = new JButton("Cargar Ranking");
     private final JButton buttonLimpiarRanking= new JButton("Limpiar Ranking");
-    //Opcion desplegable con3 opciones de ordenar: ID, Partidas Ganadas y Nickname
     private final JComboBox comboBoxOrdenar = new JComboBox();
     private final JButton buttonOrdenar = new JButton("Ordenar");
 
 
-    //COMPONENTES ESTADISTICAS
+    //COMPONENTES ESTADISTICAS / LOGROS
     private final JPanel panelEstadisticas = new JPanel();
     private final JPanel panelBotonesEstadisticas = new JPanel();
     private final JLabel labelID= new JLabel("ID:");
@@ -51,6 +51,16 @@ public class VistaRanking {
     private final JButton buttonLimpiarEstadisticas= new JButton("Limpiar");
     private JTable tablaEstadisticas = new JTable();
 
+    private final JPanel panelLogros = new JPanel();
+    private final JLabel labelPartidaCorta= new JLabel("Partida mas corta(turnos):");
+    private final JTextField textoPartidaCorta = new JTextField(35);
+    private final JLabel labelPartidasTotales= new JLabel("Jugador con mas partidas (total):");
+    private final JTextField textoPartidaTotal= new JTextField(25);
+    private final JLabel labelPartidasGanadas= new JLabel("Jugador con mas partidas (ganadas):");
+    private final JTextField textoPartidaGanadas = new JTextField(25);
+    private final JLabel labelPartidasPerdidas= new JLabel("Jugador con mas partidas (perdidas:");
+    private final JTextField textoPartidaPerdidas = new JTextField(25);
+
     //BARRA DE MENU
     private final JMenuBar menubarVista = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
@@ -59,6 +69,7 @@ public class VistaRanking {
     private final JMenu menuRanking = new JMenu("Ranking");
     private final JMenuItem menuItem_consultar_ranking = new JMenuItem("Consultar Ranking");
     private final JMenuItem menuItem_consultar_estadisticas = new JMenuItem("Consultar Estadisticas");
+    private final JMenuItem menuItem_consultar_logros = new JMenuItem("Consultar Logros");
 
 
     /**
@@ -114,6 +125,7 @@ public class VistaRanking {
         menuFile.add(menuitemQuit);
         menuRanking.add(menuItem_consultar_ranking);
         menuRanking.add(menuItem_consultar_estadisticas);
+        menuRanking.add(menuItem_consultar_logros);
         menubarVista.add(menuFile);
         menubarVista.add(menuRanking);
         frameVista.setJMenuBar(menubarVista);
@@ -128,9 +140,11 @@ public class VistaRanking {
         panelBotonesGeneral.setLayout(new FlowLayout());
         panelBotonesGeneral.add(buttonConsultarRanking);
         panelBotonesGeneral.add(buttonConsultarEstadisticas);
+        panelBotonesGeneral.add(buttonConsultarLogros);
         panelBotonesGeneral.add(buttonVolverMenu);
         buttonConsultarRanking.setToolTipText("Consulta todo el ranking");
         buttonConsultarEstadisticas.setToolTipText("Consulta las estadisticas de un Jugador en concreto");
+        buttonConsultarLogros.setToolTipText("Consultar los logros");
         buttonVolverMenu.setToolTipText("Volver al menu principal");
 
         //PANEL RANKING
@@ -157,6 +171,7 @@ public class VistaRanking {
         buttonLimpiarRanking.setToolTipText("Hace un clear del TextArea");
         buttonOrdenar.setToolTipText("Ordena la salida en funcion de: ID, partidas ganadas o Nickname");
 
+
         //PANEL ESTADISTICAS
         panelBotonesEstadisticas.setLayout(new FlowLayout());
         panelBotonesEstadisticas.add(labelID);
@@ -165,6 +180,7 @@ public class VistaRanking {
         panelBotonesEstadisticas.add(textoNickname);
         panelBotonesEstadisticas.add(buttonBuscarEstadisticas);
         panelBotonesEstadisticas.add(buttonLimpiarEstadisticas);
+
         panelEstadisticas.setLayout(new BorderLayout());
         panelEstadisticas.add(labelInfoRanking2,BorderLayout.NORTH);
         panelEstadisticas.add(panelBotonesEstadisticas,BorderLayout.EAST);
@@ -172,6 +188,29 @@ public class VistaRanking {
         limpiar_estadisticas();
         tablaEstadisticas.repaint();
         panelEstadisticas.add(tablaEstadisticas,BorderLayout.SOUTH);
+
+        //logros
+        panelLogros.setLayout(new BoxLayout(panelLogros,BoxLayout.PAGE_AXIS));
+        JPanel panelAux = new JPanel();
+        panelAux.setLayout(new FlowLayout());
+        panelAux.add(labelPartidaCorta);
+        panelAux.add(textoPartidaCorta);
+        panelLogros.add(panelAux);
+        panelAux = new JPanel();
+        panelAux.setLayout(new FlowLayout());
+        panelAux.add(labelPartidasTotales);
+        panelAux.add(textoPartidaTotal);
+        panelLogros.add(panelAux);
+        panelAux = new JPanel();
+        panelAux.setLayout(new FlowLayout());
+        panelAux.add(labelPartidasGanadas);
+        panelAux.add(textoPartidaGanadas);
+        panelLogros.add(panelAux);
+        panelAux = new JPanel();
+        panelAux.setLayout(new FlowLayout());
+        panelAux.add(labelPartidasPerdidas);
+        panelAux.add(textoPartidaPerdidas);
+        panelLogros.add(panelAux);
 
         //PANEL INFO
         panelActivo = panelRanking;
@@ -187,7 +226,27 @@ public class VistaRanking {
 
 
     /////////// LISTENERS (+ su asignacion)
+    /**
+     * Metodo cargar_logros (guarda la informacion de los logros en los TextFields assignados por estos)
+     * * */
+    private void cargar_logros() {
+        ArrayList<String> as = iCtrlPresentacion.presentacion_consultar_logros();
+        if (as.size() == 4) {
+            textoPartidaCorta.setText(as.get(0));
+            textoPartidaCorta.setEditable(false);
 
+            textoPartidaTotal.setText(as.get(1));
+            textoPartidaTotal.setEditable(false);
+
+            textoPartidaGanadas.setText(as.get(2));
+            textoPartidaGanadas.setEditable(false);
+
+            textoPartidaPerdidas.setText(as.get(1));
+            textoPartidaPerdidas.setEditable(false);
+
+        }
+
+    }
 
     //CONSULTAR RANKING
 
@@ -302,6 +361,21 @@ public class VistaRanking {
     }
 
     /**
+     * Metodo actionPerfomed del boton de Consultar Logros
+     * * */
+    public void actionPerformed_buttonConsultarLogros(ActionEvent event) {
+        panelInfo.remove(panelActivo);
+        if (iPanelActivo != 3) {
+            iPanelActivo = 3;
+            panelActivo = panelLogros;
+            cargar_logros();
+        }
+        panelInfo.add(panelActivo);
+        frameVista.pack();
+        frameVista.repaint();
+    }
+
+    /**
      * Metodo actionPerfomed del boton de Buscar Estadisticas
      * * */
     public void actionPerformed_buttonBuscarEstadisticas (ActionEvent event) {
@@ -386,6 +460,9 @@ public class VistaRanking {
         buttonConsultarEstadisticas.addActionListener
                 (this::actionPerformed_buttonConsultarEstadisticas);
 
+        buttonConsultarLogros.addActionListener
+                (this::actionPerformed_buttonConsultarLogros);
+
         buttonLimpiarEstadisticas.addActionListener
                 (this::actionPerformed_buttonLimpiarEstadisticas);
 
@@ -398,6 +475,9 @@ public class VistaRanking {
         menuItem_consultar_estadisticas.addActionListener
                 (this::actionPerformed_buttonConsultarEstadisticas);
 
+        menuItem_consultar_logros.addActionListener
+                (this::actionPerformed_buttonConsultarLogros);
+
         buttonVolverMenu.addActionListener (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
 
         buttonOrdenar.addActionListener
@@ -405,16 +485,4 @@ public class VistaRanking {
 
     }
 
-
-    /////////// MAIN (para poder probar)
-
-    /*public static void main (String[] args) {
-        javax.swing.SwingUtilities.invokeLater (
-                new Runnable() {
-                    public void run() {
-                        CtrlPresentacion ctrlPresentacion = new CtrlPresentacion();
-                        ctrlPresentacion.inicializarPresentacion();
-                        new VistaRanking(ctrlPresentacion).hacerVisible(true);
-                    }});
-    }*/
 }

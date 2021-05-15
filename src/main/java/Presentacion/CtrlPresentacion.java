@@ -2,7 +2,6 @@ package Presentacion;
 
 import Dominio.CtrlDominio;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -121,7 +120,7 @@ public class CtrlPresentacion {
      * Metodo exportar ranking (desde Capa Presentacion)
      * */
     public void presentacion_exportar_ranking() {
-        ctrlDominio.domino_exportar_ranking();
+        try {ctrlDominio.domino_exportar_ranking();} catch (Exception e) {}
     }
 
     /**
@@ -135,6 +134,13 @@ public class CtrlPresentacion {
         return ctrlDominio.consultar_estadisticas(id,nick);
     }
 
+    /**
+     * Metodo presentacion_consultar_logros
+     * @return devuelve en un ArrayList de String la informacion de los logros al completo
+     * */
+    public ArrayList<String> presentacion_consultar_logros() {
+        return ctrlDominio.consultar_logros();
+    }
 
     /**
      * Metodo consultar ranking (desde Capa Presentacion)

@@ -45,8 +45,8 @@ public class VistaMenu {
     private final JButton buttonBorrarTablero = new JButton("Borrar");
 
     private final JPanel panelMenuRanking= new JPanel();
-    private final JLabel labelRanking = new JLabel("Ranking");
-    private final JButton buttonConsultarRanking = new JButton("Consultar Ranking");
+    private final JLabel labelRanking = new JLabel("Ranking / Logros");
+    private final JButton buttonConsultarRanking = new JButton("Consultar Ranking / Logros");
 
     private final JPanel panelOtrasOpciones= new JPanel();
     private final JLabel labelOtros = new JLabel("Otras opciones");
@@ -227,15 +227,4 @@ public class VistaMenu {
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.RANKING));
 
     }
-
-    /////////// MAIN (para poder probar)
-    /*public static void main (String[] args) {
-        javax.swing.SwingUtilities.invokeLater (
-                new Runnable() {
-                    public void run() {
-                        CtrlPresentacion ctrlPresentacion = new CtrlPresentacion();
-                        ctrlPresentacion.inicializarPresentacion();
-                        new VistaMenu(ctrlPresentacion).hacerVisible(true);
-                    }});
-    }*/
 }

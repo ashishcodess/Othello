@@ -35,11 +35,6 @@ public class CtrlPersitencia {
         this.dir_ranking =  this.dirIni + "ranking/";
         this.dir_tablero =  this.dirIni + "tableros/";
 
-
-        /*this.cPartidas = new IOPartidas(this.path_partidas);
-        this.cRanking = new IORanking(this.path_ranking);
-        this.cUsuario = new IOUsuario(this.path_users);
-        this.cTablero = new IOTablero(this.path_tableros);*/
         InicializarDirPersitencia();
         calcular_IDs_maximos();
     }
@@ -53,11 +48,6 @@ public class CtrlPersitencia {
         this.dir_ranking =  this.dirIni + "ranking/";
         this.dir_tablero =  this.dirIni + "tableros/";
 
-        /*
-        this.cPartidas = new IOPartidas(dir_partidas);
-        this.cRanking = new IORanking(dir_ranking);
-        this.cUsuario = new IOUsuario(dir_usuarios);
-        this.cTablero = new IOTablero(dir_tablero);*/
         InicializarDirPersitencia();
         calcular_IDs_maximos();
     }
@@ -116,7 +106,6 @@ public class CtrlPersitencia {
      * @return devuelve el modo de la partida con igual a idPartida, caso contrario (no existe partida) devuelve -1
      */
     public int ctrl_leer_modo_partida(int idPartida) throws IOException {
-        //return cPartidas.leer_modo_partida(idPartida);
         int modo = -1;
         String s_fichero = dir_partidas +idPartida + ".txt";
         ArrayList<String> as = io.leerFichero(s_fichero);
@@ -362,31 +351,79 @@ public class CtrlPersitencia {
      * @return devuelve el Ranking ubicado en el fichero apuntado por s,caso de no existir devuelve excepcion
      */
     public Ranking ctrl_importar_ranking(String s) throws MyException, IOException {
-            String pathF = dir_ranking + s;
-            ArrayList<String> as = io.leerFichero(pathF);
-            Ranking rank = new Ranking();
-            int tam = as.size(); //modificar el bucle cuando tengamos o de los records
-            int i;
-            for (i=0; i<tam; ++i) {
-                String[] s2 = as.get(i).split(" ");
-                int id, ganadas, perdidas,empatadas;
-                String nick;
-                if (s2.length == 6) {
-                    id = Integer.parseInt(s2[0]);
-                    nick = s2[1];
-                    ganadas = Integer.parseInt(s2[2]);
-                    perdidas = Integer.parseInt(s2[3]);
-                    empatadas = Integer.parseInt(s2[4]);
-                    //total = Integer.parseInt(s2[5]);
-                    ElementoRanking e = new ElementoRanking(id,nick,ganadas,perdidas,empatadas);
-                    //ElementoRanking e = new ElementoRanking(id,nick,ganadas,perdidas,empatadas,total);
-                    rank.add_al_ranking(e);
-                }
+        String pathF = dir_ranking + s;
+        ArrayList<String> as = io.leerFichero(pathF);
+        Ranking rank = new Ranking();
+        int tam = as.size();
+        int i;
+        //logros
+        for (i = 0; i < 5; ++i) {
+            String sAux = as.get(i);
+            String[] s2 = sAux.split(" ");
+            int t, id1, id2;
+            String nick1 = "";
+            String nick2 = "";
+            switch (i) {
+                case 0: //partida mas corta
+                    t = Integer.parseInt(s2[0]);
+                    id1 = Integer.parseInt(s2[1]);
+                    if (id1 < 6) { //es una maquina //s2.length==4
+                        id2 = Integer.parseInt(s2[2]);
+                        nick2 = s2[3];
+                    }
+                    else {
+                        nick1 = s2[2];
+                        id2 = Integer.parseInt(s2[3]);
+                        if (id2 > 6) nick2 = s2[4];
+                    }
+                    rank.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,nick1,id1,nick2,id2,t);
+                    break;
+                case 1: //mas capturas (sin implementar)
+                    break;
+                case 2: //Total partidas
+                    if (s2.length == 3) {
+                        t = Integer.parseInt(s2[0]);
+                        id1 = Integer.parseInt(s2[1]);
+                        nick1 = s2[2];
+                        rank.cambiar_logro_jugador(Logros.tipoLogro.PARTIDAS_TOTALES,nick1,id1,t);
+                    }
+                    break;
+                case 3: //Ganadas
+                    if (s2.length == 3) {
+                        t = Integer.parseInt(s2[0]);
+                        id1 = Integer.parseInt(s2[1]);
+                        nick1 = s2[2];
+                        rank.cambiar_logro_jugador(Logros.tipoLogro.PARTIDAS_GANADAS,nick1,id1,t);
+                    }
+                    break;
+                case 4: //Perdidas
+                    if (s2.length == 3) {
+                        t = Integer.parseInt(s2[0]);
+                        id1 = Integer.parseInt(s2[1]);
+                        nick1 = s2[2];
+                        rank.cambiar_logro_jugador(Logros.tipoLogro.PARTIDAS_PERDIDAS,nick1,id1,t);
+                    }
+                    break;
             }
-            return rank;
+
+        }
+        //ranking
+        for (i=5; i<tam; ++i) {
+            String[] s2 = as.get(i).split(" ");
+            int id, ganadas, perdidas,empatadas;
+            String nick;
+            if (s2.length == 6) {
+                id = Integer.parseInt(s2[0]);
+                nick = s2[1];
+                ganadas = Integer.parseInt(s2[2]);
+                perdidas = Integer.parseInt(s2[3]);
+                empatadas = Integer.parseInt(s2[4]);
+                ElementoRanking e = new ElementoRanking(id,nick,ganadas,perdidas,empatadas);
+                rank.add_al_ranking(e);
+            }
+        }
+        return rank;
     }
-
-
 
 
     /**
