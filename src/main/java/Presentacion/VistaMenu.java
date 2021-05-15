@@ -208,10 +208,7 @@ public class VistaMenu {
                 });
 
         buttonCrearPartida.addActionListener
-                (event -> {
-                    iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);
-                    System.exit(0);
-                });
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO));
 
 
         menuitemLogin.addActionListener
