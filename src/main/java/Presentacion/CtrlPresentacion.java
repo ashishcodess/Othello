@@ -5,7 +5,7 @@ import Dominio.CtrlDominio;
 import java.util.ArrayList;
 import java.util.Collections;
 
-enum vistaActiva{LOGIN, MENU, RANKING, CREDITOS, TABLERO} //agregar en funcion de las necesidades
+enum vistaActiva{LOGIN, MENU, RANKING, CREDITOS, TABLERO, PRUEBA} //agregar en funcion de las necesidades
 
 public class CtrlPresentacion {
 
@@ -16,6 +16,8 @@ public class CtrlPresentacion {
     private final VistaMenu vistaMenu;
     private final VistaCreditos vistaCreditos;
     private final VistaTablero vistaTablero;
+
+    private final VistaPrueba vistaPrueba;
 
     /**
      * Creadora por defecto de CtrlPresentacion
@@ -29,6 +31,8 @@ public class CtrlPresentacion {
         //vistaPartida = new VistaPartida(this);
         vistaCreditos = new VistaCreditos(this);
         vistaTablero  = new VistaTablero(this);
+
+        vistaPrueba = new VistaPrueba(this);
     }
 
     /**
@@ -86,6 +90,14 @@ public class CtrlPresentacion {
                 vistaCreditos.hacerVisible(false);
                 vistaTablero.hacerVisible(true);
                 break;
+
+            case PRUEBA:
+                vistaPrueba.hacerVisible(true);
+                vistaLogin.hacerVisible(false);
+                vistaMenu.hacerVisible(false);
+                vistaRanking.hacerVisible(false);
+                vistaCreditos.hacerVisible(false);
+                vistaTablero.hacerVisible(false);
         }
     }
 
