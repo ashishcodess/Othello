@@ -134,7 +134,7 @@ public class Ranking {
                 if (id2 > 5) incrementar_partida(id2,nick2,tipoGanador.GANA);
                 break;
         }
-        comprueba_logros_jugadores(nick1,id1,nick2,id2);
+        compruebaModifica_logros_jugadores(nick1,id1,nick2,id2);
     }
 
     /**
@@ -283,8 +283,6 @@ public class Ranking {
      * Comprobar logro jugadores
      * @param tipo tipo de Logro de jugadores a comprobar (PARTIDAS_TOTALES, PARTIDAS_GANADAS, PARTIDAS_PERDIDAS)
      * @param t entero a comprobar la condicion
-     * @return devuelve TRUE en caso de que se cumpla la condicion de que el entero pasado por parametro sea mayor
-     * al que hay almacenado
      * */
     public void cambiar_logro_jugador(Logros.tipoLogro tipo, String nick1, int id1, int t) {
         log.cambiar_logro_jugador(tipo,nick1,id1,t);
@@ -378,13 +376,13 @@ public class Ranking {
     }
 
     /**
-     * Comprueba los logros de partidas totales, ganadas y perdidas y modifica en caso de ser necesario
+     * Comprueba y modifica (en caso de ser necesario) los logros de partidas totales, ganadas y perdidas
      * @param nick1 nickname del Jugador1 (en caso de que tenga nickname)
      * @param id1 identificador del Jugador1
      * @param nick2 nickname del Jugador2 (en caso de que tenga nickname)
      * @param id2 identificador del Jugador2
      * */
-    private void comprueba_logros_jugadores(String nick1, int id1, String nick2, int id2) {
+    private void compruebaModifica_logros_jugadores(String nick1, int id1, String nick2, int id2) {
         int i = existe_en_ranking(id1,nick1);
         if (i != -1) { //Jugador1
             ElementoRanking e_aux = consultar_elemento_i(i);

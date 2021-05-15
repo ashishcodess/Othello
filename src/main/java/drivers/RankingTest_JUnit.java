@@ -1,6 +1,7 @@
 package drivers;
 
 import Dominio.ElementoRanking;
+import Dominio.Logros;
 import Dominio.Ranking;
 import MyException.MyException;
 
@@ -70,8 +71,6 @@ public class RankingTest_JUnit {
 
     //Tests sobre Ranking
 
-
-
     @Test
     public void test_agregarAlRanking_e_incrementar_partida() throws MyException {
         rank.add_al_ranking(e1);
@@ -131,8 +130,6 @@ public class RankingTest_JUnit {
         }
     }
 
-
-
     @Test
     public void test_ordenarNickname() {
         rank2.ordenar_ranking(2);
@@ -141,5 +138,75 @@ public class RankingTest_JUnit {
             assertEquals(resultados[i],rank.consultar_info_elemento_i(i));
         }
     }
+
+    //Test de los logros
+
+    @Test
+    public void test_cambiar_logro_partidaMasCorta_y_consultar_logro() {
+        rank2.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,"a",6,"b",7,40);
+        String s = rank2.consultar_logro(Logros.tipoLogro.PARTIDA_CORTA);
+        assertEquals("40 6 a 7 b",s);
+    }
+
+    @Test
+    public void test_cambiar_logro_partidasTOTALES_y_consultar_logro() {
+        rank2.cambiar_logro_jugador(Logros.tipoLogro.PARTIDAS_TOTALES,"a",6,8);
+        String s = rank2.consultar_logro(Logros.tipoLogro.PARTIDAS_TOTALES);
+        assertEquals("8 6 a",s);
+    }
+
+    @Test
+    public void test_cambiar_logro_partidasGanadas_y_consultar_logro() {
+        rank2.cambiar_logro_jugador(Logros.tipoLogro.PARTIDAS_GANADAS,"b",7,12);
+        String s = rank2.consultar_logro(Logros.tipoLogro.PARTIDAS_GANADAS);
+        assertEquals("12 7 b",s);
+    }
+    @Test
+    public void test_cambiar_logro_partidasPerdidas_y_consultar_logro() {
+        rank2.cambiar_logro_jugador(Logros.tipoLogro.PARTIDAS_PERDIDAS,"b",7,4);
+        String s = rank2.consultar_logro(Logros.tipoLogro.PARTIDAS_PERDIDAS);
+        assertEquals("4 7 b",s);
+    }
+
+    @Test
+    public void test_comprobarCondicionLogro_PARTIDAS() {
+        rank2.cambiar_logro_jugador(Logros.tipoLogro.PARTIDAS_GANADAS,"b",7,12);
+        boolean b1 = rank2.comprobar_logro(Logros.tipoLogro.PARTIDAS_GANADAS,13); //deberia dar cierto (13 > 12)
+        boolean b2 = rank2.comprobar_logro(Logros.tipoLogro.PARTIDAS_GANADAS,10); //deberia dar falso (10 < 12)
+        boolean res = b1 && !b2;
+        assertTrue(res);
+
+        rank2.cambiar_logro_jugador(Logros.tipoLogro.PARTIDAS_TOTALES, "b", 7, 6);
+        b1 = rank2.comprobar_logro(Logros.tipoLogro.PARTIDAS_TOTALES,13); //deberia dar cierto (13 > 6)
+        b2 = rank2.comprobar_logro(Logros.tipoLogro.PARTIDAS_TOTALES,3); //deberia dar falso (3 < 6)
+        res = b1 && !b2;
+        assertTrue(res);
+
+        rank2.cambiar_logro_jugador(Logros.tipoLogro.PARTIDAS_PERDIDAS, "b", 7, 15);
+        b1 = rank2.comprobar_logro(Logros.tipoLogro.PARTIDAS_PERDIDAS,16); //deberia dar cierto (16 > 15)
+        b2 = rank2.comprobar_logro(Logros.tipoLogro.PARTIDAS_PERDIDAS,14); //deberia dar falso (14 < 15)
+        res = b1 && !b2;
+        assertTrue(res);
+
+
+        rank2.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,"a",6,"b",7,45);
+        b1 = rank2.comprobar_logro(Logros.tipoLogro.PARTIDA_CORTA,16); //deberia dar cierto (16 < 45)
+        b2 = rank2.comprobar_logro(Logros.tipoLogro.PARTIDA_CORTA,45); //deberia dar falso (53 > 45)
+        res = b1 && !b2;
+        assertTrue(res);
+
+    }
+
+    @Test
+    public void test_Incrementar_partidas_Y_comprobar_logros_actualizados() throws MyException{
+        rank2.incrementar_ganadas_perdidas(6,"a",7,"b", Ranking.tipoGanador.GANA_J2);
+        String s = rank2.consultar_logro(Logros.tipoLogro.PARTIDAS_GANADAS);
+        assertEquals("3 7 b",s);
+        s = rank2.consultar_logro(Logros.tipoLogro.PARTIDAS_TOTALES);
+        assertEquals("4 7 b",s);
+        s = rank2.consultar_logro(Logros.tipoLogro.PARTIDAS_PERDIDAS);
+        assertEquals("1 6 a",s);
+    }
+
 
 }
