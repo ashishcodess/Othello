@@ -18,6 +18,15 @@ public class VistaPrueba {
     private String imagen_blanca = "./src/files/fichas/blanca.png";
     private String imagen_negra = "./src/files/fichas/negra.png";
 
+    private JButton bPrueba1 = new JButton("prueba1");
+    private JButton bPrueba2 = new JButton("prueba2");
+    private JPanel panelBotones = new JPanel();
+    private JTextArea textPrueba = new JTextArea();
+
+    private final JMenuBar menubarVista = new JMenuBar();
+    private final JMenu menuFile = new JMenu("File");
+    private final JMenuItem menuitemQuit = new JMenuItem("Salir");
+
     private int prueba_switch_imagen = 0;
 
     private String getImagen() {
@@ -53,10 +62,17 @@ public class VistaPrueba {
         inicializar_frameVista();
         inicializar_Componentes();
         asignar_listenersComponentes();
+        inicializar_menubarVista();
+    }
+
+    private void inicializar_menubarVista() {
+        menubarVista.add(menuFile);
+        menuFile.add(menuitemQuit);
+        frameVista.setJMenuBar(menubarVista);
     }
 
     private void inicializar_frameVista() {
-        frameVista.setMinimumSize(new Dimension(1000,1000));
+        frameVista.setMinimumSize(new Dimension(900,800));
         frameVista.setPreferredSize(frameVista.getMinimumSize());
         frameVista.setResizable(false);
         frameVista.setLocationRelativeTo(null);
@@ -81,9 +97,13 @@ public class VistaPrueba {
             }
         }
 
-        panelPrincipal.setLayout(new FlowLayout());
-        panelPrincipal.add(tablero);
+        panelBotones.setLayout(new FlowLayout());
+        panelBotones.add(bPrueba1);
+        panelBotones.add(bPrueba2);
 
+        panelPrincipal.setLayout(new BorderLayout());
+        panelPrincipal.add(tablero,BorderLayout.CENTER);
+        panelPrincipal.add(panelBotones,BorderLayout.EAST);
     }
 
     public void hacerVisible(boolean b) {
