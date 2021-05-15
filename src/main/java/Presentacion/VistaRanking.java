@@ -23,7 +23,8 @@ public class VistaRanking {
     private JPanel panelActivo = new JPanel();
     private final JPanel panelBotonesGeneral = new JPanel();
     private final JButton buttonConsultarRanking = new JButton("Consultar todo el Ranking");
-    private final JButton buttonConsultarEstadisticas = new JButton("Consultar Logros /Consultar estadisticas");
+    private final JButton buttonConsultarEstadisticas = new JButton("Consultar estadisticas (1 jugador)");
+    private final JButton buttonConsultarLogros = new JButton("Consultar logros");
     private final JLabel labelInfoRanking = new JLabel("Informacion del ranking (ID, nickname, Ganadas, Perdidas,Empatadas, Totales)"); //borrar al final
     private final JLabel labelInfoRanking2 = new JLabel("Informacion del ranking (ID, nickname, Ganadas, Perdidas,Empatadas, Totales)"); //borrar al final
 
@@ -41,6 +42,8 @@ public class VistaRanking {
 
 
     //COMPONENTES ESTADISTICAS / LOGROS
+    private final JPanel panelEstadisticas1 = new JPanel();
+
     private final JPanel panelEstadisticas = new JPanel();
     private final JPanel panelBotonesEstadisticas = new JPanel();
     private final JLabel labelID= new JLabel("ID:");
@@ -51,8 +54,15 @@ public class VistaRanking {
     private final JButton buttonLimpiarEstadisticas= new JButton("Limpiar");
     private JTable tablaEstadisticas = new JTable();
 
-
-
+    private final JPanel panelLogros = new JPanel();
+    private final JLabel labelPartidaCorta= new JLabel("Partida mas corta(turnos):");
+    private final JTextField textoPartidaCorta = new JTextField(3);
+    private final JLabel labelPartidasTotales= new JLabel("Jugador con mas partidas (total):");
+    private final JTextField textoPartidaTotal= new JTextField(3);
+    private final JLabel labelPartidasGanadas= new JLabel("Jugador con mas partidas (ganadas):");
+    private final JTextField textoPartidaGanadas = new JTextField(3);
+    private final JLabel labelPartidasPerdidas= new JLabel("Jugador con mas partidas (perdidas:");
+    private final JTextField textoPartidaPerdidas = new JTextField(3);
 
     //BARRA DE MENU
     private final JMenuBar menubarVista = new JMenuBar();
@@ -131,9 +141,11 @@ public class VistaRanking {
         panelBotonesGeneral.setLayout(new FlowLayout());
         panelBotonesGeneral.add(buttonConsultarRanking);
         panelBotonesGeneral.add(buttonConsultarEstadisticas);
+        panelBotonesGeneral.add(buttonConsultarLogros);
         panelBotonesGeneral.add(buttonVolverMenu);
         buttonConsultarRanking.setToolTipText("Consulta todo el ranking");
-        buttonConsultarEstadisticas.setToolTipText("Consultar logros o Consulta las estadisticas de un Jugador en concreto");
+        buttonConsultarEstadisticas.setToolTipText("Consulta las estadisticas de un Jugador en concreto");
+        buttonConsultarLogros.setToolTipText("Consultar los logros");
         buttonVolverMenu.setToolTipText("Volver al menu principal");
 
         //PANEL RANKING
@@ -160,6 +172,7 @@ public class VistaRanking {
         buttonLimpiarRanking.setToolTipText("Hace un clear del TextArea");
         buttonOrdenar.setToolTipText("Ordena la salida en funcion de: ID, partidas ganadas o Nickname");
 
+
         //PANEL ESTADISTICAS
         panelBotonesEstadisticas.setLayout(new FlowLayout());
         panelBotonesEstadisticas.add(labelID);
@@ -168,13 +181,50 @@ public class VistaRanking {
         panelBotonesEstadisticas.add(textoNickname);
         panelBotonesEstadisticas.add(buttonBuscarEstadisticas);
         panelBotonesEstadisticas.add(buttonLimpiarEstadisticas);
-        panelEstadisticas.setLayout(new BorderLayout());
+
+        /*panelEstadisticas.setLayout(new BorderLayout());
         panelEstadisticas.add(labelInfoRanking2,BorderLayout.NORTH);
         panelEstadisticas.add(panelBotonesEstadisticas,BorderLayout.EAST);
         tablaEstadisticas.setFillsViewportHeight(true);
         limpiar_estadisticas();
         tablaEstadisticas.repaint();
         panelEstadisticas.add(tablaEstadisticas,BorderLayout.SOUTH);
+        //panelEstadisticas.add(panelLogros,BorderLayout.SOUTH);*/
+
+
+        panelEstadisticas1.setLayout(new BorderLayout());
+        panelEstadisticas1.add(labelInfoRanking2,BorderLayout.NORTH);
+        panelEstadisticas1.add(panelBotonesEstadisticas,BorderLayout.EAST);
+        tablaEstadisticas.setFillsViewportHeight(true);
+        limpiar_estadisticas();
+        tablaEstadisticas.repaint();
+        panelEstadisticas1.add(tablaEstadisticas,BorderLayout.SOUTH);
+
+
+        panelEstadisticas.add(panelEstadisticas1,BorderLayout.NORTH);
+
+        //logros
+        panelLogros.setLayout(new BoxLayout(panelLogros,BoxLayout.PAGE_AXIS));
+        JPanel panelAux = new JPanel();
+        panelAux.setLayout(new FlowLayout());
+        panelAux.add(labelPartidaCorta);
+        panelAux.add(textoPartidaCorta);
+        panelLogros.add(panelAux);
+        panelAux = new JPanel();
+        panelAux.setLayout(new FlowLayout());
+        panelAux.add(labelPartidasTotales);
+        panelAux.add(textoPartidaTotal);
+        panelLogros.add(panelAux);
+        panelAux = new JPanel();
+        panelAux.setLayout(new FlowLayout());
+        panelAux.add(labelPartidasGanadas);
+        panelAux.add(textoPartidaGanadas);
+        panelLogros.add(panelAux);
+        panelAux = new JPanel();
+        panelAux.setLayout(new FlowLayout());
+        panelAux.add(labelPartidasPerdidas);
+        panelAux.add(textoPartidaPerdidas);
+        panelLogros.add(panelAux);
 
         //PANEL INFO
         panelActivo = panelRanking;
@@ -304,6 +354,17 @@ public class VistaRanking {
         frameVista.repaint();
     }
 
+    public void actionPerformed_buttonConsultarLogros(ActionEvent event) {
+        panelInfo.remove(panelActivo);
+        if (iPanelActivo != 3) {
+            iPanelActivo = 3;
+            panelActivo = panelLogros;
+        }
+        panelInfo.add(panelActivo);
+        frameVista.pack();
+        frameVista.repaint();
+    }
+
     /**
      * Metodo actionPerfomed del boton de Buscar Estadisticas
      * * */
@@ -388,6 +449,9 @@ public class VistaRanking {
 
         buttonConsultarEstadisticas.addActionListener
                 (this::actionPerformed_buttonConsultarEstadisticas);
+
+        buttonConsultarLogros.addActionListener
+                (this::actionPerformed_buttonConsultarLogros);
 
         buttonLimpiarEstadisticas.addActionListener
                 (this::actionPerformed_buttonLimpiarEstadisticas);
