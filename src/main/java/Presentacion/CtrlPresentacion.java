@@ -124,6 +124,10 @@ public class CtrlPresentacion {
     }
 
 
+    public ArrayList<String> presentacion_consultar_logros() {
+        return ctrlDominio.consultar_logros();
+    }
+
     /**
      * Metodo consultar ranking (desde Capa Presentacion)
      * @return devuelve en un ArrayList de String la informacion el ranking al completo

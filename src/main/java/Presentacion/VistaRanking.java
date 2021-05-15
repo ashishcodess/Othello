@@ -36,14 +36,11 @@ public class VistaRanking {
     private final JPanel panelBotonesRanking = new JPanel();
     private final JButton buttonCargarRanking = new JButton("Cargar Ranking");
     private final JButton buttonLimpiarRanking= new JButton("Limpiar Ranking");
-    //Opcion desplegable con3 opciones de ordenar: ID, Partidas Ganadas y Nickname
     private final JComboBox comboBoxOrdenar = new JComboBox();
     private final JButton buttonOrdenar = new JButton("Ordenar");
 
 
     //COMPONENTES ESTADISTICAS / LOGROS
-    private final JPanel panelEstadisticas1 = new JPanel();
-
     private final JPanel panelEstadisticas = new JPanel();
     private final JPanel panelBotonesEstadisticas = new JPanel();
     private final JLabel labelID= new JLabel("ID:");
@@ -56,13 +53,13 @@ public class VistaRanking {
 
     private final JPanel panelLogros = new JPanel();
     private final JLabel labelPartidaCorta= new JLabel("Partida mas corta(turnos):");
-    private final JTextField textoPartidaCorta = new JTextField(3);
+    private final JTextField textoPartidaCorta = new JTextField(35);
     private final JLabel labelPartidasTotales= new JLabel("Jugador con mas partidas (total):");
-    private final JTextField textoPartidaTotal= new JTextField(3);
+    private final JTextField textoPartidaTotal= new JTextField(25);
     private final JLabel labelPartidasGanadas= new JLabel("Jugador con mas partidas (ganadas):");
-    private final JTextField textoPartidaGanadas = new JTextField(3);
+    private final JTextField textoPartidaGanadas = new JTextField(25);
     private final JLabel labelPartidasPerdidas= new JLabel("Jugador con mas partidas (perdidas:");
-    private final JTextField textoPartidaPerdidas = new JTextField(3);
+    private final JTextField textoPartidaPerdidas = new JTextField(25);
 
     //BARRA DE MENU
     private final JMenuBar menubarVista = new JMenuBar();
@@ -72,6 +69,7 @@ public class VistaRanking {
     private final JMenu menuRanking = new JMenu("Ranking");
     private final JMenuItem menuItem_consultar_ranking = new JMenuItem("Consultar Ranking");
     private final JMenuItem menuItem_consultar_estadisticas = new JMenuItem("Consultar Estadisticas");
+    private final JMenuItem menuItem_consultar_logros = new JMenuItem("Consultar Logros");
 
 
     /**
@@ -127,6 +125,7 @@ public class VistaRanking {
         menuFile.add(menuitemQuit);
         menuRanking.add(menuItem_consultar_ranking);
         menuRanking.add(menuItem_consultar_estadisticas);
+        menuRanking.add(menuItem_consultar_logros);
         menubarVista.add(menuFile);
         menubarVista.add(menuRanking);
         frameVista.setJMenuBar(menubarVista);
@@ -182,26 +181,13 @@ public class VistaRanking {
         panelBotonesEstadisticas.add(buttonBuscarEstadisticas);
         panelBotonesEstadisticas.add(buttonLimpiarEstadisticas);
 
-        /*panelEstadisticas.setLayout(new BorderLayout());
+        panelEstadisticas.setLayout(new BorderLayout());
         panelEstadisticas.add(labelInfoRanking2,BorderLayout.NORTH);
         panelEstadisticas.add(panelBotonesEstadisticas,BorderLayout.EAST);
         tablaEstadisticas.setFillsViewportHeight(true);
         limpiar_estadisticas();
         tablaEstadisticas.repaint();
         panelEstadisticas.add(tablaEstadisticas,BorderLayout.SOUTH);
-        //panelEstadisticas.add(panelLogros,BorderLayout.SOUTH);*/
-
-
-        panelEstadisticas1.setLayout(new BorderLayout());
-        panelEstadisticas1.add(labelInfoRanking2,BorderLayout.NORTH);
-        panelEstadisticas1.add(panelBotonesEstadisticas,BorderLayout.EAST);
-        tablaEstadisticas.setFillsViewportHeight(true);
-        limpiar_estadisticas();
-        tablaEstadisticas.repaint();
-        panelEstadisticas1.add(tablaEstadisticas,BorderLayout.SOUTH);
-
-
-        panelEstadisticas.add(panelEstadisticas1,BorderLayout.NORTH);
 
         //logros
         panelLogros.setLayout(new BoxLayout(panelLogros,BoxLayout.PAGE_AXIS));
@@ -241,6 +227,24 @@ public class VistaRanking {
 
     /////////// LISTENERS (+ su asignacion)
 
+    private void cargar_logros() {
+        ArrayList<String> as = iCtrlPresentacion.presentacion_consultar_logros();
+        if (as.size() == 4) {
+            textoPartidaCorta.setText(as.get(0));
+            textoPartidaCorta.setEditable(false);
+
+            textoPartidaTotal.setText(as.get(1));
+            textoPartidaTotal.setEditable(false);
+
+            textoPartidaGanadas.setText(as.get(2));
+            textoPartidaGanadas.setEditable(false);
+
+            textoPartidaPerdidas.setText(as.get(1));
+            textoPartidaPerdidas.setEditable(false);
+
+        }
+
+    }
 
     //CONSULTAR RANKING
 
@@ -359,6 +363,7 @@ public class VistaRanking {
         if (iPanelActivo != 3) {
             iPanelActivo = 3;
             panelActivo = panelLogros;
+            cargar_logros();
         }
         panelInfo.add(panelActivo);
         frameVista.pack();
@@ -464,6 +469,9 @@ public class VistaRanking {
 
         menuItem_consultar_estadisticas.addActionListener
                 (this::actionPerformed_buttonConsultarEstadisticas);
+
+        menuItem_consultar_logros.addActionListener
+                (this::actionPerformed_buttonConsultarLogros);
 
         buttonVolverMenu.addActionListener (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
 

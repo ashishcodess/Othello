@@ -90,12 +90,10 @@ public class Logros {
 
     public String consultar_partida_corta() {
         return (turnos_logro + " " + id1_logro + " " + nick1_logro + " " + id2_logro + " " + nick2_logro);
-        //return ("Turnos: " + turnos_logro + " , logrado en Partida con jugadores J1[" + id1_logro + " , " + nick1_logro + "] - J2[" + id2_logro + " , " + nick2_logro + "]");
     }
 
     public String consultar_max_capturas() {
         return (capturas+ " " + id1_captura + " " + nick1_captura + " " + id2_captura + " " + nick2_captura);
-        //return ("Capturas: " + capturas + " , logrado en Partida con jugadores J1[" + id1_captura + " , " + nick1_captura + "] - J2[" + id2_captura + " , " + nick2_captura + "]");
     }
 
 
@@ -141,19 +139,15 @@ public class Logros {
 
     public String consultar_jugador_Totales() {
         return (partidas_totales + " " + id_j_totales + " " + j_total);
-        //return ("Partidas totales: " + partidas_totales + " , jugador [" + id_j_totales + " , " + j_total + "]");
     }
 
     public String consultar_jugador_Ganadas() {
         return (partidas_ganadas + " " + id_j_ganadas + " " + j_ganadas);
-        //return ("Partidas Ganadas: " + partidas_ganadas + " , jugador [" + id_j_ganadas + " , " + j_ganadas + "]");
     }
 
     public String consultar_jugador_perdidas() {
         return (partidas_perdidas + " " + id_j_perdida + " " + j_perdida);
-        //return ("Partidas Perdidas: " + partidas_perdidas + " , jugador [" + id_j_perdida + " , " + j_perdida + "]");
     }
-
 
 }
 

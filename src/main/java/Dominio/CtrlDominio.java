@@ -101,6 +101,28 @@ public class CtrlDominio {
         return res;
     }
 
+    public ArrayList<String> consultar_logros() {
+        ArrayList<String> as = new ArrayList<>();
+        String[] sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDA_CORTA)).split(" ");
+        String s = "";
+        if (sAux.length == 5) s = ("Turnos: " + sAux[0] + " , logrado en Partida con jugadores J1[" + sAux[1] + " , " + sAux[2] + "] - J2[" + sAux[3] + " , " + sAux[4] + "]");
+        as.add(s);
+
+        sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDAS_TOTALES)).split(" ");
+        if (sAux.length == 3) s = ("Partidas totales: " + sAux[0] + " , jugador [" + sAux[1] + " , " + sAux[2] + "]");
+        as.add(s);
+
+        sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDAS_GANADAS)).split(" ");
+        if (sAux.length == 3) s = ("Partidas Ganadas: " + sAux[0] + " , jugador [" + sAux[1] + " , " + sAux[2] + "]");
+        as.add(s);
+
+        sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDAS_PERDIDAS)).split(" ");
+        if (sAux.length == 3) s = ("Partidas Perdidas: " + sAux[0] + " , jugador [" + sAux[1] + " , " + sAux[2] + "]");
+        as.add(s);
+
+        return as;
+    }
+
     /**
      * Metodo consultar ranking
      * @return devuelve en un ArrayList de String la informacion el ranking al completo
