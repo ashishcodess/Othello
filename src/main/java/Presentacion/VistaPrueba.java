@@ -52,6 +52,7 @@ public class VistaPrueba {
         frameVista.setLayout(new BorderLayout()); // 5 zonas (North, South, East, West, Center)
         inicializar_frameVista();
         inicializar_Componentes();
+        asignar_listenersComponentes();
     }
 
     private void inicializar_frameVista() {
@@ -101,24 +102,27 @@ public class VistaPrueba {
                     }});
     }
 
-    boolean pulsado = true;
 
-    //NO funciona pero entiendo que esa es la idea
-    public void actionPerformed_button0(ActionEvent event) {
-        /*JButton b = new JButton();
-        Insets margenesBotones = new Insets(0,0,0,0);
-        b.setMargin(margenesBotones);
-        ImageIcon icono = new ImageIcon(getImagen());
-        b.setIcon(icono);
-        botonesMatriz[0][0] = b;*/
-
-
-
+    public void actionPerformed_botones(ActionEvent event) {
+        for (int i = 0; i < botonesMatriz.length; ++i) {
+            for (int j = 0; j < botonesMatriz[i].length; ++j) {
+                if (event.getSource() == botonesMatriz[i][j]) {
+                    String s = getImagen();
+                    botonesMatriz[i][j].setIcon(new ImageIcon(s));
+                }
+            }
+        }
     }
 
 
+
     private void asignar_listenersComponentes() {
-        botonesMatriz[0][0].addActionListener
-                (this::actionPerformed_button0);
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                botonesMatriz[i][j].addActionListener
+                        (this::actionPerformed_botones);
+            }
+        }
+
     }
 }
