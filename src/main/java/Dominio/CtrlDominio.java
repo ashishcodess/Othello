@@ -101,6 +101,10 @@ public class CtrlDominio {
         return res;
     }
 
+    /**
+     * Metodo consultar logros
+     * @return devuelve un arraylist de strings con la informacion de los logros
+     * */
     public ArrayList<String> consultar_logros() {
         ArrayList<String> as = new ArrayList<>();
         String[] sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDA_CORTA)).split(" ");

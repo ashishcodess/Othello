@@ -226,7 +226,9 @@ public class VistaRanking {
 
 
     /////////// LISTENERS (+ su asignacion)
-
+    /**
+     * Metodo cargar_logros (guarda la informacion de los logros en los TextFields assignados por estos)
+     * * */
     private void cargar_logros() {
         ArrayList<String> as = iCtrlPresentacion.presentacion_consultar_logros();
         if (as.size() == 4) {
@@ -358,6 +360,9 @@ public class VistaRanking {
         frameVista.repaint();
     }
 
+    /**
+     * Metodo actionPerfomed del boton de Consultar Logros
+     * * */
     public void actionPerformed_buttonConsultarLogros(ActionEvent event) {
         panelInfo.remove(panelActivo);
         if (iPanelActivo != 3) {

@@ -112,11 +112,12 @@ public class Ranking {
     /**
      * Operacion incrementar_ganadas_perdidas()
      * Este metodo es el encargado de incrementar las partidas de cada jugador (en caso de que no exista creara los Elementos del Ranking de cada jugador respectivamente)
+     * Ademas hace la comprobacion de los logros en caso de necesitarse actualizarlos
      * @param id1 identificador del Jugador1
      * @param nick1 nickname del Jugador1 (en caso de que tenga nickname)
      * @param id2 identificador del Jugador2
      * @param nick2 nickname del Jugador2 (en caso de que tenga nickname)
-     * @param ganador incrementar contador en funcion del tipo de ganador
+     * @param ganador incrementar contador en funcion del tipoGanador de ganador
      * */
     public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, tipoGanador ganador) throws MyException {
         switch (ganador) {
@@ -132,7 +133,6 @@ public class Ranking {
                 if (id1 > 5) incrementar_partida(id1,nick1,tipoGanador.PIERDE);
                 if (id2 > 5) incrementar_partida(id2,nick2,tipoGanador.GANA);
                 break;
-
         }
         comprueba_logros_jugadores(nick1,id1,nick2,id2);
     }
@@ -266,14 +266,36 @@ public class Ranking {
 
     //FUNCIONES DE LOGROS
 
+    /**
+     * Cambiar logro partida (menos turnos o mas capturas)
+     * @param tipo tipo de logro a realizar el cambio (PARTIDA_CORTA o CAPTURAS)
+     * @param nick1 nickname del Jugador1 (en caso de que tenga nickname)
+     * @param id1 identificador del Jugador1
+     * @param nick2 nickname del Jugador2 (en caso de que tenga nickname)
+     * @param id2 identificador del Jugador2
+     * @param t es el numero entero a reemplazar dependiendo del tipo seleccionado
+     * */
     public void cambiar_logro_partida(Logros.tipoLogro tipo, String nick1, int id1, String nick2, int id2, int t) {
         log.cambiar_logro_partida(tipo,nick1,id1,nick2,id2,t);
     }
 
+    /**
+     * Comprobar logro jugadores
+     * @param tipo tipo de Logro de jugadores a comprobar (PARTIDAS_TOTALES, PARTIDAS_GANADAS, PARTIDAS_PERDIDAS)
+     * @param t entero a comprobar la condicion
+     * @return devuelve TRUE en caso de que se cumpla la condicion de que el entero pasado por parametro sea mayor
+     * al que hay almacenado
+     * */
     public void cambiar_logro_jugador(Logros.tipoLogro tipo, String nick1, int id1, int t) {
         log.cambiar_logro_jugador(tipo,nick1,id1,t);
     }
 
+    /**
+     * Comprobar logro
+     * @param tipo tipo de Logro
+     * @param i entero a comprobar la condicion3
+     * @return devuelve TRUE en caso de que se cumpla la condicion del logro a probar
+     * */
     public boolean comprobar_logro(Logros.tipoLogro tipo, int i) {
         boolean b = false;
         switch (tipo) {
@@ -286,20 +308,25 @@ public class Ranking {
                 break;
 
             case PARTIDAS_TOTALES:
-                b = log.comprueba_logro_partidas(tipo,i);
+                b = log.comprueba_logro_jugadores(tipo,i);
                 break;
 
             case PARTIDAS_GANADAS:
-                b = log.comprueba_logro_partidas(tipo, i);
+                b = log.comprueba_logro_jugadores(tipo,i);
                 break;
 
             case PARTIDAS_PERDIDAS:
-                b =log.comprueba_logro_partidas(tipo, i);
+                b = log.comprueba_logro_jugadores(tipo,i);
                 break;
         }
         return b;
     }
 
+    /**
+     * Consultar logro
+     * @param tipo es el tipo de logro a consultar [PARTIDA_CORTA, PARTIDAS_TOTALES, PARTIDAS_GANADAS, PARTIDAS_PERDIDAS, CAPTURAS]
+     * @return devuelve la informacion del logro dependiendo del tipoLogro pasado como parametro
+     * */
     public String consultar_logro(Logros.tipoLogro tipo) {
         String res = "";
         switch (tipo) {
@@ -327,13 +354,36 @@ public class Ranking {
     }
 
 
+    /**
+     * Comprueba logro : comprueba el logro y se modifica el logro si es necesario
+     * @param tipo es el tipo de logro a consultar para jugador[PARTIDAS_TOTALES, PARTIDAS_GANADAS, PARTIDAS_PERDIDAS]
+     * @param e ElementoRanking a comprobar dependiendo del tipo de logro
+     * */
     private void comprueba_logro(Logros.tipoLogro tipo, ElementoRanking e) {
-        int partidas_aux = e.consultar_Totales();
-        if (log.comprueba_logro_partidas(tipo,partidas_aux)) {
+        int partidas_aux = 0;
+        switch (tipo) {
+            case PARTIDAS_TOTALES:
+                partidas_aux = e.consultar_Totales();
+                break;
+            case PARTIDAS_GANADAS:
+                partidas_aux = e.consultar_Ganadas();
+                break;
+            case PARTIDAS_PERDIDAS:
+                partidas_aux = e.consultar_Perdidas();
+                break;
+        }
+        if (log.comprueba_logro_jugadores(tipo,partidas_aux)) {
             log.cambiar_logro_jugador(tipo,e.consultar_Nickname(),e.consultar_ID(),partidas_aux);
         }
     }
 
+    /**
+     * Comprueba los logros de partidas totales, ganadas y perdidas y modifica en caso de ser necesario
+     * @param nick1 nickname del Jugador1 (en caso de que tenga nickname)
+     * @param id1 identificador del Jugador1
+     * @param nick2 nickname del Jugador2 (en caso de que tenga nickname)
+     * @param id2 identificador del Jugador2
+     * */
     private void comprueba_logros_jugadores(String nick1, int id1, String nick2, int id2) {
         int i = existe_en_ranking(id1,nick1);
         if (i != -1) { //Jugador1
@@ -350,7 +400,6 @@ public class Ranking {
             comprueba_logro(Logros.tipoLogro.PARTIDAS_PERDIDAS,e_aux);
         }
     }
-
 
 
     /**

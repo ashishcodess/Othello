@@ -123,7 +123,10 @@ public class CtrlPresentacion {
         return ctrlDominio.consultar_estadisticas(id,nick);
     }
 
-
+    /**
+     * Metodo presentacion_consultar_logros
+     * @return devuelve en un ArrayList de String la informacion de los logros al completo
+     * */
     public ArrayList<String> presentacion_consultar_logros() {
         return ctrlDominio.consultar_logros();
     }
