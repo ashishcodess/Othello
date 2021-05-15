@@ -109,7 +109,7 @@ public class CtrlPresentacion {
      * Metodo exportar ranking (desde Capa Presentacion)
      * */
     public void presentacion_exportar_ranking() {
-        ctrlDominio.domino_exportar_ranking();
+        try {ctrlDominio.domino_exportar_ranking();} catch (Exception e) {}
     }
 
     /**

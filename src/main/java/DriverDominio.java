@@ -103,7 +103,7 @@ public class DriverDominio {
 
                 //logros
                 int turnos = p.getTurnoPartida();
-                boolean b = ranking.comprueba_logro_partida(turnos);
+                boolean b = ranking.comprobar_logro(Logros.tipoLogro.PARTIDA_CORTA,turnos);
                 if (b) ranking.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,nick1,id1,nick2,id2,turnos);
 
                 switch (ganador) {

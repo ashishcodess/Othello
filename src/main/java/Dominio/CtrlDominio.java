@@ -79,11 +79,8 @@ public class CtrlDominio {
     /**
     * Metodo exportar ranking (desde Dominio)
     * */
-    public void domino_exportar_ranking() {
-        try {
-            cp.ctrl_exportar_ranking(ranking.toArrayList(), "ranking.txt");
-        }
-        catch (Exception e) {}
+    public void domino_exportar_ranking() throws IOException {
+        cp.ctrl_exportar_ranking(ranking.toArrayList(), "ranking.txt");
     }
 
     /**

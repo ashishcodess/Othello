@@ -210,6 +210,14 @@ public class Ranking {
      * */
     public ArrayList<String> toArrayList() {
         ArrayList<String> as = new ArrayList<>();
+        //logros
+        as.add(consultar_logro(Logros.tipoLogro.PARTIDA_CORTA));
+        as.add("*");
+        as.add(consultar_logro(Logros.tipoLogro.PARTIDAS_TOTALES));
+        as.add(consultar_logro(Logros.tipoLogro.PARTIDAS_GANADAS));
+        as.add(consultar_logro(Logros.tipoLogro.PARTIDAS_PERDIDAS));
+        as.add("***");
+        //RANKING
         for (ElementoRanking elementoRanking : this.ranking) {
             as.add(elementoRanking.consultar_todo());
         }
@@ -262,21 +270,62 @@ public class Ranking {
         log.cambiar_logro_partida(tipo,nick1,id1,nick2,id2,t);
     }
 
-    public boolean comprueba_logro_partida(int turno) {
-        return log.comprueba_logro_partida(turno);
+    public void cambiar_logro_jugador(Logros.tipoLogro tipo, String nick1, int id1, int t) {
+        log.cambiar_logro_jugador(tipo,nick1,id1,t);
     }
 
-    public boolean comprueba_logro_capturas(int cap) {
-        return log.comprueba_logro_capturas(cap);
+    public boolean comprobar_logro(Logros.tipoLogro tipo, int i) {
+        boolean b = false;
+        switch (tipo) {
+            case PARTIDA_CORTA:
+                b = log.comprueba_logro_partida(i);
+                break;
+
+            case CAPTURAS:
+                b = log.comprueba_logro_capturas(i);
+                break;
+
+            case PARTIDAS_TOTALES:
+                b = log.comprueba_logro_partidas(tipo,i);
+                break;
+
+            case PARTIDAS_GANADAS:
+                b = log.comprueba_logro_partidas(tipo, i);
+                break;
+
+            case PARTIDAS_PERDIDAS:
+                b =log.comprueba_logro_partidas(tipo, i);
+                break;
+        }
+        return b;
     }
 
-    public String consultar_partida_corta() {
-        return log.consultar_partida_corta();
+    public String consultar_logro(Logros.tipoLogro tipo) {
+        String res = "";
+        switch (tipo) {
+            case PARTIDA_CORTA:
+                res = log.consultar_partida_corta();
+                break;
+
+            case CAPTURAS:
+                res = log.consultar_max_capturas();
+                break;
+
+            case PARTIDAS_TOTALES:
+                res = log.consultar_jugador_Totales();
+                break;
+
+            case PARTIDAS_GANADAS:
+                res = log.consultar_jugador_Ganadas();
+                break;
+
+            case PARTIDAS_PERDIDAS:
+                res = log.consultar_jugador_perdidas();
+                break;
+        }
+        return res;
     }
 
-    public String consultar_max_capturas() {
-        return log.consultar_max_capturas();
-    }
 
     private void comprueba_logro(Logros.tipoLogro tipo, ElementoRanking e) {
         int partidas_aux = e.consultar_Totales();
