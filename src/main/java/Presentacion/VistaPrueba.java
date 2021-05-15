@@ -74,7 +74,7 @@ public class VistaPrueba {
             for (int j = 0; j < botonesMatriz[i].length; ++j) {
                 JButton b = new JButton();
                 b.setMargin(margenesBotones);
-                ImageIcon icono = new ImageIcon(imagen_disponible);
+                ImageIcon icono = new ImageIcon(imagen_vacia);
                 b.setIcon(icono);
                 botonesMatriz[i][j] = b;
                 tablero.add(botonesMatriz[i][j]);
