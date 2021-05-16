@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 
-//PUEDE SERVIR DE AYUDA PARA QUE QUEDE MEJOR EL TABLERO -> SERGIO
+
 
 public class VistaTablero {
 
@@ -74,7 +74,7 @@ public class VistaTablero {
     private void inicializar_frameVista() {
         frameVista.setMinimumSize(new Dimension(950,850));
         frameVista.setPreferredSize(frameVista.getMinimumSize());
-        frameVista.setResizable(true);
+        frameVista.setResizable(false);
         frameVista.setLocationRelativeTo(null);
         frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel contentPane = (JPanel) frameVista.getContentPane();
