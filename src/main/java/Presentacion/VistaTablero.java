@@ -92,6 +92,7 @@ public class VistaTablero {
             for (int j = 0; j < botonesMatriz[i].length; ++j) {
                 JButton b = new JButton();
                 b.setMargin(margenesBotones);
+                b.setBackground(Color.gray);
                 if (i == 3 && j == 3){
                     b.setIcon(new ImageIcon(imagen_blanca));
                 }
