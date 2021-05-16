@@ -278,8 +278,8 @@ public class CtrlDominio {
     }
 
     //para imprimir tablero hacia la capa de presentacion
-    public int[][] getTableroPartida() {
+    /*public int[][] getTableroPartida() {
         return partida_activa.getTableroPartida().toMatrix();
-    }
+    }*/
 
 }

@@ -13,10 +13,10 @@ public class VistaTablero {
     private final CtrlPresentacion iCtrlPresentacion;
     private final JPanel panelPrincipal = new JPanel();
 
-    private String imagen_vacia = "./src/files/fichas/vacia.png";
-    private String imagen_disponible = "./src/files/fichas/disponible.png";
-    private String imagen_blanca = "./src/files/fichas/blanca.png";
-    private String imagen_negra = "./src/files/fichas/negra.png";
+    private final String imagen_vacia = "./src/files/fichas/vacia.png";
+    private final String imagen_disponible = "./src/files/fichas/disponible.png";
+    private final String imagen_blanca = "./src/files/fichas/blanca.png";
+    private final String imagen_negra = "./src/files/fichas/negra.png";
 
     private JButton bPrueba1 = new JButton("Pasar turno");
     private JButton bPrueba2 = new JButton("prueba2");
@@ -85,6 +85,8 @@ public class VistaTablero {
         tablero = new JPanel(new GridLayout(0,8));
         tablero.setBorder((new LineBorder(Color.BLACK)));
 
+        //int[][] tableroPartida = iCtrlPresentacion.presentacionObtenerTablero();
+
         Insets margenesBotones = new Insets(0,0,0,0);
         for (int i = 0; i < botonesMatriz.length; ++i) {
             for (int j = 0; j < botonesMatriz[i].length; ++j) {
@@ -103,8 +105,7 @@ public class VistaTablero {
                     b.setIcon(new ImageIcon(imagen_negra));
                 }
                 else {
-                    ImageIcon icono = new ImageIcon(imagen_vacia);
-                    b.setIcon(icono);
+                    b.setIcon(new ImageIcon(imagen_vacia));
                 }
                 botonesMatriz[i][j] = b;
                 tablero.add(botonesMatriz[i][j]);
