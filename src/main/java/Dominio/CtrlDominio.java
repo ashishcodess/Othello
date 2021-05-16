@@ -132,7 +132,15 @@ public class CtrlDominio {
      * @return devuelve en un ArrayList de String la informacion el ranking al completo
      * */
     public ArrayList<String> consultar_ranking() {
-        return ranking.toArrayList();
+        ArrayList<String> as = ranking.toArrayList();
+        //quitar logros
+        as.remove(0);
+        as.remove(0);
+        as.remove(0);
+        as.remove(0);
+        as.remove(0);
+        as.remove(0);
+        return as;
     }
 
     /**
