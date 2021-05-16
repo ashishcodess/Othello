@@ -798,7 +798,8 @@ public class Tablero {
 
     public boolean finalizada(){
 
-        return (this.num_vacia == 0 || this.blancas.size() == 0 || this.negras.size() == 0 || (this.disponibles.size() == 0 && !this.disponibles_anterior));
+        return (this.num_vacia == 0 || this.blancas.size() == 0 ||
+                this.negras.size() == 0 || (this.disponibles.size() == 0 && !this.disponibles_anterior));
     }
 
     /**

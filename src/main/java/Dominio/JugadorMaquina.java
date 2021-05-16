@@ -99,24 +99,39 @@ public class JugadorMaquina extends Jugador {
      */
     public Tablero valorMaxNegras(Tablero t, int turno, int alpha, int beta, int depth){
 
+        if(depth == 0 || t.finalizada())return t;
+
         Tablero mejorHijo = t;
         Set<Tablero> estados_hijos = this.genera_succesores(t, turno);
+        int evaluacion;
 
-        /*if(turno%2 == 0){
+        if(turno%2 == 0){
             int maxeval = -1000;
             for(Tablero aux : estados_hijos){
-
+                aux = valorMaxBlancas(aux,turno+1,alpha, beta, this.get_profundidadMaquina()-1);
+                evaluacion = aux.getHeuristicValueNegras();
+                if(maxeval < evaluacion){
+                    maxeval = evaluacion;
+                    mejorHijo = aux;
+                }
+                if(beta<=alpha)break;
             }
+            return mejorHijo;
         }
 
         else {
             int mineval = 1000;
             for(Tablero aux : estados_hijos){
-
+                aux = valorMaxBlancas(aux,turno+1,alpha, beta, this.get_profundidadMaquina()-1);
+                evaluacion = aux.getHeuristicValueNegras();
+                if(mineval > evaluacion){
+                    mineval = evaluacion;
+                    mejorHijo = aux;
+                }
+                if(beta<=alpha)break;
             }
-        }*/
-
-        return mejorHijo;
+            return mejorHijo;
+        }
     }
 
     /**
