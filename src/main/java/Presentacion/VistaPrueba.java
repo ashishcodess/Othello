@@ -18,7 +18,7 @@ public class VistaPrueba {
     private String imagen_blanca = "./src/files/fichas/blanca.png";
     private String imagen_negra = "./src/files/fichas/negra.png";
 
-    private JButton bPrueba1 = new JButton("prueba1");
+    private JButton bPrueba1 = new JButton("Pasar turno");
     private JButton bPrueba2 = new JButton("prueba2");
     private JPanel panelBotones = new JPanel();
     private JTextArea textPrueba = new JTextArea();
@@ -72,9 +72,9 @@ public class VistaPrueba {
     }
 
     private void inicializar_frameVista() {
-        frameVista.setMinimumSize(new Dimension(900,800));
+        frameVista.setMinimumSize(new Dimension(950,850));
         frameVista.setPreferredSize(frameVista.getMinimumSize());
-        frameVista.setResizable(false);
+        frameVista.setResizable(true);
         frameVista.setLocationRelativeTo(null);
         frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel contentPane = (JPanel) frameVista.getContentPane();
