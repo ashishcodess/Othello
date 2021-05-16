@@ -108,7 +108,7 @@ public class JugadorMaquina extends Jugador {
         if(turno%2 == 0){
             int maxeval = -1000;
             for(Tablero aux : estados_hijos){
-                aux = valorMaxBlancas(aux,turno+1,alpha, beta, this.get_profundidadMaquina()-1);
+                aux = valorMaxNegras(aux,turno+1,alpha, beta, this.get_profundidadMaquina()-1);
                 evaluacion = aux.getHeuristicValueNegras();
                 if(maxeval < evaluacion){
                     maxeval = evaluacion;
@@ -122,7 +122,7 @@ public class JugadorMaquina extends Jugador {
         else {
             int mineval = 1000;
             for(Tablero aux : estados_hijos){
-                aux = valorMaxBlancas(aux,turno+1,alpha, beta, this.get_profundidadMaquina()-1);
+                aux = valorMaxNegras(aux,turno+1,alpha, beta, this.get_profundidadMaquina()-1);
                 evaluacion = aux.getHeuristicValueNegras();
                 if(mineval > evaluacion){
                     mineval = evaluacion;
