@@ -102,8 +102,6 @@ public class VistaConfigPartida {
         panelBotones.setLayout(new FlowLayout());
         panelCentral.setLayout(new FlowLayout());
 
-
-
         //PANEL MODO DE JUEGO
         panelModoDeJuego.add(labelModoDeJuego);
         panelModoDeJuego.add(IAVsIARadioButton);
@@ -132,9 +130,6 @@ public class VistaConfigPartida {
         //PANEL PRINCIPAL
         panelPrincipal.add(panelCentral, BorderLayout.CENTER);
         panelPrincipal.add(panelBotones,BorderLayout.SOUTH);
-
-
-
     }
 
 
