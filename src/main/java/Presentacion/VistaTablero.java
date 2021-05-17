@@ -93,7 +93,7 @@ public class VistaTablero {
         frameVista.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frameVista.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
-                salir_del_juego();
+                iCtrlPresentacion.salir_del_juego();
             }
         });
         JPanel contentPane = (JPanel) frameVista.getContentPane();
@@ -155,15 +155,6 @@ public class VistaTablero {
         frameVista.pack();
         frameVista.setVisible(b);
         frameVista.setEnabled(b);
-    }
-
-
-    /**
-     * Metodo WindowPerfomed para cerrar la ventana
-     * */
-    private void salir_del_juego() {
-        iCtrlPresentacion.presentacion_exportar_ranking();
-        System.exit(0);
     }
 
     public void actionPerformed_botones(ActionEvent event) {

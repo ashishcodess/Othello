@@ -43,6 +43,15 @@ public class CtrlPresentacion {
 
 
     /**
+     * Metodo para cerrar la ventana
+     * */
+    public void salir_del_juego() {
+        presentacion_exportar_ranking();
+        System.exit(0);
+    }
+
+
+    /**
      * Metodo hacerVisibleVista
      * @param a dependiendo de la enumeracion de vistaActiva hace visible una vista u otra (para gestion de vistas)
      * */
@@ -113,7 +122,7 @@ public class CtrlPresentacion {
      * Metodo exportar ranking (desde Capa Presentacion)
      * */
     public void presentacion_exportar_ranking() {
-        try {ctrlDominio.domino_exportar_ranking();} catch (Exception e) {}
+        ctrlDominio.domino_exportar_ranking();
     }
 
     /**

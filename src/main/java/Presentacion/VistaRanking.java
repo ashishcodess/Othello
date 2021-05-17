@@ -117,7 +117,7 @@ public class VistaRanking {
         frameVista.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frameVista.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
-                salir_del_juego();
+                iCtrlPresentacion.salir_del_juego();
             }
         });
         JPanel contentPane = (JPanel) frameVista.getContentPane();
@@ -234,13 +234,6 @@ public class VistaRanking {
 
     /////////// LISTENERS (+ su asignacion)
 
-    /**
-     * Metodo WindowPerfomed para cerrar la ventana
-     * */
-    private void salir_del_juego() {
-        iCtrlPresentacion.presentacion_exportar_ranking();
-        System.exit(0);
-    }
 
     /**
      * Metodo cargar_logros (guarda la informacion de los logros en los TextFields assignados por estos)
@@ -465,10 +458,7 @@ public class VistaRanking {
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
 
         menuitemQuit.addActionListener
-                (event -> {
-                    iCtrlPresentacion.presentacion_exportar_ranking();
-                    System.exit(0);
-                });
+                (event -> iCtrlPresentacion.salir_del_juego());
 
         buttonConsultarRanking.addActionListener
                 (event -> actionPerformed_buttonConsultarRanking());

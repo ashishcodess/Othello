@@ -82,7 +82,7 @@ public class VistaConfigPartida {
         frameVista.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frameVista.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
-                salir_del_juego();
+                iCtrlPresentacion.salir_del_juego();
             }
         });
         JPanel contentPane = (JPanel) frameVista.getContentPane();
@@ -137,14 +137,6 @@ public class VistaConfigPartida {
         //PANEL PRINCIPAL
         panelPrincipal.add(panelCentral, BorderLayout.CENTER);
         panelPrincipal.add(panelBotones,BorderLayout.SOUTH);
-    }
-
-    /**
-     * Metodo WindowPerfomed para cerrar la ventana
-     * */
-    private void salir_del_juego() {
-        iCtrlPresentacion.presentacion_exportar_ranking();
-        System.exit(0);
     }
 
 

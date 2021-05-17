@@ -83,7 +83,7 @@ public class VistaLogin {
         frameVista.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frameVista.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
-                salir_del_juego();
+                iCtrlPresentacion.salir_del_juego();
             }
         });
         JPanel contentPane = (JPanel) frameVista.getContentPane();
@@ -142,14 +142,6 @@ public class VistaLogin {
 
 
     /////////// LISTENERS (+ su asignacion)
-    /**
-     * Metodo WindowPerfomed para cerrar la ventana
-     * */
-    private void salir_del_juego() {
-        iCtrlPresentacion.presentacion_exportar_ranking();
-        System.exit(0);
-    }
-
 
     /**
      * Metodo actionPerfomed del boton de Login
@@ -207,9 +199,7 @@ public class VistaLogin {
                 (this::actionPerformed_buttonRegistrarse);
 
         menuitemQuit.addActionListener
-                (event -> {
-                    salir_del_juego();
-                });
+                (event -> iCtrlPresentacion.salir_del_juego());
     }
 
 
