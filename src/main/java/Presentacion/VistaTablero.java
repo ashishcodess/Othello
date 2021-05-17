@@ -18,14 +18,24 @@ public class VistaTablero {
     private final String imagen_blanca = "./src/files/fichas/blanca.png";
     private final String imagen_negra = "./src/files/fichas/negra.png";
 
-    private JButton bPrueba1 = new JButton("Pasar turno");
-    private JButton bPrueba2 = new JButton("prueba2");
+
     private JPanel panelBotones = new JPanel();
-    private JTextArea textPrueba = new JTextArea();
+    private JButton bottonPasarTurno = new JButton("Pasar turno");
+    private JLabel labelSeparador = new JLabel("         ");
+    private JLabel labelOpcionesPartida = new JLabel("Opciones de partida");
+    private JButton bottonGuardarPartida = new JButton("Guardar Partida");
+    private JButton bottonFinalizarPartida = new JButton("Finalizar Partida");
+
+
 
     private final JMenuBar menubarVista = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
     private final JMenuItem menuitemQuit = new JMenuItem("Salir");
+
+    private final JMenu menuPartida = new JMenu("Partida");
+    private final JMenuItem menuitemGuardarPartida = new JMenuItem("Guardar Partida");
+    private final JMenuItem menuitemFinalizarPartida = new JMenuItem("Finalizar Partida");
+
 
     private int prueba_switch_imagen = 0;
 
@@ -54,7 +64,6 @@ public class VistaTablero {
     private JButton[][] botonesMatriz = new JButton[8][8];
     private JPanel tablero;
 
-    private static final String columnas = "ABCDEFGH";
 
     public VistaTablero(CtrlPresentacion pCtrlPresentacion)  {
         iCtrlPresentacion = pCtrlPresentacion;
@@ -66,8 +75,11 @@ public class VistaTablero {
     }
 
     private void inicializar_menubarVista() {
-        menubarVista.add(menuFile);
         menuFile.add(menuitemQuit);
+        menubarVista.add(menuFile);
+        menuPartida.add(menuitemGuardarPartida);
+        menuPartida.add(menuitemFinalizarPartida);
+        menubarVista.add(menuPartida);
         frameVista.setJMenuBar(menubarVista);
     }
 
@@ -114,9 +126,12 @@ public class VistaTablero {
         }
 
         panelBotones.setLayout(new FlowLayout());
-        panelBotones.add(bPrueba1);
-        panelBotones.add(bPrueba2);
-
+        panelBotones.setLayout(new BoxLayout(panelBotones,BoxLayout.PAGE_AXIS));
+        panelBotones.add(bottonPasarTurno);
+        panelBotones.add(labelSeparador);
+        panelBotones.add(labelOpcionesPartida);
+        panelBotones.add(bottonGuardarPartida);
+        panelBotones.add(bottonFinalizarPartida);
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.add(tablero,BorderLayout.CENTER);
         panelPrincipal.add(panelBotones,BorderLayout.EAST);
