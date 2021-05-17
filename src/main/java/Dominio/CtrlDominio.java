@@ -244,11 +244,6 @@ public class CtrlDominio {
     }
 
 
-    //para imprimir tablero hacia la capa de presentacion
-    public int[][] getTableroPartida() {
-        return partida_activa.getTableroPartida().toMatrix();
-    }
-
 
     /**
      * Metodo actualizar_ranking
@@ -344,11 +339,6 @@ public class CtrlDominio {
         return null; //por ahora para pruebas
     }
 
-<<<<<<< HEAD
-    private static ArrayList<String> listar_partidas_disponibles(int id, String nick) throws IOException {
-        //enviara al Controlador de Presentacion (para mostrar que partidas puede cargar/borrar el jugador)
-        return cp.ctrl_listar_partidas_disponibles(id,nick);
-    }
 
     //para imprimir tablero hacia la capa de presentacion
     public int[][] getTableroPartida() {
@@ -359,7 +349,6 @@ public class CtrlDominio {
         Set<Position> casillasDisponibles = tablero_activo.getCasillasDisponibles();
         return casillasDisponibles;
     }
-=======
->>>>>>> db18b8d2cf79f0e144f751fce9be8c14b9d8498d
+
 
 }
