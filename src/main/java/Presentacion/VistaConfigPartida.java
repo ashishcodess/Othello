@@ -5,6 +5,10 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+
+/*SERGIO: FALTA SELECTOR DE IA, BOTON PARA ACCEDER A UN MENU DONDE SE MUESTRAN LOS TABLEROS PERSONALIZADOS Y OPCION
+* PARA CARGAR ESTE MISMO. IGUAL SE PUEDE AÑADIR ALGO MAS */
+
 public class VistaConfigPartida {
 
     // Controlador de presentacion

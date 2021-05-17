@@ -174,8 +174,8 @@ public class VistaRanking {
         }
         panelBotonesRanking.add(comboBoxOrdenar);
         panelBotonesRanking.add(buttonOrdenar);
-        buttonCargarRanking.setToolTipText("Carga la informacion del ranking en el TextArea");
-        buttonLimpiarRanking.setToolTipText("Hace un clear del TextArea");
+        buttonCargarRanking.setToolTipText("Carga la informacion del ranking");
+        buttonLimpiarRanking.setToolTipText("Hace un clear de la tabla del ranking mostrada en pantalla");
         buttonOrdenar.setToolTipText("Ordena la salida en funcion de: ID, partidas ganadas o Nickname");
 
 
@@ -186,7 +186,9 @@ public class VistaRanking {
         panelBotonesEstadisticas.add(labelNickname);
         panelBotonesEstadisticas.add(textoNickname);
         panelBotonesEstadisticas.add(buttonBuscarEstadisticas);
+        buttonBuscarEstadisticas.setToolTipText("Busca las estadisticas del jugador introducido");
         panelBotonesEstadisticas.add(buttonLimpiarEstadisticas);
+        buttonLimpiarEstadisticas.setToolTipText("Limpia los campos de busqueda de ID y de Nickname");
 
         panelEstadisticas.setLayout(new BorderLayout());
         panelEstadisticas.add(labelInfoRanking2,BorderLayout.NORTH);

@@ -14,7 +14,7 @@ public class VistaCreditos {
             + "\n    - Sergi Bosquet Reyes \n";
 
     private final JFrame frameVista = new JFrame("Creditos");
-    private final JButton buttonOK = new JButton("OK");
+    private final JButton buttonOK = new JButton("Volver al menu principal");
 
     private final JMenuItem menuitemQuit = new JMenuItem("Salir");
     private final JMenuItem menuitemVolver = new JMenuItem("Volver al menu principal");
@@ -31,8 +31,9 @@ public class VistaCreditos {
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.add(infoCreditos,BorderLayout.CENTER);
         panelPrincipal.add(buttonOK,BorderLayout.SOUTH);
+        buttonOK.setToolTipText("Vuelva al menu principal");
 
-        frameVista.setMinimumSize(new Dimension(300,250));
+        frameVista.setMinimumSize(new Dimension(300,280));
         frameVista.setPreferredSize(frameVista.getMinimumSize());
         frameVista.setResizable(false);
         frameVista.setLocationRelativeTo(null);

@@ -6,6 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+
+/*
+* SERGIO: FALTA POR HACER VISTAS DE CARGAR/BORRAR PARTIDA, CREAR TABLERO, BORRAR TABLERO
+* */
+
 public class VistaMenu {
     // Controlador de presentacion
     private final CtrlPresentacion iCtrlPresentacion;
@@ -140,25 +145,34 @@ public class VistaMenu {
         panelMenuPartida.setLayout(new BoxLayout(panelMenuPartida,BoxLayout.PAGE_AXIS));
         panelMenuPartida.add(labelPartida);
         panelMenuPartida.add(buttonCrearPartida);
+        buttonCrearPartida.setToolTipText("Entra en el menu de config. de una Partida");
         panelMenuPartida.add(buttonCargarBorrarPartida);
+        buttonCrearPartida.setToolTipText("Entra en el menu para Cargar/Borrar una partida guardada por el usuario");
 
         //PANEL MENU TABLERO
         panelMenuTablero.setLayout(new BoxLayout(panelMenuTablero,BoxLayout.PAGE_AXIS));
         panelMenuTablero.add(labelTablero);
         panelMenuTablero.add(buttonCrearTablero);
+        buttonCrearTablero.setToolTipText("Entra en el menu de config. de una Tablero");
         panelMenuTablero.add(buttonBorrarTablero);
+        buttonBorrarTablero.setToolTipText("Entra en el menu para Borrar un tablero guardado en el sistema");
 
         //PANEL MENU RANKING
         panelMenuRanking.setLayout(new BoxLayout(panelMenuRanking,BoxLayout.PAGE_AXIS));
         panelMenuRanking.add(labelRanking);
         panelMenuRanking.add(buttonConsultarRanking);
+        buttonConsultarRanking.setToolTipText("Consulta el ranking, estadisticas de un jugador o los logros");
+
 
         //PANEL MENU OTRAS OPCIONES
         panelOtrasOpciones.setLayout(new FlowLayout());
         panelOtrasOpciones.add(labelOtros);
         panelOtrasOpciones.add(buttonLogin);
+        buttonLogin.setToolTipText("Volver al menu de Login (login con otro usuario)");
         panelOtrasOpciones.add(buttonCreditos);
+        buttonCreditos.setToolTipText("Muestra los creditos");
         panelOtrasOpciones.add(buttonSalir);
+        buttonSalir.setToolTipText("Salir del juego");
 
         //PANEL BOTONES GENERAL
         panelBotonesMenu.setLayout(new BorderLayout());
