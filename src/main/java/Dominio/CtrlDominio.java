@@ -2,6 +2,7 @@ package Dominio;
 
 import ControladorPersistencia.CtrlPersitencia;
 import Dominio.Partida.Partida;
+import Dominio.Partida.Position;
 import Dominio.Partida.Tablero;
 import Dominio.Ranking.Logros;
 import Dominio.Ranking.Ranking;
@@ -9,6 +10,7 @@ import MyException.MyException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Set;
 
 
 public class CtrlDominio {
@@ -25,6 +27,7 @@ public class CtrlDominio {
 
     private static int estado_partida; //para conocer el estado de la partida desde la capa de Presentacion
     private static Partida partida_activa;
+    private static Tablero tablero_activo;
 
 
     /**
@@ -285,8 +288,13 @@ public class CtrlDominio {
     }
 
     //para imprimir tablero hacia la capa de presentacion
-    /*public int[][] getTableroPartida() {
+    public int[][] getTableroPartida() {
         return partida_activa.getTableroPartida().toMatrix();
-    }*/
+    }
+
+    public Set<Position> getCasillasDisponibles(){
+        Set<Position> casillasDisponibles = tablero_activo.getCasillasDisponibles();
+        return casillasDisponibles;
+    }
 
 }

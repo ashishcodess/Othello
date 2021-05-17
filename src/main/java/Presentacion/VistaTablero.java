@@ -104,7 +104,7 @@ public class VistaTablero {
         JPanel tablero = new JPanel(new GridLayout(0, 8));
         tablero.setBorder((new LineBorder(Color.BLACK)));
 
-        //int[][] tableroPartida = iCtrlPresentacion.presentacionObtenerTablero();
+        int[][] tableroPartida = iCtrlPresentacion.presentacionObtenerTablero();
 
         Insets margenesBotones = new Insets(0,0,0,0);
         for (int i = 0; i < botonesMatriz.length; ++i) {
@@ -143,6 +143,42 @@ public class VistaTablero {
         panelPrincipal.add(tablero,BorderLayout.CENTER);
         panelPrincipal.add(panelBotones,BorderLayout.EAST);
     }
+    /*
+    private void inicializar_Componentes() {
+        JPanel tablero = new JPanel(new GridLayout(0, 8));
+        tablero.setBorder((new LineBorder(Color.BLACK)));
+
+        int[][] tableroPartida = iCtrlPresentacion.presentacionObtenerTablero();
+
+        Insets margenesBotones = new Insets(0,0,0,0);
+        for (int i = 0; i < botonesMatriz.length; ++i) {
+            for (int j = 0; j < botonesMatriz[i].length; ++j) {
+                JButton b = new JButton();
+                b.setMargin(margenesBotones);
+                b.setBackground(Color.gray);
+                if (tableroPartida[i][j] == 0 ) b.setIcon(new ImageIcon(imagen_vacia));
+                else if (tableroPartida[i][j] == 3 )b.setIcon(new ImageIcon(imagen_blanca));
+                else if (tableroPartida[i][j] == 2 )b.setIcon(new ImageIcon(imagen_negra));
+                else b.setIcon(new ImageIcon(imagen_disponible));
+
+                botonesMatriz[i][j] = b;
+                tablero.add(botonesMatriz[i][j]);
+            }
+        }
+
+        panelBotones.setLayout(new FlowLayout());
+        panelBotones.setLayout(new BoxLayout(panelBotones,BoxLayout.PAGE_AXIS));
+        panelBotones.add(bottonPasarTurno);
+        panelBotones.add(labelSeparador);
+        panelBotones.add(labelOpcionesPartida);
+        panelBotones.add(bottonGuardarPartida);
+        panelBotones.add(bottonFinalizarPartida);
+        panelPrincipal.setLayout(new BorderLayout());
+        panelPrincipal.add(tablero,BorderLayout.CENTER);
+        panelPrincipal.add(panelBotones,BorderLayout.EAST);
+    }
+
+   */
 
     private void obtener_dir_imagenes() {
         imagen_vacia = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_VACIA);
@@ -167,7 +203,17 @@ public class VistaTablero {
             }
         }
     }
-
+/*
+ Set<Position> posDisp = iCtrlPresentacion.presentacionObternerCasillasDisponibles();
+ for (int i = 0; i < posDisp.size() ; ++i){
+                JButton b = new JButton();
+                b.setMargin(margenesBotones);
+                b.setBackground(Color.gray);
+                b.setIcon(new ImageIcon(imagen_disponible));
+                botonesMatriz[i][j] = b;
+                tablero.add(botonesMatriz[i][j]);
+ }
+*/
 
     private void asignar_listenersComponentes() {
         for (int i = 0; i < 8; ++i) {

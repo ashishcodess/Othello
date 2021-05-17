@@ -1,9 +1,13 @@
 package Presentacion;
 
+import Dominio.Partida.Position;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Set;
 
 public class VistaConfigPartida {
 
@@ -139,10 +143,15 @@ public class VistaConfigPartida {
         panelPrincipal.add(panelBotones,BorderLayout.SOUTH);
     }
 
-
+    /*public void actionPerformed_comenzarPartidaButton(ActionEvent event){
+        Set<Position> posDisp = iCtrlPresentacion.presentacionObternerCasillasDisponibles();
+    }*/
     private void asignarListeners() {
         comenzarPartidaButton.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO));
+
+        /*comenzarPartidaButton.addActionListener
+                 (this::actionPerformed_comenzarPartidaButton);*/
 
         menuButton.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));

@@ -2,9 +2,11 @@ package Presentacion;
 
 import ControladorPersistencia.CtrlPersitencia;
 import Dominio.CtrlDominio;
+import Dominio.Partida.Position;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Set;
 
 enum vistaActiva{LOGIN, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA} //agregar en funcion de las necesidades
 
@@ -177,5 +179,14 @@ public class CtrlPresentacion {
      * Metodo consultar size del ranking (desde capa Presentacion)
      * @return devuelve el size del ranking
      * */
-    //public int[][] presentacionObtenerTablero() {return ctrlDominio.getTableroPartida();}
+    public int[][] presentacionObtenerTablero() {return ctrlDominio.getTableroPartida();}
+
+    /**
+     * Metodo consultar casillas disponibles (desde capa Presentacion)
+     * @return casillas disponibles
+     * */
+    /*public Set<Position> presentacionObternerCasillasDisponibles(){
+        return ctrlDominio.getCasillasDisponibles();
+    }*/
+
 }
