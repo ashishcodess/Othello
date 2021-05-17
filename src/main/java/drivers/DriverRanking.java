@@ -1,8 +1,8 @@
 package drivers;
 
 import MyException.MyException;
-import Dominio.Ranking;
-import Dominio.ElementoRanking;
+import Dominio.Ranking.Ranking;
+import Dominio.Ranking.ElementoRanking;
 
 
 import java.util.Scanner;

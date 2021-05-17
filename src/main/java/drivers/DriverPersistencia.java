@@ -1,9 +1,9 @@
 package drivers;
 
 import ControladorPersistencia.CtrlPersitencia;
-import Dominio.ElementoRanking;
-import Dominio.Partida;
-import Dominio.Ranking;
+import Dominio.Ranking.ElementoRanking;
+import Dominio.Partida.Partida;
+import Dominio.Ranking.Ranking;
 import MyException.MyException;
 
 import java.io.IOException;

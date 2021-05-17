@@ -1,8 +1,8 @@
 package drivers;
 
-import Dominio.ElementoRanking;
-import Dominio.Logros;
-import Dominio.Ranking;
+import Dominio.Ranking.ElementoRanking;
+import Dominio.Ranking.Logros;
+import Dominio.Ranking.Ranking;
 import MyException.MyException;
 
 import org.junit.Before;

@@ -1,8 +1,11 @@
 package Dominio;
 
 import ControladorPersistencia.CtrlPersitencia;
+import Dominio.Partida.Partida;
+import Dominio.Partida.Tablero;
+import Dominio.Ranking.Logros;
+import Dominio.Ranking.Ranking;
 import MyException.MyException;
-import Dominio.*;
 
 import java.io.IOException;
 import java.util.ArrayList;

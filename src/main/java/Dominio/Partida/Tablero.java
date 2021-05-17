@@ -1,6 +1,5 @@
-package Dominio;
+package Dominio.Partida;
 
-import java.sql.Array;
 import java.util.*;
 
 

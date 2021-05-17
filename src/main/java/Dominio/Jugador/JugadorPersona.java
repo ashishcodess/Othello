@@ -1,6 +1,7 @@
 
-package Dominio;
+package Dominio.Jugador;
 
+import Dominio.Partida.Tablero;
 import MyException.MyException;
 
 public class JugadorPersona extends Jugador {

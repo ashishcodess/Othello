@@ -1,9 +1,9 @@
 import ControladorPersistencia.CtrlPersitencia;
 
-import Dominio.Logros;
-import Dominio.Partida;
-import Dominio.Ranking;
-import Dominio.Tablero;
+import Dominio.Ranking.Logros;
+import Dominio.Partida.Partida;
+import Dominio.Ranking.Ranking;
+import Dominio.Partida.Tablero;
 import MyException.MyException;
 
 import java.io.IOException;

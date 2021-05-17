@@ -1,6 +1,8 @@
 package ControladorPersistencia;
 
-import Dominio.*;
+import Dominio.Partida.Partida;
+import Dominio.Partida.Tablero;
+import Dominio.Ranking.*;
 import MyException.MyException;
 
 import java.io.BufferedReader;

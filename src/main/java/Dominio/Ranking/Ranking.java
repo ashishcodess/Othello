@@ -1,4 +1,4 @@
-package Dominio;
+package Dominio.Ranking;
 
 import MyException.MyException;
 
