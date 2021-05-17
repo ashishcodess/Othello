@@ -174,8 +174,8 @@ public class CtrlPresentacion {
     public int presentacion_consultar_tam_ranking() {return ctrlDominio.consultar_tam_ranking();}
 
     /**
-     * Metodo consultar size del ranking (desde capa Presentacion)
-     * @return devuelve el size del ranking
+     * Metodo obtener tablero
+     * @return devuelve el tablero de la partida como una matriz de enteros (desde la Capa de Dominio)
      * */
-    //public int[][] presentacionObtenerTablero() {return ctrlDominio.getTableroPartida();}
+    public int[][] presentacion_ObtenerTablero() {return ctrlDominio.getTableroPartida();}
 }

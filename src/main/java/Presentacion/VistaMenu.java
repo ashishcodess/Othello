@@ -8,7 +8,11 @@ import java.awt.event.WindowEvent;
 
 
 /*
-* SERGIO: FALTA POR HACER VISTAS DE CARGAR/BORRAR PARTIDA, CREAR TABLERO, BORRAR TABLERO
+* SERGIO: FALTA POR HACER VISTAS:
+*  - CARGAR/BORRAR PARTIDA
+*  - Cargar el 2do jugador para las partidas de Persona vs Persona
+*  - CREAR TABLERO
+*  - BORRAR TABLERO
 * */
 
 public class VistaMenu {
