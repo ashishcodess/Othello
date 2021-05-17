@@ -1,11 +1,13 @@
 package Presentacion;
 
+import ControladorPersistencia.CtrlPersitencia;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
-
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 public class VistaTablero {
@@ -13,18 +15,18 @@ public class VistaTablero {
     private final CtrlPresentacion iCtrlPresentacion;
     private final JPanel panelPrincipal = new JPanel();
 
-    private final String imagen_vacia = "./src/files/fichas/vacia.png";
-    private final String imagen_disponible = "./src/files/fichas/disponible.png";
-    private final String imagen_blanca = "./src/files/fichas/blanca.png";
-    private final String imagen_negra = "./src/files/fichas/negra.png";
+    private String imagen_vacia = "";
+    private String imagen_disponible = "";
+    private String imagen_blanca = "";
+    private String imagen_negra = "";
 
 
-    private JPanel panelBotones = new JPanel();
-    private JButton bottonPasarTurno = new JButton("Pasar turno");
-    private JLabel labelSeparador = new JLabel("         ");
-    private JLabel labelOpcionesPartida = new JLabel("Opciones de partida");
-    private JButton bottonGuardarPartida = new JButton("Guardar Partida");
-    private JButton bottonFinalizarPartida = new JButton("Finalizar Partida");
+    private final JPanel panelBotones = new JPanel();
+    private final JButton bottonPasarTurno = new JButton("Pasar turno");
+    private final JLabel labelSeparador = new JLabel("         ");
+    private final JLabel labelOpcionesPartida = new JLabel("Opciones de partida");
+    private final JButton bottonGuardarPartida = new JButton("Guardar Partida");
+    private final JButton bottonFinalizarPartida = new JButton("Finalizar Partida");
 
 
 
@@ -61,14 +63,14 @@ public class VistaTablero {
     }
 
     private final JFrame frameVista = new JFrame("Vista Tablero");
-    private JButton[][] botonesMatriz = new JButton[8][8];
-    private JPanel tablero;
+    private final JButton[][] botonesMatriz = new JButton[8][8];
 
 
     public VistaTablero(CtrlPresentacion pCtrlPresentacion)  {
         iCtrlPresentacion = pCtrlPresentacion;
         frameVista.setLayout(new BorderLayout()); // 5 zonas (North, South, East, West, Center)
         inicializar_frameVista();
+        obtener_dir_imagenes();
         inicializar_Componentes();
         asignar_listenersComponentes();
         inicializar_menubarVista();
@@ -88,13 +90,18 @@ public class VistaTablero {
         frameVista.setPreferredSize(frameVista.getMinimumSize());
         frameVista.setResizable(false);
         frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameVista.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frameVista.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent evt) {
+                salir_del_juego();
+            }
+        });
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
     }
 
     private void inicializar_Componentes() {
-        tablero = new JPanel(new GridLayout(0,8));
+        JPanel tablero = new JPanel(new GridLayout(0, 8));
         tablero.setBorder((new LineBorder(Color.BLACK)));
 
         //int[][] tableroPartida = iCtrlPresentacion.presentacionObtenerTablero();
@@ -137,6 +144,13 @@ public class VistaTablero {
         panelPrincipal.add(panelBotones,BorderLayout.EAST);
     }
 
+    private void obtener_dir_imagenes() {
+        imagen_vacia = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_VACIA);
+        imagen_disponible = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_DISPONIBLE);
+        imagen_blanca = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_BLANCA);
+        imagen_negra = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_NEGRA);
+    }
+
     public void hacerVisible(boolean b) {
         frameVista.pack();
         frameVista.setVisible(b);
@@ -144,12 +158,20 @@ public class VistaTablero {
     }
 
 
+    /**
+     * Metodo WindowPerfomed para cerrar la ventana
+     * */
+    private void salir_del_juego() {
+        iCtrlPresentacion.presentacion_exportar_ranking();
+        System.exit(0);
+    }
+
     public void actionPerformed_botones(ActionEvent event) {
-        for (int i = 0; i < botonesMatriz.length; ++i) {
-            for (int j = 0; j < botonesMatriz[i].length; ++j) {
-                if (event.getSource() == botonesMatriz[i][j]) {
+        for (JButton[] jButtons : botonesMatriz) {
+            for (JButton jButton : jButtons) {
+                if (event.getSource() == jButton) {
                     String s = getImagen();
-                    botonesMatriz[i][j].setIcon(new ImageIcon(s));
+                    jButton.setIcon(new ImageIcon(s));
                 }
             }
         }

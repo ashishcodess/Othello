@@ -2,6 +2,8 @@ package Presentacion;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class VistaCreditos {
 
@@ -34,7 +36,12 @@ public class VistaCreditos {
         frameVista.setPreferredSize(frameVista.getMinimumSize());
         frameVista.setResizable(false);
         frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameVista.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frameVista.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent evt) {
+                salir_del_juego();
+            }
+        });
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
 
@@ -59,6 +66,13 @@ public class VistaCreditos {
         frameVista.setEnabled(b);
     }
 
+    /**
+     * Metodo WindowPerfomed para cerrar la ventana
+     * */
+    private void salir_del_juego() {
+        iCtrlPresentacion.presentacion_exportar_ranking();
+        System.exit(0);
+    }
 
     /**
      * Metodo para asignar los listeners a cada componente

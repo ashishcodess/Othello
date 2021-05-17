@@ -76,6 +76,10 @@ public class CtrlDominio {
         return idRes;
     }
 
+    public String dominio_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG t) {
+        return cp.consultar_dir_IMG(t);
+    }
+
     /**
     * Metodo exportar ranking (desde Dominio)
     * */

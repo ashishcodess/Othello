@@ -1,11 +1,12 @@
 package Presentacion;
 
+import ControladorPersistencia.CtrlPersitencia;
 import Dominio.CtrlDominio;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-enum vistaActiva{LOGIN, MENU, RANKING, CREDITOS, TABLERO, PRUEBA, CONFIGPARTIDA} //agregar en funcion de las necesidades
+enum vistaActiva{LOGIN, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA} //agregar en funcion de las necesidades
 
 public class CtrlPresentacion {
 
@@ -17,7 +18,6 @@ public class CtrlPresentacion {
     private final VistaCreditos vistaCreditos;
     private final VistaTablero vistaTablero;
     private final VistaConfigPartida vistaConfigPartida;
-    private final VistaPrueba vistaPrueba;
 
     /**
      * Creadora por defecto de CtrlPresentacion
@@ -32,7 +32,6 @@ public class CtrlPresentacion {
         vistaCreditos = new VistaCreditos(this);
         vistaTablero  = new VistaTablero(this);
         vistaConfigPartida = new VistaConfigPartida(this);
-        vistaPrueba = new VistaPrueba(this);
     }
 
     /**
@@ -56,7 +55,6 @@ public class CtrlPresentacion {
         vistaCreditos.hacerVisible(false);
         vistaTablero.hacerVisible(false);
         vistaConfigPartida.hacerVisible(false);
-        vistaPrueba.hacerVisible(false); //eliminar vista cuando tengamos el el tablero bien
         switch (a) {
             case LOGIN:
                 vistaLogin.hacerVisible(true);
@@ -75,9 +73,6 @@ public class CtrlPresentacion {
                 break;
             case CONFIGPARTIDA:
                 vistaConfigPartida.hacerVisible(true);
-                break;
-            case PRUEBA:
-                vistaPrueba.hacerVisible(true);
                 break;
         }
     }
@@ -98,6 +93,11 @@ public class CtrlPresentacion {
      * @return devuelve la informacion que esta logueado dentro del juego
      * */
     public String presentacion_get_info_usuario_activo() {return ctrlDominio.get_info_usuario_activo();}
+
+
+    public String presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG t) {
+        return ctrlDominio.dominio_consultar_dir_imagen_fichas(t);
+    }
 
     /**
      * Metodo registro usuario (desde Capa Presentacion)

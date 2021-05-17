@@ -9,9 +9,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 public class CtrlPersitencia {
-
-
 
     private final InputOutput io = new InputOutput();
 
@@ -25,8 +24,9 @@ public class CtrlPersitencia {
     private int idMax_partida;
     private int idMax_tablero;
 
-
-
+    //imagenes
+    public enum tipoIMG {IMG_VACIA,IMG_DISPONIBLE,IMG_NEGRA,IMG_BLANCA}
+    private final String dirImagenes;
 
     public CtrlPersitencia() {
         this.dirIni = "./src/files/";
@@ -34,11 +34,10 @@ public class CtrlPersitencia {
         this.dir_usuarios = this.dirIni + "users/";
         this.dir_ranking =  this.dirIni + "ranking/";
         this.dir_tablero =  this.dirIni + "tableros/";
-
+        this.dirImagenes = this.dirIni + "fichas/";
         InicializarDirPersitencia();
         calcular_IDs_maximos();
     }
-
 
 
     public CtrlPersitencia(String s_path) {
@@ -47,7 +46,7 @@ public class CtrlPersitencia {
         this.dir_usuarios = this.dirIni + "users/";
         this.dir_ranking =  this.dirIni + "ranking/";
         this.dir_tablero =  this.dirIni + "tableros/";
-
+        this.dirImagenes = this.dirIni + "fichas/";
         InicializarDirPersitencia();
         calcular_IDs_maximos();
     }
@@ -69,6 +68,26 @@ public class CtrlPersitencia {
             io.crearDirectorio(dir_usuarios);
             io.crearDirectorio(dir_tablero);
         }
+    }
+
+
+    public String consultar_dir_IMG(tipoIMG t) {
+        String s = dirImagenes;
+        switch (t) {
+            case IMG_VACIA:
+                s = s + "vacia.png";
+                break;
+            case IMG_DISPONIBLE:
+                s = s + "disponible.png";
+                break;
+            case IMG_BLANCA:
+                s = s + "blanca.png";
+                break;
+            case IMG_NEGRA:
+                s = s + "negra.png";
+                break;
+        }
+        return s;
     }
 
     /**

@@ -4,6 +4,8 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -36,7 +38,7 @@ public class VistaRanking {
     private final JPanel panelBotonesRanking = new JPanel();
     private final JButton buttonCargarRanking = new JButton("Cargar Ranking");
     private final JButton buttonLimpiarRanking= new JButton("Limpiar Ranking");
-    private final JComboBox comboBoxOrdenar = new JComboBox();
+    private final JComboBox<String> comboBoxOrdenar = new JComboBox<>();
     private final JButton buttonOrdenar = new JButton("Ordenar");
 
 
@@ -112,7 +114,12 @@ public class VistaRanking {
         frameVista.setPreferredSize(frameVista.getMinimumSize());
         frameVista.setResizable(false);
         frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameVista.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frameVista.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent evt) {
+                salir_del_juego();
+            }
+        });
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
     }
@@ -133,7 +140,7 @@ public class VistaRanking {
 
 
     /**
-     * Metodo para inicializar todos los paneles
+     * Metodo para inicializar todos los panelesº
      * */
     private void inicializar_paneles() {
         //PANEL BOTONES_GENERAL
@@ -226,6 +233,15 @@ public class VistaRanking {
 
 
     /////////// LISTENERS (+ su asignacion)
+
+    /**
+     * Metodo WindowPerfomed para cerrar la ventana
+     * */
+    private void salir_del_juego() {
+        iCtrlPresentacion.presentacion_exportar_ranking();
+        System.exit(0);
+    }
+
     /**
      * Metodo cargar_logros (guarda la informacion de los logros en los TextFields assignados por estos)
      * * */
