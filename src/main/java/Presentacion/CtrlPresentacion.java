@@ -48,66 +48,37 @@ public class CtrlPresentacion {
      * @param a dependiendo de la enumeracion de vistaActiva hace visible una vista u otra (para gestion de vistas)
      * */
     public void hacerVisibleVista(vistaActiva a) {
+        vistaLogin.hacerVisible(false);
+        vistaMenu.hacerVisible(false);
+        vistaConfigPartida.hacerVisible(false);
+        //vistaPartida.hacerVisible(false);
+        vistaRanking.hacerVisible(false);
+        vistaCreditos.hacerVisible(false);
+        vistaTablero.hacerVisible(false);
+        vistaConfigPartida.hacerVisible(false);
+        vistaPrueba.hacerVisible(false); //eliminar vista cuando tengamos el el tablero bien
         switch (a) {
             case LOGIN:
                 vistaLogin.hacerVisible(true);
-                vistaMenu.hacerVisible(false);
-                vistaConfigPartida.hacerVisible(false);
-                //vistaPartida.hacerVisible(false);
-                vistaRanking.hacerVisible(false);
-                vistaCreditos.hacerVisible(false);
                 break;
             case MENU:
-                vistaLogin.hacerVisible(false);
                 vistaMenu.hacerVisible(true);
-                vistaConfigPartida.hacerVisible(false);
-                //vistaPartida.hacerVisible(false);
-                vistaRanking.hacerVisible(false);
-                vistaCreditos.hacerVisible(false);
                 break;
             case RANKING:
-                vistaLogin.hacerVisible(false);
-                vistaMenu.hacerVisible(false);
-                vistaConfigPartida.hacerVisible(false);
-                //vistaPartida.hacerVisible(false);
                 vistaRanking.hacerVisible(true);
-                vistaCreditos.hacerVisible(false);
                 break;
             case CREDITOS:
-                vistaLogin.hacerVisible(false);
-                vistaMenu.hacerVisible(false);
-                vistaConfigPartida.hacerVisible(false);
-                //vistaPartida.hacerVisible(false);
-                vistaRanking.hacerVisible(false);
                 vistaCreditos.hacerVisible(true);
                 break;
             case TABLERO:
-                vistaLogin.hacerVisible(false);
-                vistaMenu.hacerVisible(false);
-                vistaConfigPartida.hacerVisible(false);
-                //vistaPartida.hacerVisible(false);
-                vistaRanking.hacerVisible(false);
-                vistaCreditos.hacerVisible(false);
                 vistaTablero.hacerVisible(true);
-                vistaConfigPartida.hacerVisible(false);
                 break;
             case CONFIGPARTIDA:
-                vistaLogin.hacerVisible(false);
-                vistaMenu.hacerVisible(false);
-                //vistaPartida.hacerVisible(false);
-                vistaRanking.hacerVisible(false);
-                vistaCreditos.hacerVisible(false);
-                vistaTablero.hacerVisible(false);
                 vistaConfigPartida.hacerVisible(true);
                 break;
-
             case PRUEBA:
                 vistaPrueba.hacerVisible(true);
-                vistaLogin.hacerVisible(false);
-                vistaMenu.hacerVisible(false);
-                vistaRanking.hacerVisible(false);
-                vistaCreditos.hacerVisible(false);
-                vistaTablero.hacerVisible(false);
+                break;
         }
     }
 
