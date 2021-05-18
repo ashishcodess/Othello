@@ -19,19 +19,24 @@ public class VistaCargarTablero {
     private final JPanel panelPrincipal = new JPanel();
     private JFrame frameVista = new JFrame("Vista Tablero");
 
-    private final JButton[][] botonesMatriz = new JButton[8][8];
+    private int modo = -1;
 
+    private final JButton[][] botonesMatriz = new JButton[8][8];
 
 
     private final JPanel panelBotones = new JPanel();
     private final JButton buttonCargar = new JButton("Cargar Tablero");
     private final JButton buttonBorrar = new JButton("Borrar Tablero");
     private final JButton buttonLimpiar = new JButton("Limpiar");
+    private final JButton buttonMenu = new JButton("Menu Principal");
     private JComboBox<String> selector_tablero = new JComboBox<>();
+
+    private int id_tablero_seleccionado = -1;
 
 
     private final JMenuBar menubarVista = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
+    private final JMenuItem menuitemMenu = new JMenuItem("Menu Principal");
     private final JMenuItem menuitemQuit = new JMenuItem("Salir");
 
 
@@ -53,6 +58,7 @@ public class VistaCargarTablero {
     }
 
     private void inicializar_menubarVista() {
+        menuFile.add(menuitemMenu);
         menuFile.add(menuitemQuit);
         menubarVista.add(menuFile);
         frameVista.setJMenuBar(menubarVista);
@@ -65,13 +71,21 @@ public class VistaCargarTablero {
         imagen_negra = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_NEGRA);
     }
 
-    public void hacerVisible(boolean b) {
+    public void hacerVisible(boolean b, int t) {
         frameVista.pack();
         frameVista.setVisible(b);
         frameVista.setEnabled(b);
-        //if (b) recargar_comboBox_tableros();
+        modo = t;
+        recargar_info();
     }
 
+    private void recargar_info() {
+        //recargar_comboBox_tableros();
+        if (modo == 1) {
+            buttonCargar.setEnabled(false);
+        }
+        else buttonCargar.setEnabled(true);
+    }
 
     private void inicializar_Componentes() {
         JPanel tablero = new JPanel(new GridLayout(0, 8));
@@ -86,9 +100,6 @@ public class VistaCargarTablero {
                 tablero.add(botonesMatriz[i][j]);
             }
         }
-        /*panelPrincipal.setLayout(new FlowLayout());
-        panelPrincipal.add(tablero);*/
-
 
         JPanel panelAux = new JPanel();
         panelAux.setLayout(new BorderLayout());
@@ -99,6 +110,7 @@ public class VistaCargarTablero {
         panelAux2.setLayout(new FlowLayout());
         panelAux2.add(selector_tablero);
         panelAux2.add(buttonLimpiar);
+        panelAux2.add(buttonMenu);
 
         panelAux.add(panelAux2,BorderLayout.NORTH);
         panelAux.add(buttonCargar,BorderLayout.CENTER);
@@ -106,7 +118,6 @@ public class VistaCargarTablero {
 
         panelBotones.add(panelAux);
         panelPrincipal.add(panelBotones);
-        //panelPrincipal.add(buttonLimpiar);
 
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.add(tablero,BorderLayout.CENTER);
@@ -114,7 +125,10 @@ public class VistaCargarTablero {
     }
 
     private void recargar_comboBox_tableros() {
+        selector_tablero.removeAllItems();
         ArrayList<String> tableros_disponibles = iCtrlPresentacion.obtener_lista_tableros_disponibles();
+        System.out.println("entra en recargar combobox");
+        for (int i = 0; i < tableros_disponibles.size(); ++i) System.out.println(tableros_disponibles.get(i));
         JComboBox<String> combo= new JComboBox<>();
         for (int i = 0; i < tableros_disponibles.size(); ++i) {
             combo.addItem(tableros_disponibles.get(i));
@@ -158,37 +172,54 @@ public class VistaCargarTablero {
         }
     }
 
-    private int obtener_info_selector_tablero() {
+    private void obtener_info_selector_tablero() {
         String s = selector_tablero.getSelectedItem().toString();
-        System.out.println(s);
-        int id = 0;
+        id_tablero_seleccionado = -1;
         try {
-            id = Integer.parseInt(s);
+            id_tablero_seleccionado = Integer.parseInt(s);
         }
         catch (Exception e) {}
-        return id;
     }
 
     private void listener_selector_tablero() {
-        int id = obtener_info_selector_tablero();
-        int[][] tab = iCtrlPresentacion.cargarTablero(id);
+        int[][] tab = iCtrlPresentacion.cargarTablero(id_tablero_seleccionado);
         cargarImagenes_tablero(tab);
+        obtener_info_selector_tablero();
     }
 
     private void listener_boton_borrar() {
-        int id = obtener_info_selector_tablero();
-        iCtrlPresentacion.borrar_tablero(id);
+        //int id = obtener_info_selector_tablero();
+        obtener_info_selector_tablero();
+        System.out.println("borrando id: " + id_tablero_seleccionado);
+        if (id_tablero_seleccionado != -1) iCtrlPresentacion.borrar_tablero(id_tablero_seleccionado);
         recargar_comboBox_tableros();
     }
 
+    private void listener_boton_cargar() {
+        System.out.println("cargando");
+    }
 
     public void asignar_listenersComponentes() {
         selector_tablero.addActionListener
                 (event -> listener_selector_tablero());
+
         buttonLimpiar.addActionListener
                 (event -> limpiar_vista_previa_tablero());
+
+        buttonCargar.addActionListener
+                (event -> listener_boton_cargar());
+
         buttonBorrar.addActionListener
                 (event -> listener_boton_borrar());
+
+        buttonMenu.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+
+        menuitemMenu.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+
+        menuitemQuit.addActionListener
+                (event -> iCtrlPresentacion.salir_del_juego());
     }
 
 }

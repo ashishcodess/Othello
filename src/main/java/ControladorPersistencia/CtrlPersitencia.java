@@ -347,7 +347,6 @@ public class CtrlPersitencia {
             String sAux[] = s.split(".txt");
             as.set(i, sAux[0]);
         }
-
         return as;
     }
 

@@ -10,7 +10,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
-enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA, CARGARTABLERO} //agregar en funcion de las necesidades
+enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA, CARGARTABLERO, BORRARTABLERO} //agregar en funcion de las necesidades
 
 
 public class CtrlPresentacion {
@@ -94,7 +94,7 @@ public class CtrlPresentacion {
         vistaCreditos.hacerVisible(false);
         vistaTablero.hacerVisible(false);
         vistaConfigPartida.hacerVisible(false);
-        vistaCargarTablero.hacerVisible(false);
+        vistaCargarTablero.hacerVisible(false, 2);
         switch (a) {
             case LOGIN:
                 vistaLogin.hacerVisible(true,tipoJugador.JUGADOR1);
@@ -118,7 +118,10 @@ public class CtrlPresentacion {
                 vistaConfigPartida.hacerVisible(true);
                 break;
             case CARGARTABLERO:
-                vistaCargarTablero.hacerVisible(true);
+                vistaCargarTablero.hacerVisible(true,1);
+                break;
+            case BORRARTABLERO:
+                vistaCargarTablero.hacerVisible(true,0);
                 break;
         }
     }
