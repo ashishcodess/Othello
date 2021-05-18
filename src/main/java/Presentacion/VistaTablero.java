@@ -138,7 +138,7 @@ public class VistaTablero {
                 tablero.add(botonesMatriz[i][j]);
             }
         }
-        panelBotones.setLayout(new FlowLayout());
+        //panelBotones.setLayout(new FlowLayout());
         panelBotones.setLayout(new BoxLayout(panelBotones,BoxLayout.PAGE_AXIS));
         panelBotones.add(bottonPasarTurno);
         panelBotones.add(labelSeparador);

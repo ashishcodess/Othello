@@ -10,7 +10,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
-enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA} //agregar en funcion de las necesidades
+enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA, CARGARTABLERO} //agregar en funcion de las necesidades
 
 
 public class CtrlPresentacion {
@@ -26,6 +26,7 @@ public class CtrlPresentacion {
     private final VistaTablero vistaTablero;
     private final VistaConfigPartida vistaConfigPartida;
     private final VistaPartida vistaPartida;
+    private final VistaCargarTablero vistaCargarTablero;
 
     /**
      * Creadora por defecto de CtrlPresentacion
@@ -39,13 +40,15 @@ public class CtrlPresentacion {
         vistaPartida = new VistaPartida(this);
         vistaCreditos = new VistaCreditos(this);
         vistaTablero  = new VistaTablero(this);
+        vistaCargarTablero = new VistaCargarTablero(this);
     }
 
     /**
      * inicializa la vista (con la VistaLogin como ventana inicial)
      * */
     public void inicializarPresentacion() {
-        hacerVisibleVista(vistaActiva.LOGIN);
+        //hacerVisibleVista(vistaActiva.LOGIN);
+        hacerVisibleVista(vistaActiva.CARGARTABLERO); //pruebas
     }
 
 
@@ -89,6 +92,7 @@ public class CtrlPresentacion {
         vistaCreditos.hacerVisible(false);
         vistaTablero.hacerVisible(false);
         vistaConfigPartida.hacerVisible(false);
+        vistaCargarTablero.hacerVisible(false);
         switch (a) {
             case LOGIN:
                 vistaLogin.hacerVisible(true,tipoJugador.JUGADOR1);
@@ -110,6 +114,9 @@ public class CtrlPresentacion {
                 break;
             case CONFIGPARTIDA:
                 vistaConfigPartida.hacerVisible(true);
+                break;
+            case CARGARTABLERO:
+                vistaCargarTablero.hacerVisible(true);
                 break;
         }
     }
