@@ -55,17 +55,6 @@ public class JugadorMaquina extends Jugador {
     }
 
     /*Sets y Gets*/
-    /**
-     * Operacion set del atributo ID
-     * @param nuevoID indica el nuevo valor que tomara el atributo id
-     */
-    public void modificar_id_maquina(int nuevoID) { super.modificar_id(nuevoID); } //Aunque para las maquinas creo yo que no es necesario modificar su ID
-
-    /**
-     * Operacion set del atributo profundidad_MinMax
-     * @param nuevaProfundidad indica el nuevo valor que tomara el atributo profundidad_MinMax
-     */
-    public void modificar_profundidad(int nuevaProfundidad) {this.profundidad_MinMax = nuevaProfundidad;}
 
     /**
      * Operacion get del atributo ID
