@@ -3,6 +3,7 @@ package Presentacion;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 
 /*SERGIO: FALTA SELECTOR DE IA, BOTON PARA ACCEDER A UN MENU DONDE SE MUESTRAN LOS TABLEROS PERSONALIZADOS Y OPCION
@@ -32,7 +33,10 @@ public class VistaConfigPartida {
     private final JRadioButton personaVsPersonaRadioButton = new JRadioButton("Jugador vs Jugador");
     private final JRadioButton personaVsIARadioButton = new JRadioButton("Jugador vs IA");
     private final JRadioButton IAVsIARadioButton = new JRadioButton("IA vs IA");
+    private JComboBox<String> selectorIA_0 = new JComboBox<>();
+    private JComboBox<String> selectorIA_1 = new JComboBox<>();
     private final JButton buttonLoginUser2 = new JButton("Login Jugador 2");
+    private JComboBox<String> selectorIA_2 = new JComboBox<>();
 
     private final JButton comenzarPartidaButton = new JButton("Comenzar Partida!");
     private final JButton menuButton = new JButton("Volver al menú");
@@ -79,7 +83,7 @@ public class VistaConfigPartida {
      * Metodo para inicializar frame
      * */
     private void inicializar_frameVista() {
-        frameVista = iCtrlPresentacion.configuracion_frame(450,250, "Configuracion de Partida");
+        frameVista = iCtrlPresentacion.configuracion_frame(450,350, "Configuracion de Partida");
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
     }
@@ -91,6 +95,14 @@ public class VistaConfigPartida {
         menuFile.add(menuitemQuit);
         menubarVista.add(menuFile);
         frameVista.setJMenuBar(menubarVista);
+    }
+
+    private JComboBox<String> inicializar_comboBox() {
+        JComboBox<String> combo= new JComboBox<>();
+        for (String s : Arrays.asList("facil_1", "facil_2", "normal_1", "normal_2", "dificil_1","dificil_2")) {
+            combo.addItem(s);
+        }
+        return combo;
     }
 
     /**
@@ -105,9 +117,17 @@ public class VistaConfigPartida {
         panelCentral.setLayout(new FlowLayout());
 
         //PANEL MODO DE JUEGO
+
         panelModoDeJuego.add(labelModoDeJuego);
         panelModoDeJuego.add(IAVsIARadioButton);
+        selectorIA_0 = inicializar_comboBox();
+        selectorIA_1 = inicializar_comboBox();
+        panelModoDeJuego.add(selectorIA_0);
+        panelModoDeJuego.add(selectorIA_1);
         panelModoDeJuego.add(personaVsIARadioButton);
+
+        selectorIA_2 = inicializar_comboBox();
+        panelModoDeJuego.add(selectorIA_2);
         panelModoDeJuego.add(personaVsPersonaRadioButton);
         panelModoDeJuego.add(buttonLoginUser2);
 
@@ -125,12 +145,12 @@ public class VistaConfigPartida {
         panelBotones.add(menuButton);
         panelBotones.add(comenzarPartidaButton);
 
-
         //PANEL CENTRAL
         panelCentral.add(panelModoDeJuego,BorderLayout.WEST);
         panelCentral.add(panelReglas,BorderLayout.EAST);
 
         //PANEL PRINCIPAL
+        //panelPrincipal.add(panelModoDeJuego,BorderLayout.WEST);
         panelPrincipal.add(panelCentral, BorderLayout.CENTER);
         panelPrincipal.add(panelBotones,BorderLayout.SOUTH);
     }

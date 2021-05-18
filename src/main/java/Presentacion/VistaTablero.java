@@ -10,6 +10,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 
+//IDEA HACER CLASE EXTENDIDA DE ESTO (SIN LOS BOTONES
+
 public class VistaTablero {
 
     private final CtrlPresentacion iCtrlPresentacion;
@@ -37,6 +39,7 @@ public class VistaTablero {
     private final JMenu menuPartida = new JMenu("Partida");
     private final JMenuItem menuitemGuardarPartida = new JMenuItem("Guardar Partida");
     private final JMenuItem menuitemFinalizarPartida = new JMenuItem("Finalizar Partida");
+
 
 
     private int prueba_switch_imagen = 0;
@@ -91,6 +94,19 @@ public class VistaTablero {
         contentPane.add(panelPrincipal);
     }
 
+    private void obtener_dir_imagenes() {
+        imagen_vacia = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_VACIA);
+        imagen_disponible = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_DISPONIBLE);
+        imagen_blanca = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_BLANCA);
+        imagen_negra = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_NEGRA);
+    }
+
+    public void hacerVisible(boolean b) {
+        frameVista.pack();
+        frameVista.setVisible(b);
+        frameVista.setEnabled(b);
+    }
+
     private void inicializar_Componentes() {
         JPanel tablero = new JPanel(new GridLayout(0, 8));
         tablero.setBorder((new LineBorder(Color.BLACK)));
@@ -122,7 +138,6 @@ public class VistaTablero {
                 tablero.add(botonesMatriz[i][j]);
             }
         }
-
         panelBotones.setLayout(new FlowLayout());
         panelBotones.setLayout(new BoxLayout(panelBotones,BoxLayout.PAGE_AXIS));
         panelBotones.add(bottonPasarTurno);
@@ -134,6 +149,8 @@ public class VistaTablero {
         panelPrincipal.add(tablero,BorderLayout.CENTER);
         panelPrincipal.add(panelBotones,BorderLayout.EAST);
     }
+
+
     /*
     private void inicializar_Componentes() {
         JPanel tablero = new JPanel(new GridLayout(0, 8));
@@ -171,18 +188,6 @@ public class VistaTablero {
 
    */
 
-    private void obtener_dir_imagenes() {
-        imagen_vacia = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_VACIA);
-        imagen_disponible = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_DISPONIBLE);
-        imagen_blanca = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_BLANCA);
-        imagen_negra = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_NEGRA);
-    }
-
-    public void hacerVisible(boolean b) {
-        frameVista.pack();
-        frameVista.setVisible(b);
-        frameVista.setEnabled(b);
-    }
 
     public void actionPerformed_botones(ActionEvent event) {
         for (JButton[] jButtons : botonesMatriz) {
@@ -206,7 +211,7 @@ public class VistaTablero {
  }
 */
 
-    private void asignar_listenersComponentes() {
+    public void asignar_listenersComponentes() {
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 botonesMatriz[i][j].addActionListener

@@ -10,7 +10,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
-enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA} //agregar en funcion de las necesidades
+enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA} //agregar en funcion de las necesidades
 
 
 public class CtrlPresentacion {
@@ -25,6 +25,7 @@ public class CtrlPresentacion {
     private final VistaCreditos vistaCreditos;
     private final VistaTablero vistaTablero;
     private final VistaConfigPartida vistaConfigPartida;
+    private final VistaPartida vistaPartida;
 
     /**
      * Creadora por defecto de CtrlPresentacion
@@ -34,11 +35,10 @@ public class CtrlPresentacion {
         vistaRanking = new VistaRanking(this);
         vistaLogin = new VistaLogin(this,tipoJugador.JUGADOR1);
         vistaMenu = new VistaMenu(this);
-        //vistaConfigPartida = new VistaConfigPartida(this);
-        //vistaPartida = new VistaPartida(this);
+        vistaConfigPartida = new VistaConfigPartida(this);
+        vistaPartida = new VistaPartida(this);
         vistaCreditos = new VistaCreditos(this);
         vistaTablero  = new VistaTablero(this);
-        vistaConfigPartida = new VistaConfigPartida(this);
     }
 
     /**
@@ -84,7 +84,7 @@ public class CtrlPresentacion {
         vistaLogin.hacerVisible(false,tipoJugador.JUGADOR1);
         vistaMenu.hacerVisible(false);
         vistaConfigPartida.hacerVisible(false);
-        //vistaPartida.hacerVisible(false);
+        vistaPartida.hacerVisible(false);
         vistaRanking.hacerVisible(false);
         vistaCreditos.hacerVisible(false);
         vistaTablero.hacerVisible(false);

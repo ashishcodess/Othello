@@ -158,7 +158,6 @@ public class VistaMenu {
         panelMenuRanking.add(buttonConsultarRanking);
         buttonConsultarRanking.setToolTipText("Consulta el ranking, estadisticas de un jugador o los logros");
 
-
         //PANEL MENU OTRAS OPCIONES
         panelOtrasOpciones.setLayout(new FlowLayout());
         panelOtrasOpciones.add(labelOtros);
@@ -178,7 +177,6 @@ public class VistaMenu {
 
         //PANEL INFO
         panelInfo.add(panelBotonesMenu);
-
 
         //PANEL PRINCIPAL
         panelPrincipal.setLayout(new BorderLayout());
