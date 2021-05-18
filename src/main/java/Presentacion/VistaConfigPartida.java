@@ -39,6 +39,9 @@ public class VistaConfigPartida {
     private final JButton buttonLoginUser2 = new JButton("Login Jugador 2");
     private JComboBox<String> selectorIA_2 = new JComboBox<>();
 
+    //en caso de cierto, al iniciar la partida saltaria al menu de seleccion de tablero
+    private JCheckBox tableroCheckBox = new JCheckBox("Tablero Personalizado?");
+
     private final JButton comenzarPartidaButton = new JButton("Comenzar Partida!");
     private final JButton menuButton = new JButton("Volver al menú");
 
@@ -84,7 +87,7 @@ public class VistaConfigPartida {
      * Metodo para inicializar frame
      * */
     private void inicializar_frameVista() {
-        frameVista = iCtrlPresentacion.configuracion_frame(450,350, "Configuracion de Partida");
+        frameVista = iCtrlPresentacion.configuracion_frame(550,450, "Configuracion de Partida");
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
     }
@@ -137,6 +140,7 @@ public class VistaConfigPartida {
         panelModoDeJuego.add(buttonLoginUser2);
 
 
+
         verticalCheckBox.setEnabled(true);
         horizontalCheckBox.setEnabled(true);
         diagonalCheckBox.setEnabled(true);
@@ -147,6 +151,7 @@ public class VistaConfigPartida {
         panelReglas.add(diagonalCheckBox);
 
         //PANEL BOTONES
+        panelBotones.add(tableroCheckBox);
         panelBotones.add(menuButton);
         panelBotones.add(comenzarPartidaButton);
 
@@ -155,7 +160,6 @@ public class VistaConfigPartida {
         panelCentral.add(panelReglas,BorderLayout.EAST);
 
         //PANEL PRINCIPAL
-        //panelPrincipal.add(panelModoDeJuego,BorderLayout.WEST);
         panelPrincipal.add(panelCentral, BorderLayout.CENTER);
         panelPrincipal.add(panelBotones,BorderLayout.SOUTH);
     }
@@ -163,6 +167,7 @@ public class VistaConfigPartida {
     /*public void actionPerformed_comenzarPartidaButton(ActionEvent event){
         Set<Position> posDisp = iCtrlPresentacion.presentacionObternerCasillasDisponibles();
     }*/
+
     private void asignarListeners() {
         comenzarPartidaButton.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO));
