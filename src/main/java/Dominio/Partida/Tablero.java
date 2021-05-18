@@ -801,6 +801,10 @@ public class Tablero {
                 this.negras.size() == 0 || (this.disponibles.size() == 0 && !this.disponibles_anterior));
     }
 
+    public void setTurnoAnterior(boolean b){
+     this.disponibles_anterior = b;
+    }
+
     /**
      * Operacion toMatrix
      * @return devuelve la informacion del tablero en una matriz de enteros
