@@ -168,9 +168,16 @@ public class VistaConfigPartida {
         Set<Position> posDisp = iCtrlPresentacion.presentacionObternerCasillasDisponibles();
     }*/
 
+    private void gestionar_inicio_de_juego() {
+        if (tableroCheckBox.isSelected()) {
+            //SALTAR AL MENU DE CARGA DE TABLERO
+        }
+        else iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);
+    }
+
     private void asignarListeners() {
         comenzarPartidaButton.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO));
+                (event -> gestionar_inicio_de_juego());
 
         /*comenzarPartidaButton.addActionListener
                  (this::actionPerformed_comenzarPartidaButton);*/
