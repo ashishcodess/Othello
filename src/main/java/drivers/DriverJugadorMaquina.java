@@ -47,7 +47,6 @@ public class DriverJugadorMaquina {
         JugadorMaquina res = new JugadorMaquina(idMaquina, profundidad);
         System.out.println("Maquina creada con ID:" + idMaquina);
         System.out.println("Prueba get_MaquinaID : " + res.get_MaquinaID());
-        System.out.println("Prueba get_Nickname : " + res.get_Nickname());
-        System.out.println("Prueba get_Nickname : " + res.get_profundidadMaquina());
+        System.out.println("Prueba get_Profundidad : " + res.get_profundidadMaquina());
     }
 }
