@@ -24,8 +24,7 @@ public class JugadorMaquina extends Jugador {
      * */
     public JugadorMaquina () {
         super();
-        this.succesores = new HashSet<Tablero>();
-        Set<Position> disponibles= new HashSet<Position>();
+        this.succesores = new HashSet<>();
     }
 
     /**
@@ -35,8 +34,7 @@ public class JugadorMaquina extends Jugador {
     public JugadorMaquina (int idMaquina) throws MyException{
         super(idMaquina);
         if (idMaquina > 5)throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idMaquina);
-        this.succesores = new HashSet<Tablero>();
-        Set<Position> disponibles= new HashSet<Position>();
+        this.succesores = new HashSet<>();
     }
 
     @Override
@@ -53,22 +51,10 @@ public class JugadorMaquina extends Jugador {
         super(idMaquina);
         if (idMaquina > 5)throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idMaquina);
         this.profundidad_MinMax = profundidad;
-        this.succesores = new HashSet<Tablero>();
-        Set<Position> disponibles= new HashSet<Position>();
+        this.succesores = new HashSet<>();
     }
 
     /*Sets y Gets*/
-    /**
-     * Operacion set del atributo ID
-     * @param nuevoID indica el nuevo valor que tomara el atributo id
-     */
-    public void modificar_id_maquina(int nuevoID) { super.modificar_id(nuevoID); } //Aunque para las maquinas creo yo que no es necesario modificar su ID
-
-    /**
-     * Operacion set del atributo profundidad_MinMax
-     * @param nuevaProfundidad indica el nuevo valor que tomara el atributo profundidad_MinMax
-     */
-    public void modificar_profundidad(int nuevaProfundidad) {this.profundidad_MinMax = nuevaProfundidad;}
 
     /**
      * Operacion get del atributo ID
