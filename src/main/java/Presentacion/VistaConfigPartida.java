@@ -131,6 +131,10 @@ public class VistaConfigPartida {
         IAVsIARadioButton.setSelected(false);
         personaVsIARadioButton.setSelected(false);
         personaVsPersonaRadioButton.setSelected(false);
+        buttonLoginUser2.setVisible(false);
+        selectorIA_0.setVisible(false);
+        selectorIA_1.setVisible(false);
+        selectorIA_2.setVisible(false);
 
         panelModoDeJuego.add(labelModoDeJuego);
         panelModoDeJuego.add(IAVsIARadioButton);
@@ -232,15 +236,23 @@ public class VistaConfigPartida {
         IAVsIARadioButton.setSelected(false);
         personaVsIARadioButton.setSelected(false);
         personaVsPersonaRadioButton.setSelected(false);
+        buttonLoginUser2.setVisible(false);
+        selectorIA_0.setVisible(false);
+        selectorIA_1.setVisible(false);
+        selectorIA_2.setVisible(false);
         switch (i) {
             case 0:
                 IAVsIARadioButton.setSelected(true);
+                selectorIA_0.setVisible(true);
+                selectorIA_1.setVisible(true);
                 break;
             case 1:
                 personaVsIARadioButton.setSelected(true);
+                selectorIA_2.setVisible(true);
                 break;
             case 2:
                 personaVsPersonaRadioButton.setSelected(true);
+                buttonLoginUser2.setVisible(true);
                 break;
         }
     }

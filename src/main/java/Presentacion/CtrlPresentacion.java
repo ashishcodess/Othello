@@ -47,8 +47,8 @@ public class CtrlPresentacion {
      * inicializa la vista (con la VistaLogin como ventana inicial)
      * */
     public void inicializarPresentacion() {
-        //hacerVisibleVista(vistaActiva.LOGIN);
-        hacerVisibleVista(vistaActiva.CARGARTABLERO); //pruebas
+        hacerVisibleVista(vistaActiva.LOGIN);
+        //hacerVisibleVista(vistaActiva.CARGARTABLERO); //pruebas
     }
 
 
