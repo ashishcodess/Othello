@@ -108,7 +108,6 @@ public class VistaConfigPartida {
         panelModoDeJuego.add(personaVsIARadioButton);
         panelModoDeJuego.add(personaVsPersonaRadioButton);
 
-
         verticalCheckBox.setEnabled(true);
         horizontalCheckBox.setEnabled(true);
         diagonalCheckBox.setEnabled(true);
