@@ -138,7 +138,7 @@ public class VistaTablero {
                 tablero.add(botonesMatriz[i][j]);
             }
         }
-        panelBotones.setLayout(new FlowLayout());
+        //panelBotones.setLayout(new FlowLayout());
         panelBotones.setLayout(new BoxLayout(panelBotones,BoxLayout.PAGE_AXIS));
         panelBotones.add(bottonPasarTurno);
         panelBotones.add(labelSeparador);
@@ -212,12 +212,17 @@ public class VistaTablero {
 */
 
     public void asignar_listenersComponentes() {
+        //TABLERO
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 botonesMatriz[i][j].addActionListener
                         (this::actionPerformed_botones);
             }
         }
+
+
+        bottonFinalizarPartida.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
 
     }
 }

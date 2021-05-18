@@ -72,6 +72,7 @@ public class CtrlDominio {
         return "Usuarios activos:         J1 - (ID:" + code + " , nickname: " + nickname + ")            " + "J2 - (ID2:" + id_2 + " , nickname2: " + nick_2 + ")";
     }
 
+
     /**
      * Metodo registro usuario
      * @param nick nickname de usuario a registrar
@@ -169,13 +170,16 @@ public class CtrlDominio {
         return ranking.ordenar_ranking(orden);
     }
 
-
     /**
      * Metodo consultar size del ranking
      * @return devuelve el size del ranking
      * */
     public int consultar_tam_ranking() {return ranking.consultar_tam_ranking();}
 
+
+    public void crear_partida(ArrayList<String> as) {
+        //partida_activa = new Partida()
+    }
 
     /**
      * Metodo listar partidas disponibles
@@ -188,20 +192,12 @@ public class CtrlDominio {
         return cp.ctrl_listar_partidas_disponibles(id,nick);
     }
 
-    /**
-     * Metodo listar tableros disponibles
-     * @return devuelve un Arraylist de strings con todos los tableros almacenados en el sistema
-     * */
-    public ArrayList<String> listar_tableros_disponibles() {
-        return cp.ctrl_tableros_disponibles();
-    }
 
 
     public void dominio_guardar_partida() throws IOException {
         ArrayList<String> as = partida_activa.toArrayList();
         cp.ctrl_guardar_partida(as);
     }
-
 
 
     /**
@@ -221,6 +217,14 @@ public class CtrlDominio {
      */
     public boolean dominio_borrar_partida(int idPartida) throws IOException {
         return cp.ctrl_borrar_partida(idPartida);
+    }
+
+    /**
+     * Metodo listar tableros disponibles
+     * @return devuelve un Arraylist de strings con todos los tableros almacenados en el sistema
+     * */
+    public ArrayList<String> listar_tableros_disponibles() {
+        return cp.ctrl_tableros_disponibles();
     }
 
     /**
@@ -278,7 +282,6 @@ public class CtrlDominio {
 
 
 
-    //FUNCION NO TESTEADA
     private static int ejecutarRondaPartida(Partida p, ArrayList<String> argum) {
         /*ejecutar 1 ronda de la partida:
          * mandarle el estado de como va la partida hacia la capa de presentacion
@@ -312,38 +315,6 @@ public class CtrlDominio {
 
         }
         return res;
-    }
-
-
-    //FUNCION NO TESTEADA
-    private static Partida iniciarPartida(ArrayList<String> argum) {
-        //Argum: argumentos/info necesaria para crear la partida
-        try {
-            int idPartida = cp.ctrl_get_nuevo_ID_Partida();
-            int id1, id2;
-            String nick1;
-            String nick2;
-            int modo = Integer.parseInt(argum.get(0));
-            if (modo<0 || modo > 2) throw new MyException(MyException.tipoExcepcion.MODO_INCORRECTO,modo);
-            int[] reglas = new int[3];
-            reglas[0] = Integer.parseInt(argum.get(1));
-            reglas[1] = Integer.parseInt(argum.get(2));
-            reglas[2] = Integer.parseInt(argum.get(3));
-            /*Para CapaPresentacion: hay que hacer funcion de seleccionar
-            el bando cuando estamos en modo2*/
-
-            //seleccion de id's y de nicknames's (caso de no tener que sea "")
-            id1 = Integer.parseInt(argum.get(4));
-            nick1 = argum.get(5);
-            id2 = Integer.parseInt(argum.get(6));
-            nick2 = argum.get(7);
-            Tablero t = new Tablero();//por ahora, diferenciar si se quiere cargar un tablero nuevo
-            return new Partida(idPartida,modo,reglas,0,id1,nick1,id2,nick2,t);
-        }
-        catch (Exception e) {
-            //que hacer cuando salta alguna excepcion
-        }
-        return null; //por ahora para pruebas
     }
 
 

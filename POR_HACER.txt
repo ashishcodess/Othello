@@ -1,0 +1,22 @@
+LISTA DE COSAS PENDIENTES POR HACER (2da entrega):
+
+
+CAPA DE DOMINIO:
+
+- Acabar IA (+ test IA)
+- Testear IA y ver que finaliza una partida desde la capa de Dominio
+- Drivers de la IA
+- Drivers de tablero
+- Añadir algun logro mas (si es posible)
+- Acabar driverPersitencia para tableros (Sergio)
+
+
+CAPA DE PRESENTACION:
+
+- Acabar vista de configuracion de partida
+- Vista de partida (a partir de la vista de tablero)
+- Vista para cargar/borrar partida
+- Vista crear tablero (a partir de la vista de tablero)
+- Vista de borrar tablero
+-
+

@@ -3,7 +3,9 @@ package Presentacion;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 
 /*SERGIO: FALTA SELECTOR DE IA, BOTON PARA ACCEDER A UN MENU DONDE SE MUESTRAN LOS TABLEROS PERSONALIZADOS Y OPCION
@@ -40,7 +42,7 @@ public class VistaConfigPartida {
     private JComboBox<String> selectorIA_2 = new JComboBox<>();
 
     //en caso de cierto, al iniciar la partida saltaria al menu de seleccion de tablero
-    private JCheckBox tableroCheckBox = new JCheckBox("Tablero Personalizado?");
+    private final JCheckBox tableroCheckBox = new JCheckBox("Tablero Personalizado?");
 
     private final JButton comenzarPartidaButton = new JButton("Comenzar Partida!");
     private final JButton menuButton = new JButton("Volver al menú");
@@ -126,7 +128,7 @@ public class VistaConfigPartida {
         selectorIA_2 = inicializar_comboBox();
 
         //FALTARIA DESDE EL LISTENER QUE AL PULSAR UNA EL RESTO SE DESMARQUEN
-        IAVsIARadioButton.setSelected(true);
+        IAVsIARadioButton.setSelected(false);
         personaVsIARadioButton.setSelected(false);
         personaVsPersonaRadioButton.setSelected(false);
 
@@ -138,7 +140,6 @@ public class VistaConfigPartida {
         panelModoDeJuego.add(selectorIA_2);
         panelModoDeJuego.add(personaVsPersonaRadioButton);
         panelModoDeJuego.add(buttonLoginUser2);
-
 
         verticalCheckBox.setEnabled(true);
         horizontalCheckBox.setEnabled(true);
@@ -167,11 +168,81 @@ public class VistaConfigPartida {
         Set<Position> posDisp = iCtrlPresentacion.presentacionObternerCasillasDisponibles();
     }*/
 
+    private int consultar_info_comboBox(JComboBox<String> e) {
+        String s = Objects.requireNonNull(e.getSelectedItem()).toString();
+        int id = -1;
+        switch (s) {
+            case "facil_1":
+                id = 0;
+                break;
+            case "facil_2":
+                id = 1;
+                break;
+            case "normal_1":
+                id = 2;
+                break;
+            case "normal_2":
+                id = 3;
+                break;
+            case "dificil_1":
+                id = 4;
+                break;
+            case "dificil_2":
+                id = 5;
+                break;
+        }
+        return id;
+    }
+
+
+    private ArrayList<Integer> recoger_info_modo_juego() {
+        //0->modo , 1 -> ID-maquina1, 2 -> ID-maquina2
+        ArrayList<Integer> cosas = new ArrayList<>();
+        int i_aux;
+        if (IAVsIARadioButton.isSelected()) {
+            cosas.add(0);
+            i_aux = consultar_info_comboBox(selectorIA_0);
+            cosas.add(i_aux);
+            cosas.add(consultar_info_comboBox(selectorIA_1));
+        }
+        else if (personaVsIARadioButton.isSelected()) {
+            cosas.add(1);
+            i_aux = consultar_info_comboBox(selectorIA_2);
+            cosas.add(i_aux);
+        }
+        else if (personaVsPersonaRadioButton.isSelected()) {
+            cosas.add(2);
+        }
+        return cosas;
+    }
+
+
     private void gestionar_inicio_de_juego() {
         if (tableroCheckBox.isSelected()) {
-            //SALTAR AL MENU DE CARGA DE TABLERO
+            //SALTAR AL MENU DE CARGA DE TABLERO Y LUEGO CREAR PARTIDA CON LA CONFIGURACION NECESARIA
         }
-        else iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);
+        else { //CREAR PARTIDA CON LA CONFIGURACION
+            ArrayList<Integer> as = recoger_info_modo_juego();
+            for(int i = 0; i < as.size(); ++i) System.out.println(as.get(i));
+            iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);
+        }
+    }
+
+    private void gestion_ComboBox_uno_ON(int i) {
+        IAVsIARadioButton.setSelected(false);
+        personaVsIARadioButton.setSelected(false);
+        personaVsPersonaRadioButton.setSelected(false);
+        switch (i) {
+            case 0:
+                IAVsIARadioButton.setSelected(true);
+                break;
+            case 1:
+                personaVsIARadioButton.setSelected(true);
+                break;
+            case 2:
+                personaVsPersonaRadioButton.setSelected(true);
+                break;
+        }
     }
 
     private void asignarListeners() {
@@ -187,5 +258,13 @@ public class VistaConfigPartida {
         buttonLoginUser2.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.LOGIN_USER2));
 
+        IAVsIARadioButton.addActionListener
+                (event -> gestion_ComboBox_uno_ON(0));
+
+        personaVsIARadioButton.addActionListener
+                (event -> gestion_ComboBox_uno_ON(1));
+
+        personaVsPersonaRadioButton.addActionListener
+                (event -> gestion_ComboBox_uno_ON(2));
     }
 }

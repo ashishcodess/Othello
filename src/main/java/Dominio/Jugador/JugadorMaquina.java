@@ -1,12 +1,5 @@
 package Dominio.Jugador;
 
-/*
-*
-* falta hacer IA maquina
-*
-* */
-
-import Dominio.Partida.Casilla;
 import Dominio.Partida.Position;
 import Dominio.Partida.Tablero;
 import MyException.MyException;
@@ -22,19 +15,16 @@ public class JugadorMaquina extends Jugador {
     private int profundidad_MinMax;
 
     /**atributo estados succesores para la implementación del algoritmo de la IA*/
-    private Set<Tablero> succesores;
+    private final Set<Tablero> succesores;
 
-    /**atributo posiciones disponibles para la implementación del algoritmo de la IA*/
-    private Set<Position> disponibles;
 
-    /*Constructora*/
+
     /**
      * Constructora por defecto (vacia) de JugadorMaquina
      * */
     public JugadorMaquina () {
         super();
-        this.succesores = new HashSet<Tablero>();
-        Set<Position> disponibles= new HashSet<Position>();
+        this.succesores = new HashSet<>();
     }
 
     /**
@@ -44,8 +34,7 @@ public class JugadorMaquina extends Jugador {
     public JugadorMaquina (int idMaquina) throws MyException{
         super(idMaquina);
         if (idMaquina > 5)throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idMaquina);
-        this.succesores = new HashSet<Tablero>();
-        Set<Position> disponibles= new HashSet<Position>();
+        this.succesores = new HashSet<>();
     }
 
     @Override
@@ -62,22 +51,10 @@ public class JugadorMaquina extends Jugador {
         super(idMaquina);
         if (idMaquina > 5)throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idMaquina);
         this.profundidad_MinMax = profundidad;
-        this.succesores = new HashSet<Tablero>();
-        Set<Position> disponibles= new HashSet<Position>();
+        this.succesores = new HashSet<>();
     }
 
     /*Sets y Gets*/
-    /**
-     * Operacion set del atributo ID
-     * @param nuevoID indica el nuevo valor que tomara el atributo id
-     */
-    public void modificar_id_maquina(int nuevoID) { super.modificar_id(nuevoID); } //Aunque para las maquinas creo yo que no es necesario modificar su ID
-
-    /**
-     * Operacion set del atributo profundidad_MinMax
-     * @param nuevaProfundidad indica el nuevo valor que tomara el atributo profundidad_MinMax
-     */
-    public void modificar_profundidad(int nuevaProfundidad) {this.profundidad_MinMax = nuevaProfundidad;}
 
     /**
      * Operacion get del atributo ID
@@ -105,40 +82,34 @@ public class JugadorMaquina extends Jugador {
         if(depth == 0 || t.finalizada())return t;
 
         Tablero mejorHijo = t;
-        Set<Tablero> estados_hijos = this.genera_succesores(t, turno);
+        Set<Tablero> estados_hijos = this.genera_estados(t, turno);
         int evaluacion;
 
-        if(turno%2 == 0){
-            int maxeval = -1000;
-            for(Tablero aux : estados_hijos){
-                aux = valorMaxNegras(aux,turno+1,alpha, beta, this.get_profundidadMaquina()-1);
-                evaluacion = aux.getHeuristicValueNegras();
+        for(Tablero aux : estados_hijos){
+            aux = valorMaxNegras(aux,turno+1,alpha, beta, this.get_profundidadMaquina()-1);
+            evaluacion = aux.getHeuristicValueNegras();
+            if(turno%2 == 0){
+                int maxeval = -1000;
                 if(maxeval < evaluacion){
                     maxeval = evaluacion;
                     mejorHijo = aux;
                 }
-                if(beta<=alpha)break;
             }
-            return mejorHijo;
-        }
-
-        else {
-            int mineval = 1000;
-            for(Tablero aux : estados_hijos){
-                aux = valorMaxNegras(aux,turno+1,alpha, beta, this.get_profundidadMaquina()-1);
-                evaluacion = aux.getHeuristicValueNegras();
+            else {
+                int mineval = 1000;
                 if(mineval > evaluacion){
                     mineval = evaluacion;
                     mejorHijo = aux;
                 }
-                if(beta<=alpha)break;
             }
-            return mejorHijo;
+
+            if(beta<=alpha)break;
         }
+        return mejorHijo;
     }
 
     /**
-     * Operacion para tirar ficha ejecutando el algoritmo minMax en caso que la maquina sea las fichas blancas
+     * Operacion para tirar ficha ejecutando el algoritmo minMax en caso que la maquina sea las fichas de color blanco
      * @param t el tablero de la partida
      * @param turno turno de la partida en ese momento en concreto
      * @param alpha parámetro alfa del algoritmo
@@ -148,39 +119,35 @@ public class JugadorMaquina extends Jugador {
      */
     public Tablero valorMaxBlancas(Tablero t, int turno, int alpha, int beta, int depth){
 
-        if(depth == 0 || t.finalizada())return t;
-
-        Tablero mejorHijo = t;
-        Set<Tablero> estados_hijos = this.genera_succesores(t, turno);
-        int evaluacion;
-
-        if(turno%2 != 0){
-            int maxeval = -1000;
-            for(Tablero aux : estados_hijos){
-                aux = valorMaxBlancas(aux,turno+1,alpha, beta, this.get_profundidadMaquina()-1);
-                 evaluacion = aux.getHeuristicValueBlancas();
-                 if(maxeval < evaluacion){
-                     maxeval = evaluacion;
-                     mejorHijo = aux;
-                 }
-                 if(beta<=alpha)break;
-            }
-            return mejorHijo;
+        if(depth == 0 || t.finalizada()){
+            return t;
         }
 
-        else {
-            int mineval = 1000;
-            for(Tablero aux : estados_hijos){
-                aux = valorMaxBlancas(aux,turno+1,alpha, beta, this.get_profundidadMaquina()-1);
-                evaluacion = aux.getHeuristicValueBlancas();
+        Tablero mejorHijo = t;
+        Set<Tablero> estados_hijos = this.genera_estados(t, turno);
+        int evaluacion;
+
+        for(Tablero aux : estados_hijos){
+            aux = valorMaxBlancas(aux,turno+1,alpha, beta, this.get_profundidadMaquina()-1);
+             evaluacion = aux.getHeuristicValueBlancas();
+            if(turno%2 != 0){
+                int maxeval = -1000;
+                if(maxeval < evaluacion){
+                    maxeval = evaluacion;
+                    mejorHijo = aux;
+                }
+            }
+            else{
+                int mineval = 1000;
                 if(mineval > evaluacion){
                     mineval = evaluacion;
                     mejorHijo = aux;
                 }
-                if(beta<=alpha)break;
             }
-            return mejorHijo;
+
+             if(beta<=alpha)break;
         }
+        return mejorHijo;
     }
 
     @Override
@@ -191,6 +158,8 @@ public class JugadorMaquina extends Jugador {
      * @return devuelve el tablero con la ficha colocada por la IA
      * */
     public Tablero posicion(Tablero t, int turno){
+
+        //Comentad esta parte y descomentad lo otro para poder ejecutar con maquina
 
         if(turno%2 == 0)t = valorMaxBlancas(t,turno,-100, 100, this.get_profundidadMaquina());
         else t = valorMaxNegras(t,turno,-100, 100, this.get_profundidadMaquina());
@@ -214,15 +183,16 @@ public class JugadorMaquina extends Jugador {
      * Función que genera los estados succesores del tablero que recibe como parámetro
      * @param t es el tablero a partir del cual generamos su lista de estados succesores
      * @param turno es el turno del tablero t
-     * @return retorna la lista de estados hijos de ese tablero, resultantes de cada uno de los posibles movimientos de este
+     * @return retorna la lista de estados succesores de ese tablero, resultantes de cada uno de los posibles movimientos de este
      */
-    public Set<Tablero> genera_succesores(Tablero t, int turno){
+    public Set<Tablero> genera_estados(Tablero t, int turno){
 
-        Tablero aux; Casilla disponible;
+        Tablero aux;
         t.calcularCasillasDisponiblesDiagonales(turno);
         t.calcularCasillasDisponiblesHorizontal(turno);
         t.calcularCasillasDisponiblesVertical(turno);
-        disponibles = t.getCasillasDisponibles();
+
+        Set<Position> disponibles = t.getCasillasDisponibles();
 
         for(Position pos : disponibles){
 

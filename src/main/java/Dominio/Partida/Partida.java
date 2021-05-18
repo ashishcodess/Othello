@@ -219,7 +219,9 @@ public class Partida {
         if (finalizada == 2 || (this.turno >= 60 && this.tablero.getCasillasDisponibles().size() == 0)) {
             comprobarPartidaFinalizada();
             return this.ganador; //si hay dos turnos sin poder mover ningun jugador, la partida se acaba.
-        }
+
+        } //Sergi C: hay que cambiarlo por el metodo finalizada de tablero y hay que ir actualizando el booleano
+        // disponibles_anterior del tablero
         else {
             reglasCasillasDisponibles();
             this.disponibles = this.tablero.getCasillasDisponibles();
