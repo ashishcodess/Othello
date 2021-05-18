@@ -33,6 +33,7 @@ public class VistaConfigPartida {
     private final JRadioButton personaVsPersonaRadioButton = new JRadioButton("Jugador vs Jugador");
     private final JRadioButton personaVsIARadioButton = new JRadioButton("Jugador vs IA");
     private final JRadioButton IAVsIARadioButton = new JRadioButton("IA vs IA");
+
     private JComboBox<String> selectorIA_0 = new JComboBox<>();
     private JComboBox<String> selectorIA_1 = new JComboBox<>();
     private final JButton buttonLoginUser2 = new JButton("Login Jugador 2");
@@ -117,16 +118,20 @@ public class VistaConfigPartida {
         panelCentral.setLayout(new FlowLayout());
 
         //PANEL MODO DE JUEGO
+        selectorIA_0 = inicializar_comboBox();
+        selectorIA_1 = inicializar_comboBox();
+        selectorIA_2 = inicializar_comboBox();
+
+        //FALTARIA DESDE EL LISTENER QUE AL PULSAR UNA EL RESTO SE DESMARQUEN
+        IAVsIARadioButton.setSelected(true);
+        personaVsIARadioButton.setSelected(false);
+        personaVsPersonaRadioButton.setSelected(false);
 
         panelModoDeJuego.add(labelModoDeJuego);
         panelModoDeJuego.add(IAVsIARadioButton);
-        selectorIA_0 = inicializar_comboBox();
-        selectorIA_1 = inicializar_comboBox();
         panelModoDeJuego.add(selectorIA_0);
         panelModoDeJuego.add(selectorIA_1);
         panelModoDeJuego.add(personaVsIARadioButton);
-
-        selectorIA_2 = inicializar_comboBox();
         panelModoDeJuego.add(selectorIA_2);
         panelModoDeJuego.add(personaVsPersonaRadioButton);
         panelModoDeJuego.add(buttonLoginUser2);
