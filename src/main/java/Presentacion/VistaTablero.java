@@ -62,7 +62,7 @@ public class VistaTablero {
         return img;
     }
 
-    private final JFrame frameVista = new JFrame("Vista Tablero");
+    private JFrame frameVista = new JFrame("Vista Tablero");
     private final JButton[][] botonesMatriz = new JButton[8][8];
 
 
@@ -86,16 +86,7 @@ public class VistaTablero {
     }
 
     private void inicializar_frameVista() {
-        frameVista.setMinimumSize(new Dimension(950,850));
-        frameVista.setPreferredSize(frameVista.getMinimumSize());
-        frameVista.setResizable(false);
-        frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frameVista.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent evt) {
-                iCtrlPresentacion.salir_del_juego();
-            }
-        });
+        frameVista = iCtrlPresentacion.configuracion_frame(950,850,"Tablero");
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
     }
@@ -104,7 +95,7 @@ public class VistaTablero {
         JPanel tablero = new JPanel(new GridLayout(0, 8));
         tablero.setBorder((new LineBorder(Color.BLACK)));
 
-        int[][] tableroPartida = iCtrlPresentacion.presentacionObtenerTablero();
+        //int[][] tableroPartida = iCtrlPresentacion.presentacionObtenerTablero();
 
         Insets margenesBotones = new Insets(0,0,0,0);
         for (int i = 0; i < botonesMatriz.length; ++i) {

@@ -19,7 +19,7 @@ public class VistaRanking {
     private int iPanelActivo = 0; //para cambiar entre panel Ranking y estadisticas
 
     // Componentes de la interficie grafica
-    private final JFrame frameVista = new JFrame("Vista Ranking");
+    private JFrame frameVista = new JFrame("Vista Ranking");
     private final  JPanel panelPrincipal = new JPanel();
     private final  JPanel panelInfo = new JPanel();
     private JPanel panelActivo = new JPanel();
@@ -110,7 +110,7 @@ public class VistaRanking {
      * Metodo para inicializar frame
      * */
     private void inicializar_frameVista() {
-        frameVista.setMinimumSize(new Dimension(700,750));
+        /*frameVista.setMinimumSize(new Dimension(700,750));
         frameVista.setPreferredSize(frameVista.getMinimumSize());
         frameVista.setResizable(false);
         frameVista.setLocationRelativeTo(null);
@@ -119,7 +119,9 @@ public class VistaRanking {
             public void windowClosing(WindowEvent evt) {
                 iCtrlPresentacion.salir_del_juego();
             }
-        });
+        });*/
+
+        frameVista = iCtrlPresentacion.configuracion_frame(700,750,"Ranking");
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
     }

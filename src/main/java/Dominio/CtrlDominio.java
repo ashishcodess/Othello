@@ -18,16 +18,14 @@ public class CtrlDominio {
     private static CtrlPersitencia cp;
     private static Ranking ranking;
 
-    static int code; //ID jugador1
-    static String nickname; //nickname jugador1
+    private static int code; //ID jugador1
+    private static String nickname; //nickname jugador1
 
-    static int id_2; //ID jugador2
-    static String nick_2; //nickname jugador2
-
+    private static int id_2; //ID jugador2
+    private static String nick_2; //nickname jugador2
 
     private static int estado_partida; //para conocer el estado de la partida desde la capa de Presentacion
     private static Partida partida_activa;
-    private static Tablero tablero_activo;
 
 
     /**
@@ -36,6 +34,8 @@ public class CtrlDominio {
     public CtrlDominio() {
         code = -1;
         nickname = "";
+        id_2 = -1;
+        nick_2 = "";
         cp = new CtrlPersitencia();
         try {ranking = cp.ctrl_importar_ranking("ranking.txt");}
         catch (Exception e) {ranking = new Ranking();}
@@ -45,14 +45,21 @@ public class CtrlDominio {
      * metodo para loguearse como usuario
      * @param id identificador de usuario a hacer login
      * @param nick nickname de usuario a hacer login
+     * @param b si es falso login sobre Jugador 1, caso contrario sobre Jugador 2
      * @return devuelve 1 en caso de login correcto, 0 caso contrario
      * */
-    public int login_inicial_presentacion(int id, String nick) {
-        int res = 0;
+    public boolean login_presentacion(int id, String nick, boolean b) {
+        boolean res = false;
         if (cp.ctrl_existe_usuario(id,nick)) {
-            code = id;
-            nickname = nick;
-            res = 1;
+            if (!b) { //login usuario 1
+                code = id;
+                nickname = nick;
+            }
+            else { //login usuario 2
+                id_2 = id;
+                nick_2 = nick;
+            }
+            res = true;
         }
         return res;
     }
@@ -62,7 +69,7 @@ public class CtrlDominio {
      * @return devuelve la informacion que esta logueado dentro del juego
      * */
     public String get_info_usuario_activo() {
-        return "Usuario activo (ID:" + code + " , nickname: " + nickname + ")";
+        return "Usuarios activos:         J1 - (ID:" + code + " , nickname: " + nickname + ")            " + "J2 - (ID2:" + id_2 + " , nickname2: " + nick_2 + ")";
     }
 
     /**
@@ -346,7 +353,7 @@ public class CtrlDominio {
     }
 
     public Set<Position> getCasillasDisponibles(){
-        Set<Position> casillasDisponibles = tablero_activo.getCasillasDisponibles();
+        Set<Position> casillasDisponibles = partida_activa.getTableroPartida().getCasillasDisponibles();
         return casillasDisponibles;
     }
 

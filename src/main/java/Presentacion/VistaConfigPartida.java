@@ -1,13 +1,8 @@
 package Presentacion;
 
-import Dominio.Partida.Position;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.Set;
 
 
 /*SERGIO: FALTA SELECTOR DE IA, BOTON PARA ACCEDER A UN MENU DONDE SE MUESTRAN LOS TABLEROS PERSONALIZADOS Y OPCION
@@ -18,7 +13,7 @@ public class VistaConfigPartida {
     // Controlador de presentacion
     private final CtrlPresentacion iCtrlPresentacion;
 
-    private final JFrame frameVista = new JFrame("Configurar Partida");
+    private JFrame frameVista = new JFrame("Configurar Partida");
     private final JPanel panelPrincipal = new JPanel();
 
 
@@ -37,6 +32,7 @@ public class VistaConfigPartida {
     private final JRadioButton personaVsPersonaRadioButton = new JRadioButton("Jugador vs Jugador");
     private final JRadioButton personaVsIARadioButton = new JRadioButton("Jugador vs IA");
     private final JRadioButton IAVsIARadioButton = new JRadioButton("IA vs IA");
+    private final JButton buttonLoginUser2 = new JButton("Login Jugador 2");
 
     private final JButton comenzarPartidaButton = new JButton("Comenzar Partida!");
     private final JButton menuButton = new JButton("Volver al menú");
@@ -83,16 +79,7 @@ public class VistaConfigPartida {
      * Metodo para inicializar frame
      * */
     private void inicializar_frameVista() {
-        frameVista.setMinimumSize(new Dimension(450,250));
-        frameVista.setPreferredSize(frameVista.getMinimumSize());
-        frameVista.setResizable(false);
-        frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frameVista.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent evt) {
-                iCtrlPresentacion.salir_del_juego();
-            }
-        });
+        frameVista = iCtrlPresentacion.configuracion_frame(450,250, "Configuracion de Partida");
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
     }
@@ -122,6 +109,7 @@ public class VistaConfigPartida {
         panelModoDeJuego.add(IAVsIARadioButton);
         panelModoDeJuego.add(personaVsIARadioButton);
         panelModoDeJuego.add(personaVsPersonaRadioButton);
+        panelModoDeJuego.add(buttonLoginUser2);
 
 
         verticalCheckBox.setEnabled(true);
@@ -159,6 +147,9 @@ public class VistaConfigPartida {
 
         menuButton.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+
+        buttonLoginUser2.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.LOGIN_USER2));
 
     }
 }

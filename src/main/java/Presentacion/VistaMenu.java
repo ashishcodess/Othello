@@ -20,7 +20,7 @@ public class VistaMenu {
     private final CtrlPresentacion iCtrlPresentacion;
 
 
-    private final JFrame frameVista = new JFrame("Menu Principal");
+    private JFrame frameVista = new JFrame("Menu Principal");
 
     private final JPanel panelPrincipal = new JPanel();
     private final JPanel panelInfo = new JPanel();
@@ -96,8 +96,8 @@ public class VistaMenu {
      * Metodo para inicializar componentes (menuBar, paneles y frame)
      * */
     private void inicializarComponentes() {
-        inicializar_menubarVista();
         inicializar_frameVista();
+        inicializar_menubarVista();
         inicializar_paneles();
         asignar_listenersComponentes();
     }
@@ -107,16 +107,7 @@ public class VistaMenu {
      * Metodo para inicializar frame
      * */
     private void inicializar_frameVista() {
-        frameVista.setMinimumSize(new Dimension(600,300));
-        frameVista.setPreferredSize(frameVista.getMinimumSize());
-        frameVista.setResizable(false);
-        frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frameVista.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent evt) {
-                iCtrlPresentacion.salir_del_juego();
-            }
-        });
+        frameVista = iCtrlPresentacion.configuracion_frame(600,300,"Menu");
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
     }

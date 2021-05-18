@@ -2,8 +2,6 @@ package Presentacion;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class VistaCreditos {
 
@@ -13,7 +11,7 @@ public class VistaCreditos {
             +"\n    - Ashish Kshetri \n" + "\n    - Sergi Cassanmagnago Somoza \n"
             + "\n    - Sergi Bosquet Reyes \n";
 
-    private final JFrame frameVista = new JFrame("Creditos");
+    private JFrame frameVista = new JFrame("Creditos");
     private final JButton buttonOK = new JButton("Volver al menu principal");
 
     private final JMenuItem menuitemQuit = new JMenuItem("Salir");
@@ -33,16 +31,8 @@ public class VistaCreditos {
         panelPrincipal.add(buttonOK,BorderLayout.SOUTH);
         buttonOK.setToolTipText("Vuelva al menu principal");
 
-        frameVista.setMinimumSize(new Dimension(300,280));
-        frameVista.setPreferredSize(frameVista.getMinimumSize());
-        frameVista.setResizable(false);
-        frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frameVista.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent evt) {
-                salir_del_juego();
-            }
-        });
+
+        frameVista = iCtrlPresentacion.configuracion_frame(300,280, "Creditos");
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
 

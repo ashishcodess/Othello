@@ -2,15 +2,20 @@ package Presentacion;
 
 import ControladorPersistencia.CtrlPersitencia;
 import Dominio.CtrlDominio;
-import Dominio.Partida.Position;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Set;
 
-enum vistaActiva{LOGIN, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA} //agregar en funcion de las necesidades
+enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA} //agregar en funcion de las necesidades
+
 
 public class CtrlPresentacion {
+
+    public enum tipoJugador {JUGADOR1,JUGADOR2}
 
     private final CtrlDominio ctrlDominio;
 
@@ -27,7 +32,7 @@ public class CtrlPresentacion {
     public CtrlPresentacion() {
         ctrlDominio = new CtrlDominio();
         vistaRanking = new VistaRanking(this);
-        vistaLogin = new VistaLogin(this);
+        vistaLogin = new VistaLogin(this,tipoJugador.JUGADOR1);
         vistaMenu = new VistaMenu(this);
         //vistaConfigPartida = new VistaConfigPartida(this);
         //vistaPartida = new VistaPartida(this);
@@ -53,12 +58,30 @@ public class CtrlPresentacion {
     }
 
 
+
+    /*CONFIGURACION COMUN PARA TODOS LOS FRAMES, CAMBIA UNICAMENTE EL SIZE DE LA VENTANA*/
+    public JFrame configuracion_frame(int size_x, int size_y, String s) {
+        JFrame frameAux = new JFrame(s);
+        frameAux.setMinimumSize(new Dimension(size_x,size_y));
+        frameAux.setPreferredSize(frameAux.getMinimumSize());
+        frameAux.setResizable(false);
+        frameAux.setLocationRelativeTo(null);
+        frameAux.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frameAux.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent evt) {
+                salir_del_juego();
+            }
+        });
+        return frameAux;
+    }
+
+
     /**
      * Metodo hacerVisibleVista
      * @param a dependiendo de la enumeracion de vistaActiva hace visible una vista u otra (para gestion de vistas)
      * */
     public void hacerVisibleVista(vistaActiva a) {
-        vistaLogin.hacerVisible(false);
+        vistaLogin.hacerVisible(false,tipoJugador.JUGADOR1);
         vistaMenu.hacerVisible(false);
         vistaConfigPartida.hacerVisible(false);
         //vistaPartida.hacerVisible(false);
@@ -68,7 +91,10 @@ public class CtrlPresentacion {
         vistaConfigPartida.hacerVisible(false);
         switch (a) {
             case LOGIN:
-                vistaLogin.hacerVisible(true);
+                vistaLogin.hacerVisible(true,tipoJugador.JUGADOR1);
+                break;
+            case LOGIN_USER2:
+                vistaLogin.hacerVisible(true,tipoJugador.JUGADOR2);
                 break;
             case MENU:
                 vistaMenu.hacerVisible(true);
@@ -94,8 +120,17 @@ public class CtrlPresentacion {
      * @param nick nickname de usuario a hacer login
      * @return devuelve 1 en caso de login correcto, 0 caso contrario
      * */
-    public int presentacion_login(int id, String nick) {
-        return ctrlDominio.login_inicial_presentacion(id,nick);
+    public boolean presentacion_login(int id, String nick, tipoJugador a) {
+        boolean b = false;
+        switch (a) {
+            case JUGADOR1:
+                b = false;
+                break;
+            case JUGADOR2:
+                b = true;
+                break;
+        }
+        return ctrlDominio.login_presentacion(id,nick,b);
     }
 
 
