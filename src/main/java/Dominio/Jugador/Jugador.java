@@ -1,6 +1,7 @@
-package Dominio;
+package Dominio.Jugador;
 
 
+import Dominio.Partida.Tablero;
 import MyException.MyException;
 
 public abstract class Jugador {

@@ -1,14 +1,20 @@
 package Presentacion;
 
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
+
+
+/*SERGIO: FALTA SELECTOR DE IA, BOTON PARA ACCEDER A UN MENU DONDE SE MUESTRAN LOS TABLEROS PERSONALIZADOS Y OPCION
+* PARA CARGAR ESTE MISMO. IGUAL SE PUEDE AÑADIR ALGO MAS */
 
 public class VistaConfigPartida {
 
     // Controlador de presentacion
     private final CtrlPresentacion iCtrlPresentacion;
 
-    private final JFrame frameVista = new JFrame("Configurar Partida");
+    private JFrame frameVista = new JFrame("Configurar Partida");
     private final JPanel panelPrincipal = new JPanel();
 
 
@@ -27,6 +33,14 @@ public class VistaConfigPartida {
     private final JRadioButton personaVsPersonaRadioButton = new JRadioButton("Jugador vs Jugador");
     private final JRadioButton personaVsIARadioButton = new JRadioButton("Jugador vs IA");
     private final JRadioButton IAVsIARadioButton = new JRadioButton("IA vs IA");
+
+    private JComboBox<String> selectorIA_0 = new JComboBox<>();
+    private JComboBox<String> selectorIA_1 = new JComboBox<>();
+    private final JButton buttonLoginUser2 = new JButton("Login Jugador 2");
+    private JComboBox<String> selectorIA_2 = new JComboBox<>();
+
+    //en caso de cierto, al iniciar la partida saltaria al menu de seleccion de tablero
+    private JCheckBox tableroCheckBox = new JCheckBox("Tablero Personalizado?");
 
     private final JButton comenzarPartidaButton = new JButton("Comenzar Partida!");
     private final JButton menuButton = new JButton("Volver al menú");
@@ -73,11 +87,7 @@ public class VistaConfigPartida {
      * Metodo para inicializar frame
      * */
     private void inicializar_frameVista() {
-        frameVista.setMinimumSize(new Dimension(450,250));
-        frameVista.setPreferredSize(frameVista.getMinimumSize());
-        frameVista.setResizable(false);
-        frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameVista = iCtrlPresentacion.configuracion_frame(550,450, "Configuracion de Partida");
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
     }
@@ -89,6 +99,14 @@ public class VistaConfigPartida {
         menuFile.add(menuitemQuit);
         menubarVista.add(menuFile);
         frameVista.setJMenuBar(menubarVista);
+    }
+
+    private JComboBox<String> inicializar_comboBox() {
+        JComboBox<String> combo= new JComboBox<>();
+        for (String s : Arrays.asList("facil_1", "facil_2", "normal_1", "normal_2", "dificil_1","dificil_2")) {
+            combo.addItem(s);
+        }
+        return combo;
     }
 
     /**
@@ -103,10 +121,24 @@ public class VistaConfigPartida {
         panelCentral.setLayout(new FlowLayout());
 
         //PANEL MODO DE JUEGO
+        selectorIA_0 = inicializar_comboBox();
+        selectorIA_1 = inicializar_comboBox();
+        selectorIA_2 = inicializar_comboBox();
+
+        //FALTARIA DESDE EL LISTENER QUE AL PULSAR UNA EL RESTO SE DESMARQUEN
+        IAVsIARadioButton.setSelected(true);
+        personaVsIARadioButton.setSelected(false);
+        personaVsPersonaRadioButton.setSelected(false);
+
         panelModoDeJuego.add(labelModoDeJuego);
         panelModoDeJuego.add(IAVsIARadioButton);
+        panelModoDeJuego.add(selectorIA_0);
+        panelModoDeJuego.add(selectorIA_1);
         panelModoDeJuego.add(personaVsIARadioButton);
+        panelModoDeJuego.add(selectorIA_2);
         panelModoDeJuego.add(personaVsPersonaRadioButton);
+        panelModoDeJuego.add(buttonLoginUser2);
+
 
         verticalCheckBox.setEnabled(true);
         horizontalCheckBox.setEnabled(true);
@@ -118,9 +150,9 @@ public class VistaConfigPartida {
         panelReglas.add(diagonalCheckBox);
 
         //PANEL BOTONES
+        panelBotones.add(tableroCheckBox);
         panelBotones.add(menuButton);
         panelBotones.add(comenzarPartidaButton);
-
 
         //PANEL CENTRAL
         panelCentral.add(panelModoDeJuego,BorderLayout.WEST);
@@ -131,13 +163,29 @@ public class VistaConfigPartida {
         panelPrincipal.add(panelBotones,BorderLayout.SOUTH);
     }
 
+    /*public void actionPerformed_comenzarPartidaButton(ActionEvent event){
+        Set<Position> posDisp = iCtrlPresentacion.presentacionObternerCasillasDisponibles();
+    }*/
+
+    private void gestionar_inicio_de_juego() {
+        if (tableroCheckBox.isSelected()) {
+            //SALTAR AL MENU DE CARGA DE TABLERO
+        }
+        else iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);
+    }
 
     private void asignarListeners() {
         comenzarPartidaButton.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO));
+                (event -> gestionar_inicio_de_juego());
+
+        /*comenzarPartidaButton.addActionListener
+                 (this::actionPerformed_comenzarPartidaButton);*/
 
         menuButton.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+
+        buttonLoginUser2.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.LOGIN_USER2));
 
     }
 }

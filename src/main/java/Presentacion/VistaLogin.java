@@ -3,13 +3,15 @@ package Presentacion;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class VistaLogin {
 
     // Controlador de presentacion
     private final CtrlPresentacion iCtrlPresentacion;
 
-    private final JFrame frameVista = new JFrame("Login");
+    private JFrame frameVista = new JFrame("Login");
     private final JPanel panelPrincipal = new JPanel();
 
 
@@ -29,6 +31,10 @@ public class VistaLogin {
     private final JButton buttonLogin= new JButton("Login");
     private final JButton buttonLimpiarLogin= new JButton("Limpiar");
 
+    private JLabel labelJ1_J2 = new JLabel();
+
+    private CtrlPresentacion.tipoJugador tJugador;
+
     private final JTextField textoLoginFinal = new JTextField(15);
 
     //BARRA DE MENU
@@ -41,32 +47,51 @@ public class VistaLogin {
     /**
      * Constructora de VistaLogin
      * */
-    public VistaLogin(CtrlPresentacion pCtrlPresentacion) {
+
+    public VistaLogin(CtrlPresentacion pCtrlPresentacion, CtrlPresentacion.tipoJugador a) {
         iCtrlPresentacion = pCtrlPresentacion;
         frameVista.setLayout(new BorderLayout()); // 5 zonas (North, South, East, West, Center)
-        inicializarComponentes();
+        tJugador = a;
+        inicializarComponentes(tJugador);
     }
 
     /**
      *Metodo hacerVisible
      * @param b si TRUE entonces el frame sera visible, caso contrario estara desactivado
      * */
-    public void hacerVisible(boolean b) {
+    public void hacerVisible(boolean b, CtrlPresentacion.tipoJugador a) {
         frameVista.pack();
         frameVista.setVisible(b);
         frameVista.setEnabled(b);
+        if (b) {
+            tJugador = a;
+            clear_textos();
+        }
     }
 
+    private void clear_textos() {
+        switch (tJugador) {
+            case JUGADOR1:
+                labelJ1_J2.setText("Login de jugador: JUGADOR 1");
+                break;
+            case JUGADOR2:
+                labelJ1_J2.setText("Login de jugador: JUGADOR 2");
+                break;
+        }
+        textoNickname.setText("");
+        textoID.setText("");
+        textoRegistroNickname.setText("");
+    }
 
     /////////// INICIALIZACION DE COMPONENTES
 
     /**
      * Metodo para inicializar componentes (menuBar, paneles y frame)
      * */
-    private void inicializarComponentes() {
+    private void inicializarComponentes(CtrlPresentacion.tipoJugador a) {
         inicializar_frameVista();
         inicializar_menubarVista();
-        inicializar_paneles();
+        inicializar_paneles(a);
         asignar_listenersComponentes();
     }
 
@@ -74,11 +99,7 @@ public class VistaLogin {
      * Metodo para inicializar frame
      * */
     private void inicializar_frameVista() {
-        frameVista.setMinimumSize(new Dimension(650,250));
-        frameVista.setPreferredSize(frameVista.getMinimumSize());
-        frameVista.setResizable(false);
-        frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameVista = iCtrlPresentacion.configuracion_frame(650,250, "Login");
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
     }
@@ -93,13 +114,22 @@ public class VistaLogin {
         frameVista.setJMenuBar(menubarVista);
     }
 
+
     /**
      * Metodo para inicializar todos los paneles
      * */
-    private void inicializar_paneles() {
+    private void inicializar_paneles(CtrlPresentacion.tipoJugador a) {
         panelLogin.setLayout(new BorderLayout());
-        JLabel aa= new JLabel("Login de jugador:");
-        panelLogin.add(aa, BorderLayout.NORTH);
+        labelJ1_J2= new JLabel("");
+        switch (a) {
+            case JUGADOR1:
+                labelJ1_J2.setText("Login de jugador: JUGADOR 1");
+                break;
+            case JUGADOR2:
+                labelJ1_J2.setText("Login de jugador: JUGADOR 2");
+                break;
+        }
+        panelLogin.add(labelJ1_J2, BorderLayout.NORTH);
         pLogin1.setLayout(new FlowLayout());
         pLogin1.add(labelID);
         pLogin1.add(textoID);
@@ -124,8 +154,10 @@ public class VistaLogin {
         panelLoginPrincipal.setLayout(new BorderLayout());
         panelLoginPrincipal.add(panelLogin, BorderLayout.NORTH);
         panelLoginPrincipal.add(panelRegistro, BorderLayout.CENTER);
+
         textoLoginFinal.setEditable(false);
         panelLoginPrincipal.add(textoLoginFinal,BorderLayout.SOUTH);
+
 
         //PANEL PRINCIPAL
         panelPrincipal.setLayout(new FlowLayout());
@@ -144,10 +176,17 @@ public class VistaLogin {
         try {
             id = Integer.parseInt(textoID.getText());
             String nick = textoNickname.getText();
-            int res = iCtrlPresentacion.presentacion_login(id,nick);
-            if (res == 1) {
+            boolean res = iCtrlPresentacion.presentacion_login(id,nick,tJugador);
+            if (res) {
                 textoLoginFinal.setText("");
-                iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU);
+                switch (tJugador) {
+                    case JUGADOR1:
+                        iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU);
+                        break;
+                    case JUGADOR2:
+                        iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA);
+                        break;
+                }
             }
             else textoLoginFinal.setText("Login incorrecto (vuelve a introducir los datos)");
         }
@@ -164,6 +203,7 @@ public class VistaLogin {
         textoNickname.setText("");
         textoRegistroNickname.setText("");
     }
+
 
     /**
      * Metodo actionPerfomed del boton de Registrarse
@@ -191,10 +231,7 @@ public class VistaLogin {
                 (this::actionPerformed_buttonRegistrarse);
 
         menuitemQuit.addActionListener
-                (event -> {
-                    iCtrlPresentacion.presentacion_exportar_ranking();
-                    System.exit(0);
-                });
+                (event -> iCtrlPresentacion.salir_del_juego());
     }
 
 

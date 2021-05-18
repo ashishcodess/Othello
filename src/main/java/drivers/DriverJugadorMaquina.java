@@ -1,6 +1,6 @@
 package drivers;
 
-import Dominio.*;
+import Dominio.Jugador.JugadorMaquina;
 import MyException.MyException;
 
 import java.util.Scanner;

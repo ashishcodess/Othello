@@ -3,13 +3,24 @@ package Presentacion;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+
+/*
+* SERGIO: FALTA POR HACER VISTAS:
+*  - CARGAR/BORRAR PARTIDA
+*  - Cargar el 2do jugador para las partidas de Persona vs Persona
+*  - CREAR TABLERO
+*  - BORRAR TABLERO
+* */
 
 public class VistaMenu {
     // Controlador de presentacion
     private final CtrlPresentacion iCtrlPresentacion;
 
 
-    private final JFrame frameVista = new JFrame("Menu Principal");
+    private JFrame frameVista = new JFrame("Menu Principal");
 
     private final JPanel panelPrincipal = new JPanel();
     private final JPanel panelInfo = new JPanel();
@@ -85,8 +96,8 @@ public class VistaMenu {
      * Metodo para inicializar componentes (menuBar, paneles y frame)
      * */
     private void inicializarComponentes() {
-        inicializar_menubarVista();
         inicializar_frameVista();
+        inicializar_menubarVista();
         inicializar_paneles();
         asignar_listenersComponentes();
     }
@@ -96,11 +107,7 @@ public class VistaMenu {
      * Metodo para inicializar frame
      * */
     private void inicializar_frameVista() {
-        frameVista.setMinimumSize(new Dimension(600,300));
-        frameVista.setPreferredSize(frameVista.getMinimumSize());
-        frameVista.setResizable(false);
-        frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameVista = iCtrlPresentacion.configuracion_frame(600,300,"Menu");
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
     }
@@ -133,25 +140,33 @@ public class VistaMenu {
         panelMenuPartida.setLayout(new BoxLayout(panelMenuPartida,BoxLayout.PAGE_AXIS));
         panelMenuPartida.add(labelPartida);
         panelMenuPartida.add(buttonCrearPartida);
+        buttonCrearPartida.setToolTipText("Entra en el menu de config. de una Partida");
         panelMenuPartida.add(buttonCargarBorrarPartida);
+        buttonCrearPartida.setToolTipText("Entra en el menu para Cargar/Borrar una partida guardada por el usuario");
 
         //PANEL MENU TABLERO
         panelMenuTablero.setLayout(new BoxLayout(panelMenuTablero,BoxLayout.PAGE_AXIS));
         panelMenuTablero.add(labelTablero);
         panelMenuTablero.add(buttonCrearTablero);
+        buttonCrearTablero.setToolTipText("Entra en el menu de config. de una Tablero");
         panelMenuTablero.add(buttonBorrarTablero);
+        buttonBorrarTablero.setToolTipText("Entra en el menu para Borrar un tablero guardado en el sistema");
 
         //PANEL MENU RANKING
         panelMenuRanking.setLayout(new BoxLayout(panelMenuRanking,BoxLayout.PAGE_AXIS));
         panelMenuRanking.add(labelRanking);
         panelMenuRanking.add(buttonConsultarRanking);
+        buttonConsultarRanking.setToolTipText("Consulta el ranking, estadisticas de un jugador o los logros");
 
         //PANEL MENU OTRAS OPCIONES
         panelOtrasOpciones.setLayout(new FlowLayout());
         panelOtrasOpciones.add(labelOtros);
         panelOtrasOpciones.add(buttonLogin);
+        buttonLogin.setToolTipText("Volver al menu de Login (login con otro usuario)");
         panelOtrasOpciones.add(buttonCreditos);
+        buttonCreditos.setToolTipText("Muestra los creditos");
         panelOtrasOpciones.add(buttonSalir);
+        buttonSalir.setToolTipText("Salir del juego");
 
         //PANEL BOTONES GENERAL
         panelBotonesMenu.setLayout(new BorderLayout());
@@ -162,7 +177,6 @@ public class VistaMenu {
 
         //PANEL INFO
         panelInfo.add(panelBotonesMenu);
-
 
         //PANEL PRINCIPAL
         panelPrincipal.setLayout(new BorderLayout());
@@ -202,10 +216,7 @@ public class VistaMenu {
                 });
 
         menuitemQuit.addActionListener
-                (event -> {
-                    iCtrlPresentacion.presentacion_exportar_ranking();
-                    System.exit(0);
-                });
+                (event -> iCtrlPresentacion.salir_del_juego());
 
         buttonCrearPartida.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA));

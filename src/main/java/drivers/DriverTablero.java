@@ -1,19 +1,11 @@
 package drivers;
 
-import Dominio.*;
-
+import Dominio.Partida.Position;
+import Dominio.Partida.Tablero;
 import MyException.MyException;
 
 import java.io.IOException;
 import java.util.*;
-
-import MyException.MyException;
-
-import java.io.IOException;
-import java.util.*;
-import MyException.MyException;
-
-import java.io.IOException;
 
 public class DriverTablero {
     static Scanner scan = new Scanner(System.in);

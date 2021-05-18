@@ -4,6 +4,8 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -17,7 +19,7 @@ public class VistaRanking {
     private int iPanelActivo = 0; //para cambiar entre panel Ranking y estadisticas
 
     // Componentes de la interficie grafica
-    private final JFrame frameVista = new JFrame("Vista Ranking");
+    private JFrame frameVista = new JFrame("Vista Ranking");
     private final  JPanel panelPrincipal = new JPanel();
     private final  JPanel panelInfo = new JPanel();
     private JPanel panelActivo = new JPanel();
@@ -36,7 +38,7 @@ public class VistaRanking {
     private final JPanel panelBotonesRanking = new JPanel();
     private final JButton buttonCargarRanking = new JButton("Cargar Ranking");
     private final JButton buttonLimpiarRanking= new JButton("Limpiar Ranking");
-    private final JComboBox comboBoxOrdenar = new JComboBox();
+    private final JComboBox<String> comboBoxOrdenar = new JComboBox<>();
     private final JButton buttonOrdenar = new JButton("Ordenar");
 
 
@@ -108,11 +110,18 @@ public class VistaRanking {
      * Metodo para inicializar frame
      * */
     private void inicializar_frameVista() {
-        frameVista.setMinimumSize(new Dimension(700,750));
+        /*frameVista.setMinimumSize(new Dimension(700,750));
         frameVista.setPreferredSize(frameVista.getMinimumSize());
         frameVista.setResizable(false);
         frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameVista.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frameVista.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent evt) {
+                iCtrlPresentacion.salir_del_juego();
+            }
+        });*/
+
+        frameVista = iCtrlPresentacion.configuracion_frame(700,750,"Ranking");
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
     }
@@ -133,7 +142,7 @@ public class VistaRanking {
 
 
     /**
-     * Metodo para inicializar todos los paneles
+     * Metodo para inicializar todos los panelesº
      * */
     private void inicializar_paneles() {
         //PANEL BOTONES_GENERAL
@@ -167,8 +176,8 @@ public class VistaRanking {
         }
         panelBotonesRanking.add(comboBoxOrdenar);
         panelBotonesRanking.add(buttonOrdenar);
-        buttonCargarRanking.setToolTipText("Carga la informacion del ranking en el TextArea");
-        buttonLimpiarRanking.setToolTipText("Hace un clear del TextArea");
+        buttonCargarRanking.setToolTipText("Carga la informacion del ranking");
+        buttonLimpiarRanking.setToolTipText("Hace un clear de la tabla del ranking mostrada en pantalla");
         buttonOrdenar.setToolTipText("Ordena la salida en funcion de: ID, partidas ganadas o Nickname");
 
 
@@ -179,7 +188,9 @@ public class VistaRanking {
         panelBotonesEstadisticas.add(labelNickname);
         panelBotonesEstadisticas.add(textoNickname);
         panelBotonesEstadisticas.add(buttonBuscarEstadisticas);
+        buttonBuscarEstadisticas.setToolTipText("Busca las estadisticas del jugador introducido");
         panelBotonesEstadisticas.add(buttonLimpiarEstadisticas);
+        buttonLimpiarEstadisticas.setToolTipText("Limpia los campos de busqueda de ID y de Nickname");
 
         panelEstadisticas.setLayout(new BorderLayout());
         panelEstadisticas.add(labelInfoRanking2,BorderLayout.NORTH);
@@ -226,6 +237,8 @@ public class VistaRanking {
 
 
     /////////// LISTENERS (+ su asignacion)
+
+
     /**
      * Metodo cargar_logros (guarda la informacion de los logros en los TextFields assignados por estos)
      * * */
@@ -449,10 +462,7 @@ public class VistaRanking {
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
 
         menuitemQuit.addActionListener
-                (event -> {
-                    iCtrlPresentacion.presentacion_exportar_ranking();
-                    System.exit(0);
-                });
+                (event -> iCtrlPresentacion.salir_del_juego());
 
         buttonConsultarRanking.addActionListener
                 (event -> actionPerformed_buttonConsultarRanking());

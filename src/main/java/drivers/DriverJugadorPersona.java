@@ -1,6 +1,6 @@
 package drivers;
 
-import Dominio.JugadorPersona;
+import Dominio.Jugador.JugadorPersona;
 import MyException.MyException;
 
 import java.util.*;

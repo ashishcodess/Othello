@@ -1,11 +1,16 @@
 package Dominio;
 
 import ControladorPersistencia.CtrlPersitencia;
+import Dominio.Partida.Partida;
+import Dominio.Partida.Position;
+import Dominio.Partida.Tablero;
+import Dominio.Ranking.Logros;
+import Dominio.Ranking.Ranking;
 import MyException.MyException;
-import Dominio.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Set;
 
 
 public class CtrlDominio {
@@ -13,12 +18,11 @@ public class CtrlDominio {
     private static CtrlPersitencia cp;
     private static Ranking ranking;
 
-    static int code; //ID jugador1
-    static String nickname; //nickname jugador1
+    private static int code; //ID jugador1
+    private static String nickname; //nickname jugador1
 
-    static int id_2; //ID jugador2
-    static String nick_2; //nickname jugador2
-
+    private static int id_2; //ID jugador2
+    private static String nick_2; //nickname jugador2
 
     private static int estado_partida; //para conocer el estado de la partida desde la capa de Presentacion
     private static Partida partida_activa;
@@ -30,6 +34,8 @@ public class CtrlDominio {
     public CtrlDominio() {
         code = -1;
         nickname = "";
+        id_2 = -1;
+        nick_2 = "";
         cp = new CtrlPersitencia();
         try {ranking = cp.ctrl_importar_ranking("ranking.txt");}
         catch (Exception e) {ranking = new Ranking();}
@@ -39,14 +45,21 @@ public class CtrlDominio {
      * metodo para loguearse como usuario
      * @param id identificador de usuario a hacer login
      * @param nick nickname de usuario a hacer login
+     * @param b si es falso login sobre Jugador 1, caso contrario sobre Jugador 2
      * @return devuelve 1 en caso de login correcto, 0 caso contrario
      * */
-    public int login_inicial_presentacion(int id, String nick) {
-        int res = 0;
+    public boolean login_presentacion(int id, String nick, boolean b) {
+        boolean res = false;
         if (cp.ctrl_existe_usuario(id,nick)) {
-            code = id;
-            nickname = nick;
-            res = 1;
+            if (!b) { //login usuario 1
+                code = id;
+                nickname = nick;
+            }
+            else { //login usuario 2
+                id_2 = id;
+                nick_2 = nick;
+            }
+            res = true;
         }
         return res;
     }
@@ -56,7 +69,7 @@ public class CtrlDominio {
      * @return devuelve la informacion que esta logueado dentro del juego
      * */
     public String get_info_usuario_activo() {
-        return "Usuario activo (ID:" + code + " , nickname: " + nickname + ")";
+        return "Usuarios activos:         J1 - (ID:" + code + " , nickname: " + nickname + ")            " + "J2 - (ID2:" + id_2 + " , nickname2: " + nick_2 + ")";
     }
 
     /**
@@ -76,11 +89,15 @@ public class CtrlDominio {
         return idRes;
     }
 
+    public String dominio_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG t) {
+        return cp.consultar_dir_IMG(t);
+    }
+
     /**
     * Metodo exportar ranking (desde Dominio)
     * */
-    public void domino_exportar_ranking() throws IOException {
-        cp.ctrl_exportar_ranking(ranking.toArrayList(), "ranking.txt");
+    public void domino_exportar_ranking() {
+        try{cp.ctrl_exportar_ranking(ranking.toArrayList(), "ranking.txt");} catch (Exception e) {}
     }
 
     /**
@@ -159,27 +176,79 @@ public class CtrlDominio {
      * */
     public int consultar_tam_ranking() {return ranking.consultar_tam_ranking();}
 
+
     /**
-     * Metodo cargarPartida
-     * Carga una partida a partir de un fichero guardado previamente
-     * @param idPartida id de partida a cargar
-     * @return devuelve la partida cargada, caso contrario devuelve null
+     * Metodo listar partidas disponibles
+     * @param id del jugador a mostrar las partidas disponibles
+     * @param nick del jugador a mostrar las partidas disponibles
+     * @return devuelve un Arraylist de strings con las posibles partidas donde se encuentra el Jugador
      * */
-    private static Partida cargarPartida(int idPartida) {
-        try {
-            return cp.ctrl_cargar_partida(idPartida);
-        }
-        catch (Exception e) {
-            //String s = ("Fallo al cargar la partida con ID:" + idPartida);
-            //llamar a CtrlPresentacion con el mensaje de s
-        }
-        return null;
+    public ArrayList<String> listar_partidas_disponibles(int id, String nick) throws IOException {
+        //enviara al Controlador de Presentacion (para mostrar que partidas puede cargar/borrar el jugador)
+        return cp.ctrl_listar_partidas_disponibles(id,nick);
+    }
+
+    /**
+     * Metodo listar tableros disponibles
+     * @return devuelve un Arraylist de strings con todos los tableros almacenados en el sistema
+     * */
+    public ArrayList<String> listar_tableros_disponibles() {
+        return cp.ctrl_tableros_disponibles();
     }
 
 
-    //FUNCIONES NO TESTEADAS....
+    public void dominio_guardar_partida() throws IOException {
+        ArrayList<String> as = partida_activa.toArrayList();
+        cp.ctrl_guardar_partida(as);
+    }
 
 
+
+    /**
+     * Metodo cargar Partida (desde domino
+     * Carga una partida a partir de un fichero guardado previamente y se actualiza "partida_activa"
+     * @param idPartida id de partida a cargar
+     * */
+    public void dominio_cargar_partida(int idPartida) throws IOException, MyException {
+        //Sergio: igual hay que hacer algo mas que solo esto
+        partida_activa = cp.ctrl_cargar_partida(idPartida);
+    }
+
+
+    /** Operacion Borrar Partida (desde Dominio)
+     * @param idPartida es el identificador de partida a borrar
+     * @return devuelve TRUE en caso que se haya borrado con exito
+     */
+    public boolean dominio_borrar_partida(int idPartida) throws IOException {
+        return cp.ctrl_borrar_partida(idPartida);
+    }
+
+    /**
+     * Operacion Guardar Tablero (desde Dominio)
+     */
+    public void dominio_guardar_tablero() throws IOException {
+        int[][] tab = getTableroPartida();
+        int turno = partida_activa.getTurnoPartida();
+        cp.ctrl_guardar_tablero(tab,turno);
+    }
+
+    /**
+     * Operacion Cargar Tablero (desde Dominio)
+     * @param idTablero es el ID de tablero a cargar
+     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero inicial
+     */
+    public int [][] dominio_cargar_tablero(int idTablero) throws IOException {
+        //Sergio: igual puede ser privada si solo la usamos en esta clase
+        return cp.ctrl_cargar_tablero(idTablero);
+    }
+
+    /** Operacion borrar_tablero (desde Dominio)
+     * @param idTablero el identificador de tablero a borrar
+     * @return devuelve TRUE en caso que se haya borrado con exito
+     */
+    public boolean dominio_borrar_tablero(int idTablero) {
+        return cp.ctrl_borrar_tablero(idTablero);
+    }
 
 
 
@@ -207,10 +276,13 @@ public class CtrlDominio {
         }
     }
 
-    /*ejecutar 1 ronda de la partida:
-    * mandarle el estado de como va la partida hacia la capa de presentacion
-    * */
+
+
+    //FUNCION NO TESTEADA
     private static int ejecutarRondaPartida(Partida p, ArrayList<String> argum) {
+        /*ejecutar 1 ronda de la partida:
+         * mandarle el estado de como va la partida hacia la capa de presentacion
+         * */
         int res = -1;
         try {
             //accion a realizar esta dentro de argum
@@ -242,8 +314,10 @@ public class CtrlDominio {
         return res;
     }
 
-    //Argum: argumentos/info necesaria para crear la partida
+
+    //FUNCION NO TESTEADA
     private static Partida iniciarPartida(ArrayList<String> argum) {
+        //Argum: argumentos/info necesaria para crear la partida
         try {
             int idPartida = cp.ctrl_get_nuevo_ID_Partida();
             int id1, id2;
@@ -272,14 +346,16 @@ public class CtrlDominio {
         return null; //por ahora para pruebas
     }
 
-    private static ArrayList<String> listar_partidas_disponibles(int id, String nick) throws IOException {
-        //enviara al Controlador de Presentacion (para mostrar que partidas puede cargar/borrar el jugador)
-        return cp.ctrl_listar_partidas_disponibles(id,nick);
-    }
 
     //para imprimir tablero hacia la capa de presentacion
-    /*public int[][] getTableroPartida() {
+    public int[][] getTableroPartida() {
         return partida_activa.getTableroPartida().toMatrix();
-    }*/
+    }
+
+    public Set<Position> getCasillasDisponibles(){
+        Set<Position> casillasDisponibles = partida_activa.getTableroPartida().getCasillasDisponibles();
+        return casillasDisponibles;
+    }
+
 
 }

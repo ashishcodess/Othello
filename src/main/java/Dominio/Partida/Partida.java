@@ -1,5 +1,8 @@
-package Dominio;
+package Dominio.Partida;
 
+import Dominio.Jugador.Jugador;
+import Dominio.Jugador.JugadorMaquina;
+import Dominio.Jugador.JugadorPersona;
 import MyException.MyException;
 
 import java.util.*;

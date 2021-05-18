@@ -1,13 +1,21 @@
 package Presentacion;
 
+import ControladorPersistencia.CtrlPersitencia;
 import Dominio.CtrlDominio;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
-enum vistaActiva{LOGIN, MENU, RANKING, CREDITOS, TABLERO, PRUEBA, CONFIGPARTIDA} //agregar en funcion de las necesidades
+enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA} //agregar en funcion de las necesidades
+
 
 public class CtrlPresentacion {
+
+    public enum tipoJugador {JUGADOR1,JUGADOR2}
 
     private final CtrlDominio ctrlDominio;
 
@@ -17,7 +25,7 @@ public class CtrlPresentacion {
     private final VistaCreditos vistaCreditos;
     private final VistaTablero vistaTablero;
     private final VistaConfigPartida vistaConfigPartida;
-    private final VistaPrueba vistaPrueba;
+    private final VistaPartida vistaPartida;
 
     /**
      * Creadora por defecto de CtrlPresentacion
@@ -25,14 +33,12 @@ public class CtrlPresentacion {
     public CtrlPresentacion() {
         ctrlDominio = new CtrlDominio();
         vistaRanking = new VistaRanking(this);
-        vistaLogin = new VistaLogin(this);
+        vistaLogin = new VistaLogin(this,tipoJugador.JUGADOR1);
         vistaMenu = new VistaMenu(this);
-        //vistaConfigPartida = new VistaConfigPartida(this);
-        //vistaPartida = new VistaPartida(this);
+        vistaConfigPartida = new VistaConfigPartida(this);
+        vistaPartida = new VistaPartida(this);
         vistaCreditos = new VistaCreditos(this);
         vistaTablero  = new VistaTablero(this);
-        vistaConfigPartida = new VistaConfigPartida(this);
-        vistaPrueba = new VistaPrueba(this);
     }
 
     /**
@@ -44,70 +50,67 @@ public class CtrlPresentacion {
 
 
     /**
+     * Metodo para cerrar la ventana
+     * */
+    public void salir_del_juego() {
+        presentacion_exportar_ranking();
+        System.exit(0);
+    }
+
+
+
+    /*CONFIGURACION COMUN PARA TODOS LOS FRAMES, CAMBIA UNICAMENTE EL SIZE DE LA VENTANA*/
+    public JFrame configuracion_frame(int size_x, int size_y, String s) {
+        JFrame frameAux = new JFrame(s);
+        frameAux.setMinimumSize(new Dimension(size_x,size_y));
+        frameAux.setPreferredSize(frameAux.getMinimumSize());
+        frameAux.setResizable(false);
+        frameAux.setLocationRelativeTo(null);
+        frameAux.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frameAux.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent evt) {
+                salir_del_juego();
+            }
+        });
+        return frameAux;
+    }
+
+
+    /**
      * Metodo hacerVisibleVista
      * @param a dependiendo de la enumeracion de vistaActiva hace visible una vista u otra (para gestion de vistas)
      * */
     public void hacerVisibleVista(vistaActiva a) {
+        vistaLogin.hacerVisible(false,tipoJugador.JUGADOR1);
+        vistaMenu.hacerVisible(false);
+        vistaConfigPartida.hacerVisible(false);
+        vistaPartida.hacerVisible(false);
+        vistaRanking.hacerVisible(false);
+        vistaCreditos.hacerVisible(false);
+        vistaTablero.hacerVisible(false);
+        vistaConfigPartida.hacerVisible(false);
         switch (a) {
             case LOGIN:
-                vistaLogin.hacerVisible(true);
-                vistaMenu.hacerVisible(false);
-                vistaConfigPartida.hacerVisible(false);
-                //vistaPartida.hacerVisible(false);
-                vistaRanking.hacerVisible(false);
-                vistaCreditos.hacerVisible(false);
+                vistaLogin.hacerVisible(true,tipoJugador.JUGADOR1);
+                break;
+            case LOGIN_USER2:
+                vistaLogin.hacerVisible(true,tipoJugador.JUGADOR2);
                 break;
             case MENU:
-                vistaLogin.hacerVisible(false);
                 vistaMenu.hacerVisible(true);
-                vistaConfigPartida.hacerVisible(false);
-                //vistaPartida.hacerVisible(false);
-                vistaRanking.hacerVisible(false);
-                vistaCreditos.hacerVisible(false);
                 break;
             case RANKING:
-                vistaLogin.hacerVisible(false);
-                vistaMenu.hacerVisible(false);
-                vistaConfigPartida.hacerVisible(false);
-                //vistaPartida.hacerVisible(false);
                 vistaRanking.hacerVisible(true);
-                vistaCreditos.hacerVisible(false);
                 break;
             case CREDITOS:
-                vistaLogin.hacerVisible(false);
-                vistaMenu.hacerVisible(false);
-                vistaConfigPartida.hacerVisible(false);
-                //vistaPartida.hacerVisible(false);
-                vistaRanking.hacerVisible(false);
                 vistaCreditos.hacerVisible(true);
                 break;
             case TABLERO:
-                vistaLogin.hacerVisible(false);
-                vistaMenu.hacerVisible(false);
-                vistaConfigPartida.hacerVisible(false);
-                //vistaPartida.hacerVisible(false);
-                vistaRanking.hacerVisible(false);
-                vistaCreditos.hacerVisible(false);
                 vistaTablero.hacerVisible(true);
-                vistaConfigPartida.hacerVisible(false);
                 break;
             case CONFIGPARTIDA:
-                vistaLogin.hacerVisible(false);
-                vistaMenu.hacerVisible(false);
-                //vistaPartida.hacerVisible(false);
-                vistaRanking.hacerVisible(false);
-                vistaCreditos.hacerVisible(false);
-                vistaTablero.hacerVisible(false);
                 vistaConfigPartida.hacerVisible(true);
                 break;
-
-            case PRUEBA:
-                vistaPrueba.hacerVisible(true);
-                vistaLogin.hacerVisible(false);
-                vistaMenu.hacerVisible(false);
-                vistaRanking.hacerVisible(false);
-                vistaCreditos.hacerVisible(false);
-                vistaTablero.hacerVisible(false);
         }
     }
 
@@ -117,8 +120,17 @@ public class CtrlPresentacion {
      * @param nick nickname de usuario a hacer login
      * @return devuelve 1 en caso de login correcto, 0 caso contrario
      * */
-    public int presentacion_login(int id, String nick) {
-        return ctrlDominio.login_inicial_presentacion(id,nick);
+    public boolean presentacion_login(int id, String nick, tipoJugador a) {
+        boolean b = false;
+        switch (a) {
+            case JUGADOR1:
+                b = false;
+                break;
+            case JUGADOR2:
+                b = true;
+                break;
+        }
+        return ctrlDominio.login_presentacion(id,nick,b);
     }
 
 
@@ -127,6 +139,11 @@ public class CtrlPresentacion {
      * @return devuelve la informacion que esta logueado dentro del juego
      * */
     public String presentacion_get_info_usuario_activo() {return ctrlDominio.get_info_usuario_activo();}
+
+
+    public String presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG t) {
+        return ctrlDominio.dominio_consultar_dir_imagen_fichas(t);
+    }
 
     /**
      * Metodo registro usuario (desde Capa Presentacion)
@@ -142,7 +159,7 @@ public class CtrlPresentacion {
      * Metodo exportar ranking (desde Capa Presentacion)
      * */
     public void presentacion_exportar_ranking() {
-        try {ctrlDominio.domino_exportar_ranking();} catch (Exception e) {}
+        ctrlDominio.domino_exportar_ranking();
     }
 
     /**
@@ -194,8 +211,17 @@ public class CtrlPresentacion {
     public int presentacion_consultar_tam_ranking() {return ctrlDominio.consultar_tam_ranking();}
 
     /**
-     * Metodo consultar size del ranking (desde capa Presentacion)
-     * @return devuelve el size del ranking
+     * Metodo obtener tablero
+     * @return devuelve el tablero de la partida como una matriz de enteros (desde la Capa de Dominio)
      * */
-    //public int[][] presentacionObtenerTablero() {return ctrlDominio.getTableroPartida();}
+    public int[][] presentacionObtenerTablero() {return ctrlDominio.getTableroPartida();}
+
+    /**
+     * Metodo consultar casillas disponibles (desde capa Presentacion)
+     * @return casillas disponibles
+     * */
+    /*public Set<Position> presentacionObternerCasillasDisponibles(){
+        return ctrlDominio.getCasillasDisponibles();
+    }*/
+
 }

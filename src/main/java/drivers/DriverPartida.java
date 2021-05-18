@@ -1,6 +1,6 @@
 package drivers;
 
-import Dominio.Partida;
+import Dominio.Partida.Partida;
 import MyException.MyException;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package Dominio;
+package Dominio.Jugador;
 
 /*
 *
@@ -6,6 +6,9 @@ package Dominio;
 *
 * */
 
+import Dominio.Partida.Casilla;
+import Dominio.Partida.Position;
+import Dominio.Partida.Tablero;
 import MyException.MyException;
 
 import java.util.HashSet;

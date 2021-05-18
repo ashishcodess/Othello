@@ -1,15 +1,26 @@
 package Presentacion;
 
+import javax.swing.*;
 import java.awt.*;
 
-public class VistaPartida {
-/*
+//IDEA INTENTAR HACER UN EXTEND DE CLASE VistaTablero (si no hacerlo en vistas diferentes: para partidas y para Cargar Tableros)
+
+public class VistaPartida extends VistaTablero {
+
+    /*private final CtrlPresentacion iCtrlPresentacion;
+    private final JPanel panelPrincipal = new JPanel();
+    private JFrame frameVista = new JFrame("Partida");*/
+
     public VistaPartida(CtrlPresentacion pCtrlPresentacion) {
-        iCtrlPresentacion = pCtrlPresentacion;
-        frameVista.setLayout(new BorderLayout());
-        inicializarComponentes();
+        super(pCtrlPresentacion);
     }
 
-    public static void hacerVisible(boolean b) {
-    }*/
+    /*Sergio: quitar los botones de la parte de vistaTablero y ponerlo aqui, de esa manera
+    podemos reutilizar la vistaTablero para mostrar los tableros cuando tengamos que cargar un tablero
+    * */
+
+
+
+
+
 }

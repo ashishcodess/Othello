@@ -1,31 +1,46 @@
 package Presentacion;
 
+import ControladorPersistencia.CtrlPersitencia;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
+//IDEA HACER CLASE EXTENDIDA DE ESTO (SIN LOS BOTONES
 
 public class VistaTablero {
 
     private final CtrlPresentacion iCtrlPresentacion;
     private final JPanel panelPrincipal = new JPanel();
 
-    private final String imagen_vacia = "./src/files/fichas/vacia.png";
-    private final String imagen_disponible = "./src/files/fichas/disponible.png";
-    private final String imagen_blanca = "./src/files/fichas/blanca.png";
-    private final String imagen_negra = "./src/files/fichas/negra.png";
+    private String imagen_vacia = "";
+    private String imagen_disponible = "";
+    private String imagen_blanca = "";
+    private String imagen_negra = "";
 
-    private JButton bPrueba1 = new JButton("Pasar turno");
-    private JButton bPrueba2 = new JButton("prueba2");
-    private JPanel panelBotones = new JPanel();
-    private JTextArea textPrueba = new JTextArea();
+
+    private final JPanel panelBotones = new JPanel();
+    private final JButton bottonPasarTurno = new JButton("Pasar turno");
+    private final JLabel labelSeparador = new JLabel("         ");
+    private final JLabel labelOpcionesPartida = new JLabel("Opciones de partida");
+    private final JButton bottonGuardarPartida = new JButton("Guardar Partida");
+    private final JButton bottonFinalizarPartida = new JButton("Finalizar Partida");
+
+
 
     private final JMenuBar menubarVista = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
     private final JMenuItem menuitemQuit = new JMenuItem("Salir");
+
+    private final JMenu menuPartida = new JMenu("Partida");
+    private final JMenuItem menuitemGuardarPartida = new JMenuItem("Guardar Partida");
+    private final JMenuItem menuitemFinalizarPartida = new JMenuItem("Finalizar Partida");
+
+
 
     private int prueba_switch_imagen = 0;
 
@@ -50,39 +65,50 @@ public class VistaTablero {
         return img;
     }
 
-    private final JFrame frameVista = new JFrame("Vista Tablero");
-    private JButton[][] botonesMatriz = new JButton[8][8];
-    private JPanel tablero;
+    private JFrame frameVista = new JFrame("Vista Tablero");
+    private final JButton[][] botonesMatriz = new JButton[8][8];
 
-    private static final String columnas = "ABCDEFGH";
 
     public VistaTablero(CtrlPresentacion pCtrlPresentacion)  {
         iCtrlPresentacion = pCtrlPresentacion;
         frameVista.setLayout(new BorderLayout()); // 5 zonas (North, South, East, West, Center)
         inicializar_frameVista();
+        obtener_dir_imagenes();
         inicializar_Componentes();
         asignar_listenersComponentes();
         inicializar_menubarVista();
     }
 
     private void inicializar_menubarVista() {
-        menubarVista.add(menuFile);
         menuFile.add(menuitemQuit);
+        menubarVista.add(menuFile);
+        menuPartida.add(menuitemGuardarPartida);
+        menuPartida.add(menuitemFinalizarPartida);
+        menubarVista.add(menuPartida);
         frameVista.setJMenuBar(menubarVista);
     }
 
     private void inicializar_frameVista() {
-        frameVista.setMinimumSize(new Dimension(950,850));
-        frameVista.setPreferredSize(frameVista.getMinimumSize());
-        frameVista.setResizable(false);
-        frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameVista = iCtrlPresentacion.configuracion_frame(950,850,"Tablero");
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
     }
 
+    private void obtener_dir_imagenes() {
+        imagen_vacia = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_VACIA);
+        imagen_disponible = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_DISPONIBLE);
+        imagen_blanca = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_BLANCA);
+        imagen_negra = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_NEGRA);
+    }
+
+    public void hacerVisible(boolean b) {
+        frameVista.pack();
+        frameVista.setVisible(b);
+        frameVista.setEnabled(b);
+    }
+
     private void inicializar_Componentes() {
-        tablero = new JPanel(new GridLayout(0,8));
+        JPanel tablero = new JPanel(new GridLayout(0, 8));
         tablero.setBorder((new LineBorder(Color.BLACK)));
 
         //int[][] tableroPartida = iCtrlPresentacion.presentacionObtenerTablero();
@@ -112,36 +138,80 @@ public class VistaTablero {
                 tablero.add(botonesMatriz[i][j]);
             }
         }
-
         panelBotones.setLayout(new FlowLayout());
-        panelBotones.add(bPrueba1);
-        panelBotones.add(bPrueba2);
-
+        panelBotones.setLayout(new BoxLayout(panelBotones,BoxLayout.PAGE_AXIS));
+        panelBotones.add(bottonPasarTurno);
+        panelBotones.add(labelSeparador);
+        panelBotones.add(labelOpcionesPartida);
+        panelBotones.add(bottonGuardarPartida);
+        panelBotones.add(bottonFinalizarPartida);
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.add(tablero,BorderLayout.CENTER);
         panelPrincipal.add(panelBotones,BorderLayout.EAST);
     }
 
-    public void hacerVisible(boolean b) {
-        frameVista.pack();
-        frameVista.setVisible(b);
-        frameVista.setEnabled(b);
+
+    /*
+    private void inicializar_Componentes() {
+        JPanel tablero = new JPanel(new GridLayout(0, 8));
+        tablero.setBorder((new LineBorder(Color.BLACK)));
+
+        int[][] tableroPartida = iCtrlPresentacion.presentacionObtenerTablero();
+
+        Insets margenesBotones = new Insets(0,0,0,0);
+        for (int i = 0; i < botonesMatriz.length; ++i) {
+            for (int j = 0; j < botonesMatriz[i].length; ++j) {
+                JButton b = new JButton();
+                b.setMargin(margenesBotones);
+                b.setBackground(Color.gray);
+                if (tableroPartida[i][j] == 0 ) b.setIcon(new ImageIcon(imagen_vacia));
+                else if (tableroPartida[i][j] == 3 )b.setIcon(new ImageIcon(imagen_blanca));
+                else if (tableroPartida[i][j] == 2 )b.setIcon(new ImageIcon(imagen_negra));
+                else b.setIcon(new ImageIcon(imagen_disponible));
+
+                botonesMatriz[i][j] = b;
+                tablero.add(botonesMatriz[i][j]);
+            }
+        }
+
+        panelBotones.setLayout(new FlowLayout());
+        panelBotones.setLayout(new BoxLayout(panelBotones,BoxLayout.PAGE_AXIS));
+        panelBotones.add(bottonPasarTurno);
+        panelBotones.add(labelSeparador);
+        panelBotones.add(labelOpcionesPartida);
+        panelBotones.add(bottonGuardarPartida);
+        panelBotones.add(bottonFinalizarPartida);
+        panelPrincipal.setLayout(new BorderLayout());
+        panelPrincipal.add(tablero,BorderLayout.CENTER);
+        panelPrincipal.add(panelBotones,BorderLayout.EAST);
     }
+
+   */
 
 
     public void actionPerformed_botones(ActionEvent event) {
-        for (int i = 0; i < botonesMatriz.length; ++i) {
-            for (int j = 0; j < botonesMatriz[i].length; ++j) {
-                if (event.getSource() == botonesMatriz[i][j]) {
+        for (JButton[] jButtons : botonesMatriz) {
+            for (JButton jButton : jButtons) {
+                if (event.getSource() == jButton) {
                     String s = getImagen();
-                    botonesMatriz[i][j].setIcon(new ImageIcon(s));
+                    jButton.setIcon(new ImageIcon(s));
                 }
             }
         }
     }
+/*
+ Set<Position> posDisp = iCtrlPresentacion.presentacionObternerCasillasDisponibles();
+ for (int i = 0; i < posDisp.size() ; ++i){
+                JButton b = new JButton();
+                b.setMargin(margenesBotones);
+                b.setBackground(Color.gray);
+                b.setIcon(new ImageIcon(imagen_disponible));
+                botonesMatriz[i][j] = b;
+                tablero.add(botonesMatriz[i][j]);
+ }
+*/
 
-
-    private void asignar_listenersComponentes() {
+    public void asignar_listenersComponentes() {
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 botonesMatriz[i][j].addActionListener

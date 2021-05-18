@@ -11,8 +11,8 @@ public class VistaCreditos {
             +"\n    - Ashish Kshetri \n" + "\n    - Sergi Cassanmagnago Somoza \n"
             + "\n    - Sergi Bosquet Reyes \n";
 
-    private final JFrame frameVista = new JFrame("Creditos");
-    private final JButton buttonOK = new JButton("OK");
+    private JFrame frameVista = new JFrame("Creditos");
+    private final JButton buttonOK = new JButton("Volver al menu principal");
 
     private final JMenuItem menuitemQuit = new JMenuItem("Salir");
     private final JMenuItem menuitemVolver = new JMenuItem("Volver al menu principal");
@@ -29,12 +29,10 @@ public class VistaCreditos {
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.add(infoCreditos,BorderLayout.CENTER);
         panelPrincipal.add(buttonOK,BorderLayout.SOUTH);
+        buttonOK.setToolTipText("Vuelva al menu principal");
 
-        frameVista.setMinimumSize(new Dimension(300,250));
-        frameVista.setPreferredSize(frameVista.getMinimumSize());
-        frameVista.setResizable(false);
-        frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        frameVista = iCtrlPresentacion.configuracion_frame(300,280, "Creditos");
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
 
@@ -59,6 +57,13 @@ public class VistaCreditos {
         frameVista.setEnabled(b);
     }
 
+    /**
+     * Metodo WindowPerfomed para cerrar la ventana
+     * */
+    private void salir_del_juego() {
+        iCtrlPresentacion.presentacion_exportar_ranking();
+        System.exit(0);
+    }
 
     /**
      * Metodo para asignar los listeners a cada componente

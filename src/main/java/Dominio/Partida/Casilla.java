@@ -1,4 +1,4 @@
-package Dominio;
+package Dominio.Partida;
 
 public class Casilla {
 

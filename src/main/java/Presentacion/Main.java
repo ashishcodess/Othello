@@ -7,7 +7,6 @@ public class Main {
                     public void run() {
                         CtrlPresentacion ctrlPresentacion = new CtrlPresentacion();
                         ctrlPresentacion.inicializarPresentacion();
-                        ctrlPresentacion.hacerVisibleVista(vistaActiva.LOGIN);
                     }});
     }
 }
