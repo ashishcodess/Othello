@@ -1,32 +1,40 @@
 package Presentacion;
 
 import ControladorPersistencia.CtrlPersitencia;
-import Presentacion.CtrlPresentacion;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class VistaCargarTablero {
-
-    private final CtrlPresentacion iCtrlPresentacion;
-    private final JPanel panelPrincipal = new JPanel();
-
     private String imagen_vacia = "";
     private String imagen_disponible = "";
     private String imagen_blanca = "";
     private String imagen_negra = "";
 
+
+    private final CtrlPresentacion iCtrlPresentacion;
+    private final JPanel panelPrincipal = new JPanel();
+    private JFrame frameVista = new JFrame("Vista Tablero");
+
+    private final JButton[][] botonesMatriz = new JButton[8][8];
+
+
+
     private final JPanel panelBotones = new JPanel();
     private final JButton buttonCargar = new JButton("Cargar Tablero");
     private final JButton buttonBorrar = new JButton("Borrar Tablero");
+    private final JButton buttonLimpiar = new JButton("Limpiar");
+    private JComboBox<String> selector_tablero = new JComboBox<>();
+
 
     private final JMenuBar menubarVista = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
     private final JMenuItem menuitemQuit = new JMenuItem("Salir");
 
-    private JFrame frameVista = new JFrame("Vista Tablero");
-    private final JButton[][] botonesMatriz = new JButton[8][8];
+
 
     public VistaCargarTablero(CtrlPresentacion pCtrlPresentacion)  {
         iCtrlPresentacion = pCtrlPresentacion;
@@ -61,6 +69,57 @@ public class VistaCargarTablero {
         frameVista.pack();
         frameVista.setVisible(b);
         frameVista.setEnabled(b);
+        //if (b) recargar_comboBox_tableros();
+    }
+
+
+    private void inicializar_Componentes() {
+        JPanel tablero = new JPanel(new GridLayout(0, 8));
+        tablero.setBorder((new LineBorder(Color.BLACK)));
+        Insets margenesBotones = new Insets(0,0,0,0);
+        for (int i = 0; i < botonesMatriz.length; ++i) {
+            for (int j = 0; j < botonesMatriz[i].length; ++j) {
+                JButton b = new JButton();
+                b.setMargin(margenesBotones);
+                b.setBackground(Color.gray);
+                botonesMatriz[i][j] = b;
+                tablero.add(botonesMatriz[i][j]);
+            }
+        }
+        /*panelPrincipal.setLayout(new FlowLayout());
+        panelPrincipal.add(tablero);*/
+
+
+        JPanel panelAux = new JPanel();
+        panelAux.setLayout(new BorderLayout());
+        panelBotones.setLayout(new FlowLayout());
+        recargar_comboBox_tableros();
+
+        JPanel panelAux2 = new JPanel();
+        panelAux2.setLayout(new FlowLayout());
+        panelAux2.add(selector_tablero);
+        panelAux2.add(buttonLimpiar);
+
+        panelAux.add(panelAux2,BorderLayout.NORTH);
+        panelAux.add(buttonCargar,BorderLayout.CENTER);
+        panelAux.add(buttonBorrar,BorderLayout.SOUTH);
+
+        panelBotones.add(panelAux);
+        panelPrincipal.add(panelBotones);
+        //panelPrincipal.add(buttonLimpiar);
+
+        panelPrincipal.setLayout(new BorderLayout());
+        panelPrincipal.add(tablero,BorderLayout.CENTER);
+        panelPrincipal.add(panelBotones,BorderLayout.EAST);
+    }
+
+    private void recargar_comboBox_tableros() {
+        ArrayList<String> tableros_disponibles = iCtrlPresentacion.obtener_lista_tableros_disponibles();
+        JComboBox<String> combo= new JComboBox<>();
+        for (int i = 0; i < tableros_disponibles.size(); ++i) {
+            combo.addItem(tableros_disponibles.get(i));
+        }
+        selector_tablero = combo;
     }
 
     private void cambiar_imagen_casilla(int x, int y, int tipo) {
@@ -86,40 +145,50 @@ public class VistaCargarTablero {
     private void cargarImagenes_tablero(int[][] tab) {
         for (int i = 0; i < botonesMatriz.length; ++i) {
             for (int j = 0; j < 8; ++j) {
-                int t = tab[i][j];
-                cambiar_imagen_casilla(i,j,t);
+                cambiar_imagen_casilla(i,j,tab[i][j]);
             }
         }
     }
 
-    private void inicializar_Componentes() {
-        JPanel tablero = new JPanel(new GridLayout(0, 8));
-        tablero.setBorder((new LineBorder(Color.BLACK)));
-        Insets margenesBotones = new Insets(0,0,0,0);
+    private void limpiar_vista_previa_tablero() {
         for (int i = 0; i < botonesMatriz.length; ++i) {
-            for (int j = 0; j < botonesMatriz[i].length; ++j) {
-                JButton b = new JButton();
-                b.setMargin(margenesBotones);
-                b.setBackground(Color.gray);
-                botonesMatriz[i][j] = b;
-                tablero.add(botonesMatriz[i][j]);
+            for (int j = 0; j < 8; ++j) {
+                cambiar_imagen_casilla(i,j,0);
             }
         }
-        /*panelPrincipal.setLayout(new FlowLayout());
-        panelPrincipal.add(tablero);*/
-
-        panelBotones.setLayout(new BoxLayout(panelBotones,BoxLayout.PAGE_AXIS));
-        panelBotones.add(buttonCargar);
-        panelBotones.add(buttonBorrar);
-        panelPrincipal.add(panelBotones);
-
-        panelPrincipal.setLayout(new BorderLayout());
-        panelPrincipal.add(tablero,BorderLayout.CENTER);
-        panelPrincipal.add(panelBotones,BorderLayout.EAST);
     }
+
+    private int obtener_info_selector_tablero() {
+        String s = selector_tablero.getSelectedItem().toString();
+        System.out.println(s);
+        int id = 0;
+        try {
+            id = Integer.parseInt(s);
+        }
+        catch (Exception e) {}
+        return id;
+    }
+
+    private void listener_selector_tablero() {
+        int id = obtener_info_selector_tablero();
+        int[][] tab = iCtrlPresentacion.cargarTablero(id);
+        cargarImagenes_tablero(tab);
+    }
+
+    private void listener_boton_borrar() {
+        int id = obtener_info_selector_tablero();
+        iCtrlPresentacion.borrar_tablero(id);
+        recargar_comboBox_tableros();
+    }
+
 
     public void asignar_listenersComponentes() {
-
+        selector_tablero.addActionListener
+                (event -> listener_selector_tablero());
+        buttonLimpiar.addActionListener
+                (event -> limpiar_vista_previa_tablero());
+        buttonBorrar.addActionListener
+                (event -> listener_boton_borrar());
     }
 
 }

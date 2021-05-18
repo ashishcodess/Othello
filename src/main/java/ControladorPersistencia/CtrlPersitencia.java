@@ -342,6 +342,12 @@ public class CtrlPersitencia {
             b = (as.get(i)).equals(s);
             if (b) as.remove(i);
         }
+        for (int i = 0; i < as.size(); ++i) { //borrar parte de .txt
+            s = as.get(i);
+            String sAux[] = s.split(".txt");
+            as.set(i, sAux[0]);
+        }
+
         return as;
     }
 

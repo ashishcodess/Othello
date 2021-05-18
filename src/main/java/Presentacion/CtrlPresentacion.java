@@ -15,6 +15,8 @@ enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPAR
 
 public class CtrlPresentacion {
 
+
+
     public enum tipoJugador {JUGADOR1,JUGADOR2}
 
     private final CtrlDominio ctrlDominio;
@@ -216,6 +218,23 @@ public class CtrlPresentacion {
      * @return devuelve el size del ranking
      * */
     public int presentacion_consultar_tam_ranking() {return ctrlDominio.consultar_tam_ranking();}
+
+
+    public ArrayList<String> obtener_lista_tableros_disponibles() {return ctrlDominio.listar_tableros_disponibles();}
+
+    public int[][] cargarTablero(int id) {
+        int [][]tab = new int[8][8];
+        try{
+            tab = ctrlDominio.dominio_cargar_tablero(id);
+        }
+        catch (Exception e) {
+
+        }
+        return tab;
+    }
+
+    public boolean borrar_tablero(int id) {return ctrlDominio.dominio_borrar_tablero(id);}
+
 
     /**
      * Metodo obtener tablero
