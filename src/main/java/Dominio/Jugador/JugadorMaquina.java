@@ -24,7 +24,7 @@ public class JugadorMaquina extends Jugador {
      * */
     public JugadorMaquina () {
         super();
-        this.succesores = new HashSet<Tablero>();
+        this.succesores = new HashSet<>();
     }
 
     /**
@@ -34,7 +34,7 @@ public class JugadorMaquina extends Jugador {
     public JugadorMaquina (int idMaquina) throws MyException{
         super(idMaquina);
         if (idMaquina > 5)throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idMaquina);
-        this.succesores = new HashSet<Tablero>();
+        this.succesores = new HashSet<>();
     }
 
     @Override
@@ -51,8 +51,7 @@ public class JugadorMaquina extends Jugador {
         super(idMaquina);
         if (idMaquina > 5)throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idMaquina);
         this.profundidad_MinMax = profundidad;
-        this.succesores = new HashSet<Tablero>();
-        Set<Position> disponibles= new HashSet<Position>();
+        this.succesores = new HashSet<>();
     }
 
     /*Sets y Gets*/
