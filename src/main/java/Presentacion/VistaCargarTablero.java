@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Objects;
 
 public class VistaCargarTablero {
     private String imagen_vacia = "";
@@ -19,7 +19,6 @@ public class VistaCargarTablero {
     private final JPanel panelPrincipal = new JPanel();
     private JFrame frameVista = new JFrame("Vista Tablero");
 
-    private int modo = -1;
 
     private final JButton[][] botonesMatriz = new JButton[8][8];
 
@@ -71,21 +70,15 @@ public class VistaCargarTablero {
         imagen_negra = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_NEGRA);
     }
 
-    public void hacerVisible(boolean b, int t) {
+    public void hacerVisible(boolean b) {
         frameVista.pack();
         frameVista.setVisible(b);
         frameVista.setEnabled(b);
-        modo = t;
-        recargar_info();
+        if (b) {
+            buttonCargar.setEnabled(iCtrlPresentacion.consultar_idTablero_cargar() == -1);
+        }
     }
 
-    private void recargar_info() {
-        //recargar_comboBox_tableros();
-        if (modo == 1) {
-            buttonCargar.setEnabled(false);
-        }
-        else buttonCargar.setEnabled(true);
-    }
 
     private void inicializar_Componentes() {
         JPanel tablero = new JPanel(new GridLayout(0, 8));
@@ -128,10 +121,10 @@ public class VistaCargarTablero {
         selector_tablero.removeAllItems();
         ArrayList<String> tableros_disponibles = iCtrlPresentacion.obtener_lista_tableros_disponibles();
         System.out.println("entra en recargar combobox");
-        for (int i = 0; i < tableros_disponibles.size(); ++i) System.out.println(tableros_disponibles.get(i));
+        for (String tableros_disponible : tableros_disponibles) System.out.println(tableros_disponible);
         JComboBox<String> combo= new JComboBox<>();
-        for (int i = 0; i < tableros_disponibles.size(); ++i) {
-            combo.addItem(tableros_disponibles.get(i));
+        for (String tableros_disponible : tableros_disponibles) {
+            combo.addItem(tableros_disponible);
         }
         selector_tablero = combo;
     }
@@ -156,14 +149,6 @@ public class VistaCargarTablero {
     }
 
 
-    private void cargarImagenes_tablero(int[][] tab) {
-        for (int i = 0; i < botonesMatriz.length; ++i) {
-            for (int j = 0; j < 8; ++j) {
-                cambiar_imagen_casilla(i,j,tab[i][j]);
-            }
-        }
-    }
-
     private void limpiar_vista_previa_tablero() {
         for (int i = 0; i < botonesMatriz.length; ++i) {
             for (int j = 0; j < 8; ++j) {
@@ -173,7 +158,8 @@ public class VistaCargarTablero {
     }
 
     private void obtener_info_selector_tablero() {
-        String s = selector_tablero.getSelectedItem().toString();
+        String s = Objects.requireNonNull(selector_tablero.getSelectedItem()).toString();
+        System.out.println("info selector: " + s);
         id_tablero_seleccionado = -1;
         try {
             id_tablero_seleccionado = Integer.parseInt(s);
@@ -182,13 +168,16 @@ public class VistaCargarTablero {
     }
 
     private void listener_selector_tablero() {
-        int[][] tab = iCtrlPresentacion.cargarTablero(id_tablero_seleccionado);
-        cargarImagenes_tablero(tab);
         obtener_info_selector_tablero();
+        int[][] tab = iCtrlPresentacion.cargarTablero(id_tablero_seleccionado);
+        for (int i = 0; i < botonesMatriz.length; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                cambiar_imagen_casilla(i,j,tab[i][j]);
+            }
+        }
     }
 
     private void listener_boton_borrar() {
-        //int id = obtener_info_selector_tablero();
         obtener_info_selector_tablero();
         System.out.println("borrando id: " + id_tablero_seleccionado);
         if (id_tablero_seleccionado != -1) iCtrlPresentacion.borrar_tablero(id_tablero_seleccionado);
@@ -197,6 +186,9 @@ public class VistaCargarTablero {
 
     private void listener_boton_cargar() {
         System.out.println("cargando");
+        obtener_info_selector_tablero();
+        iCtrlPresentacion.modificar_idTablero_cargar(id_tablero_seleccionado);
+        iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA);
     }
 
     public void asignar_listenersComponentes() {

@@ -26,6 +26,13 @@ public class CtrlDominio {
 
     private static int estado_partida; //para conocer el estado de la partida desde la capa de Presentacion
     private static Partida partida_activa;
+    private static int idTablero_cargar;
+
+    public void modificar_idTablero_cargar(int id) {
+        idTablero_cargar = id;
+    }
+
+    public int consultar_idTablero_cargar() {return idTablero_cargar;}
 
 
     /**
