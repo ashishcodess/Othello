@@ -192,6 +192,8 @@ public class JugadorMaquina extends Jugador {
      * */
     public Tablero posicion(Tablero t, int turno){
 
+        //Comentad esta parte y descomentad lo otro para poder ejecutar con maquina
+
         if(turno%2 == 0)t = valorMaxBlancas(t,turno,-100, 100, this.get_profundidadMaquina());
         else t = valorMaxNegras(t,turno,-100, 100, this.get_profundidadMaquina());
         return t;
