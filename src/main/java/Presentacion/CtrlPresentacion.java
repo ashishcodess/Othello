@@ -15,8 +15,6 @@ enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPAR
 
 public class CtrlPresentacion {
 
-
-
     public enum tipoJugador {JUGADOR1,JUGADOR2}
 
     private final CtrlDominio ctrlDominio;
@@ -94,7 +92,7 @@ public class CtrlPresentacion {
         vistaCreditos.hacerVisible(false);
         vistaTablero.hacerVisible(false);
         vistaConfigPartida.hacerVisible(false);
-        vistaCargarTablero.hacerVisible(false, 2);
+        vistaCargarTablero.hacerVisible(false);
         switch (a) {
             case LOGIN:
                 vistaLogin.hacerVisible(true,tipoJugador.JUGADOR1);
@@ -118,10 +116,11 @@ public class CtrlPresentacion {
                 vistaConfigPartida.hacerVisible(true);
                 break;
             case CARGARTABLERO:
-                vistaCargarTablero.hacerVisible(true,1);
+                vistaCargarTablero.hacerVisible(true);
                 break;
             case BORRARTABLERO:
-                vistaCargarTablero.hacerVisible(true,0);
+                modificar_idTablero_cargar(-2);
+                vistaCargarTablero.hacerVisible(true);
                 break;
         }
     }
@@ -235,6 +234,12 @@ public class CtrlPresentacion {
         }
         return tab;
     }
+
+    public void modificar_idTablero_cargar(int id) {
+        ctrlDominio.modificar_idTablero_cargar(id);
+    }
+
+    public int consultar_idTablero_cargar() {return ctrlDominio.consultar_idTablero_cargar();}
 
     public boolean borrar_tablero(int id) {return ctrlDominio.dominio_borrar_tablero(id);}
 

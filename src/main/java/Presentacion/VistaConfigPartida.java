@@ -19,6 +19,7 @@ public class VistaConfigPartida {
     private JFrame frameVista = new JFrame("Configurar Partida");
     private final JPanel panelPrincipal = new JPanel();
 
+    private boolean primera_vez = true;
 
     //config partida
     private final JPanel panelModoDeJuego = new JPanel();
@@ -70,6 +71,7 @@ public class VistaConfigPartida {
         frameVista.pack();
         frameVista.setVisible(b);
         frameVista.setEnabled(b);
+        if (b) System.out.println("idtab:" + iCtrlPresentacion.consultar_idTablero_cargar());
     }
 
 
@@ -220,15 +222,27 @@ public class VistaConfigPartida {
         return cosas;
     }
 
+    private void recoger_info_partida() {
+        ArrayList<Integer> as = recoger_info_modo_juego();
+        for(int i = 0; i < as.size(); ++i) System.out.println(as.get(i));
+        iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);
+    }
 
     private void gestionar_inicio_de_juego() {
         if (tableroCheckBox.isSelected()) {
             //SALTAR AL MENU DE CARGA DE TABLERO Y LUEGO CREAR PARTIDA CON LA CONFIGURACION NECESARIA
+            if (!primera_vez) {
+                primera_vez = true;
+                recoger_info_partida();
+            }
+            else {
+                primera_vez = false;
+                iCtrlPresentacion.modificar_idTablero_cargar(-1);
+                iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARTABLERO);
+            }
         }
         else { //CREAR PARTIDA CON LA CONFIGURACION
-            ArrayList<Integer> as = recoger_info_modo_juego();
-            for(int i = 0; i < as.size(); ++i) System.out.println(as.get(i));
-            iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);
+            recoger_info_partida();
         }
     }
 
