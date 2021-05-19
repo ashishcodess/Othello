@@ -21,16 +21,16 @@ Sergio Aguado:
 	- MyException
 	- Ranking
 	    - ElementoRanking
+	    - Logros
 	    - DriverRanking
 	    - RankingTest_JUnit (test unitario JUnit)
 	- ControladorPersitencia
 	    - CtrlPersitencia + DriverPersitencia
-	    - IOPartidas
-	    - IORanking
-	    - IOUsuario
+	    - InputOutput
 
 	- CtrlPresentacion
 	    - VistaRanking
 	    - VistaMenu
 	    - VistaLogin
 	    - VistaCreditos
+	    - VistaCargarTablero
