@@ -31,8 +31,6 @@ public class DriverPersistencia {
         as.set(0,"4");
         as.set(1,"9 dd");
 
-        //IDEA EXTRAER IDENTIFICADOR Y PASARLO COMO PARAMETRO EN GUARDAR PARTIDA
-
         cp.ctrl_guardar_partida(as);
         System.out.println("Se ha creado partida con ID partida: 4");
         System.out.println();
@@ -125,9 +123,6 @@ public class DriverPersistencia {
         else System.out.println("Error hay algun ID igual (no deberia ser asi...)");
     }
 
-    public static void test_IOTablero(int id) {
-        //FALTA POR HACER
-    }
 
     /**test_prueba_getID_nueva_tablero*/
     public static void test_prueba_getID_nueva_tablero() {
@@ -193,13 +188,6 @@ public class DriverPersistencia {
                         break;
                     case 6:
                         test_prueba_getID_nueva_tablero();
-                        break;
-                    case 7:
-                        System.out.print("seleccionar ID tablero(fichero para realizar pruebas):");
-                        i_entrada = Integer.parseInt(scan.next());
-                        System.out.println("Pruebas sobre ficheros tablero");
-                        System.out.println();
-                        test_IOTablero(i_entrada);
                         break;
                     default:
                         System.out.println("Introducir una opcion correcta");
