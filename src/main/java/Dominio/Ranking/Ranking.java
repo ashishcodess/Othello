@@ -212,7 +212,7 @@ public class Ranking {
         ArrayList<String> as = new ArrayList<>();
         //logros
         as.add(consultar_logro(Logros.tipoLogro.PARTIDA_CORTA));
-        as.add("*");
+        as.add(consultar_logro(Logros.tipoLogro.FICHAS_DIFF));
         as.add(consultar_logro(Logros.tipoLogro.PARTIDAS_TOTALES));
         as.add(consultar_logro(Logros.tipoLogro.PARTIDAS_GANADAS));
         as.add(consultar_logro(Logros.tipoLogro.PARTIDAS_PERDIDAS));

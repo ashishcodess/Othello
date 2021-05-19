@@ -49,18 +49,20 @@ public class Logros {
         id2_fichas = -1;
         fichas_diff = 0;
 
+        //PARTIDAS TOTALES
         j_total = "";
         id_j_totales = 0;
         partidas_totales = 0;
 
-        j_perdida = "";
-        id_j_perdida = 0;
-        partidas_perdidas = 0;
-
+        //PARTIDAS GANADAS
         j_ganadas = "";
         id_j_ganadas = 0;
         partidas_ganadas = 0;
 
+        //PARTIDAS PERDIDAS
+        j_perdida = "";
+        id_j_perdida = 0;
+        partidas_perdidas = 0;
     }
 
     /**

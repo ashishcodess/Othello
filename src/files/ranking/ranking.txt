@@ -1,5 +1,5 @@
 60 7 as2 9 dd
-*
+20 6 a 10 7 b 30
 8 9 dd
 5 8 aaaa
 3 8 aaaa

@@ -407,19 +407,37 @@ public class CtrlPersitencia {
                     }
                     rank.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,nick1,id1,nick2,id2,t,0);
                     break;
-                case 1: //mas capturas (sin implementar)
-                    /*if (s2.length == 7) {
+
+                case 1: //Diferencia de fichas mas grande
+                    int t2 = 0;
+                    if (s2.length == 7) {
                         id1 = Integer.parseInt(s2[1]);
-                        t = Integer.parseInt(s2[2]);
-                        id2 = Integer.parseInt(s2[3]);
-                        nick2 = s2[4];
-                        int t2 = Integer.parseInt(s2[5]);
+                        nick1 = s2[2];
+                        t = Integer.parseInt(s2[3]);
+                        id2 = Integer.parseInt(s2[4]);
+                        nick2 = s2[5];
+                        t2 = Integer.parseInt(s2[6]);
                         rank.cambiar_logro_partida(Logros.tipoLogro.FICHAS_DIFF,nick1,id1,nick2,id2,t,t2);
-                    }*/
-                    //FALTA SI HAY ALGUNA MAQUINA
+                    }
+                    else if (s2.length == 6) {
+                        id1 = Integer.parseInt(s2[1]);
+                        if (id1 < 6) {
+                            t = Integer.parseInt(s2[2]);
+                            id2 = Integer.parseInt(s2[3]);
+                            nick2 = s2[4];
+                            t2 = Integer.parseInt(s2[5]);
+                        }
+                        else {
+                            nick1 = s2[2];
+                            t = Integer.parseInt(s2[3]);
+                            id2 = Integer.parseInt(s2[4]);
+                            t2 = Integer.parseInt(s2[5]);
+                        }
+                        rank.cambiar_logro_partida(Logros.tipoLogro.FICHAS_DIFF,nick1,id1,nick2,id2,t,t2);
+                    }
                     break;
 
-                case 2: //Total partidas
+                case 2: //PARTIDAS TOTALES
                     if (s2.length == 3) {
                         t = Integer.parseInt(s2[0]);
                         id1 = Integer.parseInt(s2[1]);
@@ -427,7 +445,8 @@ public class CtrlPersitencia {
                         rank.cambiar_logro_jugador(Logros.tipoLogro.PARTIDAS_TOTALES,nick1,id1,t);
                     }
                     break;
-                case 3: //Ganadas
+
+                case 3: //PARTIDAS GANADAS
                     if (s2.length == 3) {
                         t = Integer.parseInt(s2[0]);
                         id1 = Integer.parseInt(s2[1]);
@@ -435,7 +454,8 @@ public class CtrlPersitencia {
                         rank.cambiar_logro_jugador(Logros.tipoLogro.PARTIDAS_GANADAS,nick1,id1,t);
                     }
                     break;
-                case 4: //Perdidas
+
+                case 4: //PARTIDAS PERDIDAS
                     if (s2.length == 3) {
                         t = Integer.parseInt(s2[0]);
                         id1 = Integer.parseInt(s2[1]);

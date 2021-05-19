@@ -138,7 +138,8 @@ public class CtrlDominio {
         as.add(s);
 
         sAux = (ranking.consultar_logro(Logros.tipoLogro.FICHAS_DIFF)).split(" ");
-        if (sAux.length == 7) s = ("Diferencia: " + sAux[0] + " , J1[fichas:" + sAux[3] + " ," + sAux[1] + " , " + sAux[2] + "] - J2[fichas:" + sAux[6] +" ," + sAux[4] + " , " + sAux[5] + "]");
+        //if (sAux.length == 7) s = ("Diferencia: " + sAux[0] + " , J1[fichas:" + sAux[3] + " ," + sAux[1] + " , " + sAux[2] + "] - J2[fichas:" + sAux[6] +" ," + sAux[4] + " , " + sAux[5] + "]");
+        if (sAux.length == 7) s = ("Diferencia: " + sAux[0] + " , J1[" + sAux[1] + " , " + sAux[2] + " , fichas:" + sAux[3] + "] - J2[" + sAux[4] + " , " + sAux[5] + " , fichas:" + sAux[6] +"]");
         as.add(s);
 
         sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDAS_TOTALES)).split(" ");
@@ -152,8 +153,6 @@ public class CtrlDominio {
         sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDAS_PERDIDAS)).split(" ");
         if (sAux.length == 3) s = ("Partidas Perdidas: " + sAux[0] + " , jugador [" + sAux[1] + " , " + sAux[2] + "]");
         as.add(s);
-
-        for(int i = 0; i < as.size(); ++i) System.out.println(as.get(i));
 
         return as;
     }
