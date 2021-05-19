@@ -49,12 +49,12 @@ public class Partida {
         this.ganador = -1;
         switch (modoJuego){
             case 0:
-                this.j1 = new JugadorMaquina(idj1, (idj1+1)*4);
-                this.j2 = new JugadorMaquina(idj2, (idj2+1)*4);
+                this.j1 = new JugadorMaquina(idj1);
+                this.j2 = new JugadorMaquina(idj2);
                 break;
             case 1:
                 this.j1 = new JugadorPersona(idj1, n1);
-                this.j2 = new JugadorMaquina(idj2, (idj2+1)*4);
+                this.j2 = new JugadorMaquina(idj2);
                 break;
             case 2:
                 this.j1 = new JugadorPersona(idj1, n1);
@@ -86,12 +86,12 @@ public class Partida {
         this.modoDeJuego = modoJuego;
         switch (modoJuego){
             case 0:
-                this.j1 = new JugadorMaquina(idj1, (idj1+1)*4);
-                this.j2 = new JugadorMaquina(idj2, (idj2+1)*4);
+                this.j1 = new JugadorMaquina(idj1);
+                this.j2 = new JugadorMaquina(idj2);
                 break;
             case 1:
                 this.j1 = new JugadorPersona(idj1, n1);
-                this.j2 = new JugadorMaquina(idj2, (idj2+1)*4);
+                this.j2 = new JugadorMaquina(idj2);
                 break;
             case 2:
                 this.j1 = new JugadorPersona(idj1, n1);
