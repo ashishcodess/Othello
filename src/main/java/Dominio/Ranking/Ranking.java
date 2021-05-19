@@ -274,7 +274,7 @@ public class Ranking {
      * @param nick2 nickname del Jugador2 (en caso de que tenga nickname)
      * @param id2 identificador del Jugador2
      * @param t1 es el numero entero a reemplazar dependiendo del tipo seleccionado en caso de FICHAS DIFF es el numero de fichas de del jugador 1
-     * @param t1 es el numero de fichas de del jugador 1
+     * @param t2 es el numero de fichas de del jugador 2
      * */
     public void cambiar_logro_partida(Logros.tipoLogro tipo, String nick1, int id1, String nick2, int id2, int t1, int t2) {
         log.cambiar_logro_partida(tipo,nick1,id1,nick2,id2,t1,t2);

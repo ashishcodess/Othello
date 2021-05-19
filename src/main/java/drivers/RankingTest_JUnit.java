@@ -149,6 +149,13 @@ public class RankingTest_JUnit {
     }
 
     @Test
+    public void test_cambiar_logro_partidaMasDiferencia_y_consultar_logro() {
+        rank2.cambiar_logro_partida(Logros.tipoLogro.FICHAS_DIFF,"a",6,"b",7,10,30);
+        String s = rank2.consultar_logro(Logros.tipoLogro.FICHAS_DIFF);
+        assertEquals("20 6 a 10 7 b 30",s);
+    }
+
+    @Test
     public void test_cambiar_logro_partidasTOTALES_y_consultar_logro() {
         rank2.cambiar_logro_jugador(Logros.tipoLogro.PARTIDAS_TOTALES,"a",6,8);
         String s = rank2.consultar_logro(Logros.tipoLogro.PARTIDAS_TOTALES);
@@ -192,6 +199,12 @@ public class RankingTest_JUnit {
         rank2.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,"a",6,"b",7,45,0);
         b1 = rank2.comprobar_logro(Logros.tipoLogro.PARTIDA_CORTA,16); //deberia dar cierto (16 < 45)
         b2 = rank2.comprobar_logro(Logros.tipoLogro.PARTIDA_CORTA,45); //deberia dar falso (53 > 45)
+        res = b1 && !b2;
+        assertTrue(res);
+
+        rank2.cambiar_logro_partida(Logros.tipoLogro.FICHAS_DIFF,"a",6,"b",7,45,30);
+        b1 = rank2.comprobar_logro(Logros.tipoLogro.FICHAS_DIFF,16); //deberia dar cierto (16 < 45-30)
+        b2 = rank2.comprobar_logro(Logros.tipoLogro.FICHAS_DIFF,10); //deberia dar falso (53 > (45-30))
         res = b1 && !b2;
         assertTrue(res);
 

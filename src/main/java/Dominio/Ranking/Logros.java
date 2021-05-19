@@ -84,13 +84,27 @@ public class Logros {
 
 
     /**
+     * Calcular diferencia fichas
+     * @param fichas_j1 numero de fichas del jugador 1
+     * @param fichas_j2 numero de fichas del jugador 2
+     * @return devuelve la diferencia maxima respecto a las fichas de los jugadores
+     * */
+    private int calcular_diferencia_fichas(int fichas_j1,int fichas_j2) {
+        int res_diff = 0;
+        if (fichas_j1 > fichas_j2) res_diff = (fichas_j1 - fichas_j2);
+        else if (fichas_j1 < fichas_j2) res_diff = (fichas_j2 - fichas_j1);
+        return res_diff;
+    }
+
+    /**
      * Cambiar logro partida (menos turnos o mas capturas)
      * @param tipo tipo de logro a realizar el cambio (PARTIDA_CORTA o CAPTURAS)
      * @param nick1 nickname del Jugador1 (en caso de que tenga nickname)
      * @param id1 identificador del Jugador1
      * @param nick2 nickname del Jugador2 (en caso de que tenga nickname)
      * @param id2 identificador del Jugador2
-     * @param t es el numero entero a reemplazar dependiendo del tipo seleccionado
+     * @param t1 es el numero entero a reemplazar dependiendo del tipo seleccionado en caso de FICHAS DIFF es el numero de fichas de del jugador 1
+     * @param t2 es el numero de fichas de del jugador 2
      * */
     public void cambiar_logro_partida(tipoLogro tipo, String nick1, int id1, String nick2, int id2, int t1, int t2) {
         switch (tipo) {
@@ -107,12 +121,14 @@ public class Logros {
                 this.id1_fichas = id1;
                 this.nick2_fichas = nick2;
                 this.id2_fichas = id2;
-                int t = 0;
-                //t = calcular_diferencia_fichas(fichas_j1,fichas_j2);
+                int t = calcular_diferencia_fichas(t1,t2);
                 this.fichas_diff = t;
+                this.fichas_j1 = t1;
+                this.fichas_j2 = t2;
                 break;
         }
     }
+
 
     /**
      * Comprobar logro jugadores

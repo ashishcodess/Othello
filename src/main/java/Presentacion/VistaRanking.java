@@ -56,6 +56,10 @@ public class VistaRanking {
     private final JPanel panelLogros = new JPanel();
     private final JLabel labelPartidaCorta= new JLabel("Partida mas corta(turnos):");
     private final JTextField textoPartidaCorta = new JTextField(35);
+
+    private final JLabel labelFichasDiff= new JLabel("Mayor diferencia de fichas:");
+    private final JTextField textoFichasDiff = new JTextField(35);
+
     private final JLabel labelPartidasTotales= new JLabel("Jugador con mas partidas (total):");
     private final JTextField textoPartidaTotal= new JTextField(25);
     private final JLabel labelPartidasGanadas= new JLabel("Jugador con mas partidas (ganadas):");
@@ -209,6 +213,11 @@ public class VistaRanking {
         panelLogros.add(panelAux);
         panelAux = new JPanel();
         panelAux.setLayout(new FlowLayout());
+        panelAux.add(labelFichasDiff);
+        panelAux.add(textoFichasDiff);
+        panelLogros.add(panelAux);
+        panelAux = new JPanel();
+        panelAux.setLayout(new FlowLayout());
         panelAux.add(labelPartidasTotales);
         panelAux.add(textoPartidaTotal);
         panelLogros.add(panelAux);
@@ -244,17 +253,20 @@ public class VistaRanking {
      * * */
     private void cargar_logros() {
         ArrayList<String> as = iCtrlPresentacion.presentacion_consultar_logros();
-        if (as.size() == 4) {
+        if (as.size() == 5) {
             textoPartidaCorta.setText(as.get(0));
             textoPartidaCorta.setEditable(false);
 
-            textoPartidaTotal.setText(as.get(1));
+            textoFichasDiff.setText(as.get(1));
+            textoFichasDiff.setEditable(false);
+
+            textoPartidaTotal.setText(as.get(2));
             textoPartidaTotal.setEditable(false);
 
-            textoPartidaGanadas.setText(as.get(2));
+            textoPartidaGanadas.setText(as.get(3));
             textoPartidaGanadas.setEditable(false);
 
-            textoPartidaPerdidas.setText(as.get(1));
+            textoPartidaPerdidas.setText(as.get(4));
             textoPartidaPerdidas.setEditable(false);
 
         }

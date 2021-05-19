@@ -408,8 +408,17 @@ public class CtrlPersitencia {
                     rank.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,nick1,id1,nick2,id2,t,0);
                     break;
                 case 1: //mas capturas (sin implementar)
-
+                    if (s2.length == 7) {
+                        id1 = Integer.parseInt(s2[1]);
+                        t = Integer.parseInt(s2[2]);
+                        id2 = Integer.parseInt(s2[3]);
+                        nick2 = s2[4];
+                        int t2 = Integer.parseInt(s2[5]);
+                        rank.cambiar_logro_partida(Logros.tipoLogro.FICHAS_DIFF,nick1,id1,nick2,id2,t,t2);
+                    }
+                    //FALTA SI HAY ALGUNA MAQUINA
                     break;
+
                 case 2: //Total partidas
                     if (s2.length == 3) {
                         t = Integer.parseInt(s2[0]);
