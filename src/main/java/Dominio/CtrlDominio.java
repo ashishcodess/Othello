@@ -18,7 +18,7 @@ public class CtrlDominio {
     private static CtrlPersitencia cp;
     private static Ranking ranking;
 
-    private static int code; //ID jugador1
+    private static int id_1; //ID jugador1
     private static String nickname; //nickname jugador1
 
     private static int id_2; //ID jugador2
@@ -39,7 +39,7 @@ public class CtrlDominio {
      * Creadora por defecto de CtrlDominio
      * */
     public CtrlDominio() {
-        code = -1;
+        id_1 = -1;
         nickname = "";
         id_2 = -1;
         nick_2 = "";
@@ -59,7 +59,7 @@ public class CtrlDominio {
         boolean res = false;
         if (cp.ctrl_existe_usuario(id,nick)) {
             if (!b) { //login usuario 1
-                code = id;
+                id_1 = id;
                 nickname = nick;
             }
             else { //login usuario 2
@@ -76,7 +76,7 @@ public class CtrlDominio {
      * @return devuelve la informacion que esta logueado dentro del juego
      * */
     public String get_info_usuario_activo() {
-        return "Usuarios activos:         J1 - (ID:" + code + " , nickname: " + nickname + ")            " + "J2 - (ID2:" + id_2 + " , nickname2: " + nick_2 + ")";
+        return "Usuarios activos:         J1 - (ID:" + id_1 + " , nickname: " + nickname + ")            " + "J2 - (ID2:" + id_2 + " , nickname2: " + nick_2 + ")";
     }
 
 
@@ -334,5 +334,39 @@ public class CtrlDominio {
         return casillasDisponibles;
     }
 
+    public static void iniciarPartida(int modo, int[] r, int idj1, int idj2, String nickj1, String nickj2) {
+        try {
+            int idPartida = cp.ctrl_get_nuevo_ID_Partida();
+            if (modo < 0 || modo > 2) throw new MyException("Modo de juego incorrecto");
+            int id1 = id_1; //por defecto anfitrion como J1
+            int id2 = -1;
+            String nick1 = nickname; //por defecto anfitrion como J1
+            String nick2 = "";
+            int turnoPartida = 0;
+
+            //Seleccionar informacion del contrincante
+            switch (modo) {
+                case 0: //Maquina vs Maquina
+                    id1 = idj1; nick1 = "";
+                    id2 = idj2; nick2 = "";
+                    break;
+
+                case 1: //Persona(siempre negras) vs Maquina
+                    id1 = idj1; nick1 = nickj1;
+                    id2 = idj2; nick2 = "";
+                    break;
+
+                case 2: //Persona vs Persona
+                    id1 = idj1; nick1 = nickj1;
+                    id2 = idj2; nick2 = nickj2;
+                    break;
+            }
+            Tablero t = new Tablero();
+            partida_activa = new Partida(idPartida,modo,r,turnoPartida,id1,nick1,id2,nick2,t);
+        }
+        catch (Exception e) {
+            //System.out.println(e);
+        }
+    }
 
 }
