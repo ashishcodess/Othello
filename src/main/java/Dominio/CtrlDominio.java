@@ -231,6 +231,7 @@ public class CtrlDominio {
                 id_aux2 = a_int.get(5);
                 partida_activa = new Partida(idPartida,modo,reglas,turno,id_aux1,"",id_aux2,"",t);
             }
+            partida_activa.get_info_partida(); //imprimir pruebas
         }
         catch (Exception ignored) {}
     }

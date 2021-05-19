@@ -255,7 +255,7 @@ public class VistaConfigPartida {
     //AQUI HAY QUE CREAR LA PARTIDA....
     private void recoger_info_partida() {
         ArrayList<Integer> as_int = recoger_info_modo_juego();
-        for (Integer a : as_int) System.out.println(a);
+        //for (Integer a : as_int) System.out.println(a);
         iCtrlPresentacion.cargarTablero(iCtrlPresentacion.consultar_idTablero_cargar());
         primera_vez = true;
         iCtrlPresentacion.presentacion_crearPartida(as_int);
