@@ -282,7 +282,7 @@ public class CtrlPersitencia {
      * @return devuelve TRUE en caso que se haya borrado con exito, caso contrario devuelve excepcion
      */
     public boolean ctrl_borrar_tablero(int idTablero) {
-        if (idTablero >= 0) {
+        if (idTablero > 0) {
             String pathF = dir_tablero + idTablero + ".txt";
             return io.borrarFichero(pathF);
         }
@@ -292,7 +292,7 @@ public class CtrlPersitencia {
     /**
      * Operacion ctrl_cargar_tablero
      * @param idTablero es el ID de tablero a cargar
-     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero inicial
+     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero vacio
      */
     public int[][] ctrl_cargar_tablero(int idTablero) throws IOException {
         int[][] map = new int[8][8];
@@ -300,8 +300,8 @@ public class CtrlPersitencia {
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 map[i][j] = 0;
-                if ((i == 3 && j==3) || (i == 4 && j==4)) map[i][j] = 3;
-                else if ((i == 3 && j==4) || (i == 4 && j==3)) map[i][j] = 2;
+                //if ((i == 3 && j==3) || (i == 4 && j==4)) map[i][j] = 3;
+                //else if ((i == 3 && j==4) || (i == 4 && j==3)) map[i][j] = 2;
             }
         }
         String pathF = dir_tablero + idTablero + ".txt";
