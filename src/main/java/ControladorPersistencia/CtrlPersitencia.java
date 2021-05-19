@@ -112,7 +112,7 @@ public class CtrlPersitencia {
      * @return devuelve el siguente ID disponible para asignarselo a un Usuario
      * */
     public int ctrl_get_nuevo_ID_user() {
-        return (++idMax_usuario);
+        return idMax_usuario;
     }
 
     /**
@@ -120,7 +120,7 @@ public class CtrlPersitencia {
      * @return devuelve el siguente ID disponible para asignarselo a una Partida
      * */
     public int ctrl_get_nuevo_ID_Partida() {
-        return (++idMax_partida);
+        return idMax_partida;
     }
 
     /**
@@ -128,10 +128,30 @@ public class CtrlPersitencia {
      * @return devuelve el siguente ID disponible para asignarselo a un tablero a guardar
      * */
     public int ctrl_get_nuevo_ID_tablero() {
-        return (++idMax_tablero);
+        return idMax_tablero;
     }
 
 
+    /**
+     * Operacion ctrl_incr_nuevo_ID_user (incrementa contador ID user)
+     * */
+    private void ctrl_incr_nuevo_ID_user() {
+        ++idMax_usuario;
+    }
+
+    /**
+     * Operacion ctrl_incr_nuevo_ID_partida (incrementa contador ID partida)
+     * */
+    private void ctrl_incr_nuevo_ID_partida() {
+        ++idMax_partida;
+    }
+
+    /**
+     * Operacion ctrl_incr_nuevo_ID_tablero (incrementa contador ID tablero)
+     * */
+    private void ctrl_incr_nuevo_ID_tablero() {
+        ++idMax_tablero;
+    }
 
 
     //Controlador de Partidas (cPartidas)
@@ -210,6 +230,7 @@ public class CtrlPersitencia {
             int id_partida  = Integer.parseInt(as.get(0));
             String pathF = dir_partidas + id_partida + ".txt";
             io.guardarInfoFichero(pathF,as,tipoFichero.PARTIDA);
+            ctrl_incr_nuevo_ID_partida();
             int id1, id2;
             String nick1= "";
             String nick2 = "";
@@ -287,9 +308,8 @@ public class CtrlPersitencia {
         as.add(s_aux);
 
         String pathF = dir_tablero + idTablero + ".txt";
-
+        ctrl_incr_nuevo_ID_tablero();
         io.guardarInfoFichero(pathF,as,tipoFichero.TABLERO);
-
     }
 
     /** Operacion ctrl_borrar_tablero
@@ -519,7 +539,9 @@ public class CtrlPersitencia {
      */
     public boolean ctrl_crear_usuario(int idJugador,String nicknameJugador) throws IOException {
         String pathF = dir_usuarios + idJugador + "_" + nicknameJugador;
-        return io.crearFichero(pathF);
+        boolean b = io.crearFichero(pathF);
+        if (b) ctrl_incr_nuevo_ID_user();
+        return b;
     }
 
     /**
