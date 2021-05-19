@@ -26,6 +26,13 @@ public class CtrlDominio {
 
     private static int estado_partida; //para conocer el estado de la partida desde la capa de Presentacion
     private static Partida partida_activa;
+    private static int idTablero_cargar;
+
+    public void modificar_idTablero_cargar(int id) {
+        idTablero_cargar = id;
+    }
+
+    public int consultar_idTablero_cargar() {return idTablero_cargar;}
 
 
     /**
@@ -239,10 +246,9 @@ public class CtrlDominio {
     /**
      * Operacion Cargar Tablero (desde Dominio)
      * @param idTablero es el ID de tablero a cargar
-     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero inicial
+     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero vacio
      */
     public int [][] dominio_cargar_tablero(int idTablero) throws IOException {
-        //Sergio: igual puede ser privada si solo la usamos en esta clase
         return cp.ctrl_cargar_tablero(idTablero);
     }
 

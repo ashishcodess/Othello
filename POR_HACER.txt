@@ -6,7 +6,7 @@ CAPA DE DOMINIO:
 - Acabar IA (+ test IA)
 - Testear IA y ver que finaliza una partida desde la capa de Dominio
 - Drivers de la IA
-- Drivers de tablero
+- Drivers de tablero   // Hecho
 - Añadir algun logro mas (si es posible)
 - Acabar driverPersitencia para tableros (Sergio)
 

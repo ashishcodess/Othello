@@ -24,7 +24,7 @@ public class DriverTablero {
         System.out.println();
 
     }
-    /** print_dispnibles para ver cuales son los primeros casillas disponibles cuando empezamos la partida
+    /** print_disponibles para ver cuales son los primeros casillas disponibles cuando empezamos la partida
      * */
     public static void print_disponibles() {
 
@@ -251,14 +251,8 @@ public class DriverTablero {
             System.out.println("DriverJugador (OPCIONES):");
             System.out.println("-1 - SALIR DEL DRIVER");
             System.out.println("1 - Print tablero");
-            System.out.println("2 - Print graph_v");
-            System.out.println("3 - Print graph_h");
-            System.out.println("4 - Print graph_dl ");
-            System.out.println("5 - Print graph_dr ");
-            System.out.println("6 - Print set disponibles ");
-            System.out.println("7 - Print set negras ");
-            System.out.println("8 - Print set blancas ");
-            System.out.println("9 - Print modificadas ");
+            System.out.println("2 - Print set disponibles ");
+            System.out.println("3 - Print modificadas ");
             System.out.println();
             System.out.print("Introducir opcion:");
             int i_entrada = Integer.parseInt(scan.next());
@@ -270,10 +264,10 @@ public class DriverTablero {
                 case 1:
                     test_tablero();
                     break;
-                case 6:
+                case 2:
                     print_disponibles();
                     break;
-                case 9:
+                case 3:
                     print_modificadas();
                     break;
                 default:

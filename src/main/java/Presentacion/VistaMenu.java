@@ -221,6 +221,9 @@ public class VistaMenu {
         buttonCrearPartida.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA));
 
+        buttonBorrarTablero.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARTABLERO));
+
 
         menuitemLogin.addActionListener
                 (this::actionPerformed_buttonLogin);

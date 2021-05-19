@@ -10,12 +10,10 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
-enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA, CARGARTABLERO} //agregar en funcion de las necesidades
+enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA, CARGARTABLERO, BORRARTABLERO} //agregar en funcion de las necesidades
 
 
 public class CtrlPresentacion {
-
-
 
     public enum tipoJugador {JUGADOR1,JUGADOR2}
 
@@ -118,6 +116,10 @@ public class CtrlPresentacion {
                 vistaConfigPartida.hacerVisible(true);
                 break;
             case CARGARTABLERO:
+                vistaCargarTablero.hacerVisible(true);
+                break;
+            case BORRARTABLERO:
+                modificar_idTablero_cargar(-2);
                 vistaCargarTablero.hacerVisible(true);
                 break;
         }
@@ -232,6 +234,12 @@ public class CtrlPresentacion {
         }
         return tab;
     }
+
+    public void modificar_idTablero_cargar(int id) {
+        ctrlDominio.modificar_idTablero_cargar(id);
+    }
+
+    public int consultar_idTablero_cargar() {return ctrlDominio.consultar_idTablero_cargar();}
 
     public boolean borrar_tablero(int id) {return ctrlDominio.dominio_borrar_tablero(id);}
 

@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Objects;
 
 public class VistaCargarTablero {
     private String imagen_vacia = "";
@@ -19,19 +19,23 @@ public class VistaCargarTablero {
     private final JPanel panelPrincipal = new JPanel();
     private JFrame frameVista = new JFrame("Vista Tablero");
 
-    private final JButton[][] botonesMatriz = new JButton[8][8];
 
+    private final JButton[][] botonesMatriz = new JButton[8][8];
 
 
     private final JPanel panelBotones = new JPanel();
     private final JButton buttonCargar = new JButton("Cargar Tablero");
     private final JButton buttonBorrar = new JButton("Borrar Tablero");
     private final JButton buttonLimpiar = new JButton("Limpiar");
+    private final JButton buttonMenu = new JButton("Menu Principal");
     private JComboBox<String> selector_tablero = new JComboBox<>();
+
+    private int id_tablero_seleccionado = -1;
 
 
     private final JMenuBar menubarVista = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
+    private final JMenuItem menuitemMenu = new JMenuItem("Menu Principal");
     private final JMenuItem menuitemQuit = new JMenuItem("Salir");
 
 
@@ -53,6 +57,7 @@ public class VistaCargarTablero {
     }
 
     private void inicializar_menubarVista() {
+        menuFile.add(menuitemMenu);
         menuFile.add(menuitemQuit);
         menubarVista.add(menuFile);
         frameVista.setJMenuBar(menubarVista);
@@ -69,7 +74,11 @@ public class VistaCargarTablero {
         frameVista.pack();
         frameVista.setVisible(b);
         frameVista.setEnabled(b);
-        //if (b) recargar_comboBox_tableros();
+        if (b) {
+            buttonCargar.setEnabled(iCtrlPresentacion.consultar_idTablero_cargar() == -1);
+            limpiar_vista_previa_tablero();
+            recargar_comboBox_tableros();
+        }
     }
 
 
@@ -86,19 +95,18 @@ public class VistaCargarTablero {
                 tablero.add(botonesMatriz[i][j]);
             }
         }
-        /*panelPrincipal.setLayout(new FlowLayout());
-        panelPrincipal.add(tablero);*/
-
 
         JPanel panelAux = new JPanel();
         panelAux.setLayout(new BorderLayout());
         panelBotones.setLayout(new FlowLayout());
+        selector_tablero.insertItemAt("", 0);
         recargar_comboBox_tableros();
 
         JPanel panelAux2 = new JPanel();
         panelAux2.setLayout(new FlowLayout());
         panelAux2.add(selector_tablero);
         panelAux2.add(buttonLimpiar);
+        panelAux2.add(buttonMenu);
 
         panelAux.add(panelAux2,BorderLayout.NORTH);
         panelAux.add(buttonCargar,BorderLayout.CENTER);
@@ -106,7 +114,6 @@ public class VistaCargarTablero {
 
         panelBotones.add(panelAux);
         panelPrincipal.add(panelBotones);
-        //panelPrincipal.add(buttonLimpiar);
 
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.add(tablero,BorderLayout.CENTER);
@@ -114,12 +121,18 @@ public class VistaCargarTablero {
     }
 
     private void recargar_comboBox_tableros() {
-        ArrayList<String> tableros_disponibles = iCtrlPresentacion.obtener_lista_tableros_disponibles();
-        JComboBox<String> combo= new JComboBox<>();
-        for (int i = 0; i < tableros_disponibles.size(); ++i) {
-            combo.addItem(tableros_disponibles.get(i));
+        int size = selector_tablero.getItemCount();
+        for(int i=size-1; i >= 1;i--){
+            selector_tablero.removeItemAt(i);
         }
-        selector_tablero = combo;
+
+        ArrayList<String> tableros_disponibles = iCtrlPresentacion.obtener_lista_tableros_disponibles();
+        for (String tableros_disponible : tableros_disponibles) {
+            selector_tablero.addItem(tableros_disponible);
+        }
+
+        selector_tablero.setSelectedIndex(0);
+        id_tablero_seleccionado = -1;
     }
 
     private void cambiar_imagen_casilla(int x, int y, int tipo) {
@@ -142,14 +155,6 @@ public class VistaCargarTablero {
     }
 
 
-    private void cargarImagenes_tablero(int[][] tab) {
-        for (int i = 0; i < botonesMatriz.length; ++i) {
-            for (int j = 0; j < 8; ++j) {
-                cambiar_imagen_casilla(i,j,tab[i][j]);
-            }
-        }
-    }
-
     private void limpiar_vista_previa_tablero() {
         for (int i = 0; i < botonesMatriz.length; ++i) {
             for (int j = 0; j < 8; ++j) {
@@ -158,37 +163,67 @@ public class VistaCargarTablero {
         }
     }
 
-    private int obtener_info_selector_tablero() {
-        String s = selector_tablero.getSelectedItem().toString();
-        System.out.println(s);
-        int id = 0;
+    private void obtener_info_selector_tablero() {
+        String s = Objects.requireNonNull(selector_tablero.getSelectedItem()).toString();
+        id_tablero_seleccionado = -1;
         try {
-            id = Integer.parseInt(s);
+            if (!s.equals("")) id_tablero_seleccionado = Integer.parseInt(s);
+            else limpiar_vista_previa_tablero();
         }
         catch (Exception e) {}
-        return id;
     }
 
     private void listener_selector_tablero() {
-        int id = obtener_info_selector_tablero();
-        int[][] tab = iCtrlPresentacion.cargarTablero(id);
-        cargarImagenes_tablero(tab);
+        obtener_info_selector_tablero();
+        //limpiar_vista_previa_tablero();
+        int[][] tab = iCtrlPresentacion.cargarTablero(id_tablero_seleccionado);
+        for (int i = 0; i < botonesMatriz.length; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                cambiar_imagen_casilla(i,j,tab[i][j]);
+            }
+        }
     }
 
     private void listener_boton_borrar() {
-        int id = obtener_info_selector_tablero();
-        iCtrlPresentacion.borrar_tablero(id);
-        recargar_comboBox_tableros();
+        obtener_info_selector_tablero();
+        if (id_tablero_seleccionado != -1) {
+            boolean b = iCtrlPresentacion.borrar_tablero(id_tablero_seleccionado);
+            if (b) {
+                selector_tablero.removeItem(selector_tablero.getItemAt(id_tablero_seleccionado));
+                recargar_comboBox_tableros();
+                limpiar_vista_previa_tablero();
+            }
+        }
     }
 
+    private void listener_boton_cargar() {
+        System.out.println("cargando");
+        obtener_info_selector_tablero();
+        iCtrlPresentacion.modificar_idTablero_cargar(id_tablero_seleccionado);
+        iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA);
+    }
 
     public void asignar_listenersComponentes() {
         selector_tablero.addActionListener
                 (event -> listener_selector_tablero());
+
         buttonLimpiar.addActionListener
                 (event -> limpiar_vista_previa_tablero());
+
+        buttonCargar.addActionListener
+                (event -> listener_boton_cargar());
+
         buttonBorrar.addActionListener
                 (event -> listener_boton_borrar());
+
+        buttonMenu.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+
+        menuitemMenu.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+
+        menuitemQuit.addActionListener
+                (event -> iCtrlPresentacion.salir_del_juego());
     }
 
 }
