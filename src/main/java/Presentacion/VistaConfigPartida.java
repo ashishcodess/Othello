@@ -19,7 +19,7 @@ public class VistaConfigPartida {
     private JFrame frameVista = new JFrame("Configurar Partida");
     private final JPanel panelPrincipal = new JPanel();
 
-    private boolean primera_vez = true;
+    private boolean primera_vez = true;//en caso de cierto, al iniciar la partida saltaria al menu de seleccion de tablero
 
     //config partida
     private final JPanel panelModoDeJuego = new JPanel();
@@ -42,8 +42,8 @@ public class VistaConfigPartida {
     private final JButton buttonLoginUser2 = new JButton("Login Jugador 2");
     private JComboBox<String> selectorIA_2 = new JComboBox<>();
 
-    //en caso de cierto, al iniciar la partida saltaria al menu de seleccion de tablero
     private final JCheckBox tableroCheckBox = new JCheckBox("Tablero Personalizado?");
+    private JLabel labelInfoTablero = new JLabel("tablero: 0");
 
     private final JButton comenzarPartidaButton = new JButton("Comenzar Partida!");
     private final JButton menuButton = new JButton("Volver al menú");
@@ -71,9 +71,13 @@ public class VistaConfigPartida {
         frameVista.pack();
         frameVista.setVisible(b);
         frameVista.setEnabled(b);
-        if (b) System.out.println("idtab:" + iCtrlPresentacion.consultar_idTablero_cargar());
+        cargar_label_info_tablero();
     }
 
+    private void cargar_label_info_tablero() {
+        int id = iCtrlPresentacion.consultar_idTablero_cargar();
+        labelInfoTablero.setText("tablero: "+ id);
+    }
 
     /////////// INICIALIZACION DE COMPONENTES
 
@@ -157,6 +161,8 @@ public class VistaConfigPartida {
         panelReglas.add(diagonalCheckBox);
 
         //PANEL BOTONES
+        cargar_label_info_tablero();
+        panelBotones.add(labelInfoTablero);
         panelBotones.add(tableroCheckBox);
         panelBotones.add(menuButton);
         panelBotones.add(comenzarPartidaButton);
@@ -222,11 +228,7 @@ public class VistaConfigPartida {
         return cosas;
     }
 
-    private void recoger_info_partida() {
-        ArrayList<Integer> as = recoger_info_modo_juego();
-        for(int i = 0; i < as.size(); ++i) System.out.println(as.get(i));
-        iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);
-    }
+
 
     private void gestionar_inicio_de_juego() {
         if (tableroCheckBox.isSelected()) {
@@ -244,6 +246,15 @@ public class VistaConfigPartida {
         else { //CREAR PARTIDA CON LA CONFIGURACION
             recoger_info_partida();
         }
+    }
+
+    //AQUI HAY QUE CREAR LA PARTIDA....
+    private void recoger_info_partida() {
+        ArrayList<Integer> as = recoger_info_modo_juego();
+        for(int i = 0; i < as.size(); ++i) System.out.println(as.get(i));
+
+        iCtrlPresentacion.cargarTablero(iCtrlPresentacion.consultar_idTablero_cargar());
+        iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);
     }
 
     private void gestion_ComboBox_uno_ON(int i) {
