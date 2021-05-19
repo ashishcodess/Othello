@@ -154,6 +154,9 @@ public class CtrlPresentacion {
      * */
     public String presentacion_get_info_usuario_activo() {return ctrlDominio.get_info_usuario_activo();}
 
+    public void presentacion_crearPartida(ArrayList<Integer> a_int) {
+        ctrlDominio.domino_crearPartida(a_int);
+    }
 
 
     public String presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG t) {

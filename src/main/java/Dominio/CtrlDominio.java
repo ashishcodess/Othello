@@ -3,6 +3,7 @@ package Dominio;
 import ControladorPersistencia.CtrlPersitencia;
 import Dominio.Partida.Partida;
 import Dominio.Partida.Position;
+import Dominio.Partida.Tablero;
 import Dominio.Ranking.Logros;
 import Dominio.Ranking.Ranking;
 import MyException.MyException;
@@ -203,6 +204,36 @@ public class CtrlDominio {
         return cp.ctrl_listar_partidas_disponibles(id,nick);
     }
 
+
+    //SERGIO: NO LA HE TESTEADO
+    public void domino_crearPartida(ArrayList<Integer> a_int) {
+        try {
+            int reglas[] = new int[3];
+            reglas[0] = a_int.get(0);
+            reglas[1] = a_int.get(1);
+            reglas[2] = a_int.get(2);
+            int modo = a_int.get(3);
+            int id_aux1 = -1;
+            int id_aux2 = -2;
+            int idPartida = cp.ctrl_get_nuevo_ID_Partida();
+            int turno = cp.ctrl_cargar_turno_tablero(idTablero_cargar);
+            int mapa[][] = cp.ctrl_cargar_tablero(idTablero_cargar);
+            Tablero t = new Tablero(mapa);
+            if (a_int.size() == 4) { //Persona vs Persona
+                partida_activa = new Partida(idPartida,modo,reglas,turno,code,nickname,id_2,nick_2,t);
+            }
+            else if (a_int.size() == 5) { // Persona vs IA
+                id_aux1 = a_int.get(4);
+                partida_activa = new Partida(idPartida,modo,reglas,turno,code,nickname,id_aux1,"",t);
+            }
+            else if (a_int.size() == 6) { // IA vs IA
+                id_aux1 = a_int.get(4);
+                id_aux2 = a_int.get(5);
+                partida_activa = new Partida(idPartida,modo,reglas,turno,id_aux1,"",id_aux2,"",t);
+            }
+        }
+        catch (Exception ignored) {}
+    }
 
 
     public void dominio_guardar_partida() throws IOException {

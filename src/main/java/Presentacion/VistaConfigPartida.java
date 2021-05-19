@@ -43,7 +43,7 @@ public class VistaConfigPartida {
     private JComboBox<String> selectorIA_2 = new JComboBox<>();
 
     private final JCheckBox tableroCheckBox = new JCheckBox("Tablero Personalizado?");
-    private JLabel labelInfoTablero = new JLabel("tablero: 0");
+    private final JLabel labelInfoTablero = new JLabel("tablero: 0");
 
     private final JButton comenzarPartidaButton = new JButton("Comenzar Partida!");
     private final JButton menuButton = new JButton("Volver al menú");
@@ -209,8 +209,11 @@ public class VistaConfigPartida {
 
 
     private ArrayList<Integer> recoger_info_modo_juego() {
-        //0->modo , 1 -> ID-maquina1, 2 -> ID-maquina2
         ArrayList<Integer> cosas = new ArrayList<>();
+        cosas.add(((verticalCheckBox.isSelected()) ? 1 : 0));
+        cosas.add(((horizontalCheckBox.isSelected()) ? 1 : 0));
+        cosas.add(((diagonalCheckBox.isSelected()) ? 1 : 0));
+        //0->modo , 1 -> ID-maquina1, 2 -> ID-maquina2
         int i_aux;
         if (IAVsIARadioButton.isSelected()) {
             cosas.add(0);
@@ -236,7 +239,7 @@ public class VistaConfigPartida {
             //SALTAR AL MENU DE CARGA DE TABLERO Y LUEGO CREAR PARTIDA CON LA CONFIGURACION NECESARIA
             if (!primera_vez) {
                 primera_vez = true;
-                recoger_info_partida();
+                recoger_info_partida(); //llama a la funcion que crea la partida
             }
             else {
                 primera_vez = false;
@@ -245,17 +248,17 @@ public class VistaConfigPartida {
             }
         }
         else { //CREAR PARTIDA CON LA CONFIGURACION
-            recoger_info_partida();
+            recoger_info_partida(); //llama a la funcion que crea la partida
         }
     }
 
     //AQUI HAY QUE CREAR LA PARTIDA....
     private void recoger_info_partida() {
-        ArrayList<Integer> as = recoger_info_modo_juego();
-        for(int i = 0; i < as.size(); ++i) System.out.println(as.get(i));
-
+        ArrayList<Integer> as_int = recoger_info_modo_juego();
+        for (Integer a : as_int) System.out.println(a);
         iCtrlPresentacion.cargarTablero(iCtrlPresentacion.consultar_idTablero_cargar());
         primera_vez = true;
+        iCtrlPresentacion.presentacion_crearPartida(as_int);
         iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);
     }
 
