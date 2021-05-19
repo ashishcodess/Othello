@@ -10,7 +10,8 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
-enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA, CARGARTABLERO, BORRARTABLERO} //agregar en funcion de las necesidades
+//agregar en funcion de las necesidades
+enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA, CARGARTABLERO, BORRARTABLERO}
 
 
 public class CtrlPresentacion {
@@ -48,7 +49,6 @@ public class CtrlPresentacion {
      * */
     public void inicializarPresentacion() {
         hacerVisibleVista(vistaActiva.LOGIN);
-        //hacerVisibleVista(vistaActiva.CARGARTABLERO); //pruebas
     }
 
 
@@ -59,7 +59,6 @@ public class CtrlPresentacion {
         presentacion_exportar_ranking();
         System.exit(0);
     }
-
 
 
     /*CONFIGURACION COMUN PARA TODOS LOS FRAMES, CAMBIA UNICAMENTE EL SIZE DE LA VENTANA*/
@@ -78,12 +77,8 @@ public class CtrlPresentacion {
         return frameAux;
     }
 
-
-    /**
-     * Metodo hacerVisibleVista
-     * @param a dependiendo de la enumeracion de vistaActiva hace visible una vista u otra (para gestion de vistas)
-     * */
-    public void hacerVisibleVista(vistaActiva a) {
+    //agregar en funcion de las necesidades
+    private void apagar_vistas() {
         vistaLogin.hacerVisible(false,tipoJugador.JUGADOR1);
         vistaMenu.hacerVisible(false);
         vistaConfigPartida.hacerVisible(false);
@@ -93,6 +88,14 @@ public class CtrlPresentacion {
         vistaTablero.hacerVisible(false);
         vistaConfigPartida.hacerVisible(false);
         vistaCargarTablero.hacerVisible(false);
+    }
+
+    /**
+     * Metodo hacerVisibleVista
+     * @param a dependiendo de la enumeracion de vistaActiva hace visible una vista u otra (para gestion de vistas)
+     * */
+    public void hacerVisibleVista(vistaActiva a) {
+        apagar_vistas();
         switch (a) {
             case LOGIN:
                 vistaLogin.hacerVisible(true,tipoJugador.JUGADOR1);
@@ -150,6 +153,10 @@ public class CtrlPresentacion {
      * @return devuelve la informacion que esta logueado dentro del juego
      * */
     public String presentacion_get_info_usuario_activo() {return ctrlDominio.get_info_usuario_activo();}
+
+    public void presentacion_crearPartida(ArrayList<Integer> a_int) {
+        ctrlDominio.domino_crearPartida(a_int);
+    }
 
 
     public String presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG t) {
@@ -229,7 +236,7 @@ public class CtrlPresentacion {
         try{
             tab = ctrlDominio.dominio_cargar_tablero(id);
         }
-        catch (Exception e) {
+        catch (Exception ignored) {
 
         }
         return tab;

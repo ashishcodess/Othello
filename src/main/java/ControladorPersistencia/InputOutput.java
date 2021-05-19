@@ -8,12 +8,18 @@ enum tipoFichero {USUARIO, PARTIDA,TABLERO, RANKING}
 
 public class InputOutput {
 
+    /**
+     * Constructora por defecto de InputOutput
+     * */
+    public InputOutput() {}
 
-    public InputOutput() {
 
-    }
-
-
+    /**
+     * Metodo calcular ID de ficheros
+     * @param pathFichero directorio del fichero a procesar
+     * @param a tipo de fichero a procesar
+     * @return devuelve el maximo numero entero que se encuentra dentro del fichero apuntado por "pathFichero"
+     * */
     public int calcularID_Ficheros (String pathFichero, tipoFichero a) {
         File f = new File(pathFichero);
         String[] s = f.list();
@@ -31,6 +37,10 @@ public class InputOutput {
         return maxID;
     }
 
+    /**
+     * Metodo crearFichero
+     * @param pathF directorio + nombre de fichero a crear
+     * @return devuelve TRUE en caso de haberse creado correctamente, caso contrario devuelve FALSE */
     public boolean crearFichero (String pathF) throws IOException {
         boolean res = false;
         File f = new File(pathF);
@@ -40,8 +50,12 @@ public class InputOutput {
         return res;
     }
 
+    /**
+     * Metodo Guardar Info Fichero
+     * @param pathF directorio + nombre de fichero a guardar informacion
+     * @param as informacion que queremos guardar
+     * @param a tipo de fichero a guardar informacion*/
     public void guardarInfoFichero(String pathF, ArrayList<String> as, tipoFichero a) throws IOException {
-        //PARTIDA, TABLERO (convertir a arraylist de strings), ranking
         File f = new File(pathF);
         if (f.exists()) f.delete();
         f.createNewFile();
@@ -65,6 +79,10 @@ public class InputOutput {
 
     }
 
+    /**
+     * Metodo leer Fichero
+     * @param pathF directorio + nombre de fichero a leer
+     * @return devuelve un ArrayList de Strings con toda la informacion que contiene dicho fichero*/
     public ArrayList<String> leerFichero(String pathF) throws IOException {
         ArrayList<String> as = new ArrayList<>();
         File f = new File(pathF);
@@ -79,11 +97,19 @@ public class InputOutput {
         return as;
     }
 
+    /**
+     * Metodo Existe Fichero
+     * @param pathF directorio + nombre de fichero a comprobar si existe
+     * @return devuelve TRUE en caso de existir el fichero, caso contrario devuelve FALSE */
     public boolean existeFichero (String pathF) {
         File f = new File(pathF);
         return f.exists();
     }
 
+    /**
+     * Metodo Borrar Fichero
+     * @param pathF directorio + nombre de fichero a borrar
+     * @return devuelve TRUE en caso de haberse borrado con exito el fichero, caso contrario devuelve FALSE */
     public boolean borrarFichero (String pathF) {
         File f = new File(pathF);
         boolean b;
@@ -92,7 +118,11 @@ public class InputOutput {
         }
         return b;
     }
-
+    /**
+     * Metodo Existe EN Fichero (buscar si una string esta contenida dentro del fichero)
+     * @param pathF directorio + nombre de fichero a comprobar si existe
+     * @param s informacion que queremos comprobar que exista
+     * @return devuelve TRUE en caso de existir la string "s" dentro de el fichero, caso contrario devuelve FALSE */
     public boolean existe_en_fichero (String pathF, String s) throws IOException {
         boolean res = false;
         File f = new File(pathF);
@@ -107,6 +137,11 @@ public class InputOutput {
         return res;
     }
 
+    /**
+     * Metodo Agregar EN Fichero (agrega la informacion al fichero)
+     * @param pathF directorio + nombre de fichero a realizar la accion
+     * @param s informacion que queremos agregar al fichero
+     * @return devuelve TRUE en caso de agregar correctamente la string "s" dentro de el fichero, caso contrario devuelve FALSE */
     public boolean agregar_a_fichero(String pathF, String s) throws IOException {
         boolean res = false;
         File f = new File(pathF);
@@ -121,6 +156,11 @@ public class InputOutput {
         return res;
     }
 
+    /**
+     * Metodo Borrar EN Fichero (Borrar la informacion de un fichero)
+     * @param pathF directorio + nombre de fichero a realizar la accion
+     * @param s informacion que queramos borrar de el fichero
+     * @return devuelve TRUE en caso de borrar correctamente la string "s" dentro de el fichero, caso contrario devuelve FALSE */
     public void borrar_de_fichero(String pathF, String s) throws IOException {
         if (existe_en_fichero(pathF,s)) {
             ArrayList<String> as = leerFichero(pathF);
@@ -130,7 +170,6 @@ public class InputOutput {
                 b = (as.get(i)).equals(s);
                 if (b) as.remove(i);
             }
-
             //volver a escribir fichero con el elemento ya borrado
             PrintWriter pw = new PrintWriter(pathF);
             for (i = 0; i < as.size(); ++i) pw.println(as.get(i));
@@ -149,6 +188,10 @@ public class InputOutput {
         }
     }
 
+    /**
+     * Metodo "listar ficheros de Directorio"
+     * @param pathDir directorio donde queramos realizar la accion
+     * @return devuelve un ArrayList de Strings con todos los ficheros que contiene el directorio pasado como parametro */
     public ArrayList<String> listarFicherosDeDirectorio(String pathDir) {
         File f = new File(pathDir);
         String[] s = f.list();
@@ -156,9 +199,7 @@ public class InputOutput {
         for (String sAux : s) {
             if (!sAux.equals("index.txt")) res.add(sAux);
         }
-
         return res;
-
     }
 
 }

@@ -93,7 +93,7 @@ public class CtrlDominio {
             if (cp.ctrl_crear_usuario(idRes,nick)) {
                 return idRes;
             }
-        }catch (Exception e) {}
+        }catch (Exception ignored) {}
         return idRes;
     }
 
@@ -105,7 +105,7 @@ public class CtrlDominio {
     * Metodo exportar ranking (desde Dominio)
     * */
     public void domino_exportar_ranking() {
-        try{cp.ctrl_exportar_ranking(ranking.toArrayList(), "ranking.txt");} catch (Exception e) {}
+        try{cp.ctrl_exportar_ranking(ranking.toArrayList(), "ranking.txt");} catch (Exception ignored) {}
     }
 
     /**
@@ -134,7 +134,12 @@ public class CtrlDominio {
         ArrayList<String> as = new ArrayList<>();
         String[] sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDA_CORTA)).split(" ");
         String s = "";
-        if (sAux.length == 5) s = ("Turnos: " + sAux[0] + " , logrado en Partida con jugadores J1[" + sAux[1] + " , " + sAux[2] + "] - J2[" + sAux[3] + " , " + sAux[4] + "]");
+        if (sAux.length == 5) s = ("Turnos: " + sAux[0] + " , logrado con jugadores J1[" + sAux[1] + " , " + sAux[2] + "] - J2[" + sAux[3] + " , " + sAux[4] + "]");
+        as.add(s);
+
+        sAux = (ranking.consultar_logro(Logros.tipoLogro.FICHAS_DIFF)).split(" ");
+        //if (sAux.length == 7) s = ("Diferencia: " + sAux[0] + " , J1[fichas:" + sAux[3] + " ," + sAux[1] + " , " + sAux[2] + "] - J2[fichas:" + sAux[6] +" ," + sAux[4] + " , " + sAux[5] + "]");
+        if (sAux.length == 7) s = ("Diferencia: " + sAux[0] + " , J1[" + sAux[1] + " , " + sAux[2] + " , fichas:" + sAux[3] + "] - J2[" + sAux[4] + " , " + sAux[5] + " , fichas:" + sAux[6] +"]");
         as.add(s);
 
         sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDAS_TOTALES)).split(" ");
@@ -199,6 +204,37 @@ public class CtrlDominio {
         return cp.ctrl_listar_partidas_disponibles(id,nick);
     }
 
+
+    //SERGIO: NO LA HE TESTEADO
+    public void domino_crearPartida(ArrayList<Integer> a_int) {
+        try {
+            int reglas[] = new int[3];
+            reglas[0] = a_int.get(0);
+            reglas[1] = a_int.get(1);
+            reglas[2] = a_int.get(2);
+            int modo = a_int.get(3);
+            int id_aux1 = -1;
+            int id_aux2 = -2;
+            int idPartida = cp.ctrl_get_nuevo_ID_Partida();
+            int turno = cp.ctrl_cargar_turno_tablero(idTablero_cargar);
+            int mapa[][] = cp.ctrl_cargar_tablero(idTablero_cargar);
+            Tablero t = new Tablero(mapa);
+            if (a_int.size() == 4) { //Persona vs Persona
+                partida_activa = new Partida(idPartida,modo,reglas,turno,code,nickname,id_2,nick_2,t);
+            }
+            else if (a_int.size() == 5) { // Persona vs IA
+                id_aux1 = a_int.get(4);
+                partida_activa = new Partida(idPartida,modo,reglas,turno,code,nickname,id_aux1,"",t);
+            }
+            else if (a_int.size() == 6) { // IA vs IA
+                id_aux1 = a_int.get(4);
+                id_aux2 = a_int.get(5);
+                partida_activa = new Partida(idPartida,modo,reglas,turno,id_aux1,"",id_aux2,"",t);
+            }
+            partida_activa.get_info_partida(); //imprimir pruebas
+        }
+        catch (Exception ignored) {}
+    }
 
 
     public void dominio_guardar_partida() throws IOException {
@@ -270,13 +306,27 @@ public class CtrlDominio {
     private static void actualizar_ranking(Partida p, Ranking.tipoGanador ganador){
         try {
             int modo = p.getModoDeJuegoPartida();
-            if (modo != 0) { //diferente de maquina vs maquina
+            if (modo != 0) {
                 int id1, id2;
                 String nick1, nick2;
                 id1 = p.getID_J1();
                 nick1 = p.getNickJugador1();
                 id2 = p.getID_J2();
                 nick2 = p.getNickJugador2();
+
+                //logros
+                int turnos = p.getTurnoPartida();
+                boolean b = ranking.comprobar_logro(Logros.tipoLogro.PARTIDA_CORTA,turnos);
+                if (b) ranking.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,nick1,id1,nick2,id2,turnos,0);
+                int fichas_j1, fichas_j2, fichas_diff;
+                fichas_j1 = p.getTableroPartida().getNumCasillasNegras();
+                fichas_j2 = p.getTableroPartida().getNumCasillasBlancas();
+                if (fichas_j1 > fichas_j2) fichas_diff = fichas_j1 - fichas_j2;
+                else fichas_diff = fichas_j2 - fichas_j1;
+                b = ranking.comprobar_logro(Logros.tipoLogro.FICHAS_DIFF,fichas_diff);
+                if (b) ranking.cambiar_logro_partida(Logros.tipoLogro.FICHAS_DIFF,nick1,id1,nick2,id2,fichas_j1,fichas_j2);
+
+                //ACTUALIZAR RANKING
                 ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,ganador);
                 cp.ctrl_exportar_ranking(ranking.toArrayList(), "ranking.txt");
             }
@@ -288,10 +338,12 @@ public class CtrlDominio {
 
 
 
+
+
+
+
     private static int ejecutarRondaPartida(Partida p, ArrayList<String> argum) {
-        /*ejecutar 1 ronda de la partida:
-         * mandarle el estado de como va la partida hacia la capa de presentacion
-         * */
+        /*ejecutar 1 ronda de la partida:*/
         int res = -1;
         try {
             //accion a realizar esta dentro de argum
@@ -315,11 +367,8 @@ public class CtrlDominio {
                         break;
                 }
             }
-
         }
-        catch (Exception e) {
-
-        }
+        catch (Exception ignored) {}
         return res;
     }
 

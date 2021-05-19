@@ -30,6 +30,9 @@ public class CtrlPersitencia {
     public enum tipoIMG {IMG_VACIA,IMG_DISPONIBLE,IMG_NEGRA,IMG_BLANCA}
     private final String dirImagenes;
 
+    /**
+     * Constructora por defecto de CtrlPersistencia
+     * */
     public CtrlPersitencia() {
         this.dirIni = "./src/files/";
         this.dir_partidas = this.dirIni + "partidas/";
@@ -41,7 +44,10 @@ public class CtrlPersitencia {
         calcular_IDs_maximos();
     }
 
-
+    /**
+     * Constructora de CtrlPersistencia
+     * @param s_path es el path personalizado a cargar
+     * */
     public CtrlPersitencia(String s_path) {
         this.dirIni = s_path;
         this.dir_partidas = this.dirIni + "partidas/";
@@ -53,7 +59,9 @@ public class CtrlPersitencia {
         calcular_IDs_maximos();
     }
 
-
+    /**
+     * Metodo calcular ID's maximos asignado de Usuario, Partida y Tablero
+     * */
     private void calcular_IDs_maximos() {
         this.idMax_usuario = io.calcularID_Ficheros(dir_usuarios,tipoFichero.USUARIO);
         this.idMax_partida = io.calcularID_Ficheros(dir_partidas,tipoFichero.PARTIDA);
@@ -61,6 +69,9 @@ public class CtrlPersitencia {
     }
 
 
+    /**
+     * Metodo Inicializar Dir. Persistencia (inicializa los directorios en caso de no existir)
+     * */
     private void InicializarDirPersitencia() {
         File f = new File(this.dirIni);
         if (!f.exists()) {
@@ -72,7 +83,11 @@ public class CtrlPersitencia {
         }
     }
 
-
+    /**
+     * Metodo consultar direccion imagen
+     * @param t es el tipo de imagen a cargar [vacia, disponible, blanca, negra]
+     * @return devuelve la direccion del icono seleccionado
+     * */
     public String consultar_dir_IMG(tipoIMG t) {
         String s = dirImagenes;
         switch (t) {
@@ -97,7 +112,7 @@ public class CtrlPersitencia {
      * @return devuelve el siguente ID disponible para asignarselo a un Usuario
      * */
     public int ctrl_get_nuevo_ID_user() {
-        return (++idMax_usuario);
+        return idMax_usuario;
     }
 
     /**
@@ -105,7 +120,7 @@ public class CtrlPersitencia {
      * @return devuelve el siguente ID disponible para asignarselo a una Partida
      * */
     public int ctrl_get_nuevo_ID_Partida() {
-        return (++idMax_partida);
+        return idMax_partida;
     }
 
     /**
@@ -113,10 +128,30 @@ public class CtrlPersitencia {
      * @return devuelve el siguente ID disponible para asignarselo a un tablero a guardar
      * */
     public int ctrl_get_nuevo_ID_tablero() {
-        return (++idMax_tablero);
+        return idMax_tablero;
     }
 
 
+    /**
+     * Operacion ctrl_incr_nuevo_ID_user (incrementa contador ID user)
+     * */
+    private void ctrl_incr_nuevo_ID_user() {
+        ++idMax_usuario;
+    }
+
+    /**
+     * Operacion ctrl_incr_nuevo_ID_partida (incrementa contador ID partida)
+     * */
+    private void ctrl_incr_nuevo_ID_partida() {
+        ++idMax_partida;
+    }
+
+    /**
+     * Operacion ctrl_incr_nuevo_ID_tablero (incrementa contador ID tablero)
+     * */
+    private void ctrl_incr_nuevo_ID_tablero() {
+        ++idMax_tablero;
+    }
 
 
     //Controlador de Partidas (cPartidas)
@@ -195,6 +230,7 @@ public class CtrlPersitencia {
             int id_partida  = Integer.parseInt(as.get(0));
             String pathF = dir_partidas + id_partida + ".txt";
             io.guardarInfoFichero(pathF,as,tipoFichero.PARTIDA);
+            ctrl_incr_nuevo_ID_partida();
             int id1, id2;
             String nick1= "";
             String nick2 = "";
@@ -272,9 +308,8 @@ public class CtrlPersitencia {
         as.add(s_aux);
 
         String pathF = dir_tablero + idTablero + ".txt";
-
+        ctrl_incr_nuevo_ID_tablero();
         io.guardarInfoFichero(pathF,as,tipoFichero.TABLERO);
-
     }
 
     /** Operacion ctrl_borrar_tablero
@@ -323,8 +358,7 @@ public class CtrlPersitencia {
     /**
      * Operacion ctrl_cargar_turno_tablero
      * @param idTablero es el ID de tablero a cargar
-     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve -1
-     */
+     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve -1 */
     public int ctrl_cargar_turno_tablero(int idTablero) throws IOException {
         int turno;
         String pathF = dir_tablero + idTablero + ".txt";
@@ -405,11 +439,39 @@ public class CtrlPersitencia {
                         id2 = Integer.parseInt(s2[3]);
                         if (id2 > 6) nick2 = s2[4];
                     }
-                    rank.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,nick1,id1,nick2,id2,t);
+                    rank.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,nick1,id1,nick2,id2,t,0);
                     break;
-                case 1: //mas capturas (sin implementar)
+
+                case 1: //Diferencia de fichas mas grande
+                    int t2 = 0;
+                    if (s2.length == 7) {
+                        id1 = Integer.parseInt(s2[1]);
+                        nick1 = s2[2];
+                        t = Integer.parseInt(s2[3]);
+                        id2 = Integer.parseInt(s2[4]);
+                        nick2 = s2[5];
+                        t2 = Integer.parseInt(s2[6]);
+                        rank.cambiar_logro_partida(Logros.tipoLogro.FICHAS_DIFF,nick1,id1,nick2,id2,t,t2);
+                    }
+                    else if (s2.length == 6) {
+                        id1 = Integer.parseInt(s2[1]);
+                        if (id1 < 6) {
+                            t = Integer.parseInt(s2[2]);
+                            id2 = Integer.parseInt(s2[3]);
+                            nick2 = s2[4];
+                            t2 = Integer.parseInt(s2[5]);
+                        }
+                        else {
+                            nick1 = s2[2];
+                            t = Integer.parseInt(s2[3]);
+                            id2 = Integer.parseInt(s2[4]);
+                            t2 = Integer.parseInt(s2[5]);
+                        }
+                        rank.cambiar_logro_partida(Logros.tipoLogro.FICHAS_DIFF,nick1,id1,nick2,id2,t,t2);
+                    }
                     break;
-                case 2: //Total partidas
+
+                case 2: //PARTIDAS TOTALES
                     if (s2.length == 3) {
                         t = Integer.parseInt(s2[0]);
                         id1 = Integer.parseInt(s2[1]);
@@ -417,7 +479,8 @@ public class CtrlPersitencia {
                         rank.cambiar_logro_jugador(Logros.tipoLogro.PARTIDAS_TOTALES,nick1,id1,t);
                     }
                     break;
-                case 3: //Ganadas
+
+                case 3: //PARTIDAS GANADAS
                     if (s2.length == 3) {
                         t = Integer.parseInt(s2[0]);
                         id1 = Integer.parseInt(s2[1]);
@@ -425,7 +488,8 @@ public class CtrlPersitencia {
                         rank.cambiar_logro_jugador(Logros.tipoLogro.PARTIDAS_GANADAS,nick1,id1,t);
                     }
                     break;
-                case 4: //Perdidas
+
+                case 4: //PARTIDAS PERDIDAS
                     if (s2.length == 3) {
                         t = Integer.parseInt(s2[0]);
                         id1 = Integer.parseInt(s2[1]);
@@ -475,7 +539,9 @@ public class CtrlPersitencia {
      */
     public boolean ctrl_crear_usuario(int idJugador,String nicknameJugador) throws IOException {
         String pathF = dir_usuarios + idJugador + "_" + nicknameJugador;
-        return io.crearFichero(pathF);
+        boolean b = io.crearFichero(pathF);
+        if (b) ctrl_incr_nuevo_ID_user();
+        return b;
     }
 
     /**

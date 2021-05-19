@@ -43,7 +43,7 @@ public class VistaConfigPartida {
     private JComboBox<String> selectorIA_2 = new JComboBox<>();
 
     private final JCheckBox tableroCheckBox = new JCheckBox("Tablero Personalizado?");
-    private JLabel labelInfoTablero = new JLabel("tablero: 0");
+    private final JLabel labelInfoTablero = new JLabel("tablero: 0");
 
     private final JButton comenzarPartidaButton = new JButton("Comenzar Partida!");
     private final JButton menuButton = new JButton("Volver al menú");
@@ -76,7 +76,8 @@ public class VistaConfigPartida {
 
     private void cargar_label_info_tablero() {
         int id = iCtrlPresentacion.consultar_idTablero_cargar();
-        labelInfoTablero.setText("tablero: "+ id);
+        if (id == 0) labelInfoTablero.setText("tablero: inicial");
+        else labelInfoTablero.setText("tablero: "+ id);
     }
 
     /////////// INICIALIZACION DE COMPONENTES
@@ -154,6 +155,9 @@ public class VistaConfigPartida {
         verticalCheckBox.setEnabled(true);
         horizontalCheckBox.setEnabled(true);
         diagonalCheckBox.setEnabled(true);
+        verticalCheckBox.setSelected(true);
+        horizontalCheckBox.setSelected(true);
+        diagonalCheckBox.setSelected(true);
         //PANEL REGLAS
         panelReglas.add(labelReglas);
         panelReglas.add(verticalCheckBox);
@@ -208,8 +212,11 @@ public class VistaConfigPartida {
 
 
     private ArrayList<Integer> recoger_info_modo_juego() {
-        //0 -> modo, 1 -> ID-maquina1, 2 -> ID-maquina2
         ArrayList<Integer> cosas = new ArrayList<>();
+        cosas.add(((verticalCheckBox.isSelected()) ? 1 : 0));
+        cosas.add(((horizontalCheckBox.isSelected()) ? 1 : 0));
+        cosas.add(((diagonalCheckBox.isSelected()) ? 1 : 0));
+        //0->modo , 1 -> ID-maquina1, 2 -> ID-maquina2
         int i_aux;
         if (IAVsIARadioButton.isSelected()) {
             cosas.add(0);
@@ -235,7 +242,7 @@ public class VistaConfigPartida {
             //SALTAR AL MENU DE CARGA DE TABLERO Y LUEGO CREAR PARTIDA CON LA CONFIGURACION NECESARIA
             if (!primera_vez) {
                 primera_vez = true;
-                recoger_info_partida();
+                recoger_info_partida(); //llama a la funcion que crea la partida
             }
             else {
                 primera_vez = false;
@@ -244,16 +251,16 @@ public class VistaConfigPartida {
             }
         }
         else { //CREAR PARTIDA CON LA CONFIGURACION
-            recoger_info_partida();
+            recoger_info_partida(); //llama a la funcion que crea la partida
         }
     }
 
-    //AQUI HAY QUE CREAR LA PARTIDA....
+    //AQUI LLAMA A CREAR PARTIDA...
     private void recoger_info_partida() {
-        ArrayList<Integer> as = recoger_info_modo_juego();
-        for(int i = 0; i < as.size(); ++i) System.out.println(as.get(i));
-
-        iCtrlPresentacion.cargarTablero(iCtrlPresentacion.consultar_idTablero_cargar());
+        ArrayList<Integer> as_int = recoger_info_modo_juego();
+        //for (Integer a : as_int) System.out.println(a);
+        primera_vez = true;
+        iCtrlPresentacion.presentacion_crearPartida(as_int);
         iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);
     }
 

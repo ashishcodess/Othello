@@ -6,8 +6,6 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 
 //IDEA HACER CLASE EXTENDIDA DE ESTO (SIN LOS BOTONES
@@ -188,10 +186,10 @@ public class VistaTablero {
 
    */
 
-
     public void actionPerformed_botones(ActionEvent event) {
         for (JButton[] jButtons : botonesMatriz) {
             for (JButton jButton : jButtons) {
+                //AQUI IRIA EL LISTENER PARA LOS BOTONES (CON TODA LA LOGICA DEL JUEGO Y ESO)
                 if (event.getSource() == jButton) {
                     String s = getImagen();
                     jButton.setIcon(new ImageIcon(s));
