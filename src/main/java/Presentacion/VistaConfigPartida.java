@@ -200,7 +200,7 @@ public class VistaConfigPartida {
 
 
     private ArrayList<Integer> recoger_info_modo_juego() {
-        //0->modo , 1 -> ID-maquina1, 2 -> ID-maquina2
+        //0 -> modo, 1 -> ID-maquina1, 2 -> ID-maquina2
         ArrayList<Integer> cosas = new ArrayList<>();
         int i_aux;
         if (IAVsIARadioButton.isSelected()) {

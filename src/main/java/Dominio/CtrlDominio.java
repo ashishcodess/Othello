@@ -178,7 +178,7 @@ public class CtrlDominio {
 
 
     public void crear_partida(ArrayList<String> as) {
-        //partida_activa = new Partida()
+        //partida_activa = new Partida();
     }
 
     /**
