@@ -155,6 +155,9 @@ public class VistaConfigPartida {
         verticalCheckBox.setEnabled(true);
         horizontalCheckBox.setEnabled(true);
         diagonalCheckBox.setEnabled(true);
+        verticalCheckBox.setSelected(true);
+        horizontalCheckBox.setSelected(true);
+        diagonalCheckBox.setSelected(true);
         //PANEL REGLAS
         panelReglas.add(labelReglas);
         panelReglas.add(verticalCheckBox);
