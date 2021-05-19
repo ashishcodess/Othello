@@ -134,11 +134,11 @@ public class CtrlDominio {
         ArrayList<String> as = new ArrayList<>();
         String[] sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDA_CORTA)).split(" ");
         String s = "";
-        if (sAux.length == 5) s = ("Turnos: " + sAux[0] + " , logrado en Partida con jugadores J1[" + sAux[1] + " , " + sAux[2] + "] - J2[" + sAux[3] + " , " + sAux[4] + "]");
+        if (sAux.length == 5) s = ("Turnos: " + sAux[0] + " , logrado con jugadores J1[" + sAux[1] + " , " + sAux[2] + "] - J2[" + sAux[3] + " , " + sAux[4] + "]");
         as.add(s);
 
         sAux = (ranking.consultar_logro(Logros.tipoLogro.FICHAS_DIFF)).split(" ");
-        if (sAux.length == 7) s = ("Diferencia: " + sAux[0] + " , logrado con jugadores J1[fichas:" + sAux[3] + " ," + sAux[1] + " , " + sAux[2] + "] - J2[fichas:" + sAux[6] +" ," + sAux[4] + " , " + sAux[5] + "]");
+        if (sAux.length == 7) s = ("Diferencia: " + sAux[0] + " , J1[fichas:" + sAux[3] + " ," + sAux[1] + " , " + sAux[2] + "] - J2[fichas:" + sAux[6] +" ," + sAux[4] + " , " + sAux[5] + "]");
         as.add(s);
 
         sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDAS_TOTALES)).split(" ");
