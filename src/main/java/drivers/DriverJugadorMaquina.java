@@ -1,6 +1,7 @@
 package drivers;
 
 import Dominio.Jugador.JugadorMaquina;
+import Dominio.Partida.Tablero;
 import MyException.MyException;
 
 import java.util.Scanner;
@@ -20,6 +21,7 @@ public class DriverJugadorMaquina {
             System.out.println("DriverJugador (OPCIONES):");
             System.out.println("0 - SALIR DEL DRIVER");
             System.out.println("1 - Crear Jugador Maquina");
+            System.out.println("2 - Ejecutar Turno");
             System.out.println();
             System.out.print("Introducir opcion:");
             int i_entrada = Integer.parseInt(scan.next());
@@ -29,7 +31,11 @@ public class DriverJugadorMaquina {
                     b = false;
                     break;
                 case 1:
-                    test_crear_jugadorMaquina(5,16);
+                    test_crear_jugadorMaquina(5);
+                    break;
+                case 2:
+                    JugadorMaquina prueba = new JugadorMaquina(1);
+                    Tablero t = new Tablero();
                     break;
                 default:
                     System.out.println("Introducir una opcion correcta");
@@ -40,11 +46,10 @@ public class DriverJugadorMaquina {
 
     /** test_crear_jugadorMaquina (clase hijo)
      * @param idMaquina es el identificador de la Maquina a crear
-     * @param profundidad profundidad del algoritmo que utiliza la Maquina a crear para elegir donde colocar cada pieza
      * @throws MyException en caso de fallo con identificadores (id pertenece a Persona)
      * */
-    public static void test_crear_jugadorMaquina(int idMaquina, int profundidad) throws MyException {
-        JugadorMaquina res = new JugadorMaquina(idMaquina, profundidad);
+    public static void test_crear_jugadorMaquina(int idMaquina) throws MyException {
+        JugadorMaquina res = new JugadorMaquina(idMaquina);
         System.out.println("Maquina creada con ID:" + idMaquina);
         System.out.println("Prueba get_MaquinaID : " + res.get_MaquinaID());
         System.out.println("Prueba get_Profundidad : " + res.get_profundidadMaquina());

@@ -35,23 +35,12 @@ public class JugadorMaquina extends Jugador {
         super(idMaquina);
         if (idMaquina > 5)throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idMaquina);
         this.succesores = new HashSet<>();
+        this.profundidad_MinMax = (idMaquina+1)*4;
     }
 
     @Override
     public String get_Nickname() {
         return "";
-    }
-
-    /**
-     * Constructora JugadorMaquina (idMaquina, profundidad)
-     * @param idMaquina (id de Jugador = idMaquina)
-     * @param profundidad (profundidad_IA = profundidad)
-     * */
-    public JugadorMaquina (int idMaquina, int profundidad) throws MyException{
-        super(idMaquina);
-        if (idMaquina > 5)throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idMaquina);
-        this.profundidad_MinMax = profundidad;
-        this.succesores = new HashSet<>();
     }
 
     /*Sets y Gets*/
