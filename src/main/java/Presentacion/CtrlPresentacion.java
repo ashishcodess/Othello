@@ -258,4 +258,8 @@ public class CtrlPresentacion {
         return ctrlDominio.getCasillasDisponibles();
     }*/
 
+    public void presentacionIniciarPartida(){
+        //ctrlDominio.iniciarPartida(modo,r,id1, id2, n1, n2);
+    }
+
 }
