@@ -8,24 +8,24 @@ public class Tablero {
 
     /*Atributos*/
     /**matrix de casilla*/
-    private Casilla[][] tablero;
+    private final Casilla[][] tablero;
     /**matrix para hacer bfs horizontal*/
-    private int[][] graph_h;
+    private final int[][] graph_h;
     private int[][] graph;
     /**matrix para hacer bfs vertical*/
-    private int[][] graph_v;
+    private final int[][] graph_v;
     /**matrix para hacer bfs diagonal right */
-    private int[][] graph_dr;
+    private final int[][] graph_dr;
     /**matrix para hacer bfs diagonal left*/
-    private int[][] graph_dl;
+    private final int[][] graph_dl;
     /**numero de casilla vacias*/
     private int num_vacia;
     /**set que contiene fichas negras*/
-    private Set<Position> negras;
+    private final Set<Position> negras;
     /**set que contiene fichas blancas*/
-    private Set<Position> blancas;
+    private final Set<Position> blancas;
     /**set que contiene fichas disponibles*/
-    private Set<Position> disponibles;
+    private final Set<Position> disponibles;
     /** Parámetro necesario para saber si la partida ha finalizado*/
     private boolean disponibles_anterior;
 
