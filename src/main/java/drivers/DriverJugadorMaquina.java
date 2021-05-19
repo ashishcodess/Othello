@@ -36,6 +36,25 @@ public class DriverJugadorMaquina {
                 case 2:
                     JugadorMaquina prueba = new JugadorMaquina(1);
                     Tablero t = new Tablero();
+                    t.inicializeTablero(t.getTablero());
+                    for (int i = 0; i < 8; ++i) {
+                        StringBuilder sbuff = new StringBuilder();
+                        for (int j = 0; j < 8; ++j) {
+                            sbuff.append(t.getTablero()[i][j].getTipoCasilla());
+                        }
+                        System.out.println(sbuff);
+                    }
+                    System.out.println("");
+                    t = prueba.valorMaxNegras(t,0,-1000,1000,prueba.get_profundidadMaquina());
+                    System.out.println("///////////////////Despues de MINIMAX////////////////////////");
+                    System.out.println("");
+                    for (int i = 0; i < 8; ++i) {
+                        StringBuilder sbuff = new StringBuilder();
+                        for (int j = 0; j < 8; ++j) {
+                            sbuff.append(t.getTablero()[i][j].getTipoCasilla());
+                        }
+                        System.out.println(sbuff);
+                    }
                     break;
                 default:
                     System.out.println("Introducir una opcion correcta");
