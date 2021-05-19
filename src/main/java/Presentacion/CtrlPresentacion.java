@@ -155,6 +155,7 @@ public class CtrlPresentacion {
     public String presentacion_get_info_usuario_activo() {return ctrlDominio.get_info_usuario_activo();}
 
 
+
     public String presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG t) {
         return ctrlDominio.dominio_consultar_dir_imagen_fichas(t);
     }

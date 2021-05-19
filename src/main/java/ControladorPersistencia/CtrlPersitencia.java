@@ -30,6 +30,9 @@ public class CtrlPersitencia {
     public enum tipoIMG {IMG_VACIA,IMG_DISPONIBLE,IMG_NEGRA,IMG_BLANCA}
     private final String dirImagenes;
 
+    /**
+     * Constructora por defecto de CtrlPersistencia
+     * */
     public CtrlPersitencia() {
         this.dirIni = "./src/files/";
         this.dir_partidas = this.dirIni + "partidas/";
@@ -41,7 +44,10 @@ public class CtrlPersitencia {
         calcular_IDs_maximos();
     }
 
-
+    /**
+     * Constructora de CtrlPersistencia
+     * @param s_path es el path personalizado a cargar
+     * */
     public CtrlPersitencia(String s_path) {
         this.dirIni = s_path;
         this.dir_partidas = this.dirIni + "partidas/";
@@ -53,7 +59,9 @@ public class CtrlPersitencia {
         calcular_IDs_maximos();
     }
 
-
+    /**
+     * Metodo calcular ID's maximos asignado de Usuario, Partida y Tablero
+     * */
     private void calcular_IDs_maximos() {
         this.idMax_usuario = io.calcularID_Ficheros(dir_usuarios,tipoFichero.USUARIO);
         this.idMax_partida = io.calcularID_Ficheros(dir_partidas,tipoFichero.PARTIDA);
@@ -61,6 +69,9 @@ public class CtrlPersitencia {
     }
 
 
+    /**
+     * Metodo Inicializar Dir. Persistencia (inicializa los directorios en caso de no existir)
+     * */
     private void InicializarDirPersitencia() {
         File f = new File(this.dirIni);
         if (!f.exists()) {
@@ -72,7 +83,11 @@ public class CtrlPersitencia {
         }
     }
 
-
+    /**
+     * Metodo consultar direccion imagen
+     * @param t es el tipo de imagen a cargar [vacia, disponible, blanca, negra]
+     * @return devuelve la direccion del icono seleccionado
+     * */
     public String consultar_dir_IMG(tipoIMG t) {
         String s = dirImagenes;
         switch (t) {
@@ -323,8 +338,7 @@ public class CtrlPersitencia {
     /**
      * Operacion ctrl_cargar_turno_tablero
      * @param idTablero es el ID de tablero a cargar
-     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve -1
-     */
+     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve -1 */
     public int ctrl_cargar_turno_tablero(int idTablero) throws IOException {
         int turno;
         String pathF = dir_tablero + idTablero + ".txt";

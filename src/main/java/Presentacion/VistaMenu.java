@@ -4,17 +4,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
-
-/*
-* SERGIO: FALTA POR HACER VISTAS:
-*  - CARGAR/BORRAR PARTIDA
-*  - Cargar el 2do jugador para las partidas de Persona vs Persona
-*  - CREAR TABLERO
-*  - BORRAR TABLERO
-* */
 
 public class VistaMenu {
     // Controlador de presentacion
@@ -208,7 +198,6 @@ public class VistaMenu {
 
         buttonCreditos.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CREDITOS));
-
 
 
         buttonSalir.addActionListener

@@ -47,7 +47,6 @@ public class VistaLogin {
     /**
      * Constructora de VistaLogin
      * */
-
     public VistaLogin(CtrlPresentacion pCtrlPresentacion, CtrlPresentacion.tipoJugador a) {
         iCtrlPresentacion = pCtrlPresentacion;
         frameVista.setLayout(new BorderLayout()); // 5 zonas (North, South, East, West, Center)
@@ -69,6 +68,10 @@ public class VistaLogin {
         }
     }
 
+    /**
+     * clear_texto (limpia los campos de texto e inicializa correctamente
+     * el label de la informacion del jugador a loguearse)"
+     * */
     private void clear_textos() {
         switch (tJugador) {
             case JUGADOR1:

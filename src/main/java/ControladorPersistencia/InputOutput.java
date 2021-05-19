@@ -8,10 +8,10 @@ enum tipoFichero {USUARIO, PARTIDA,TABLERO, RANKING}
 
 public class InputOutput {
 
-
-    public InputOutput() {
-
-    }
+    /**
+     * Constructora por defecto de InputOutput
+     * */
+    public InputOutput() {}
 
 
     public int calcularID_Ficheros (String pathFichero, tipoFichero a) {

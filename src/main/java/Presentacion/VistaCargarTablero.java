@@ -14,14 +14,12 @@ public class VistaCargarTablero {
     private String imagen_blanca = "";
     private String imagen_negra = "";
 
+    private int id_tablero_seleccionado = -1;
 
     private final CtrlPresentacion iCtrlPresentacion;
     private final JPanel panelPrincipal = new JPanel();
     private JFrame frameVista = new JFrame("Vista Tablero");
-
-
     private final JButton[][] botonesMatriz = new JButton[8][8];
-
 
     private final JPanel panelBotones = new JPanel();
     private final JButton buttonCargar = new JButton("Cargar Tablero");
@@ -30,14 +28,14 @@ public class VistaCargarTablero {
     private final JButton buttonMenu = new JButton("Menu Principal");
     private final JComboBox<String> selector_tablero = new JComboBox<>();
 
-    private int id_tablero_seleccionado = -1;
-
     private final JMenuBar menubarVista = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
     private final JMenuItem menuitemMenu = new JMenuItem("Menu Principal");
     private final JMenuItem menuitemQuit = new JMenuItem("Salir");
 
-
+    /**
+     * Constructora de Vista Cargar/Borrar Tablero
+     * */
     public VistaCargarTablero(CtrlPresentacion pCtrlPresentacion)  {
         iCtrlPresentacion = pCtrlPresentacion;
         frameVista.setLayout(new BorderLayout()); // 5 zonas (North, South, East, West, Center)
@@ -48,26 +46,10 @@ public class VistaCargarTablero {
         inicializar_menubarVista();
     }
 
-    private void inicializar_frameVista() {
-        frameVista = iCtrlPresentacion.configuracion_frame(950,850,"Cargar/Borrar Tablero");
-        JPanel contentPane = (JPanel) frameVista.getContentPane();
-        contentPane.add(panelPrincipal);
-    }
-
-    private void inicializar_menubarVista() {
-        menuFile.add(menuitemMenu);
-        menuFile.add(menuitemQuit);
-        menubarVista.add(menuFile);
-        frameVista.setJMenuBar(menubarVista);
-    }
-
-    private void obtener_dir_imagenes() {
-        imagen_vacia = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_VACIA);
-        imagen_disponible = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_DISPONIBLE);
-        imagen_blanca = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_BLANCA);
-        imagen_negra = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_NEGRA);
-    }
-
+    /**
+     *Metodo hacerVisible
+     * @param b si TRUE entonces el frame sera visible, caso contrario estara desactivado
+     * */
     public void hacerVisible(boolean b) {
         frameVista.pack();
         frameVista.setVisible(b);
@@ -79,7 +61,38 @@ public class VistaCargarTablero {
         }
     }
 
+    /**
+     * Metodo para inicializar frame
+     * */
+    private void inicializar_frameVista() {
+        frameVista = iCtrlPresentacion.configuracion_frame(950,850,"Cargar/Borrar Tablero");
+        JPanel contentPane = (JPanel) frameVista.getContentPane();
+        contentPane.add(panelPrincipal);
+    }
 
+    /**
+     * Metodo para inicializar menuBar (barra de menu superior)
+     * */
+    private void inicializar_menubarVista() {
+        menuFile.add(menuitemMenu);
+        menuFile.add(menuitemQuit);
+        menubarVista.add(menuFile);
+        frameVista.setJMenuBar(menubarVista);
+    }
+
+    /**
+     * Metodo obtener direccion de imagenes (para iconos de fichas)
+     * */
+    private void obtener_dir_imagenes() {
+        imagen_vacia = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_VACIA);
+        imagen_disponible = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_DISPONIBLE);
+        imagen_blanca = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_BLANCA);
+        imagen_negra = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_NEGRA);
+    }
+
+    /**
+     * Metodo de inicicacion de los componentes (tablero y botones)
+     * */
     private void inicializar_Componentes() {
         JPanel tablero = new JPanel(new GridLayout(0, 8));
         tablero.setBorder((new LineBorder(Color.BLACK)));
@@ -118,6 +131,9 @@ public class VistaCargarTablero {
         panelPrincipal.add(panelBotones,BorderLayout.EAST);
     }
 
+    /**
+     * Metodo recargar combobox tablero: actualiza las opciones disponibles del ComboBox
+     * */
     private void recargar_comboBox_tableros() {
         int size = selector_tablero.getItemCount();
         for(int i=size-1; i >= 1;i--){
@@ -133,6 +149,12 @@ public class VistaCargarTablero {
         id_tablero_seleccionado = -1;
     }
 
+    /**
+     * Metodo cambiar imagen casilla
+     * @param x posicion x dentro del tablero
+     * @param y posicion y dentro del tablero
+     * @param tipo (tipo de imagen a cargar [0:vacia, 1:disponible, 2:Negra, 3:Blanca]
+     * */
     private void cambiar_imagen_casilla(int x, int y, int tipo) {
         String s = "";
         switch (tipo){
@@ -153,6 +175,9 @@ public class VistaCargarTablero {
     }
 
 
+    /**
+     * Metodo limpiar vista previa tablero: hace un clear de la pantalla de vista previa
+     * */
     private void limpiar_vista_previa_tablero() {
         for (int i = 0; i < botonesMatriz.length; ++i) {
             for (int j = 0; j < 8; ++j) {
@@ -161,6 +186,9 @@ public class VistaCargarTablero {
         }
     }
 
+    /**
+     * Metodo Obtener info del elemento seleccionado por el selector_tablero
+     * */
     private void obtener_info_selector_tablero() {
         String s = Objects.requireNonNull(selector_tablero.getSelectedItem()).toString();
         id_tablero_seleccionado = -1;
@@ -171,6 +199,10 @@ public class VistaCargarTablero {
         catch (Exception ignored) {}
     }
 
+
+    /**
+     * Metodo listener del elemento comboBox "selector_tablero"
+     * */
     private void listener_selector_tablero() {
         obtener_info_selector_tablero();
         //limpiar_vista_previa_tablero();
@@ -182,6 +214,9 @@ public class VistaCargarTablero {
         }
     }
 
+    /**
+     * Metodo listener del elemento boton "Borrar"
+     * */
     private void listener_boton_borrar() {
         obtener_info_selector_tablero();
         if (id_tablero_seleccionado != -1) {
@@ -194,14 +229,19 @@ public class VistaCargarTablero {
         }
     }
 
+    /**
+     * Metodo listener del elemento boton "Cargar"
+     * */
     private void listener_boton_cargar() {
-        System.out.println("cargando");
         obtener_info_selector_tablero();
         iCtrlPresentacion.modificar_idTablero_cargar(id_tablero_seleccionado);
         int[][] mapa_tablero = iCtrlPresentacion.cargarTablero(id_tablero_seleccionado);
         iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA);
     }
 
+    /**
+     * Metodo para asignar los listeners a cada componente
+     * */
     public void asignar_listenersComponentes() {
         selector_tablero.addActionListener
                 (event -> listener_selector_tablero());
