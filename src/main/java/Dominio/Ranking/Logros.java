@@ -2,7 +2,7 @@ package Dominio.Ranking;
 
 public class Logros {
 
-    public enum tipoLogro{PARTIDA_CORTA, CAPTURAS, PARTIDAS_TOTALES, PARTIDAS_GANADAS, PARTIDAS_PERDIDAS}
+    public enum tipoLogro{PARTIDA_CORTA, FICHAS_DIFF, PARTIDAS_TOTALES, PARTIDAS_GANADAS, PARTIDAS_PERDIDAS}
 
     //partida mas corta (en tema de turnos)
     private String nick1_logro, nick2_logro;
@@ -10,9 +10,10 @@ public class Logros {
     private int turnos_logro;
 
     //Maximas capturas posibles
-    private String nick1_captura, nick2_captura;
-    private int id1_captura, id2_captura;
-    private int capturas;
+    private String nick1_fichas, nick2_fichas;
+    private int id1_fichas, id2_fichas;
+    private int fichas_diff, fichas_j1, fichas_j2;
+
 
     //Jugador que mas ha jugado
     String j_total;
@@ -40,12 +41,13 @@ public class Logros {
         id1_logro = -1;
         id2_logro = -1;
         turnos_logro = 60;
-        //Maximas capturas posibles
-        nick1_captura = "";
-        nick2_captura = "";
-        id1_captura = -1;
-        id2_captura = -1;
-        capturas = 0;
+
+        //Maxima diferencia de fichas
+        nick1_fichas = "";
+        nick2_fichas = "";
+        id1_fichas = -1;
+        id2_fichas = -1;
+        fichas_diff = 0;
 
         j_total = "";
         id_j_totales = 0;
@@ -77,7 +79,7 @@ public class Logros {
      * @return devuelve TRUE en caso de que se de que las capturas pasadas como parametro sea superior al del logro
      * */
     public boolean comprueba_logro_capturas(int cap) {
-        return (cap > capturas);
+        return (cap > fichas_diff);
     }
 
 
@@ -90,22 +92,24 @@ public class Logros {
      * @param id2 identificador del Jugador2
      * @param t es el numero entero a reemplazar dependiendo del tipo seleccionado
      * */
-    public void cambiar_logro_partida(tipoLogro tipo, String nick1, int id1, String nick2, int id2, int t) {
+    public void cambiar_logro_partida(tipoLogro tipo, String nick1, int id1, String nick2, int id2, int t1, int t2) {
         switch (tipo) {
             case PARTIDA_CORTA:
                 this.nick1_logro = nick1;
                 this.id1_logro = id1;
                 this.nick2_logro = nick2;
                 this.id2_logro = id2;
-                this.turnos_logro = t;
+                this.turnos_logro = t1;
                 break;
 
-            case CAPTURAS:
-                this.nick1_captura = nick1;
-                this.id1_captura = id1;
-                this.nick2_captura = nick2;
-                this.id2_captura = id2;
-                this.capturas = t;
+            case FICHAS_DIFF: //FALTA AR
+                this.nick1_fichas= nick1;
+                this.id1_fichas = id1;
+                this.nick2_fichas = nick2;
+                this.id2_fichas = id2;
+                int t = 0;
+                //t = calcular_diferencia_fichas(fichas_j1,fichas_j2);
+                this.fichas_diff = t;
                 break;
         }
     }
@@ -174,8 +178,8 @@ public class Logros {
      * Consultar logro: Maximo de capturas en una partida
      * @return devuelve la informacion del logro de maximo de capturas dentro de una partida
      * */
-    public String consultar_max_capturas() {
-        return (capturas+ " " + id1_captura + " " + nick1_captura + " " + id2_captura + " " + nick2_captura);
+    public String consultar_max_fichas_diff() {
+        return (fichas_diff+ " " + id1_fichas + " " + nick1_fichas + " " + fichas_j1 + " " + id2_fichas + " " + nick2_fichas + " " + fichas_j2);
     }
 
     /**

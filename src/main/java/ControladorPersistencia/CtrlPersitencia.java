@@ -405,9 +405,10 @@ public class CtrlPersitencia {
                         id2 = Integer.parseInt(s2[3]);
                         if (id2 > 6) nick2 = s2[4];
                     }
-                    rank.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,nick1,id1,nick2,id2,t);
+                    rank.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,nick1,id1,nick2,id2,t,0);
                     break;
                 case 1: //mas capturas (sin implementar)
+
                     break;
                 case 2: //Total partidas
                     if (s2.length == 3) {

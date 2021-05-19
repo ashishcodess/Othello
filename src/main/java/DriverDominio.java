@@ -104,7 +104,15 @@ public class DriverDominio {
                 //logros
                 int turnos = p.getTurnoPartida();
                 boolean b = ranking.comprobar_logro(Logros.tipoLogro.PARTIDA_CORTA,turnos);
-                if (b) ranking.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,nick1,id1,nick2,id2,turnos);
+                if (b) ranking.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,nick1,id1,nick2,id2,turnos,0);
+
+                int fichas_j1, fichas_j2, fichas_diff;
+                fichas_j1 = p.getTableroPartida().getNumCasillasNegras();
+                fichas_j2 = p.getTableroPartida().getNumCasillasBlancas();
+                fichas_diff = fichas_j1 - fichas_j2;
+                if (fichas_diff < 0) fichas_diff = fichas_j2 - fichas_j1;
+                b = ranking.comprobar_logro(Logros.tipoLogro.FICHAS_DIFF,fichas_diff);
+                if (b) ranking.cambiar_logro_partida(Logros.tipoLogro.FICHAS_DIFF,nick1,id1,nick2,id2,fichas_j1,fichas_j2);
 
                 switch (ganador) {
                     case 0:

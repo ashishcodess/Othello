@@ -143,7 +143,7 @@ public class RankingTest_JUnit {
 
     @Test
     public void test_cambiar_logro_partidaMasCorta_y_consultar_logro() {
-        rank2.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,"a",6,"b",7,40);
+        rank2.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,"a",6,"b",7,40,0);
         String s = rank2.consultar_logro(Logros.tipoLogro.PARTIDA_CORTA);
         assertEquals("40 6 a 7 b",s);
     }
@@ -189,7 +189,7 @@ public class RankingTest_JUnit {
         assertTrue(res);
 
 
-        rank2.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,"a",6,"b",7,45);
+        rank2.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,"a",6,"b",7,45,0);
         b1 = rank2.comprobar_logro(Logros.tipoLogro.PARTIDA_CORTA,16); //deberia dar cierto (16 < 45)
         b2 = rank2.comprobar_logro(Logros.tipoLogro.PARTIDA_CORTA,45); //deberia dar falso (53 > 45)
         res = b1 && !b2;

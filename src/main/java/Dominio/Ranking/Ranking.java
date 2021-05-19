@@ -268,15 +268,16 @@ public class Ranking {
 
     /**
      * Cambiar logro partida (menos turnos o mas capturas)
-     * @param tipo tipo de logro a realizar el cambio (PARTIDA_CORTA o CAPTURAS)
+     * @param tipo tipo de logro a realizar el cambio (PARTIDA_CORTA o FICHAS_DIFF)
      * @param nick1 nickname del Jugador1 (en caso de que tenga nickname)
      * @param id1 identificador del Jugador1
      * @param nick2 nickname del Jugador2 (en caso de que tenga nickname)
      * @param id2 identificador del Jugador2
-     * @param t es el numero entero a reemplazar dependiendo del tipo seleccionado
+     * @param t1 es el numero entero a reemplazar dependiendo del tipo seleccionado en caso de FICHAS DIFF es el numero de fichas de del jugador 1
+     * @param t1 es el numero de fichas de del jugador 1
      * */
-    public void cambiar_logro_partida(Logros.tipoLogro tipo, String nick1, int id1, String nick2, int id2, int t) {
-        log.cambiar_logro_partida(tipo,nick1,id1,nick2,id2,t);
+    public void cambiar_logro_partida(Logros.tipoLogro tipo, String nick1, int id1, String nick2, int id2, int t1, int t2) {
+        log.cambiar_logro_partida(tipo,nick1,id1,nick2,id2,t1,t2);
     }
 
     /**
@@ -301,7 +302,7 @@ public class Ranking {
                 b = log.comprueba_logro_partida(i);
                 break;
 
-            case CAPTURAS:
+            case FICHAS_DIFF:
                 b = log.comprueba_logro_capturas(i);
                 break;
 
@@ -332,8 +333,8 @@ public class Ranking {
                 res = log.consultar_partida_corta();
                 break;
 
-            case CAPTURAS:
-                res = log.consultar_max_capturas();
+            case FICHAS_DIFF:
+                res = log.consultar_max_fichas_diff();
                 break;
 
             case PARTIDAS_TOTALES:
