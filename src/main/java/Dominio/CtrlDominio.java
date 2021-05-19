@@ -199,9 +199,15 @@ public class CtrlDominio {
      * @param nick del jugador a mostrar las partidas disponibles
      * @return devuelve un Arraylist de strings con las posibles partidas donde se encuentra el Jugador
      * */
-    public ArrayList<String> listar_partidas_disponibles(int id, String nick) throws IOException {
+    public ArrayList<String> listar_partidas_disponibles(int id, String nick){
         //enviara al Controlador de Presentacion (para mostrar que partidas puede cargar/borrar el jugador)
-        return cp.ctrl_listar_partidas_disponibles(id,nick);
+        try {
+            return cp.ctrl_listar_partidas_disponibles(id,nick);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
 

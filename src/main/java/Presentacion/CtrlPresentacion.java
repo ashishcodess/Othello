@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 //agregar en funcion de las necesidades
-enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA, CARGARTABLERO, BORRARTABLERO}
+enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA, CARGARTABLERO, BORRARTABLERO ,LOGINPARTIDA}
 
 
 public class CtrlPresentacion {
@@ -28,6 +28,7 @@ public class CtrlPresentacion {
     private final VistaConfigPartida vistaConfigPartida;
     private final VistaPartida vistaPartida;
     private final VistaCargarTablero vistaCargarTablero;
+    private final VistaLoginPartida vistaLoginPartida;
 
     /**
      * Creadora por defecto de CtrlPresentacion
@@ -42,6 +43,7 @@ public class CtrlPresentacion {
         vistaCreditos = new VistaCreditos(this);
         vistaTablero  = new VistaTablero(this);
         vistaCargarTablero = new VistaCargarTablero(this);
+        vistaLoginPartida = new VistaLoginPartida(this);
     }
 
     /**
@@ -88,6 +90,7 @@ public class CtrlPresentacion {
         vistaTablero.hacerVisible(false);
         vistaConfigPartida.hacerVisible(false);
         vistaCargarTablero.hacerVisible(false);
+        vistaLoginPartida.hacerVisible(false);
     }
 
     /**
@@ -125,6 +128,8 @@ public class CtrlPresentacion {
                 modificar_idTablero_cargar(-2);
                 vistaCargarTablero.hacerVisible(true);
                 break;
+            case LOGINPARTIDA:
+                vistaLoginPartida.hacerVisible(true);
         }
     }
 
@@ -145,6 +150,15 @@ public class CtrlPresentacion {
                 break;
         }
         return ctrlDominio.login_presentacion(id,nick,b);
+    }
+
+    /**
+     * Metodo login (desde Capa Presentacion)
+     * @param id identificador de usuario que quiere cargar partida
+     * @return devuelve 1 en caso de login correcto, 0 caso contrario
+     * */
+    public ArrayList<String> presentacion_buscar_partidas(int id , String nick ) {
+        return ctrlDominio.listar_partidas_disponibles(id , nick);
     }
 
 
