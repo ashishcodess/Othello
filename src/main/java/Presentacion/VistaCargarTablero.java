@@ -199,7 +199,7 @@ public class VistaCargarTablero {
     private void listener_boton_cargar() {
         System.out.println("cargando");
         obtener_info_selector_tablero();
-        iCtrlPresentacion.modificar_idTablero_cargar(id_tablero_seleccionado);
+        int[][] mapa_tablero = iCtrlPresentacion.cargarTablero(id_tablero_seleccionado);
         iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA);
     }
 
