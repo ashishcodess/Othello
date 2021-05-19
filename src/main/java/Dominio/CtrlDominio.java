@@ -3,7 +3,6 @@ package Dominio;
 import ControladorPersistencia.CtrlPersitencia;
 import Dominio.Partida.Partida;
 import Dominio.Partida.Position;
-import Dominio.Partida.Tablero;
 import Dominio.Ranking.Logros;
 import Dominio.Ranking.Ranking;
 import MyException.MyException;
@@ -93,7 +92,7 @@ public class CtrlDominio {
             if (cp.ctrl_crear_usuario(idRes,nick)) {
                 return idRes;
             }
-        }catch (Exception e) {}
+        }catch (Exception ignored) {}
         return idRes;
     }
 
@@ -105,7 +104,7 @@ public class CtrlDominio {
     * Metodo exportar ranking (desde Dominio)
     * */
     public void domino_exportar_ranking() {
-        try{cp.ctrl_exportar_ranking(ranking.toArrayList(), "ranking.txt");} catch (Exception e) {}
+        try{cp.ctrl_exportar_ranking(ranking.toArrayList(), "ranking.txt");} catch (Exception ignored) {}
     }
 
     /**
@@ -275,13 +274,27 @@ public class CtrlDominio {
     private static void actualizar_ranking(Partida p, Ranking.tipoGanador ganador){
         try {
             int modo = p.getModoDeJuegoPartida();
-            if (modo != 0) { //diferente de maquina vs maquina
+            if (modo != 0) {
                 int id1, id2;
                 String nick1, nick2;
                 id1 = p.getID_J1();
                 nick1 = p.getNickJugador1();
                 id2 = p.getID_J2();
                 nick2 = p.getNickJugador2();
+
+                //logros
+                int turnos = p.getTurnoPartida();
+                boolean b = ranking.comprobar_logro(Logros.tipoLogro.PARTIDA_CORTA,turnos);
+                if (b) ranking.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,nick1,id1,nick2,id2,turnos,0);
+                int fichas_j1, fichas_j2, fichas_diff;
+                fichas_j1 = p.getTableroPartida().getNumCasillasNegras();
+                fichas_j2 = p.getTableroPartida().getNumCasillasBlancas();
+                if (fichas_j1 > fichas_j2) fichas_diff = fichas_j1 - fichas_j2;
+                else fichas_diff = fichas_j2 - fichas_j1;
+                b = ranking.comprobar_logro(Logros.tipoLogro.FICHAS_DIFF,fichas_diff);
+                if (b) ranking.cambiar_logro_partida(Logros.tipoLogro.FICHAS_DIFF,nick1,id1,nick2,id2,fichas_j1,fichas_j2);
+
+                //ACTUALIZAR RANKING
                 ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,ganador);
                 cp.ctrl_exportar_ranking(ranking.toArrayList(), "ranking.txt");
             }
@@ -293,10 +306,12 @@ public class CtrlDominio {
 
 
 
+
+
+
+
     private static int ejecutarRondaPartida(Partida p, ArrayList<String> argum) {
-        /*ejecutar 1 ronda de la partida:
-         * mandarle el estado de como va la partida hacia la capa de presentacion
-         * */
+        /*ejecutar 1 ronda de la partida:*/
         int res = -1;
         try {
             //accion a realizar esta dentro de argum
@@ -320,11 +335,8 @@ public class CtrlDominio {
                         break;
                 }
             }
-
         }
-        catch (Exception e) {
-
-        }
+        catch (Exception ignored) {}
         return res;
     }
 

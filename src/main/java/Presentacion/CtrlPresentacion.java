@@ -10,7 +10,8 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
-enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA, CARGARTABLERO, BORRARTABLERO} //agregar en funcion de las necesidades
+//agregar en funcion de las necesidades
+enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA, CARGARTABLERO, BORRARTABLERO}
 
 
 public class CtrlPresentacion {
@@ -60,7 +61,6 @@ public class CtrlPresentacion {
     }
 
 
-
     /*CONFIGURACION COMUN PARA TODOS LOS FRAMES, CAMBIA UNICAMENTE EL SIZE DE LA VENTANA*/
     public JFrame configuracion_frame(int size_x, int size_y, String s) {
         JFrame frameAux = new JFrame(s);
@@ -77,12 +77,8 @@ public class CtrlPresentacion {
         return frameAux;
     }
 
-
-    /**
-     * Metodo hacerVisibleVista
-     * @param a dependiendo de la enumeracion de vistaActiva hace visible una vista u otra (para gestion de vistas)
-     * */
-    public void hacerVisibleVista(vistaActiva a) {
+    //agregar en funcion de las necesidades
+    private void apagar_vistas() {
         vistaLogin.hacerVisible(false,tipoJugador.JUGADOR1);
         vistaMenu.hacerVisible(false);
         vistaConfigPartida.hacerVisible(false);
@@ -92,6 +88,14 @@ public class CtrlPresentacion {
         vistaTablero.hacerVisible(false);
         vistaConfigPartida.hacerVisible(false);
         vistaCargarTablero.hacerVisible(false);
+    }
+
+    /**
+     * Metodo hacerVisibleVista
+     * @param a dependiendo de la enumeracion de vistaActiva hace visible una vista u otra (para gestion de vistas)
+     * */
+    public void hacerVisibleVista(vistaActiva a) {
+        apagar_vistas();
         switch (a) {
             case LOGIN:
                 vistaLogin.hacerVisible(true,tipoJugador.JUGADOR1);
@@ -228,7 +232,7 @@ public class CtrlPresentacion {
         try{
             tab = ctrlDominio.dominio_cargar_tablero(id);
         }
-        catch (Exception e) {
+        catch (Exception ignored) {
 
         }
         return tab;

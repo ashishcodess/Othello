@@ -125,7 +125,7 @@ public class DriverDominio {
                         ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,Ranking.tipoGanador.EMPATE);
                         break;
                 }
-                cp.ctrl_exportar_ranking(ranking.toArrayList(),f);
+                cp.ctrl_exportar_ranking(ranking.toArrayList(),"ranking.txt");
             }
         }
         catch (Exception e) {

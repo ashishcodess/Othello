@@ -4,8 +4,7 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -408,7 +407,7 @@ public class VistaRanking {
         try {
             id = Integer.parseInt(textoID.getText());
         } catch (Exception ignored) {
-        } //no hacer nada
+        }
         String nick = textoNickname.getText();
         ArrayList<String> res = iCtrlPresentacion.presentacion_consultar_estadisticas(id, nick);
         String[] sRes = res.get(0).split(" ");

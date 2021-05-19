@@ -28,16 +28,14 @@ public class VistaCargarTablero {
     private final JButton buttonBorrar = new JButton("Borrar Tablero");
     private final JButton buttonLimpiar = new JButton("Limpiar");
     private final JButton buttonMenu = new JButton("Menu Principal");
-    private JComboBox<String> selector_tablero = new JComboBox<>();
+    private final JComboBox<String> selector_tablero = new JComboBox<>();
 
     private int id_tablero_seleccionado = -1;
-
 
     private final JMenuBar menubarVista = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
     private final JMenuItem menuitemMenu = new JMenuItem("Menu Principal");
     private final JMenuItem menuitemQuit = new JMenuItem("Salir");
-
 
 
     public VistaCargarTablero(CtrlPresentacion pCtrlPresentacion)  {
@@ -170,7 +168,7 @@ public class VistaCargarTablero {
             if (!s.equals("")) id_tablero_seleccionado = Integer.parseInt(s);
             else limpiar_vista_previa_tablero();
         }
-        catch (Exception e) {}
+        catch (Exception ignored) {}
     }
 
     private void listener_selector_tablero() {
