@@ -282,8 +282,11 @@ public class CtrlPersitencia {
      * @return devuelve TRUE en caso que se haya borrado con exito, caso contrario devuelve excepcion
      */
     public boolean ctrl_borrar_tablero(int idTablero) {
-        String pathF = dir_tablero + idTablero + ".txt";
-        return io.borrarFichero(pathF);
+        if (idTablero >= 0) {
+            String pathF = dir_tablero + idTablero + ".txt";
+            return io.borrarFichero(pathF);
+        }
+        else return false;
     }
 
     /**

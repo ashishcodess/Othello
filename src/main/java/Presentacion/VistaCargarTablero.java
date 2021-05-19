@@ -118,15 +118,34 @@ public class VistaCargarTablero {
     }
 
     private void recargar_comboBox_tableros() {
-        selector_tablero.removeAllItems();
-        ArrayList<String> tableros_disponibles = iCtrlPresentacion.obtener_lista_tableros_disponibles();
         System.out.println("entra en recargar combobox");
+        int size = selector_tablero.getItemCount();
+        System.out.println("Size combo:" + size);
+        for (int i = 0; i < size; i++) {
+            String item = selector_tablero.getItemAt(i);
+            System.out.println("item:" + item);
+        }
+        selector_tablero.removeItem(selector_tablero.getItemAt(id_tablero_seleccionado));
+        ArrayList<String> tableros_disponibles = iCtrlPresentacion.obtener_lista_tableros_disponibles();
+        System.out.println("nuevos tableros disponibles");
         for (String tableros_disponible : tableros_disponibles) System.out.println(tableros_disponible);
+
+        //IDEA REUTILIZAR EL MISMO COMBOBOX (BORRANDO TODA LA INFO MENOS EL ELEMENTO 0 Y VOLVIENDO A CARGAR OTRA VEZ TODO
         JComboBox<String> combo= new JComboBox<>();
+        combo.insertItemAt("", 0);
         for (String tableros_disponible : tableros_disponibles) {
             combo.addItem(tableros_disponible);
         }
+
+
         selector_tablero = combo;
+        size = selector_tablero.getItemCount();
+        System.out.println("nuevo Size combo:" + size);
+        for (int i = 0; i < size; i++) {
+            String item = selector_tablero.getItemAt(i);
+            System.out.println("item:" + item);
+        }
+        //id_tablero_seleccionado = -1;
     }
 
     private void cambiar_imagen_casilla(int x, int y, int tipo) {
@@ -158,17 +177,25 @@ public class VistaCargarTablero {
     }
 
     private void obtener_info_selector_tablero() {
-        String s = Objects.requireNonNull(selector_tablero.getSelectedItem()).toString();
+        String s = "-1";
+        //System.out.println("selec:" + (selector_tablero.getSelectedItem()).toString());
+        s = Objects.requireNonNull(selector_tablero.getSelectedItem()).toString();
+        /*if ((selector_tablero.getSelectedItem()).toString() != null) {
+            s = selector_tablero.getSelectedItem().toString();
+            System.out.println("nueva s:" + s);
+        }*/
         System.out.println("info selector: " + s);
         id_tablero_seleccionado = -1;
         try {
-            id_tablero_seleccionado = Integer.parseInt(s);
+            if (!s.equals("")) id_tablero_seleccionado = Integer.parseInt(s);
         }
         catch (Exception e) {}
     }
 
     private void listener_selector_tablero() {
         obtener_info_selector_tablero();
+        System.out.println("listen selector:" + id_tablero_seleccionado);
+        limpiar_vista_previa_tablero();
         int[][] tab = iCtrlPresentacion.cargarTablero(id_tablero_seleccionado);
         for (int i = 0; i < botonesMatriz.length; ++i) {
             for (int j = 0; j < 8; ++j) {
@@ -182,6 +209,8 @@ public class VistaCargarTablero {
         System.out.println("borrando id: " + id_tablero_seleccionado);
         if (id_tablero_seleccionado != -1) iCtrlPresentacion.borrar_tablero(id_tablero_seleccionado);
         recargar_comboBox_tableros();
+        obtener_info_selector_tablero();
+        System.out.println("nuevo selector: "+ id_tablero_seleccionado);
     }
 
     private void listener_boton_cargar() {
