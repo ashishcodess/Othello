@@ -48,7 +48,6 @@ public class CtrlPresentacion {
      * */
     public void inicializarPresentacion() {
         hacerVisibleVista(vistaActiva.LOGIN);
-        //hacerVisibleVista(vistaActiva.CARGARTABLERO); //pruebas
     }
 
 

@@ -76,7 +76,8 @@ public class VistaConfigPartida {
 
     private void cargar_label_info_tablero() {
         int id = iCtrlPresentacion.consultar_idTablero_cargar();
-        labelInfoTablero.setText("tablero: "+ id);
+        if (id == 0) labelInfoTablero.setText("tablero: inicial");
+        else labelInfoTablero.setText("tablero: "+ id);
     }
 
     /////////// INICIALIZACION DE COMPONENTES
@@ -254,6 +255,7 @@ public class VistaConfigPartida {
         for(int i = 0; i < as.size(); ++i) System.out.println(as.get(i));
 
         iCtrlPresentacion.cargarTablero(iCtrlPresentacion.consultar_idTablero_cargar());
+        primera_vez = true;
         iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);
     }
 
