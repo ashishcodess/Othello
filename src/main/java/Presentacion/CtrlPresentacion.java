@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 //agregar en funcion de las necesidades
-enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA, CARGARTABLERO, BORRARTABLERO ,LOGINPARTIDA , CARGARPARTIDA}
+enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA,CREARTABLERO,CARGARTABLERO, BORRARTABLERO ,LOGINPARTIDA , CARGARPARTIDA}
 
 
 public class CtrlPresentacion {
@@ -30,6 +30,7 @@ public class CtrlPresentacion {
     private final VistaTablero vistaTablero;
     private final VistaConfigPartida vistaConfigPartida;
     private final VistaPartida vistaPartida;
+    private final VistaCrearTablero vistaCrearTablero;
     private final VistaCargarTablero vistaCargarTablero;
 
     private final VistaCargarPartida vistaCargarPartida;
@@ -45,6 +46,7 @@ public class CtrlPresentacion {
         vistaPartida = new VistaPartida(this);
         vistaCreditos = new VistaCreditos(this);
         vistaTablero  = new VistaTablero(this);
+        vistaCrearTablero = new VistaCrearTablero(this);
         vistaCargarTablero = new VistaCargarTablero(this);
         vistaCargarPartida = new VistaCargarPartida(this);
     }
@@ -92,6 +94,7 @@ public class CtrlPresentacion {
         vistaCreditos.hacerVisible(false);
         vistaTablero.hacerVisible(false);
         vistaConfigPartida.hacerVisible(false);
+        vistaCrearTablero.hacerVisible(false);
         vistaCargarTablero.hacerVisible(false);
         vistaCargarPartida.hacerVisible(false);
     }
@@ -124,6 +127,10 @@ public class CtrlPresentacion {
                 break;
             case CONFIGPARTIDA:
                 vistaConfigPartida.hacerVisible(true);
+                break;
+            case CREARTABLERO:
+                crearTablero();
+                vistaCrearTablero.hacerVisible(true);
                 break;
             case CARGARTABLERO:
                 vistaCargarTablero.hacerVisible(true);
@@ -249,6 +256,14 @@ public class CtrlPresentacion {
 
     public ArrayList<String> obtener_lista_tableros_disponibles() {return ctrlDominio.listar_tableros_disponibles();}
 
+    public void crearTablero() {
+        ctrlDominio.dominio_crear_tablero();
+    }
+
+    public void guardarTablero() {
+        ctrlDominio.dominio_guardar_tablero();
+    }
+
     public int[][] cargarTablero(int id) {
         int [][]tab = new int[8][8];
         try{
@@ -265,6 +280,8 @@ public class CtrlPresentacion {
     }
 
     public int consultar_idTablero_cargar() {return ctrlDominio.consultar_idTablero_cargar();}
+
+    public void presentacion_guardar_tablero() { ctrlDominio.dominio_guardar_tablero();}
 
     public boolean borrar_tablero(int id) {return ctrlDominio.dominio_borrar_tablero(id);}
 

@@ -66,7 +66,6 @@ public class CtrlPersitencia {
         this.idMax_usuario = io.calcularID_Ficheros(dir_usuarios,tipoFichero.USUARIO);
         this.idMax_partida = io.calcularID_Ficheros(dir_partidas,tipoFichero.PARTIDA);
         this.idMax_tablero = io.calcularID_Ficheros(dir_tablero,tipoFichero.TABLERO);
-        ctrl_incr_nuevo_ID_partida();
     }
 
 
@@ -311,6 +310,7 @@ public class CtrlPersitencia {
         String pathF = dir_tablero + idTablero + ".txt";
         ctrl_incr_nuevo_ID_tablero();
         io.guardarInfoFichero(pathF,as,tipoFichero.TABLERO);
+        ctrl_incr_nuevo_ID_tablero();
     }
 
     /** Operacion ctrl_borrar_tablero
@@ -541,6 +541,7 @@ public class CtrlPersitencia {
     public boolean ctrl_crear_usuario(int idJugador,String nicknameJugador) throws IOException {
         String pathF = dir_usuarios + idJugador + "_" + nicknameJugador;
         boolean b = io.crearFichero(pathF);
+        System.out.println("Creado: "+ b);
         if (b) ctrl_incr_nuevo_ID_user();
         return b;
     }
