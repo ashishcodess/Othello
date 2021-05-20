@@ -105,7 +105,7 @@ public class Tablero {
                     num_vacia --;
                     blancas.add(new Position(i , j));
                 }
-                else{  // If they are available ones increase the number of availables and decrease the empty ones.
+                else if(tab[i][j].getTipoCasilla() == 1 ){
                     num_vacia --;
                     disponibles.add(new Position(i , j));
                 }
@@ -817,6 +817,17 @@ public class Tablero {
 
     public void setDisponiblesAnterior(boolean b){
         this.disponibles_anterior = b;
+    }
+
+    public void printTablero(){
+        for(int i = 0; i < 8; i++){
+            String sBuff = new String();
+            for(int j = 0; j < 8; j++){
+                sBuff = sBuff + tablero[i][j].getTipoCasilla();
+            }
+            System.out.println(sBuff);
+        }
+        System.out.println(" ");
     }
 
     /**

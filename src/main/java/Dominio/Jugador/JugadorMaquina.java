@@ -35,7 +35,7 @@ public class JugadorMaquina extends Jugador {
         super(idMaquina);
         if (idMaquina > 5)throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idMaquina);
         this.succesores = new HashSet<>();
-        this.profundidad_MinMax = (idMaquina+1)*4;
+        this.profundidad_MinMax = (idMaquina+1)*2;
     }
 
     @Override
@@ -66,17 +66,17 @@ public class JugadorMaquina extends Jugador {
      * @param depth profundidad que nos falta por recorrer
      * devuelve el tablero(estado hijo) resultante de haber ejecutado el turno que nos es más conveniente
      */
-    public Tablero valorMaxNegras(Tablero t, int turno, int alpha, int beta, int depth){
+    public Tablero valorMaxNegras(Tablero t, int turno, int alpha, int beta, int depth, int[] reglas){
 
         if(depth == 0 || t.finalizada())return t;
 
         Tablero mejorHijo = new Tablero(t.getTablero());
         mejorHijo.setDisponiblesAnterior(t.getDisponiblesAnterior());
-        Set<Tablero> estados_hijos = this.genera_estados(t, turno);
+        Set<Tablero> estados_hijos = this.genera_estados(t, turno, reglas);
         int evaluacion;
 
         for(Tablero aux : estados_hijos){
-            aux = valorMaxNegras(aux,turno+1,alpha, beta, this.get_profundidadMaquina()-1);
+            aux = valorMaxNegras(aux,turno+1,alpha, beta, this.get_profundidadMaquina()-1, reglas);
             evaluacion = aux.getHeuristicValueNegras();
             if(turno%2 == 0){
                 int maxeval = -1000;
@@ -109,7 +109,7 @@ public class JugadorMaquina extends Jugador {
      * @param depth profundidad que nos falta por recorrer
      * devuelve el tablero(estado hijo) resultante de haber ejecutado el turno que nos es más conveniente
      */
-    public Tablero valorMaxBlancas(Tablero t, int turno, int alpha, int beta, int depth){
+    public Tablero valorMaxBlancas(Tablero t, int turno, int alpha, int beta, int depth, int[] reglas){
 
         if(depth == 0 || t.finalizada()){
             return t;
@@ -118,11 +118,11 @@ public class JugadorMaquina extends Jugador {
         Tablero mejorHijo = new Tablero(t.getTablero());
         mejorHijo.setDisponiblesAnterior(t.getDisponiblesAnterior());
 
-        Set<Tablero> estados_hijos = this.genera_estados(t, turno);
+        Set<Tablero> estados_hijos = this.genera_estados(t, turno, reglas);
         int evaluacion;
 
         for(Tablero aux : estados_hijos){
-            aux = valorMaxBlancas(aux,turno+1,alpha, beta, this.get_profundidadMaquina()-1);
+            aux = valorMaxBlancas(aux,turno+1,alpha, beta, this.get_profundidadMaquina()-1, reglas);
              evaluacion = aux.getHeuristicValueBlancas();
             if(turno%2 != 0){
                 int maxeval = -1000;
@@ -146,19 +146,23 @@ public class JugadorMaquina extends Jugador {
         return mejorHijo;
     }
 
-    @Override
+    public Tablero posicion(Tablero tablero, int turno){
+        return tablero;
+    }
+
     /**
      * Operacion posicion (funcion temporal para colocar ficha de la IA)
      * @param t tablero a colocar la ficha
      * @param turno heredado de otra funcion (parametro para actualizarTablero)
+     * @param reglas reglas del juego
      * @return devuelve el tablero con la ficha colocada por la IA
      * */
-    public Tablero posicion(Tablero t, int turno){
+    public Tablero posicionMaquina(Tablero t, int turno, int[] reglas){
 
         //Comentad esta parte y descomentad lo otro para poder ejecutar con maquina
 
-        if(turno%2 == 0)t = valorMaxBlancas(t,turno,-100, 100, this.get_profundidadMaquina());
-        else t = valorMaxNegras(t,turno,-100, 100, this.get_profundidadMaquina());
+        if(turno%2 == 0)t = valorMaxBlancas(t,turno,-100, 100, this.get_profundidadMaquina(), reglas);
+        else t = valorMaxNegras(t,turno,-100, 100, this.get_profundidadMaquina(), reglas);
         return t;
 
 
@@ -181,7 +185,7 @@ public class JugadorMaquina extends Jugador {
      * @param turno es el turno del tablero t
      * @return retorna la lista de estados succesores de ese tablero, resultantes de cada uno de los posibles movimientos de este
      */
-    public Set<Tablero> genera_estados(Tablero t, int turno){
+    public Set<Tablero> genera_estados(Tablero t, int turno, int[] reglas){
 
         Tablero aux;
 
@@ -191,9 +195,14 @@ public class JugadorMaquina extends Jugador {
 
             aux = new Tablero(t.getTablero());
             aux.setDisponiblesAnterior(t.getDisponiblesAnterior());
+            aux.printTablero();
 
-            if(turno %2 == 0) aux.setCasilla_tipo(pos.getX(), pos.getY(), 2);
-            else aux.setCasilla_tipo(pos.getX(), pos.getY(), 3);
+            aux.actualizarTablero(pos.getX(), pos.getY(), turno);
+            if(reglas[0] == 1)aux.calcularCasillasDisponiblesVertical(turno);
+            if(reglas[1] == 1)aux.calcularCasillasDisponiblesHorizontal(turno);
+            if(reglas[2] == 1)aux.calcularCasillasDisponiblesDiagonales(turno);
+
+            aux.printTablero();
             succesores.add(aux);
         }
 
