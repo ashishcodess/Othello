@@ -7,9 +7,9 @@ import java.awt.*;
 
 public class VistaPartida extends VistaTablero {
 
-    /*private final CtrlPresentacion iCtrlPresentacion;
+    //private final CtrlPresentacion iCtrlPresentacion;
     private final JPanel panelPrincipal = new JPanel();
-    private JFrame frameVista = new JFrame("Partida");*/
+    private JFrame frameVista = new JFrame("Partida");
 
     public VistaPartida(CtrlPresentacion pCtrlPresentacion) {
         super(pCtrlPresentacion);

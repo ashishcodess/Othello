@@ -177,9 +177,6 @@ public class JugadorMaquina extends Jugador {
     public Set<Tablero> genera_estados(Tablero t, int turno){
 
         Tablero aux;
-        t.calcularCasillasDisponiblesDiagonales(turno);
-        t.calcularCasillasDisponiblesHorizontal(turno);
-        t.calcularCasillasDisponiblesVertical(turno);
 
         Set<Position> disponibles = t.getCasillasDisponibles();
 

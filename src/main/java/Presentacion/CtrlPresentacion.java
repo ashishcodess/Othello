@@ -16,6 +16,8 @@ enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPAR
 
 public class CtrlPresentacion {
 
+
+
     public enum tipoJugador {JUGADOR1,JUGADOR2}
 
     private final CtrlDominio ctrlDominio;
@@ -116,6 +118,7 @@ public class CtrlPresentacion {
                 vistaCreditos.hacerVisible(true);
                 break;
             case TABLERO:
+                vistaTablero.recargar_tablero();
                 vistaTablero.hacerVisible(true);
                 break;
             case CONFIGPARTIDA:
@@ -278,5 +281,13 @@ public class CtrlPresentacion {
     /*public Set<Position> presentacionObternerCasillasDisponibles(){
         return ctrlDominio.getCasillasDisponibles();
     }*/
+
+    public void presentacionRondaPartida(int x, int y) {
+        ctrlDominio.dominioRondaPartida(x, y);
+    }
+
+    public int[][] presentacionGetTableroInt() {
+        return ctrlDominio.dominioGetTableroInt();
+    }
 
 }

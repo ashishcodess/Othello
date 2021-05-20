@@ -27,7 +27,7 @@ public class Tablero {
     /**set que contiene fichas disponibles*/
     private final Set<Position> disponibles;
     /** Parámetro necesario para saber si la partida ha finalizado*/
-    private boolean disponibles_anterior;
+    private boolean disponibles_anterior = true;
 
     /*Constructora*/
     /**
@@ -137,6 +137,7 @@ public class Tablero {
     public Casilla[][] getTablero() {
         return tablero;
     }
+
 
     /**
      * Operacion que deveulve la casilla

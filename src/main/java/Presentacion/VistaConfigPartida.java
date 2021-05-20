@@ -51,7 +51,8 @@ public class VistaConfigPartida {
     //BARRA DE MENU
     private final JMenuBar menubarVista = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
-    private final JMenuItem menuitemQuit = new JMenuItem("Salir");
+    private final JMenuItem menuitemMenuPrincipal = new JMenuItem("Volver al menu principal");
+    private final JMenuItem menuitemQuit = new JMenuItem("Salir del juego");
 
 
     /**
@@ -105,6 +106,7 @@ public class VistaConfigPartida {
      * Metodo para inicializar menuBar (barra de menu superior)
      * */
     private void inicializar_menubarVista() {
+        menuFile.add(menuitemMenuPrincipal);
         menuFile.add(menuitemQuit);
         menubarVista.add(menuFile);
         frameVista.setJMenuBar(menubarVista);
@@ -136,12 +138,13 @@ public class VistaConfigPartida {
 
         //FALTARIA DESDE EL LISTENER QUE AL PULSAR UNA EL RESTO SE DESMARQUEN
         IAVsIARadioButton.setSelected(false);
-        personaVsIARadioButton.setSelected(false);
-        personaVsPersonaRadioButton.setSelected(false);
-        buttonLoginUser2.setVisible(false);
         selectorIA_0.setVisible(false);
         selectorIA_1.setVisible(false);
+        personaVsIARadioButton.setSelected(false);
         selectorIA_2.setVisible(false);
+        personaVsPersonaRadioButton.setSelected(false);
+        buttonLoginUser2.setVisible(false);
+
 
         panelModoDeJuego.add(labelModoDeJuego);
         panelModoDeJuego.add(IAVsIARadioButton);
@@ -178,11 +181,10 @@ public class VistaConfigPartida {
         //PANEL PRINCIPAL
         panelPrincipal.add(panelCentral, BorderLayout.CENTER);
         panelPrincipal.add(panelBotones,BorderLayout.SOUTH);
+
+        gestion_ComboBox_uno_ON(1); //poner modo por defecto
     }
 
-    /*public void actionPerformed_comenzarPartidaButton(ActionEvent event){
-        Set<Position> posDisp = iCtrlPresentacion.presentacionObternerCasillasDisponibles();
-    }*/
 
     private int consultar_info_comboBox(JComboBox<String> e) {
         String s = Objects.requireNonNull(e.getSelectedItem()).toString();
@@ -293,9 +295,6 @@ public class VistaConfigPartida {
         comenzarPartidaButton.addActionListener
                 (event -> gestionar_inicio_de_juego());
 
-        /*comenzarPartidaButton.addActionListener
-                 (this::actionPerformed_comenzarPartidaButton);*/
-
         menuButton.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
 
@@ -310,5 +309,11 @@ public class VistaConfigPartida {
 
         personaVsPersonaRadioButton.addActionListener
                 (event -> gestion_ComboBox_uno_ON(2));
+
+        menuitemMenuPrincipal.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+
+        menuitemQuit.addActionListener
+                (event -> iCtrlPresentacion.salir_del_juego());
     }
 }

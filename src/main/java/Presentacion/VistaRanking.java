@@ -70,7 +70,7 @@ public class VistaRanking {
     private final JMenuBar menubarVista = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
     private final JMenuItem menuitemVolverMenu= new JMenuItem("Volver al menu principal");
-    private final JMenuItem menuitemQuit = new JMenuItem("Salir");
+    private final JMenuItem menuitemQuit = new JMenuItem("Salir del Juego");
     private final JMenu menuRanking = new JMenu("Ranking");
     private final JMenuItem menuItem_consultar_ranking = new JMenuItem("Consultar Ranking");
     private final JMenuItem menuItem_consultar_estadisticas = new JMenuItem("Consultar Estadisticas");

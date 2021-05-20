@@ -37,6 +37,9 @@ public class DriverJugadorMaquina {
                     JugadorMaquina prueba = new JugadorMaquina(1);
                     Tablero t = new Tablero();
                     t.inicializeTablero(t.getTablero());
+                    t.calcularCasillasDisponiblesDiagonales(0);
+                    t.calcularCasillasDisponiblesHorizontal(0);
+                    t.calcularCasillasDisponiblesVertical(0);
                     for (int i = 0; i < 8; ++i) {
                         StringBuilder sbuff = new StringBuilder();
                         for (int j = 0; j < 8; ++j) {
@@ -45,7 +48,7 @@ public class DriverJugadorMaquina {
                         System.out.println(sbuff);
                     }
                     System.out.println("");
-                    t = prueba.valorMaxNegras(t,0,-1000,1000,prueba.get_profundidadMaquina());
+                    t = prueba.valorMaxBlancas(t,0,-1000,1000,prueba.get_profundidadMaquina());
                     System.out.println("///////////////////Despues de MINIMAX////////////////////////");
                     System.out.println("");
                     for (int i = 0; i < 8; ++i) {
