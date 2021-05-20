@@ -232,7 +232,7 @@ public class CtrlDominio {
                 id_aux2 = a_int.get(5);
                 partida_activa = new Partida(idPartida,modo,reglas,turno,id_aux1,"",id_aux2,"",t);
             }
-            partida_activa.get_info_partida(); //imprimir pruebas
+            //partida_activa.get_info_partida(); //imprimir pruebas
         }
         catch (Exception ignored) {}
     }
@@ -240,6 +240,7 @@ public class CtrlDominio {
 
     public void dominio_guardar_partida() {
         try {
+            //partida_activa.get_info_partida();
             ArrayList<String> as = partida_activa.toArrayList();
             cp.ctrl_guardar_partida(as);
         }
