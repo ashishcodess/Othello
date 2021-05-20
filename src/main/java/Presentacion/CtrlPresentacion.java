@@ -94,7 +94,7 @@ public class CtrlPresentacion {
         vistaCreditos.hacerVisible(false);
         vistaTablero.hacerVisible(false, VistaTablero.tipoTablero.PARTIDA);
         vistaConfigPartida.hacerVisible(false);
-        vistaCargarTablero.hacerVisible(false, VistaCargarTablero.tipoTablero.PARTIDA);
+        vistaCargarTablero.hacerVisible(false, VistaCargarTablero.tipoTab.PARTIDA);
         vistaCargarPartida.hacerVisible(false);
     }
 
@@ -132,16 +132,14 @@ public class CtrlPresentacion {
                 vistaTablero.hacerVisible(true, VistaTablero.tipoTablero.TABLERO);
                 break;
             case CARGARTABLERO:
-                //vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTablero.TABLERO);
-                vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTablero.PARTIDA);
+                vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTab.TABLERO);
                 break;
             case BORRARTABLERO:
                 modificar_idTablero_cargar(-2);
-                vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTablero.TABLERO);
+                vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTab.TABLERO);
                 break;
             case CARGARPARTIDA:
-                vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTablero.PARTIDA);
-                //vistaCargarPartida.hacerVisible(true);
+                vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTab.PARTIDA);
         }
     }
 
@@ -293,16 +291,6 @@ public class CtrlPresentacion {
         return tab;
     }
 
-    public int[][] cargarPartida(int id) {
-        int [][]tab1 = new int[8][8];
-        try{
-            tab1 = ctrlDominio.dominio_cargar_partida(id);
-        }
-        catch (Exception ignored) {
-
-        }
-        return tab1;
-    }
 
     public ArrayList<String> getInfoPartida(int id){
         ArrayList<String> info = new ArrayList<>();
@@ -312,6 +300,20 @@ public class CtrlPresentacion {
 
         }
         return info;
+    }
+
+    public void presentacion_cargarPartida(int id) {
+        if (id >= 0) {
+            ctrlDominio.dominio_cargar_partida(id);
+        }
+    }
+
+    public boolean presentacion_borrarPartida(int id) {
+        boolean b = false;
+        if (id >= 0) {
+            b = ctrlDominio.dominio_borrar_partida(id);
+        }
+        return b;
     }
 
     public void modificar_idTablero_cargar(int id) {

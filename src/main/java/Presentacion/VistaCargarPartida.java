@@ -207,7 +207,7 @@ public class VistaCargarPartida {
         obtener_info_selector_partida();
         //limpiar_vista_previa_tablero();
 
-        int[][] tab = iCtrlPresentacion.cargarPartida(id_partida_seleccionado);
+        int[][] tab = iCtrlPresentacion.cargarTablero(id_partida_seleccionado);
         for (int i = 0; i < botonesMatriz.length; ++i) {
             for (int j = 0; j < 8; ++j) {
                 cambiar_imagen_casilla(i,j,tab[i][j]);

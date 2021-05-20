@@ -10,8 +10,8 @@ import java.util.Objects;
 
 public class VistaCargarTablero {
 
-    public enum tipoTablero {TABLERO, PARTIDA}
-    private tipoTablero tipoActual;
+    public enum tipoTab {TABLERO, PARTIDA}
+    private tipoTab  tipoActual;
 
     private String imagen_vacia = "";
     private String imagen_disponible = "";
@@ -51,7 +51,7 @@ public class VistaCargarTablero {
      * */
     public VistaCargarTablero(CtrlPresentacion pCtrlPresentacion)  {
         iCtrlPresentacion = pCtrlPresentacion;
-        tipoActual = tipoTablero.TABLERO;
+        tipoActual = tipoTab.TABLERO;
         frameVista.setLayout(new BorderLayout()); // 5 zonas (North, South, East, West, Center)
         inicializar_frameVista();
         obtener_dir_imagenes();
@@ -64,7 +64,7 @@ public class VistaCargarTablero {
      *Metodo hacerVisible
      * @param b si TRUE entonces el frame sera visible, caso contrario estara desactivado
      * */
-    public void hacerVisible(boolean b, tipoTablero t) {
+    public void hacerVisible(boolean b, tipoTab t) {
         frameVista.pack();
         frameVista.setVisible(b);
         frameVista.setEnabled(b);
@@ -72,13 +72,21 @@ public class VistaCargarTablero {
             tipoActual = t;
             cambiar_info_labels_botones(tipoActual);
             //FALTA COMBOBOX PARA PARTIDAS + DIFERENCIAR LISTENERS
-            buttonCargar.setEnabled(iCtrlPresentacion.consultar_idTablero_cargar() == -1);
+            switch (tipoActual) {
+                case TABLERO:
+                    buttonCargar.setEnabled(iCtrlPresentacion.consultar_idTablero_cargar() == -1);
+                    break;
+                case PARTIDA:
+                    buttonCargar.setEnabled(true);
+                    break;
+            }
+
             limpiar_vista_previa_tablero();
             recargar_comboBox();
         }
     }
 
-    private void cambiar_info_labels_botones(VistaCargarTablero.tipoTablero t) {
+    private void cambiar_info_labels_botones(VistaCargarTablero.tipoTab t) {
         switch (t) {
             case PARTIDA:
                 buttonCargar.setText("Cargar Partida");
@@ -300,9 +308,26 @@ public class VistaCargarTablero {
             case PARTIDA:
                 obtener_info_selector_partida();
                 //Con toda la info + tablero
-                ArrayList<String> as = iCtrlPresentacion.consultar_info_partida_ID(id_partida_seleccionado);
-                int[][]tabl = iCtrlPresentacion.presentacion_cargar_tablero_partida(id_partida_seleccionado);
-                //tenemos info de toda la partida, ahora hace falta mostrarla
+                if (id_partida_seleccionado >= 0) {
+                    ArrayList<String> as = iCtrlPresentacion.consultar_info_partida_ID(id_partida_seleccionado);
+                    int[][]tabl = iCtrlPresentacion.presentacion_cargar_tablero_partida(id_partida_seleccionado);
+                    //tenemos info de toda la partida, ahora hace falta mostrarla
+                    infoJ1.setText("J1: " + as.get(0));
+                    infoJ2.setText("J2: " + as.get(1));
+                    infoReglas.setText("Reglas: "+ as.get(3));
+                    infoTurno.setText("Turno: " + as.get(4));
+                    String sAux = as.get(2); //modo juego
+                    String s = "";
+                    if (sAux.equals("0")) s = "IA vs IA";
+                    else if (sAux.equals("1")) s = "Persona vs IA";
+                    else if (sAux.equals("2")) s = "Persona vs Persona";
+                    infoModoJuego.setText(s);
+                    for (int i = 0; i < botonesMatriz.length; ++i) {
+                        for (int j = 0; j < 8; ++j) {
+                            cambiar_imagen_casilla(i,j,tabl[i][j]);
+                        }
+                    }
+                }
                 break;
         }
 
@@ -326,7 +351,16 @@ public class VistaCargarTablero {
                 break;
 
             case PARTIDA:
-                //falta esto + combobox
+                obtener_info_selector_partida();
+                if (id_partida_seleccionado >= 0) {
+                    //borrar partida
+                    boolean b = iCtrlPresentacion.presentacion_borrarPartida(id_partida_seleccionado);
+                    if (b) {
+                        selector.removeItem(selector.getItemAt(id_partida_seleccionado));
+                        recargar_comboBox();
+                        limpiar_vista_previa_tablero();
+                    }
+                }
                 break;
         }
 
@@ -344,11 +378,13 @@ public class VistaCargarTablero {
                 iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA);
                 break;
             case PARTIDA:
-                //falta esto + combobox
+                obtener_info_selector_partida();
+                if (id_partida_seleccionado >= 0) {
+                    iCtrlPresentacion.presentacion_cargarPartida(id_partida_seleccionado);
+                    iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);
+                }
                 break;
         }
-
-
     }
 
     /**
