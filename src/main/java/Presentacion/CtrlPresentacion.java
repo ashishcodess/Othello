@@ -293,16 +293,6 @@ public class CtrlPresentacion {
         return tab;
     }
 
-    public int[][] cargarPartida(int id) {
-        int [][]tab1 = new int[8][8];
-        try{
-            tab1 = ctrlDominio.dominio_cargar_partida(id);
-        }
-        catch (Exception ignored) {
-
-        }
-        return tab1;
-    }
 
     public ArrayList<String> getInfoPartida(int id){
         ArrayList<String> info = new ArrayList<>();
@@ -312,6 +302,20 @@ public class CtrlPresentacion {
 
         }
         return info;
+    }
+
+    public void presentacion_cargarPartida(int id) {
+        if (id >= 0) {
+            ctrlDominio.dominio_cargar_partida(id);
+        }
+    }
+
+    public boolean presentacion_borrarPartida(int id) {
+        boolean b = false;
+        if (id >= 0) {
+            b = ctrlDominio.dominio_borrar_partida(id);
+        }
+        return b;
     }
 
     public void modificar_idTablero_cargar(int id) {

@@ -346,6 +346,12 @@ public class VistaCargarTablero {
                 obtener_info_selector_partida();
                 if (id_partida_seleccionado >= 0) {
                     //borrar partida
+                    boolean b = iCtrlPresentacion.presentacion_borrarPartida(id_partida_seleccionado);
+                    if (b) {
+                        selector.removeItem(selector.getItemAt(id_partida_seleccionado));
+                        recargar_comboBox();
+                        limpiar_vista_previa_tablero();
+                    }
                 }
                 break;
         }
@@ -366,7 +372,8 @@ public class VistaCargarTablero {
             case PARTIDA:
                 obtener_info_selector_partida();
                 if (id_partida_seleccionado >= 0) {
-                    //Cargar partida y saltar a vista de Partida
+                    iCtrlPresentacion.presentacion_cargarPartida(id_partida_seleccionado);
+                    iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);
                 }
                 break;
         }

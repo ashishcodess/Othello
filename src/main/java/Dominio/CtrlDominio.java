@@ -281,10 +281,12 @@ public class CtrlDominio {
      * Carga una partida a partir de un fichero guardado previamente y se actualiza "partida_activa"
      * @param idPartida id de partida a cargar
      * */
-    public int[][] dominio_cargar_partida(int idPartida) throws IOException, MyException {
-        //Sergio: igual hay que hacer algo mas que solo esto
-        partida_activa = cp.ctrl_cargar_partida(idPartida);
-        return cp.ctrl_cargar_tablero_partida(idPartida);    // Para pruebas.
+    public void dominio_cargar_partida(int idPartida) {
+        try {
+            partida_activa = cp.ctrl_cargar_partida(idPartida);
+        }
+        catch (Exception ignored) {}
+
     }
 
     public  ArrayList<String> dominio_info_partida(int idPartida) throws IOException, MyException {
@@ -295,8 +297,13 @@ public class CtrlDominio {
      * @param idPartida es el identificador de partida a borrar
      * @return devuelve TRUE en caso que se haya borrado con exito
      */
-    public boolean dominio_borrar_partida(int idPartida) throws IOException {
-        return cp.ctrl_borrar_partida(idPartida);
+    public boolean dominio_borrar_partida(int idPartida) {
+        boolean b = false;
+        try {
+            b = cp.ctrl_borrar_partida(idPartida);
+        }
+        catch (Exception ignored) {}
+        return b;
     }
 
     /**
