@@ -149,6 +149,16 @@ public class Tablero {
     }
 
     /**
+     * Operacion que dice si la pos es valido
+     * @param x  la fila del tablero
+     * @param y la columna del tablero
+     */
+    public boolean isValido(int x, int y){
+        if (tablero[x][y].getTipoCasilla() == 1) return true;
+        return false;
+    }
+
+    /**
      * Operacion que deveulve el tipo de casilla (0 - vacía, 1 - disponible, 2 - negra, 3 - blanca)
      * @param x  la fila del tablero
      * @param y la columna del tablero
