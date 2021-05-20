@@ -30,7 +30,6 @@ public class CtrlPresentacion {
     private final VistaTablero vistaTablero;
     private final VistaConfigPartida vistaConfigPartida;
     private final VistaPartida vistaPartida;
-    private final VistaCrearTablero vistaCrearTablero;
     private final VistaCargarTablero vistaCargarTablero;
 
     private final VistaCargarPartida vistaCargarPartida;
@@ -46,7 +45,6 @@ public class CtrlPresentacion {
         vistaPartida = new VistaPartida(this);
         vistaCreditos = new VistaCreditos(this);
         vistaTablero  = new VistaTablero(this);
-        vistaCrearTablero = new VistaCrearTablero(this);
         vistaCargarTablero = new VistaCargarTablero(this);
         vistaCargarPartida = new VistaCargarPartida(this);
     }
@@ -89,12 +87,11 @@ public class CtrlPresentacion {
         vistaLogin.hacerVisible(false,tipoJugador.JUGADOR1);
         vistaMenu.hacerVisible(false);
         vistaConfigPartida.hacerVisible(false);
-        vistaPartida.hacerVisible(false);
+        vistaPartida.hacerVisible(false, VistaTablero.tipoTablero.PARTIDA);
         vistaRanking.hacerVisible(false);
         vistaCreditos.hacerVisible(false);
-        vistaTablero.hacerVisible(false);
+        vistaTablero.hacerVisible(false, VistaTablero.tipoTablero.PARTIDA);
         vistaConfigPartida.hacerVisible(false);
-        vistaCrearTablero.hacerVisible(false);
         vistaCargarTablero.hacerVisible(false);
         vistaCargarPartida.hacerVisible(false);
     }
@@ -123,14 +120,14 @@ public class CtrlPresentacion {
                 break;
             case TABLERO:
                 vistaTablero.recargar_tablero();
-                vistaTablero.hacerVisible(true);
+                vistaTablero.hacerVisible(true, VistaTablero.tipoTablero.PARTIDA);
                 break;
             case CONFIGPARTIDA:
                 vistaConfigPartida.hacerVisible(true);
                 break;
             case CREARTABLERO:
                 crearTablero();
-                vistaCrearTablero.hacerVisible(true);
+                vistaTablero.hacerVisible(true, VistaTablero.tipoTablero.TABLERO);
                 break;
             case CARGARTABLERO:
                 vistaCargarTablero.hacerVisible(true);
