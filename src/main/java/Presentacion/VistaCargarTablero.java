@@ -67,8 +67,8 @@ public class VistaCargarTablero {
         frameVista.setVisible(b);
         frameVista.setEnabled(b);
         if (b) {
-            cambiar_info_labels_botones(t);
-
+            tipoActual = t;
+            cambiar_info_labels_botones(tipoActual);
             //FALTA COMBOBOX PARA PARTIDAS + DIFERENCIAR LISTENERS
             buttonCargar.setEnabled(iCtrlPresentacion.consultar_idTablero_cargar() == -1);
             limpiar_vista_previa_tablero();
@@ -252,14 +252,22 @@ public class VistaCargarTablero {
      * Metodo listener del elemento comboBox "selector_tablero"
      * */
     private void listener_selector_tablero() {
-        obtener_info_selector_tablero();
-        //limpiar_vista_previa_tablero();
-        int[][] tab = iCtrlPresentacion.cargarTablero(id_tablero_seleccionado);
-        for (int i = 0; i < botonesMatriz.length; ++i) {
-            for (int j = 0; j < 8; ++j) {
-                cambiar_imagen_casilla(i,j,tab[i][j]);
-            }
+        switch (tipoActual) {
+            case TABLERO:
+                obtener_info_selector_tablero();
+                //limpiar_vista_previa_tablero();
+                int[][] tab = iCtrlPresentacion.cargarTablero(id_tablero_seleccionado);
+                for (int i = 0; i < botonesMatriz.length; ++i) {
+                    for (int j = 0; j < 8; ++j) {
+                        cambiar_imagen_casilla(i,j,tab[i][j]);
+                    }
+                }
+                break;
+
+            case PARTIDA:
+                break;
         }
+
     }
 
     /**
@@ -268,6 +276,7 @@ public class VistaCargarTablero {
     private void listener_boton_borrar() {
         switch (tipoActual) {
             case TABLERO:
+                obtener_info_selector_tablero();
                 if (id_tablero_seleccionado != -1) {
                     boolean b = iCtrlPresentacion.borrar_tablero(id_tablero_seleccionado);
                     if (b) {
@@ -281,9 +290,7 @@ public class VistaCargarTablero {
             case PARTIDA:
                 //falta esto + combobox
                 break;
-
         }
-        obtener_info_selector_tablero();
 
     }
 
