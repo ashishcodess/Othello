@@ -24,9 +24,10 @@ public class CtrlDominio {
     private static int id_2; //ID jugador2
     private static String nick_2; //nickname jugador2
 
-    private static int estado_partida; //para conocer el estado de la partida desde la capa de Presentacion
     private static Partida partida_activa;
     private static int idTablero_cargar;
+
+
 
     public void modificar_idTablero_cargar(int id) {
         idTablero_cargar = id;
@@ -194,10 +195,6 @@ public class CtrlDominio {
     public int consultar_tam_ranking() {return ranking.consultar_tam_ranking();}
 
 
-    public void crear_partida(ArrayList<String> as) {
-        //partida_activa = new Partida();
-    }
-
     /**
      * Metodo listar partidas disponibles
      * @param id del jugador a mostrar las partidas disponibles
@@ -216,19 +213,18 @@ public class CtrlDominio {
     }
 
 
-    //SERGIO: NO LA HE TESTEADO
     public void domino_crearPartida(ArrayList<Integer> a_int) {
         try {
-            int reglas[] = new int[3];
+            int[] reglas = new int[3];
             reglas[0] = a_int.get(0);
             reglas[1] = a_int.get(1);
             reglas[2] = a_int.get(2);
             int modo = a_int.get(3);
-            int id_aux1 = -1;
-            int id_aux2 = -2;
+            int id_aux1;
+            int id_aux2;
             int idPartida = cp.ctrl_get_nuevo_ID_Partida();
             int turno = cp.ctrl_cargar_turno_tablero(idTablero_cargar);
-            int mapa[][] = cp.ctrl_cargar_tablero(idTablero_cargar);
+            int[][] mapa = cp.ctrl_cargar_tablero(idTablero_cargar);
             Tablero t = new Tablero(mapa);
             if (a_int.size() == 4) { //Persona vs Persona
                 partida_activa = new Partida(idPartida,modo,reglas,turno,id_1,nickname,id_2,nick_2,t);
@@ -242,15 +238,20 @@ public class CtrlDominio {
                 id_aux2 = a_int.get(5);
                 partida_activa = new Partida(idPartida,modo,reglas,turno,id_aux1,"",id_aux2,"",t);
             }
-            partida_activa.get_info_partida(); //imprimir pruebas
+            //partida_activa.get_info_partida(); //imprimir pruebas
         }
         catch (Exception ignored) {}
     }
 
 
-    public void dominio_guardar_partida() throws IOException {
-        ArrayList<String> as = partida_activa.toArrayList();
-        cp.ctrl_guardar_partida(as);
+    public void dominio_guardar_partida() {
+        try {
+            //partida_activa.get_info_partida();
+            ArrayList<String> as = partida_activa.toArrayList();
+            cp.ctrl_guardar_partida(as);
+        }
+        catch (Exception ignored) {}
+
     }
 
 
@@ -285,13 +286,28 @@ public class CtrlDominio {
         return cp.ctrl_tableros_disponibles();
     }
 
+    public void dominio_crear_tablero() {
+        try {
+            Tablero t = new Tablero(dominio_cargar_tablero(0));
+            int[] reglas = {1,1,1};
+            int id = cp.ctrl_get_nuevo_ID_Partida();
+            //Crear partida ficticia
+            partida_activa = new Partida(id,2, reglas,0,id_1,nickname,id_1,nickname,t);
+        }
+        catch (Exception ignored) {}
+    }
+
     /**
      * Operacion Guardar Tablero (desde Dominio)
      */
-    public void dominio_guardar_tablero() throws IOException {
-        int[][] tab = getTableroPartida();
-        int turno = partida_activa.getTurnoPartida();
-        cp.ctrl_guardar_tablero(tab,turno);
+    public void dominio_guardar_tablero(){
+        try {
+            int[][] tab = getTableroPartida();
+            int turno = partida_activa.getTurnoPartida();
+            cp.ctrl_guardar_tablero(tab,turno);
+        }
+        catch (Exception ignored) {}
+
     }
 
     /**
@@ -312,7 +328,6 @@ public class CtrlDominio {
     public boolean dominio_borrar_tablero(int idTablero) {
         return cp.ctrl_borrar_tablero(idTablero);
     }
-
 
 
     /**
@@ -348,12 +363,8 @@ public class CtrlDominio {
                 cp.ctrl_exportar_ranking(ranking.toArrayList(), "ranking.txt");
             }
         }
-        catch (Exception e) {
-            System.out.println("Fallo al actualizar el ranking");
-        }
+        catch (Exception ignored) {}
     }
-
-
 
 
 
@@ -394,7 +405,7 @@ public class CtrlDominio {
     public int[][] getTableroPartida() {
         if (partida_activa != null) return partida_activa.getTableroPartida().toMatrix();
         else {
-            int tab[][] = new int[8][8];
+            int[][] tab = new int[8][8];
             for (int i = 0; i < 8; ++i) {
                 for (int j = 0; j < 8; ++j) tab[i][j] = 0;
             }
@@ -403,11 +414,10 @@ public class CtrlDominio {
     }
 
     public Set<Position> getCasillasDisponibles(){
-        Set<Position> casillasDisponibles = partida_activa.getTableroPartida().getCasillasDisponibles();
-        return casillasDisponibles;
+        return partida_activa.getTableroPartida().getCasillasDisponibles();
     }
 
-    public static void iniciarPartida(int modo, int[] r, int idj1, int idj2, String nickj1, String nickj2) {
+    public void iniciarPartida(int modo, int[] r, int idj1, int idj2, String nickj1, String nickj2) {
         try {
             int idPartida = cp.ctrl_get_nuevo_ID_Partida();
             if (modo < 0 || modo > 2) throw new MyException("Modo de juego incorrecto");
@@ -437,16 +447,14 @@ public class CtrlDominio {
             Tablero t = new Tablero();
             partida_activa = new Partida(idPartida,modo,r,turnoPartida,id1,nick1,id2,nick2,t);
         }
-        catch (Exception e) {
-            //System.out.println(e);
-        }
+        catch (Exception ignored) { }
     }
 
     public void dominioRondaPartida(int x, int y) {
         partida_activa.rondaPartidaPvP(x, y);
     }
 
-    public int[][] dominioGetTableroInt() {
-        return partida_activa.getTableroPartida().toMatrix();
-    }
+    /*public static boolean dominioPartidaFinalizada() {
+        return partida_activa.getTableroPartida().finalizada();
+    }*/
 }

@@ -13,10 +13,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 //agregar en funcion de las necesidades
-enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA, CARGARTABLERO, BORRARTABLERO ,LOGINPARTIDA , CARGARPARTIDA}
+enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA,CREARTABLERO,CARGARTABLERO, BORRARTABLERO ,LOGINPARTIDA , CARGARPARTIDA}
 
 
 public class CtrlPresentacion {
+
 
 
 
@@ -88,10 +89,10 @@ public class CtrlPresentacion {
         vistaLogin.hacerVisible(false,tipoJugador.JUGADOR1);
         vistaMenu.hacerVisible(false);
         vistaConfigPartida.hacerVisible(false);
-        vistaPartida.hacerVisible(false);
+        vistaPartida.hacerVisible(false, VistaTablero.tipoTablero.PARTIDA);
         vistaRanking.hacerVisible(false);
         vistaCreditos.hacerVisible(false);
-        vistaTablero.hacerVisible(false);
+        vistaTablero.hacerVisible(false, VistaTablero.tipoTablero.PARTIDA);
         vistaConfigPartida.hacerVisible(false);
         vistaCargarTablero.hacerVisible(false);
         vistaCargarPartida.hacerVisible(false);
@@ -121,10 +122,14 @@ public class CtrlPresentacion {
                 break;
             case TABLERO:
                 vistaTablero.recargar_tablero();
-                vistaTablero.hacerVisible(true);
+                vistaTablero.hacerVisible(true, VistaTablero.tipoTablero.PARTIDA);
                 break;
             case CONFIGPARTIDA:
                 vistaConfigPartida.hacerVisible(true);
+                break;
+            case CREARTABLERO:
+                crearTablero();
+                vistaTablero.hacerVisible(true, VistaTablero.tipoTablero.TABLERO);
                 break;
             case CARGARTABLERO:
                 vistaCargarTablero.hacerVisible(true);
@@ -257,6 +262,14 @@ public class CtrlPresentacion {
 
     public ArrayList<String> obtener_lista_tableros_disponibles() {return ctrlDominio.listar_tableros_disponibles();}
 
+    public void crearTablero() {
+        ctrlDominio.dominio_crear_tablero();
+    }
+
+    public void guardarTablero() {
+        ctrlDominio.dominio_guardar_tablero();
+    }
+
     public int[][] cargarTablero(int id) {
         int [][]tab = new int[8][8];
         try{
@@ -295,6 +308,8 @@ public class CtrlPresentacion {
 
     public int consultar_idTablero_cargar() {return ctrlDominio.consultar_idTablero_cargar();}
 
+    public void presentacion_guardar_tablero() { ctrlDominio.dominio_guardar_tablero();}
+
     public boolean borrar_tablero(int id) {return ctrlDominio.dominio_borrar_tablero(id);}
 
 
@@ -312,12 +327,14 @@ public class CtrlPresentacion {
         return ctrlDominio.getCasillasDisponibles();
     }*/
 
+    public void presentacion_guardar_partida() { ctrlDominio.dominio_guardar_partida();}
+
     public void presentacionRondaPartida(int x, int y) {
         ctrlDominio.dominioRondaPartida(x, y);
     }
 
-    public int[][] presentacionGetTableroInt() {
-        return ctrlDominio.dominioGetTableroInt();
-    }
+    /*public void presentacionActualizarTablero() {
+        ctrlDominio.dominioActualizarTablero();
+    }*/
 
 }
