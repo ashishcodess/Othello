@@ -229,6 +229,6 @@ public class VistaMenu {
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.RANKING));
 
         buttonCargarBorrarPartida.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.LOGINPARTIDA));//
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARPARTIDA));//
     }
 }
