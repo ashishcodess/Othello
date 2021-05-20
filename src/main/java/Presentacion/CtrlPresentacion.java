@@ -2,11 +2,13 @@ package Presentacion;
 
 import ControladorPersistencia.CtrlPersitencia;
 import Dominio.CtrlDominio;
+import MyException.MyException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -177,6 +179,13 @@ public class CtrlPresentacion {
      * */
     public String presentacion_get_info_usuario_activo() {return ctrlDominio.get_info_usuario_activo();}
 
+
+    public int presentacion_get_id_usuario(){
+        return ctrlDominio.get_id_usuario();
+    }
+    public String presentacion_get_nickname_usuario(){
+        return ctrlDominio.get_nickname_usuario();
+    }
     public void presentacion_crearPartida(ArrayList<Integer> a_int) {
         ctrlDominio.domino_crearPartida(a_int);
     }
@@ -271,6 +280,27 @@ public class CtrlPresentacion {
 
         }
         return tab;
+    }
+
+    public int[][] cargarPartida(int id) {
+        int [][]tab1 = new int[8][8];
+        try{
+            tab1 = ctrlDominio.dominio_cargar_partida(id);
+        }
+        catch (Exception ignored) {
+
+        }
+        return tab1;
+    }
+
+    public ArrayList<String> getInfoPartida(int id){
+        ArrayList<String> info = new ArrayList<>();
+        try {
+            info= ctrlDominio.dominio_info_partida(id);
+        } catch (Exception ignored) {
+
+        }
+        return info;
     }
 
     public void modificar_idTablero_cargar(int id) {

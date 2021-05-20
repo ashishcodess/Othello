@@ -221,7 +221,43 @@ public class CtrlPersitencia {
 
     }
 
+    public int[][] ctrl_cargar_tablero_partida(int idPartida) throws IOException, MyException {
+        String pathF = dir_partidas + idPartida + ".txt";
+        ArrayList<String> as = io.leerFichero(pathF);
+        String s1;
+        int[][] map = new int[8][8];
+        for (int i = 0; i < 8; ++i) {
+            s1 = as.get(i+6);
+            for (int j = 0; j < 8; ++j) {
+                map[i][j] = Integer.parseInt(String.valueOf(s1.charAt(j)));
+            }
+        }
+        return map;
+    }
 
+    public ArrayList<String> ctrl_info_partida(int idPartida) throws IOException , MyException{
+        String pathF = dir_partidas + idPartida + ".txt";
+        ArrayList<String> as = io.leerFichero(pathF);
+        String id1, id2;
+        String nick1 = "";
+        String nick2 = "";
+
+        String s1 = as.get(0);
+        String[] s2 = s1.split(" ");
+        id1 = s2[0];
+        if (s2.length != 1) nick1 = s2[1];
+
+        s1 = as.get(1);
+        s2 = s1.split(" ");
+        id2 = s2[0];
+        if (s2.length != 1) nick2 = s2[1];
+
+        ArrayList<String> s = new ArrayList<>();
+        s.add("J1 - (ID:" + id1 + " , nickname: " + nick1 + ") ");
+        s.add("J2 - (ID:" + id2 + " , nickname: " + nick2 + ") ");
+
+       return s;
+    }
     /**
      * Operacion ctrl_guardar_partida
      * @param as es ArrayList con los parametros necesarios para guardar la partida (utilizando funcion toArrayList() de Partida)

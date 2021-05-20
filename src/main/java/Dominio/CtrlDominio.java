@@ -80,7 +80,12 @@ public class CtrlDominio {
         return "Usuarios activos:         J1 - (ID:" + id_1 + " , nickname: " + nickname + ")            " + "J2 - (ID2:" + id_2 + " , nickname2: " + nick_2 + ")";
     }
 
-
+    public int get_id_usuario(){
+        return id_1;
+    }
+    public String get_nickname_usuario(){
+        return nickname;
+    }
     /**
      * Metodo registro usuario
      * @param nick nickname de usuario a registrar
@@ -255,11 +260,15 @@ public class CtrlDominio {
      * Carga una partida a partir de un fichero guardado previamente y se actualiza "partida_activa"
      * @param idPartida id de partida a cargar
      * */
-    public void dominio_cargar_partida(int idPartida) throws IOException, MyException {
+    public int[][] dominio_cargar_partida(int idPartida) throws IOException, MyException {
         //Sergio: igual hay que hacer algo mas que solo esto
         partida_activa = cp.ctrl_cargar_partida(idPartida);
+        return cp.ctrl_cargar_tablero_partida(idPartida);    // Para pruebas.
     }
 
+    public  ArrayList<String> dominio_info_partida(int idPartida) throws IOException, MyException {
+        return cp.ctrl_info_partida(idPartida);
+    }
 
     /** Operacion Borrar Partida (desde Dominio)
      * @param idPartida es el identificador de partida a borrar
@@ -309,6 +318,8 @@ public class CtrlDominio {
     public int [][] dominio_cargar_tablero(int idTablero) throws IOException {
         return cp.ctrl_cargar_tablero(idTablero);
     }
+
+
 
     /** Operacion borrar_tablero (desde Dominio)
      * @param idTablero el identificador de tablero a borrar

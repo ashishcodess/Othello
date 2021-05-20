@@ -213,8 +213,6 @@ public class Tablero {
      * @param color_opp el color de una ficha contrario(2 = negras , 3 = blancas)
      */
     public void bfsCalcularCasillasDisponiblesVertical(Position pos , int color_own ,int color_opp) {
-        boolean work_x = true;
-        int x_add , y_add , x_sub , y_sub;
         int row = 8, columns = 8;
         Queue<Position> q = new LinkedList<>();
         q.add(pos);
@@ -222,19 +220,13 @@ public class Tablero {
             Position current_pos = q.element();
             int x = current_pos.getX();
             int y = current_pos.getY();
-            if (work_x){  //vertical
-                x_add = x+1;y_add = y; x_sub = x - 1 ;y_sub = y;
-            }
-            else {    //horizontal
-                x_add = x;y_add = y+1; x_sub = x ;y_sub = y-1;
-            }
             q.remove();
             //if (isOk(x+1 , y) && graph_v[x+1][y] == 0 && graph_v[x][y] == color_opp) {
-            if (isOk(x_add , y_add)) {
-                if (graph_v[x_add][y_add] == 0 && graph_v[x][y] == color_opp) { // the next is the vacio and the current pos is opposite color to me then disponible.
-                    graph_v[x_add][y_add] = 1;
-                    tablero[x_add][y_add] = new Casilla(1);
-                    disponibles.add(new Position(x_add , y_add));
+            if (isOk(x+1 , y)) {
+                if (graph_v[x+1][y] == 0 && graph_v[x][y] == color_opp) { // the next is the vacio and the current pos is opposite color to me then disponible.
+                    graph_v[x+1][y] = 1;
+                    tablero[x+1][y] = new Casilla(1);
+                    disponibles.add(new Position(x+1 , y));
                     graph_v[x][y] = -1 ; // this one is already traversed.
                 }
             }
