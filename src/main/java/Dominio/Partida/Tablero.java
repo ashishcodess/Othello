@@ -650,7 +650,7 @@ public class Tablero {
         if (isOk(x-1, y-1)) {
             if (tablero[x-1][y-1].getTipoCasilla() == opp_color) {
                 int i = x -1 , j = y-1 ;
-                while ( i >= 0 && y >= 0 && !found1 && !stop1) {
+                while ( i >= 0 && j >= 0 && !found1 && !stop1) {
                     if (tablero[i][j].getTipoCasilla() == own_color) found1 = true;    //Case of finding the same colour
                     else if (tablero[i][j].getTipoCasilla() == 0 || tablero[i][j].getTipoCasilla() == 1)
                         stop1 = true;   // case of being unable to find any color
@@ -735,7 +735,7 @@ public class Tablero {
         if (isOk(x+1, y-1)) {
             if (tablero[x+1][y-1].getTipoCasilla() == opp_color) {
                 int i = x+1 , j = y-1 ;
-                while ( i >= 7 && j <= 0 && !found4 && !stop4) {
+                while ( i <= 7 && j <= 0 && !found4 && !stop4) {
                     if (tablero[i][j].getTipoCasilla() == own_color) found4 = true;    //Case of finding the same colour
                     else if (tablero[i][j].getTipoCasilla() == 0 || tablero[i][j].getTipoCasilla() == 1)
                         stop4 = true;   // case of being unable to find any color
