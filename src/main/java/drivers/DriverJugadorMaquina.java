@@ -26,6 +26,11 @@ public class DriverJugadorMaquina {
             System.out.print("Introducir opcion:");
             int i_entrada = Integer.parseInt(scan.next());
             System.out.println();
+            Tablero t = new Tablero();
+
+            t.calcularCasillasDisponiblesDiagonales(0);
+            t.calcularCasillasDisponiblesHorizontal(0);
+            t.calcularCasillasDisponiblesVertical(0);
             switch(i_entrada) {
                 case 0:
                     b = false;
@@ -35,11 +40,6 @@ public class DriverJugadorMaquina {
                     break;
                 case 2:
                     JugadorMaquina prueba = new JugadorMaquina(1);
-                    Tablero t = new Tablero();
-
-                    t.calcularCasillasDisponiblesDiagonales(0);
-                    t.calcularCasillasDisponiblesHorizontal(0);
-                    t.calcularCasillasDisponiblesVertical(0);
                     for (int i = 0; i < 8; ++i) {
                         String sbuff = new String();
                         for (int j = 0; j < 8; ++j) {

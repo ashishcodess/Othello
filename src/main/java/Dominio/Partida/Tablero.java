@@ -96,7 +96,7 @@ public class Tablero {
         Position pos;
         for(int i = 0 ; i < 8 ; ++i){
             for(int j = 0 ; j < 8 ; ++j){
-                tablero[i][j] = tab[i][j];  // put the exact value in exact position
+                tablero[i][j] = new Casilla(tab[i][j].getTipoCasilla());   // put the exact value in exact position
                 if(tab[i][j].getTipoCasilla() == 2 ) {   // If they are black increase the number of black tokens and decrease the empty ones.
                     num_vacia --;
                     negras.add(new Position(i , j));
@@ -821,7 +821,9 @@ public class Tablero {
                 this.negras.size() == 0 || (this.disponibles.size() == 0 && !this.disponibles_anterior));
     }
 
-    public void setTurnoAnterior(boolean b){
+    public boolean getDisponiblesAnterior(){return this.disponibles_anterior;}
+
+    public void SetDisponiblesAnterior(boolean b){
         this.disponibles_anterior = b;
     }
 

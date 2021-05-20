@@ -183,6 +183,7 @@ public class JugadorMaquina extends Jugador {
         for(Position pos : disponibles){
 
             aux = t;
+
             if(turno %2 == 0) aux.setCasilla_tipo(pos.getX(), pos.getY(), 2);
             else aux.setCasilla_tipo(pos.getX(), pos.getY(), 3);
             succesores.add(aux);
