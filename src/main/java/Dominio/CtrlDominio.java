@@ -28,6 +28,8 @@ public class CtrlDominio {
     private static Partida partida_activa;
     private static int idTablero_cargar;
 
+
+
     public void modificar_idTablero_cargar(int id) {
         idTablero_cargar = id;
     }
@@ -437,5 +439,9 @@ public class CtrlDominio {
 
     public int[][] dominioGetTableroInt() {
         return partida_activa.getTableroPartida().toMatrix();
+    }
+
+    public static boolean dominioPartidaFinalizada() {
+        return partida_activa.getTableroPartida().finalizada();
     }
 }

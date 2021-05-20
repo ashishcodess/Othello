@@ -1,6 +1,7 @@
 package Presentacion;
 
 import ControladorPersistencia.CtrlPersitencia;
+import Dominio.CtrlDominio;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -214,6 +215,14 @@ public class VistaTablero {
                 }
             }
         }
+        if (presentacionPartidaFinalizada()){
+            JFrame frameResultado = new JFrame("Resultado");
+            frameResultado.setVisible(true);
+        }
+    }
+
+    private boolean presentacionPartidaFinalizada() {
+        return CtrlDominio.dominioPartidaFinalizada();
     }
 
     public void asignar_listenersComponentes() {
