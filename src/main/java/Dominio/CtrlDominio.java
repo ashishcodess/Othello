@@ -199,9 +199,15 @@ public class CtrlDominio {
      * @param nick del jugador a mostrar las partidas disponibles
      * @return devuelve un Arraylist de strings con las posibles partidas donde se encuentra el Jugador
      * */
-    public ArrayList<String> listar_partidas_disponibles(int id, String nick) throws IOException {
+    public ArrayList<String> listar_partidas_disponibles(int id, String nick){
         //enviara al Controlador de Presentacion (para mostrar que partidas puede cargar/borrar el jugador)
-        return cp.ctrl_listar_partidas_disponibles(id,nick);
+        try {
+            return cp.ctrl_listar_partidas_disponibles(id,nick);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
 
@@ -375,7 +381,14 @@ public class CtrlDominio {
 
     //para imprimir tablero hacia la capa de presentacion
     public int[][] getTableroPartida() {
-        return partida_activa.getTableroPartida().toMatrix();
+        if (partida_activa != null) return partida_activa.getTableroPartida().toMatrix();
+        else {
+            int tab[][] = new int[8][8];
+            for (int i = 0; i < 8; ++i) {
+                for (int j = 0; j < 8; ++j) tab[i][j] = 0;
+            }
+            return tab;
+        }
     }
 
     public Set<Position> getCasillasDisponibles(){

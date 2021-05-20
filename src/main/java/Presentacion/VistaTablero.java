@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 public class VistaTablero {
 
     private final CtrlPresentacion iCtrlPresentacion;
+    private JFrame frameVista = new JFrame("Vista Tablero");
+    private final JButton[][] botonesMatriz = new JButton[8][8];
     private final JPanel panelPrincipal = new JPanel();
 
     private String imagen_vacia = "";
@@ -32,16 +34,14 @@ public class VistaTablero {
 
     private final JMenuBar menubarVista = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
-    private final JMenuItem menuitemQuit = new JMenuItem("Salir");
-
-    private final JMenu menuPartida = new JMenu("Partida");
+    private final JMenuItem menuitemQuit = new JMenuItem("Salir del Juego");
     private final JMenuItem menuitemGuardarPartida = new JMenuItem("Guardar Partida");
-    private final JMenuItem menuitemFinalizarPartida = new JMenuItem("Finalizar Partida");
+    private final JMenuItem menuitemFinalizarPartida = new JMenuItem("Finalizar Partida (Volver al menu Principal)");
 
-
-
+    //BORRAR CUANDO TENGAMOS FUNCION DE LISTENER CON LA LOGICA DEL JUEGO
     private int prueba_switch_imagen = 0;
 
+    //BORRAR CUANDO TENGAMOS FUNCION DE LISTENER CON LA LOGICA DEL JUEGO
     private String getImagen() {
         ++prueba_switch_imagen;
         prueba_switch_imagen = prueba_switch_imagen%4;
@@ -63,9 +63,6 @@ public class VistaTablero {
         return img;
     }
 
-    private JFrame frameVista = new JFrame("Vista Tablero");
-    private final JButton[][] botonesMatriz = new JButton[8][8];
-
 
     public VistaTablero(CtrlPresentacion pCtrlPresentacion)  {
         iCtrlPresentacion = pCtrlPresentacion;
@@ -78,11 +75,10 @@ public class VistaTablero {
     }
 
     private void inicializar_menubarVista() {
+        menuFile.add(menuitemGuardarPartida);
+        menuFile.add(menuitemFinalizarPartida);
         menuFile.add(menuitemQuit);
         menubarVista.add(menuFile);
-        menuPartida.add(menuitemGuardarPartida);
-        menuPartida.add(menuitemFinalizarPartida);
-        menubarVista.add(menuPartida);
         frameVista.setJMenuBar(menubarVista);
     }
 
@@ -103,6 +99,42 @@ public class VistaTablero {
         frameVista.pack();
         frameVista.setVisible(b);
         frameVista.setEnabled(b);
+        //if (b) recargar_tablero();
+    }
+
+    /**
+     * Metodo cambiar imagen casilla
+     * @param x posicion x dentro del tablero
+     * @param y posicion y dentro del tablero
+     * @param tipo (tipo de imagen a cargar [0:vacia, 1:disponible, 2:Negra, 3:Blanca]
+     * */
+    private void cambiar_imagen_casilla(int x, int y, int tipo) {
+        String s = "";
+        switch (tipo){
+            case 0:
+                s = imagen_vacia;
+                break;
+            case 1:
+                s = imagen_disponible;
+                break;
+            case 2:
+                s = imagen_negra;
+                break;
+            case 3:
+                s = imagen_blanca;
+                break;
+        }
+        botonesMatriz[x][y].setIcon(new ImageIcon(s));
+    }
+
+
+    public void recargar_tablero() {
+        int tab[][] = iCtrlPresentacion.presentacionObtenerTablero();
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                cambiar_imagen_casilla(i,j,tab[i][j]);
+            }
+        }
     }
 
     private void inicializar_Componentes() {
@@ -110,62 +142,12 @@ public class VistaTablero {
         tablero.setBorder((new LineBorder(Color.BLACK)));
 
         //int[][] tableroPartida = iCtrlPresentacion.presentacionObtenerTablero();
-
         Insets margenesBotones = new Insets(0,0,0,0);
         for (int i = 0; i < botonesMatriz.length; ++i) {
             for (int j = 0; j < botonesMatriz[i].length; ++j) {
                 JButton b = new JButton();
                 b.setMargin(margenesBotones);
                 b.setBackground(Color.gray);
-                if (i == 3 && j == 3){
-                    b.setIcon(new ImageIcon(imagen_blanca));
-                }
-                else if (i == 4 && j == 4){
-                    b.setIcon(new ImageIcon(imagen_blanca));
-                }
-                else if (i == 3 && j == 4){
-                    b.setIcon(new ImageIcon(imagen_negra));
-                }
-                else if (i == 4 && j == 3){
-                    b.setIcon(new ImageIcon(imagen_negra));
-                }
-                else {
-                    b.setIcon(new ImageIcon(imagen_vacia));
-                }
-                botonesMatriz[i][j] = b;
-                tablero.add(botonesMatriz[i][j]);
-            }
-        }
-        //panelBotones.setLayout(new FlowLayout());
-        panelBotones.setLayout(new BoxLayout(panelBotones,BoxLayout.PAGE_AXIS));
-        panelBotones.add(bottonPasarTurno);
-        panelBotones.add(labelSeparador);
-        panelBotones.add(labelOpcionesPartida);
-        panelBotones.add(bottonGuardarPartida);
-        panelBotones.add(bottonFinalizarPartida);
-        panelPrincipal.setLayout(new BorderLayout());
-        panelPrincipal.add(tablero,BorderLayout.CENTER);
-        panelPrincipal.add(panelBotones,BorderLayout.EAST);
-    }
-
-
-    /*
-    private void inicializar_Componentes() {
-        JPanel tablero = new JPanel(new GridLayout(0, 8));
-        tablero.setBorder((new LineBorder(Color.BLACK)));
-
-        int[][] tableroPartida = iCtrlPresentacion.presentacionObtenerTablero();
-
-        Insets margenesBotones = new Insets(0,0,0,0);
-        for (int i = 0; i < botonesMatriz.length; ++i) {
-            for (int j = 0; j < botonesMatriz[i].length; ++j) {
-                JButton b = new JButton();
-                b.setMargin(margenesBotones);
-                b.setBackground(Color.gray);
-                if (tableroPartida[i][j] == 0 ) b.setIcon(new ImageIcon(imagen_vacia));
-                else if (tableroPartida[i][j] == 3 )b.setIcon(new ImageIcon(imagen_blanca));
-                else if (tableroPartida[i][j] == 2 )b.setIcon(new ImageIcon(imagen_negra));
-                else b.setIcon(new ImageIcon(imagen_disponible));
 
                 botonesMatriz[i][j] = b;
                 tablero.add(botonesMatriz[i][j]);
@@ -182,9 +164,10 @@ public class VistaTablero {
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.add(tablero,BorderLayout.CENTER);
         panelPrincipal.add(panelBotones,BorderLayout.EAST);
+
+        recargar_tablero();
     }
 
-   */
 
     public void actionPerformed_botones(ActionEvent event) {
         for (JButton[] jButtons : botonesMatriz) {
@@ -197,17 +180,6 @@ public class VistaTablero {
             }
         }
     }
-/*
- Set<Position> posDisp = iCtrlPresentacion.presentacionObternerCasillasDisponibles();
- for (int i = 0; i < posDisp.size() ; ++i){
-                JButton b = new JButton();
-                b.setMargin(margenesBotones);
-                b.setBackground(Color.gray);
-                b.setIcon(new ImageIcon(imagen_disponible));
-                botonesMatriz[i][j] = b;
-                tablero.add(botonesMatriz[i][j]);
- }
-*/
 
     public void asignar_listenersComponentes() {
         //TABLERO
@@ -219,8 +191,16 @@ public class VistaTablero {
         }
 
 
+        //LISTENERS DE BOTONES Y BARRA DE MENU SUPERIOS
+
         bottonFinalizarPartida.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+
+        menuitemFinalizarPartida.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+
+        menuitemQuit.addActionListener
+                (event -> iCtrlPresentacion.salir_del_juego());
 
     }
 }

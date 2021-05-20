@@ -30,8 +30,8 @@ public class VistaCargarTablero {
 
     private final JMenuBar menubarVista = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
-    private final JMenuItem menuitemMenu = new JMenuItem("Menu Principal");
-    private final JMenuItem menuitemQuit = new JMenuItem("Salir");
+    private final JMenuItem menuitemMenu = new JMenuItem("Volver al Menu Principal");
+    private final JMenuItem menuitemQuit = new JMenuItem("Salir del Juego");
 
     /**
      * Constructora de Vista Cargar/Borrar Tablero

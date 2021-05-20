@@ -14,7 +14,7 @@ public class VistaCreditos {
     private JFrame frameVista = new JFrame("Creditos");
     private final JButton buttonOK = new JButton("Volver al menu principal");
 
-    private final JMenuItem menuitemQuit = new JMenuItem("Salir");
+    private final JMenuItem menuitemQuit = new JMenuItem("Salir del Juego");
     private final JMenuItem menuitemVolver = new JMenuItem("Volver al menu principal");
 
     /**
