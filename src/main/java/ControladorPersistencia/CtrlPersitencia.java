@@ -66,6 +66,7 @@ public class CtrlPersitencia {
         this.idMax_usuario = io.calcularID_Ficheros(dir_usuarios,tipoFichero.USUARIO);
         this.idMax_partida = io.calcularID_Ficheros(dir_partidas,tipoFichero.PARTIDA);
         this.idMax_tablero = io.calcularID_Ficheros(dir_tablero,tipoFichero.TABLERO);
+        ctrl_incr_nuevo_ID_partida();
     }
 
 
