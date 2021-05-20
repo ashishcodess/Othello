@@ -36,14 +36,14 @@ public class DriverJugadorMaquina {
                 case 2:
                     JugadorMaquina prueba = new JugadorMaquina(1);
                     Tablero t = new Tablero();
-                    t.inicializeTablero(t.getTablero());
+
                     t.calcularCasillasDisponiblesDiagonales(0);
                     t.calcularCasillasDisponiblesHorizontal(0);
                     t.calcularCasillasDisponiblesVertical(0);
                     for (int i = 0; i < 8; ++i) {
-                        StringBuilder sbuff = new StringBuilder();
+                        String sbuff = new String();
                         for (int j = 0; j < 8; ++j) {
-                            sbuff.append(t.getTablero()[i][j].getTipoCasilla());
+                            sbuff = sbuff + t.getCasilla_tipo(i,j);
                         }
                         System.out.println(sbuff);
                     }
