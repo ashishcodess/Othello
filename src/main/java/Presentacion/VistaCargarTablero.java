@@ -10,8 +10,8 @@ import java.util.Objects;
 
 public class VistaCargarTablero {
 
-    public enum tipoTablero {TABLERO, PARTIDA}
-    private tipoTablero tipoActual;
+    public enum tipoTab {TABLERO, PARTIDA}
+    private tipoTab  tipoActual;
 
     private String imagen_vacia = "";
     private String imagen_disponible = "";
@@ -51,7 +51,7 @@ public class VistaCargarTablero {
      * */
     public VistaCargarTablero(CtrlPresentacion pCtrlPresentacion)  {
         iCtrlPresentacion = pCtrlPresentacion;
-        tipoActual = tipoTablero.TABLERO;
+        tipoActual = tipoTab.TABLERO;
         frameVista.setLayout(new BorderLayout()); // 5 zonas (North, South, East, West, Center)
         inicializar_frameVista();
         obtener_dir_imagenes();
@@ -64,7 +64,7 @@ public class VistaCargarTablero {
      *Metodo hacerVisible
      * @param b si TRUE entonces el frame sera visible, caso contrario estara desactivado
      * */
-    public void hacerVisible(boolean b, tipoTablero t) {
+    public void hacerVisible(boolean b, tipoTab t) {
         frameVista.pack();
         frameVista.setVisible(b);
         frameVista.setEnabled(b);
@@ -72,13 +72,21 @@ public class VistaCargarTablero {
             tipoActual = t;
             cambiar_info_labels_botones(tipoActual);
             //FALTA COMBOBOX PARA PARTIDAS + DIFERENCIAR LISTENERS
-            buttonCargar.setEnabled(iCtrlPresentacion.consultar_idTablero_cargar() == -1);
+            switch (tipoActual) {
+                case TABLERO:
+                    buttonCargar.setEnabled(iCtrlPresentacion.consultar_idTablero_cargar() == -1);
+                    break;
+                case PARTIDA:
+                    buttonCargar.setEnabled(true);
+                    break;
+            }
+
             limpiar_vista_previa_tablero();
             recargar_comboBox();
         }
     }
 
-    private void cambiar_info_labels_botones(VistaCargarTablero.tipoTablero t) {
+    private void cambiar_info_labels_botones(VistaCargarTablero.tipoTab t) {
         switch (t) {
             case PARTIDA:
                 buttonCargar.setText("Cargar Partida");
