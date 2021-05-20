@@ -8,9 +8,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 
-//IDEA HACER CLASE EXTENDIDA DE ESTO (SIN LOS BOTONES
-
 public class VistaTablero {
+
+    public enum tipoTablero {PARTIDA, TABLERO}
+
+    private tipoTablero tipoActual;
 
     private final CtrlPresentacion iCtrlPresentacion;
     private JFrame frameVista = new JFrame("Vista Tablero");
@@ -22,50 +24,42 @@ public class VistaTablero {
     private String imagen_blanca = "";
     private String imagen_negra = "";
 
-
     private final JPanel panelBotones = new JPanel();
     private final JButton bottonPasarTurno = new JButton("Pasar turno");
     private final JLabel labelSeparador = new JLabel("         ");
-    private final JLabel labelOpcionesPartida = new JLabel("Opciones de partida");
-    private final JButton bottonGuardarPartida = new JButton("Guardar Partida");
-    private final JButton bottonFinalizarPartida = new JButton("Finalizar Partida");
-
+    private final JLabel labelOpciones = new JLabel("Opciones de partida");
+    private final JButton bottonGuardar = new JButton("Guardar Partida");
+    private final JButton bottonFinalizar = new JButton("Finalizar Partida");
 
 
     private final JMenuBar menubarVista = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
     private final JMenuItem menuitemQuit = new JMenuItem("Salir del Juego");
-    private final JMenuItem menuitemGuardarPartida = new JMenuItem("Guardar Partida");
-    private final JMenuItem menuitemFinalizarPartida = new JMenuItem("Finalizar Partida (Volver al menu Principal)");
+    private final JMenuItem menuitemGuardar= new JMenuItem("Guardar Partida");
+    private final JMenuItem menuitemFinalizar = new JMenuItem("Finalizar Partida (Volver al menu Principal)");
 
-    //BORRAR CUANDO TENGAMOS FUNCION DE LISTENER CON LA LOGICA DEL JUEGO
-    private int prueba_switch_imagen = 0;
-
-    //BORRAR CUANDO TENGAMOS FUNCION DE LISTENER CON LA LOGICA DEL JUEGO
-    private String getImagen() {
-        ++prueba_switch_imagen;
-        prueba_switch_imagen = prueba_switch_imagen%4;
-        String img = imagen_vacia;
-        switch (prueba_switch_imagen) {
-            case 0:
-                img = imagen_disponible;
+    private void cambiar_info_labels_botones(tipoTablero t) {
+        menuitemFinalizar.setText("Finalizar (Volver al menu Principal)");
+        switch (t) {
+            case PARTIDA:
+                labelOpciones.setText("Opciones de partida");
+                bottonGuardar.setText("Guardar Partida");
+                bottonFinalizar.setText("Finalizar Partida");
+                menuitemGuardar.setText("Guardar Partida");
                 break;
-            case 1:
-                img = imagen_blanca;
-                break;
-            case 2:
-                img = imagen_negra;
-                break;
-            case 3:
-                img = imagen_vacia;
+            case TABLERO:
+                bottonPasarTurno.setEnabled(false);
+                labelOpciones.setText("Opciones de Tablero");
+                bottonGuardar.setText("Guardar Tablero");
+                bottonFinalizar.setText("Finalizar (Salir sin guardar)");
+                menuitemGuardar.setText("Guardar Tablero");
                 break;
         }
-        return img;
     }
-
 
     public VistaTablero(CtrlPresentacion pCtrlPresentacion)  {
         iCtrlPresentacion = pCtrlPresentacion;
+        tipoActual = tipoTablero.PARTIDA;
         frameVista.setLayout(new BorderLayout()); // 5 zonas (North, South, East, West, Center)
         inicializar_frameVista();
         obtener_dir_imagenes();
@@ -75,8 +69,8 @@ public class VistaTablero {
     }
 
     private void inicializar_menubarVista() {
-        menuFile.add(menuitemGuardarPartida);
-        menuFile.add(menuitemFinalizarPartida);
+        menuFile.add(menuitemGuardar);
+        menuFile.add(menuitemFinalizar);
         menuFile.add(menuitemQuit);
         menubarVista.add(menuFile);
         frameVista.setJMenuBar(menubarVista);
@@ -95,12 +89,47 @@ public class VistaTablero {
         imagen_negra = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_NEGRA);
     }
 
-    public void hacerVisible(boolean b) {
+    public void hacerVisible(boolean b,tipoTablero t) {
         frameVista.pack();
         frameVista.setVisible(b);
         frameVista.setEnabled(b);
-        //if (b) recargar_tablero();
+        if (b) {
+            tipoActual = t;
+            cambiar_info_labels_botones(tipoActual);
+            recargar_tablero();
+        }
     }
+
+
+
+    private void inicializar_Componentes() {
+        JPanel tablero = new JPanel(new GridLayout(0, 8));
+        tablero.setBorder((new LineBorder(Color.BLACK)));
+
+        Insets margenesBotones = new Insets(0,0,0,0);
+        for (int i = 0; i < botonesMatriz.length; ++i) {
+            for (int j = 0; j < botonesMatriz[i].length; ++j) {
+                JButton b = new JButton();
+                b.setMargin(margenesBotones);
+                b.setBackground(Color.gray);
+
+                botonesMatriz[i][j] = b;
+                tablero.add(botonesMatriz[i][j]);
+            }
+        }
+        panelBotones.setLayout(new FlowLayout());
+        panelBotones.setLayout(new BoxLayout(panelBotones,BoxLayout.PAGE_AXIS));
+        panelBotones.add(bottonPasarTurno);
+        panelBotones.add(labelSeparador);
+        panelBotones.add(labelOpciones);
+        panelBotones.add(bottonGuardar);
+        panelBotones.add(bottonFinalizar);
+        panelPrincipal.setLayout(new BorderLayout());
+        panelPrincipal.add(tablero,BorderLayout.CENTER);
+        panelPrincipal.add(panelBotones,BorderLayout.EAST);
+        recargar_tablero();
+    }
+
 
     /**
      * Metodo cambiar imagen casilla
@@ -128,8 +157,10 @@ public class VistaTablero {
     }
 
 
+    /**
+     * Metodo recargar tablero (actualiza la pantalla con la informacion del tablero actualizado)*/
     public void recargar_tablero() {
-        int tab[][] = iCtrlPresentacion.presentacionObtenerTablero();
+        int[][] tab = iCtrlPresentacion.presentacionObtenerTablero();
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 cambiar_imagen_casilla(i,j,tab[i][j]);
@@ -137,37 +168,17 @@ public class VistaTablero {
         }
     }
 
-    private void inicializar_Componentes() {
-        JPanel tablero = new JPanel(new GridLayout(0, 8));
-        tablero.setBorder((new LineBorder(Color.BLACK)));
-
-        //int[][] tableroPartida = iCtrlPresentacion.presentacionObtenerTablero();
-        Insets margenesBotones = new Insets(0,0,0,0);
-        for (int i = 0; i < botonesMatriz.length; ++i) {
-            for (int j = 0; j < botonesMatriz[i].length; ++j) {
-                JButton b = new JButton();
-                b.setMargin(margenesBotones);
-                b.setBackground(Color.gray);
-
-                botonesMatriz[i][j] = b;
-                tablero.add(botonesMatriz[i][j]);
-            }
+    private void listener_guardar_partida() {
+        switch (tipoActual) {
+            case PARTIDA:
+                iCtrlPresentacion.presentacion_guardar_partida();
+                break;
+            case TABLERO:
+                iCtrlPresentacion.presentacion_guardar_tablero();
+                break;
         }
-
-        panelBotones.setLayout(new FlowLayout());
-        panelBotones.setLayout(new BoxLayout(panelBotones,BoxLayout.PAGE_AXIS));
-        panelBotones.add(bottonPasarTurno);
-        panelBotones.add(labelSeparador);
-        panelBotones.add(labelOpcionesPartida);
-        panelBotones.add(bottonGuardarPartida);
-        panelBotones.add(bottonFinalizarPartida);
-        panelPrincipal.setLayout(new BorderLayout());
-        panelPrincipal.add(tablero,BorderLayout.CENTER);
-        panelPrincipal.add(panelBotones,BorderLayout.EAST);
-
-        recargar_tablero();
+        iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU);
     }
-
 
     public void actionPerformed_botones(ActionEvent event) {
         int x = 0;
@@ -176,11 +187,7 @@ public class VistaTablero {
             int y = 0;
             for (JButton jButton : jButtons) {
                 y+=1;
-                //AQUI IRIA EL LISTENER PARA LOS BOTONES (CON TODA LA LOGICA DEL JUEGO Y ESO)
                 if (event.getSource() == jButton) {
-
-                    /*String s = getImagen();
-                    jButton.setIcon(new ImageIcon(s));*/
                     x = x-1;
                     y = y-1;
                     System.out.println("posicion "+ x + ", " + y);
@@ -189,31 +196,7 @@ public class VistaTablero {
                 }
             }
         }
-        int[][] tablero = iCtrlPresentacion.presentacionGetTableroInt();
-        int i = 0;
-        for (JButton[] jButtons : botonesMatriz) {
-            i+=1;
-            int j = 0;
-            for (JButton jButton : jButtons) {
-                j += 1;
-                if (tablero[i-1][j-1] == 0) {
-                    String s = imagen_vacia;
-                    jButton.setIcon(new ImageIcon(s));
-                }
-                else if (tablero[i-1][j-1] == 1) {
-                    String s = imagen_disponible;
-                    jButton.setIcon(new ImageIcon(s));
-                }
-                else if (tablero[i-1][j-1] == 2) {
-                    String s = imagen_negra;
-                    jButton.setIcon(new ImageIcon(s));
-                }
-                else if (tablero[i-1][j-1] == 3) {
-                    String s = imagen_blanca;
-                    jButton.setIcon(new ImageIcon(s));
-                }
-            }
-        }
+        recargar_tablero();
     }
 
     public void asignar_listenersComponentes() {
@@ -227,11 +210,16 @@ public class VistaTablero {
 
 
         //LISTENERS DE BOTONES Y BARRA DE MENU SUPERIOS
+        bottonGuardar.addActionListener
+                (event -> listener_guardar_partida());
 
-        bottonFinalizarPartida.addActionListener
+        bottonFinalizar.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
 
-        menuitemFinalizarPartida.addActionListener
+        menuitemGuardar.addActionListener
+                (event -> listener_guardar_partida());
+
+        menuitemFinalizar.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
 
         menuitemQuit.addActionListener

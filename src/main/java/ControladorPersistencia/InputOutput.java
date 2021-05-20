@@ -34,7 +34,7 @@ public class InputOutput {
                 if (maxID < i_aux) maxID = i_aux;
             }
         }
-        return maxID;
+        return (maxID+1);
     }
 
     /**

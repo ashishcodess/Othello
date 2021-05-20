@@ -221,7 +221,50 @@ public class CtrlPersitencia {
 
     }
 
+    public int[][] ctrl_cargar_tablero_partida(int idPartida) throws IOException, MyException {
+        String pathF = dir_partidas + idPartida + ".txt";
+        ArrayList<String> as = io.leerFichero(pathF);
+        String s1;
+        int[][] map = new int[8][8];
+        for (int i = 0; i < 8; ++i) {
+            s1 = as.get(i+6);
+            for (int j = 0; j < 8; ++j) {
+                map[i][j] = Integer.parseInt(String.valueOf(s1.charAt(j)));
+            }
+        }
+        return map;
+    }
 
+    public ArrayList<String> ctrl_info_partida(int idPartida) throws IOException , MyException{
+        String pathF = dir_partidas + idPartida + ".txt";
+        ArrayList<String> as = io.leerFichero(pathF);
+        String id1, id2;
+        String nick1 = "";
+        String nick2 = "";
+
+        String s1 = as.get(0);
+        String[] s2 = s1.split(" ");
+        id1 = s2[0];
+        if (s2.length != 1) nick1 = s2[1];
+
+        s1 = as.get(1);
+        s2 = s1.split(" ");
+        id2 = s2[0];
+        if (s2.length != 1) nick2 = s2[1];
+
+        ArrayList<String> s = new ArrayList<>();
+        s.add("J1 - (ID:" + id1 + " , nickname: " + nick1 + ") ");
+        s.add("J2 - (ID:" + id2 + " , nickname: " + nick2 + ") ");
+
+       return s;
+    }
+
+
+    public ArrayList<String> consultar_info_partida_id(int idPartida) throws IOException {
+        String pathF = dir_partidas + idPartida + ".txt";
+        ArrayList<String> as = io.leerFichero(pathF);
+        return as;
+    }
     /**
      * Operacion ctrl_guardar_partida
      * @param as es ArrayList con los parametros necesarios para guardar la partida (utilizando funcion toArrayList() de Partida)
@@ -279,6 +322,10 @@ public class CtrlPersitencia {
 
         //borrar fichero de partida
         b = io.borrarFichero(pathF);
+        //recalcular id maximo
+        this.idMax_partida = io.calcularID_Ficheros(dir_partidas,tipoFichero.PARTIDA);
+
+
         return b;
     }
 
@@ -310,6 +357,7 @@ public class CtrlPersitencia {
         String pathF = dir_tablero + idTablero + ".txt";
         ctrl_incr_nuevo_ID_tablero();
         io.guardarInfoFichero(pathF,as,tipoFichero.TABLERO);
+        ctrl_incr_nuevo_ID_tablero();
     }
 
     /** Operacion ctrl_borrar_tablero
@@ -317,11 +365,16 @@ public class CtrlPersitencia {
      * @return devuelve TRUE en caso que se haya borrado con exito, caso contrario devuelve excepcion
      */
     public boolean ctrl_borrar_tablero(int idTablero) {
+        boolean b = false;
         if (idTablero > 0) {
             String pathF = dir_tablero + idTablero + ".txt";
-            return io.borrarFichero(pathF);
+
+            b = io.borrarFichero(pathF);
+
+            //recalcular id maximo
+            this.idMax_tablero = io.calcularID_Ficheros(dir_tablero,tipoFichero.TABLERO);
         }
-        else return false;
+        return b;
     }
 
     /**
@@ -540,6 +593,7 @@ public class CtrlPersitencia {
     public boolean ctrl_crear_usuario(int idJugador,String nicknameJugador) throws IOException {
         String pathF = dir_usuarios + idJugador + "_" + nicknameJugador;
         boolean b = io.crearFichero(pathF);
+        System.out.println("Creado: "+ b);
         if (b) ctrl_incr_nuevo_ID_user();
         return b;
     }
@@ -564,7 +618,10 @@ public class CtrlPersitencia {
      */
     public boolean ctrl_borrar_usuario(int idJugador,String nicknameJugador) {
         String pathF = dir_usuarios + idJugador + "_" + nicknameJugador;
-        return io.borrarFichero(pathF);
+        boolean b = io.borrarFichero(pathF);
+        //recalcular id maximo
+        this.idMax_usuario = io.calcularID_Ficheros(dir_usuarios,tipoFichero.USUARIO);
+        return b;
     }
 
     /**

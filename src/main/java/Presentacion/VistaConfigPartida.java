@@ -263,6 +263,7 @@ public class VistaConfigPartida {
         //for (Integer a : as_int) System.out.println(a);
         primera_vez = true;
         iCtrlPresentacion.presentacion_crearPartida(as_int);
+        //iCtrlPresentacion.presentacionActualizarTablero();
         iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);
     }
 

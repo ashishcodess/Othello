@@ -21,7 +21,7 @@ public class VistaMenu {
     //BARRA DE MENU
     private final JMenuBar menubarVista = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
-    private final JMenuItem menuitemQuit = new JMenuItem("Salir del Juego");
+    private final JMenuItem menuitemQuit = new JMenuItem("Salir");
     private final JMenuItem menuitemCreditos = new JMenuItem("Creditos");
     private final JMenuItem menuitemLogin = new JMenuItem("Login Usuario");
     private final JMenu menuTablero = new JMenu("Tablero");
@@ -142,7 +142,7 @@ public class VistaMenu {
         buttonCrearTablero.setToolTipText("Entra en el menu de config. de una Tablero");
         panelMenuTablero.add(buttonBorrarTablero);
         buttonBorrarTablero.setToolTipText("Entra en el menu para Borrar un tablero guardado en el sistema");
-        panelMenuTablero.setBorder((new LineBorder(Color.BLACK)));
+        //panelMenuTablero.setBorder((new LineBorder(Color.BLACK)));
 
         //PANEL MENU RANKING
         panelMenuRanking.setLayout(new BoxLayout(panelMenuRanking,BoxLayout.PAGE_AXIS));
@@ -206,22 +206,18 @@ public class VistaMenu {
                     System.exit(0);
                 });
 
+        menuitemQuit.addActionListener
+                (event -> iCtrlPresentacion.salir_del_juego());
+
         buttonCrearPartida.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA));
+
+        buttonCrearTablero.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CREARTABLERO));
 
         buttonBorrarTablero.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARTABLERO));
 
-        buttonConsultarRanking.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.RANKING));
-
-        buttonCargarBorrarPartida.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.LOGINPARTIDA));
-
-        //LISTENERS DE BARRA DE MENU (BARRA SUPERIOR)
-
-        menuitemQuit.addActionListener
-                (event -> iCtrlPresentacion.salir_del_juego());
 
         menuitemLogin.addActionListener
                 (this::actionPerformed_buttonLogin);
@@ -232,17 +228,10 @@ public class VistaMenu {
         menuItem_consultar_ranking.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.RANKING));
 
-        menuItem_crearPartida.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA));
-
-        menuItem_BorrarTablero.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.BORRARTABLERO));
-
-        menuItem_CargarBorrarPartida.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.LOGINPARTIDA));
+        buttonConsultarRanking.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.RANKING));
 
         buttonCargarBorrarPartida.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARPARTIDA));//
-
     }
 }

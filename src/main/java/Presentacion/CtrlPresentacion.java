@@ -2,19 +2,22 @@ package Presentacion;
 
 import ControladorPersistencia.CtrlPersitencia;
 import Dominio.CtrlDominio;
+import MyException.MyException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
 //agregar en funcion de las necesidades
-enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA, CARGARTABLERO, BORRARTABLERO ,LOGINPARTIDA , CARGARPARTIDA}
+enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA,CREARTABLERO,CARGARTABLERO, BORRARTABLERO ,LOGINPARTIDA , CARGARPARTIDA}
 
 
 public class CtrlPresentacion {
+
 
 
 
@@ -86,12 +89,12 @@ public class CtrlPresentacion {
         vistaLogin.hacerVisible(false,tipoJugador.JUGADOR1);
         vistaMenu.hacerVisible(false);
         vistaConfigPartida.hacerVisible(false);
-        vistaPartida.hacerVisible(false);
+        vistaPartida.hacerVisible(false, VistaTablero.tipoTablero.PARTIDA);
         vistaRanking.hacerVisible(false);
         vistaCreditos.hacerVisible(false);
-        vistaTablero.hacerVisible(false);
+        vistaTablero.hacerVisible(false, VistaTablero.tipoTablero.PARTIDA);
         vistaConfigPartida.hacerVisible(false);
-        vistaCargarTablero.hacerVisible(false);
+        vistaCargarTablero.hacerVisible(false, VistaCargarTablero.tipoTablero.PARTIDA);
         vistaCargarPartida.hacerVisible(false);
     }
 
@@ -119,20 +122,26 @@ public class CtrlPresentacion {
                 break;
             case TABLERO:
                 vistaTablero.recargar_tablero();
-                vistaTablero.hacerVisible(true);
+                vistaTablero.hacerVisible(true, VistaTablero.tipoTablero.PARTIDA);
                 break;
             case CONFIGPARTIDA:
                 vistaConfigPartida.hacerVisible(true);
                 break;
+            case CREARTABLERO:
+                crearTablero();
+                vistaTablero.hacerVisible(true, VistaTablero.tipoTablero.TABLERO);
+                break;
             case CARGARTABLERO:
-                vistaCargarTablero.hacerVisible(true);
+                //vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTablero.TABLERO);
+                vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTablero.PARTIDA);
                 break;
             case BORRARTABLERO:
                 modificar_idTablero_cargar(-2);
-                vistaCargarTablero.hacerVisible(true);
+                vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTablero.TABLERO);
                 break;
             case CARGARPARTIDA:
-                vistaCargarPartida.hacerVisible(true);
+                vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTablero.PARTIDA);
+                //vistaCargarPartida.hacerVisible(true);
         }
     }
 
@@ -163,7 +172,17 @@ public class CtrlPresentacion {
     public ArrayList<String> presentacion_buscar_partidas(int id , String nick ) {
         return ctrlDominio.listar_partidas_disponibles(id , nick);
     }
+    public ArrayList<String> consultar_info_partida_ID(int id) {
+        return ctrlDominio.consultar_info_partida_ID(id);
+    }
 
+    public int[][] presentacion_cargar_tablero_partida(int idPartida) {
+        return ctrlDominio.dominio_cargar_tablero_partida(idPartida);
+    }
+
+    public int consultar_id_j1() {return ctrlDominio.consultar_id_j1();}
+
+    public String consultar_nickname_j1() {return ctrlDominio.consultar_nickname_j1();}
 
     /**
      * metodo Get info usuario activo (desde Capa Presentacion)
@@ -171,6 +190,13 @@ public class CtrlPresentacion {
      * */
     public String presentacion_get_info_usuario_activo() {return ctrlDominio.get_info_usuario_activo();}
 
+
+    public int presentacion_get_id_usuario(){
+        return ctrlDominio.get_id_usuario();
+    }
+    public String presentacion_get_nickname_usuario(){
+        return ctrlDominio.get_nickname_usuario();
+    }
     public void presentacion_crearPartida(ArrayList<Integer> a_int) {
         ctrlDominio.domino_crearPartida(a_int);
     }
@@ -248,6 +274,14 @@ public class CtrlPresentacion {
 
     public ArrayList<String> obtener_lista_tableros_disponibles() {return ctrlDominio.listar_tableros_disponibles();}
 
+    public void crearTablero() {
+        ctrlDominio.dominio_crear_tablero();
+    }
+
+    public void guardarTablero() {
+        ctrlDominio.dominio_guardar_tablero();
+    }
+
     public int[][] cargarTablero(int id) {
         int [][]tab = new int[8][8];
         try{
@@ -259,11 +293,34 @@ public class CtrlPresentacion {
         return tab;
     }
 
+    public int[][] cargarPartida(int id) {
+        int [][]tab1 = new int[8][8];
+        try{
+            tab1 = ctrlDominio.dominio_cargar_partida(id);
+        }
+        catch (Exception ignored) {
+
+        }
+        return tab1;
+    }
+
+    public ArrayList<String> getInfoPartida(int id){
+        ArrayList<String> info = new ArrayList<>();
+        try {
+            info= ctrlDominio.dominio_info_partida(id);
+        } catch (Exception ignored) {
+
+        }
+        return info;
+    }
+
     public void modificar_idTablero_cargar(int id) {
         ctrlDominio.modificar_idTablero_cargar(id);
     }
 
     public int consultar_idTablero_cargar() {return ctrlDominio.consultar_idTablero_cargar();}
+
+    public void presentacion_guardar_tablero() { ctrlDominio.dominio_guardar_tablero();}
 
     public boolean borrar_tablero(int id) {return ctrlDominio.dominio_borrar_tablero(id);}
 
@@ -282,12 +339,14 @@ public class CtrlPresentacion {
         return ctrlDominio.getCasillasDisponibles();
     }*/
 
+    public void presentacion_guardar_partida() { ctrlDominio.dominio_guardar_partida();}
+
     public void presentacionRondaPartida(int x, int y) {
         ctrlDominio.dominioRondaPartida(x, y);
     }
 
-    public int[][] presentacionGetTableroInt() {
-        return ctrlDominio.dominioGetTableroInt();
-    }
+    /*public void presentacionActualizarTablero() {
+        ctrlDominio.dominioActualizarTablero();
+    }*/
 
 }
