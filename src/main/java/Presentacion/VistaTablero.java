@@ -102,41 +102,6 @@ public class VistaTablero {
         //if (b) recargar_tablero();
     }
 
-    /**
-     * Metodo cambiar imagen casilla
-     * @param x posicion x dentro del tablero
-     * @param y posicion y dentro del tablero
-     * @param tipo (tipo de imagen a cargar [0:vacia, 1:disponible, 2:Negra, 3:Blanca]
-     * */
-    private void cambiar_imagen_casilla(int x, int y, int tipo) {
-        String s = "";
-        switch (tipo){
-            case 0:
-                s = imagen_vacia;
-                break;
-            case 1:
-                s = imagen_disponible;
-                break;
-            case 2:
-                s = imagen_negra;
-                break;
-            case 3:
-                s = imagen_blanca;
-                break;
-        }
-        botonesMatriz[x][y].setIcon(new ImageIcon(s));
-    }
-
-
-    public void recargar_tablero() {
-        int tab[][] = iCtrlPresentacion.presentacionObtenerTablero();
-        for (int i = 0; i < 8; ++i) {
-            for (int j = 0; j < 8; ++j) {
-                cambiar_imagen_casilla(i,j,tab[i][j]);
-            }
-        }
-    }
-
     private void inicializar_Componentes() {
         JPanel tablero = new JPanel(new GridLayout(0, 8));
         tablero.setBorder((new LineBorder(Color.BLACK)));
@@ -164,10 +129,52 @@ public class VistaTablero {
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.add(tablero,BorderLayout.CENTER);
         panelPrincipal.add(panelBotones,BorderLayout.EAST);
-
         recargar_tablero();
     }
 
+
+
+    /**
+     * Metodo cambiar imagen casilla
+     * @param x posicion x dentro del tablero
+     * @param y posicion y dentro del tablero
+     * @param tipo (tipo de imagen a cargar [0:vacia, 1:disponible, 2:Negra, 3:Blanca]
+     * */
+    private void cambiar_imagen_casilla(int x, int y, int tipo) {
+        String s = "";
+        switch (tipo){
+            case 0:
+                s = imagen_vacia;
+                break;
+            case 1:
+                s = imagen_disponible;
+                break;
+            case 2:
+                s = imagen_negra;
+                break;
+            case 3:
+                s = imagen_blanca;
+                break;
+        }
+        botonesMatriz[x][y].setIcon(new ImageIcon(s));
+    }
+
+
+    /**
+     * Metodo recargar tablero (actualiza la pantalla con la informacion del tablero actualizado)*/
+    public void recargar_tablero() {
+        int tab[][] = iCtrlPresentacion.presentacionObtenerTablero();
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                cambiar_imagen_casilla(i,j,tab[i][j]);
+            }
+        }
+    }
+
+    private void listener_guardar_partida() {
+        iCtrlPresentacion.presentacion_guardar_partida();
+        iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU);
+    }
 
     public void actionPerformed_botones(ActionEvent event) {
         int x = 0;
@@ -189,7 +196,8 @@ public class VistaTablero {
                 }
             }
         }
-        int[][] tablero = iCtrlPresentacion.presentacionGetTableroInt();
+        recargar_tablero();
+        /*int[][] tablero = iCtrlPresentacion.presentacionGetTableroInt();
         int i = 0;
         for (JButton[] jButtons : botonesMatriz) {
             i+=1;
@@ -213,7 +221,7 @@ public class VistaTablero {
                     jButton.setIcon(new ImageIcon(s));
                 }
             }
-        }
+        }*/
     }
 
     public void asignar_listenersComponentes() {
@@ -227,9 +235,14 @@ public class VistaTablero {
 
 
         //LISTENERS DE BOTONES Y BARRA DE MENU SUPERIOS
+        bottonGuardarPartida.addActionListener
+                (event -> listener_guardar_partida());
 
         bottonFinalizarPartida.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+
+        menuitemGuardarPartida.addActionListener
+                (event -> listener_guardar_partida());
 
         menuitemFinalizarPartida.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));

@@ -282,6 +282,8 @@ public class CtrlPresentacion {
         return ctrlDominio.getCasillasDisponibles();
     }*/
 
+    public void presentacion_guardar_partida() { ctrlDominio.dominio_guardar_partida();}
+
     public void presentacionRondaPartida(int x, int y) {
         ctrlDominio.dominioRondaPartida(x, y);
     }

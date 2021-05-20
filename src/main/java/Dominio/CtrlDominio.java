@@ -189,10 +189,6 @@ public class CtrlDominio {
     public int consultar_tam_ranking() {return ranking.consultar_tam_ranking();}
 
 
-    public void crear_partida(ArrayList<String> as) {
-        //partida_activa = new Partida();
-    }
-
     /**
      * Metodo listar partidas disponibles
      * @param id del jugador a mostrar las partidas disponibles
@@ -211,7 +207,6 @@ public class CtrlDominio {
     }
 
 
-    //SERGIO: NO LA HE TESTEADO
     public void domino_crearPartida(ArrayList<Integer> a_int) {
         try {
             int reglas[] = new int[3];
@@ -243,9 +238,13 @@ public class CtrlDominio {
     }
 
 
-    public void dominio_guardar_partida() throws IOException {
-        ArrayList<String> as = partida_activa.toArrayList();
-        cp.ctrl_guardar_partida(as);
+    public void dominio_guardar_partida() {
+        try {
+            ArrayList<String> as = partida_activa.toArrayList();
+            cp.ctrl_guardar_partida(as);
+        }
+        catch (Exception ignored) {}
+
     }
 
 
@@ -337,9 +336,7 @@ public class CtrlDominio {
                 cp.ctrl_exportar_ranking(ranking.toArrayList(), "ranking.txt");
             }
         }
-        catch (Exception e) {
-            System.out.println("Fallo al actualizar el ranking");
-        }
+        catch (Exception ignored) {}
     }
 
 
@@ -426,7 +423,7 @@ public class CtrlDominio {
             Tablero t = new Tablero();
             partida_activa = new Partida(idPartida,modo,r,turnoPartida,id1,nick1,id2,nick2,t);
         }
-        catch (Exception e) {
+        catch (Exception ignored) {
             //System.out.println(e);
         }
     }
