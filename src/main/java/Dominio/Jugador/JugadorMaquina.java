@@ -70,7 +70,8 @@ public class JugadorMaquina extends Jugador {
 
         if(depth == 0 || t.finalizada())return t;
 
-        Tablero mejorHijo = t;
+        Tablero mejorHijo = new Tablero(t.getTablero());
+        mejorHijo.setDisponiblesAnterior(t.getDisponiblesAnterior());
         Set<Tablero> estados_hijos = this.genera_estados(t, turno);
         int evaluacion;
 
@@ -81,14 +82,16 @@ public class JugadorMaquina extends Jugador {
                 int maxeval = -1000;
                 if(maxeval < evaluacion){
                     maxeval = evaluacion;
-                    mejorHijo = aux;
+                    mejorHijo = new Tablero(aux.getTablero());
+                    mejorHijo.setDisponiblesAnterior(aux.getDisponiblesAnterior());
                 }
             }
             else {
                 int mineval = 1000;
                 if(mineval > evaluacion){
                     mineval = evaluacion;
-                    mejorHijo = aux;
+                    mejorHijo = new Tablero(aux.getTablero());
+                    mejorHijo.setDisponiblesAnterior(aux.getDisponiblesAnterior());
                 }
             }
 
@@ -112,7 +115,9 @@ public class JugadorMaquina extends Jugador {
             return t;
         }
 
-        Tablero mejorHijo = t;
+        Tablero mejorHijo = new Tablero(t.getTablero());
+        mejorHijo.setDisponiblesAnterior(t.getDisponiblesAnterior());
+
         Set<Tablero> estados_hijos = this.genera_estados(t, turno);
         int evaluacion;
 
@@ -123,14 +128,16 @@ public class JugadorMaquina extends Jugador {
                 int maxeval = -1000;
                 if(maxeval < evaluacion){
                     maxeval = evaluacion;
-                    mejorHijo = aux;
+                    mejorHijo = new Tablero(aux.getTablero());
+                    mejorHijo.setDisponiblesAnterior(aux.getDisponiblesAnterior());
                 }
             }
             else{
                 int mineval = 1000;
                 if(mineval > evaluacion){
                     mineval = evaluacion;
-                    mejorHijo = aux;
+                    mejorHijo = new Tablero(aux.getTablero());
+                    mejorHijo.setDisponiblesAnterior(aux.getDisponiblesAnterior());
                 }
             }
 
@@ -182,7 +189,8 @@ public class JugadorMaquina extends Jugador {
 
         for(Position pos : disponibles){
 
-            aux = t;
+            aux = new Tablero(t.getTablero());
+            aux.setDisponiblesAnterior(t.getDisponiblesAnterior());
 
             if(turno %2 == 0) aux.setCasilla_tipo(pos.getX(), pos.getY(), 2);
             else aux.setCasilla_tipo(pos.getX(), pos.getY(), 3);

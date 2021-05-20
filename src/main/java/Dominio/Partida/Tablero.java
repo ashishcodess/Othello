@@ -815,7 +815,7 @@ public class Tablero {
 
     public boolean getDisponiblesAnterior(){return this.disponibles_anterior;}
 
-    public void SetDisponiblesAnterior(boolean b){
+    public void setDisponiblesAnterior(boolean b){
         this.disponibles_anterior = b;
     }
 
