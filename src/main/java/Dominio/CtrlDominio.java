@@ -220,11 +220,11 @@ public class CtrlDominio {
             int mapa[][] = cp.ctrl_cargar_tablero(idTablero_cargar);
             Tablero t = new Tablero(mapa);
             if (a_int.size() == 4) { //Persona vs Persona
-                partida_activa = new Partida(idPartida,modo,reglas,turno,code,nickname,id_2,nick_2,t);
+                partida_activa = new Partida(idPartida,modo,reglas,turno,id_1,nickname,id_2,nick_2,t);
             }
             else if (a_int.size() == 5) { // Persona vs IA
                 id_aux1 = a_int.get(4);
-                partida_activa = new Partida(idPartida,modo,reglas,turno,code,nickname,id_aux1,"",t);
+                partida_activa = new Partida(idPartida,modo,reglas,turno,id_1,nickname,id_aux1,"",t);
             }
             else if (a_int.size() == 6) { // IA vs IA
                 id_aux1 = a_int.get(4);
