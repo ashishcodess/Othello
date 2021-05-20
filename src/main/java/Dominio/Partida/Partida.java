@@ -340,6 +340,9 @@ public class Partida {
 
 
 
+    /*SERGIO: LO VEO BIEN, PERO TENDRIA QUE DEVOLVER UN ENTERO PARA SABER SI HA FINALIZADO LA PARTIDA O NO
+    * PARA PODER ACTUALIZAR EL RANKING
+    * */
 
     /**
      * Operacion que gestiona toda una ronda de la Partida en la capa de Presentacion
