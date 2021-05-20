@@ -92,7 +92,7 @@ public class CtrlPresentacion {
         vistaCreditos.hacerVisible(false);
         vistaTablero.hacerVisible(false, VistaTablero.tipoTablero.PARTIDA);
         vistaConfigPartida.hacerVisible(false);
-        vistaCargarTablero.hacerVisible(false);
+        vistaCargarTablero.hacerVisible(false, VistaCargarTablero.tipoTablero.PARTIDA);
         vistaCargarPartida.hacerVisible(false);
     }
 
@@ -130,14 +130,15 @@ public class CtrlPresentacion {
                 vistaTablero.hacerVisible(true, VistaTablero.tipoTablero.TABLERO);
                 break;
             case CARGARTABLERO:
-                vistaCargarTablero.hacerVisible(true);
+                vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTablero.TABLERO);
                 break;
             case BORRARTABLERO:
                 modificar_idTablero_cargar(-2);
-                vistaCargarTablero.hacerVisible(true);
+                vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTablero.TABLERO);
                 break;
             case CARGARPARTIDA:
-                vistaCargarPartida.hacerVisible(true);
+                vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTablero.PARTIDA);
+                //vistaCargarPartida.hacerVisible(true);
         }
     }
 
