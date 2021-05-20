@@ -138,6 +138,7 @@ public class Tablero {
         return tablero;
     }
 
+
     /**
      * Operacion que deveulve la casilla
      * @param x  la fila del tablero

@@ -431,4 +431,11 @@ public class CtrlDominio {
         }
     }
 
+    public void dominioRondaPartida(int x, int y) {
+        partida_activa.rondaPartidaPvP(x, y);
+    }
+
+    public int[][] dominioGetTableroInt() {
+        return partida_activa.getTableroPartida().toMatrix();
+    }
 }
