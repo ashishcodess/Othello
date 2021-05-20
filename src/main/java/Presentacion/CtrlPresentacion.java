@@ -18,6 +18,7 @@ public class CtrlPresentacion {
 
 
 
+
     public enum tipoJugador {JUGADOR1,JUGADOR2}
 
     private final CtrlDominio ctrlDominio;
@@ -288,6 +289,9 @@ public class CtrlPresentacion {
 
     public int[][] presentacionGetTableroInt() {
         return ctrlDominio.dominioGetTableroInt();
+    }
+    public void presentacionActualizarTablero() {
+        ctrlDominio.dominioActualizarTablero();
     }
 
 }

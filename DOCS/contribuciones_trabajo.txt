@@ -12,6 +12,10 @@ Sergi Bosquet:
 	- Partida
 	- DriverPartida
 
+	- CtrlPresentacion
+	    - VistaConfigPartida
+	    - VistaTablero
+
 Ashish Kshetri:
 	- Tablero
 	- Casilla

@@ -441,7 +441,7 @@ public class CtrlDominio {
         return partida_activa.getTableroPartida().toMatrix();
     }
 
-    public static boolean dominioPartidaFinalizada() {
+    /*public static boolean dominioPartidaFinalizada() {
         return partida_activa.getTableroPartida().finalizada();
-    }
+    }*/
 }

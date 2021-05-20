@@ -215,15 +215,11 @@ public class VistaTablero {
                 }
             }
         }
-        if (presentacionPartidaFinalizada()){
-            JFrame frameResultado = new JFrame("Resultado");
-            frameResultado.setVisible(true);
-        }
     }
 
-    private boolean presentacionPartidaFinalizada() {
-        return CtrlDominio.dominioPartidaFinalizada();
-    }
+    /*public boolean presentacionPartidaFinalizada() {
+        return CtrlPresentacion.presentacionPartidaFinalizada();
+    }*/
 
     public void asignar_listenersComponentes() {
         //TABLERO
