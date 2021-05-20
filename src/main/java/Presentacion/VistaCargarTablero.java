@@ -19,6 +19,7 @@ public class VistaCargarTablero {
     private String imagen_negra = "";
 
     private int id_tablero_seleccionado = -1;
+    private int id_partida_seleccionado = -1;
 
     private final CtrlPresentacion iCtrlPresentacion;
     private final JPanel panelPrincipal = new JPanel();
@@ -30,7 +31,7 @@ public class VistaCargarTablero {
     private final JButton buttonBorrar = new JButton("Borrar Tablero");
     private final JButton buttonLimpiar = new JButton("Limpiar");
     private final JButton buttonMenu = new JButton("Menu Principal");
-    private final JComboBox<String> selector_tablero = new JComboBox<>();
+    private final JComboBox<String> selector = new JComboBox<>();
 
     //Info de partida
     private final JLabel infoJ1 = new JLabel("Info J1: ");
@@ -50,6 +51,7 @@ public class VistaCargarTablero {
      * */
     public VistaCargarTablero(CtrlPresentacion pCtrlPresentacion)  {
         iCtrlPresentacion = pCtrlPresentacion;
+        tipoActual = tipoTablero.TABLERO;
         frameVista.setLayout(new BorderLayout()); // 5 zonas (North, South, East, West, Center)
         inicializar_frameVista();
         obtener_dir_imagenes();
@@ -72,7 +74,7 @@ public class VistaCargarTablero {
             //FALTA COMBOBOX PARA PARTIDAS + DIFERENCIAR LISTENERS
             buttonCargar.setEnabled(iCtrlPresentacion.consultar_idTablero_cargar() == -1);
             limpiar_vista_previa_tablero();
-            recargar_comboBox_tableros();
+            recargar_comboBox();
         }
     }
 
@@ -148,12 +150,12 @@ public class VistaCargarTablero {
         JPanel panelAux = new JPanel();
         panelAux.setLayout(new BorderLayout());
         panelBotones.setLayout(new FlowLayout());
-        selector_tablero.insertItemAt("", 0);
-        recargar_comboBox_tableros();
+        selector.insertItemAt("", 0);
+        recargar_comboBox();
 
         JPanel panelAux2 = new JPanel();
         panelAux2.setLayout(new FlowLayout());
-        panelAux2.add(selector_tablero);
+        panelAux2.add(selector);
         panelAux2.add(buttonLimpiar);
         panelAux2.add(buttonMenu);
 
@@ -184,17 +186,38 @@ public class VistaCargarTablero {
     /**
      * Metodo recargar combobox tablero: actualiza las opciones disponibles del ComboBox
      * */
-    private void recargar_comboBox_tableros() {
-        int size = selector_tablero.getItemCount();
-        for(int i=size-1; i >= 1;i--){
-            selector_tablero.removeItemAt(i);
+    private void recargar_comboBox() {
+        int size;
+        switch (tipoActual) {
+            case TABLERO:
+                size = selector.getItemCount();
+                for(int i=size-1; i >= 1;i--){
+                    selector.removeItemAt(i);
+                }
+                ArrayList<String> tableros_disponibles = iCtrlPresentacion.obtener_lista_tableros_disponibles();
+                for (String tableros_disponible : tableros_disponibles) {
+                    selector.addItem(tableros_disponible);
+                }
+                selector.setSelectedIndex(0);
+                id_tablero_seleccionado = -1;
+                break;
+
+            case PARTIDA: //AUN FALLA
+                id_partida_seleccionado = -1;
+                size = selector.getItemCount();
+                for(int i=size-1; i >= 1;i--){
+                    selector.removeItemAt(i);
+                }
+                int idAux = iCtrlPresentacion.consultar_id_j1();
+                String nickAux = iCtrlPresentacion.consultar_nickname_j1();
+                ArrayList<String> partidas_guardadas = iCtrlPresentacion.presentacion_buscar_partidas(idAux,nickAux);
+                for (String p : partidas_guardadas) {
+                    selector.addItem(p);
+                }
+                selector.setSelectedIndex(0);
+                break;
         }
-        ArrayList<String> tableros_disponibles = iCtrlPresentacion.obtener_lista_tableros_disponibles();
-        for (String tableros_disponible : tableros_disponibles) {
-            selector_tablero.addItem(tableros_disponible);
-        }
-        selector_tablero.setSelectedIndex(0);
-        id_tablero_seleccionado = -1;
+
     }
 
     /**
@@ -238,7 +261,7 @@ public class VistaCargarTablero {
      * Metodo Obtener info del elemento seleccionado por el selector_tablero
      * */
     private void obtener_info_selector_tablero() {
-        String s = Objects.requireNonNull(selector_tablero.getSelectedItem()).toString();
+        String s = Objects.requireNonNull(selector.getSelectedItem()).toString();
         id_tablero_seleccionado = -1;
         try {
             if (!s.equals("")) id_tablero_seleccionado = Integer.parseInt(s);
@@ -280,8 +303,8 @@ public class VistaCargarTablero {
                 if (id_tablero_seleccionado != -1) {
                     boolean b = iCtrlPresentacion.borrar_tablero(id_tablero_seleccionado);
                     if (b) {
-                        selector_tablero.removeItem(selector_tablero.getItemAt(id_tablero_seleccionado));
-                        recargar_comboBox_tableros();
+                        selector.removeItem(selector.getItemAt(id_tablero_seleccionado));
+                        recargar_comboBox();
                         limpiar_vista_previa_tablero();
                     }
                 }
@@ -302,7 +325,7 @@ public class VistaCargarTablero {
             case TABLERO:
                 obtener_info_selector_tablero();
                 iCtrlPresentacion.modificar_idTablero_cargar(id_tablero_seleccionado);
-                int[][] mapa_tablero = iCtrlPresentacion.cargarTablero(id_tablero_seleccionado);
+                //int[][] mapa_tablero = iCtrlPresentacion.cargarTablero(id_tablero_seleccionado);
                 iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA);
                 break;
             case PARTIDA:
@@ -317,7 +340,7 @@ public class VistaCargarTablero {
      * Metodo para asignar los listeners a cada componente
      * */
     public void asignar_listenersComponentes() {
-        selector_tablero.addActionListener
+        selector.addActionListener
                 (event -> listener_selector_tablero());
 
         buttonLimpiar.addActionListener

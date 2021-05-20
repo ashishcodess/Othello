@@ -195,6 +195,10 @@ public class CtrlDominio {
     public int consultar_tam_ranking() {return ranking.consultar_tam_ranking();}
 
 
+    public int consultar_id_j1() {return id_1;}
+
+    public String consultar_nickname_j1() {return nickname;}
+
     /**
      * Metodo listar partidas disponibles
      * @param id del jugador a mostrar las partidas disponibles

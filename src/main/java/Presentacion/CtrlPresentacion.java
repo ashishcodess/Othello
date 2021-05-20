@@ -172,6 +172,9 @@ public class CtrlPresentacion {
         return ctrlDominio.listar_partidas_disponibles(id , nick);
     }
 
+    public int consultar_id_j1() {return ctrlDominio.consultar_id_j1();}
+
+    public String consultar_nickname_j1() {return ctrlDominio.consultar_nickname_j1();}
 
     /**
      * metodo Get info usuario activo (desde Capa Presentacion)
