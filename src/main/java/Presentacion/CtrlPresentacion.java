@@ -289,9 +289,6 @@ public class CtrlPresentacion {
         ctrlDominio.dominioRondaPartida(x, y);
     }
 
-    public int[][] presentacionGetTableroInt() {
-        return ctrlDominio.dominioGetTableroInt();
-    }
     /*public void presentacionActualizarTablero() {
         ctrlDominio.dominioActualizarTablero();
     }*/

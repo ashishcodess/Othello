@@ -134,7 +134,6 @@ public class VistaTablero {
     }
 
 
-
     /**
      * Metodo cambiar imagen casilla
      * @param x posicion x dentro del tablero
@@ -186,9 +185,6 @@ public class VistaTablero {
                 y+=1;
                 //AQUI IRIA EL LISTENER PARA LOS BOTONES (CON TODA LA LOGICA DEL JUEGO Y ESO)
                 if (event.getSource() == jButton) {
-
-                    /*String s = getImagen();
-                    jButton.setIcon(new ImageIcon(s));*/
                     x = x-1;
                     y = y-1;
                     System.out.println("posicion "+ x + ", " + y);
@@ -198,31 +194,6 @@ public class VistaTablero {
             }
         }
         recargar_tablero();
-        /*int[][] tablero = iCtrlPresentacion.presentacionGetTableroInt();
-        int i = 0;
-        for (JButton[] jButtons : botonesMatriz) {
-            i+=1;
-            int j = 0;
-            for (JButton jButton : jButtons) {
-                j += 1;
-                if (tablero[i-1][j-1] == 0) {
-                    String s = imagen_vacia;
-                    jButton.setIcon(new ImageIcon(s));
-                }
-                else if (tablero[i-1][j-1] == 1) {
-                    String s = imagen_disponible;
-                    jButton.setIcon(new ImageIcon(s));
-                }
-                else if (tablero[i-1][j-1] == 2) {
-                    String s = imagen_negra;
-                    jButton.setIcon(new ImageIcon(s));
-                }
-                else if (tablero[i-1][j-1] == 3) {
-                    String s = imagen_blanca;
-                    jButton.setIcon(new ImageIcon(s));
-                }
-            }
-        }*/
     }
 
     /*public boolean presentacionPartidaFinalizada() {

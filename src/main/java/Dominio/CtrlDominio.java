@@ -434,10 +434,6 @@ public class CtrlDominio {
         partida_activa.rondaPartidaPvP(x, y);
     }
 
-    public int[][] dominioGetTableroInt() {
-        return partida_activa.getTableroPartida().toMatrix();
-    }
-
     /*public static boolean dominioPartidaFinalizada() {
         return partida_activa.getTableroPartida().finalizada();
     }*/
