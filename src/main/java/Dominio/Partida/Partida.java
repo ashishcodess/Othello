@@ -66,6 +66,8 @@ public class Partida {
         this.tablero = new Tablero();
         this.finalizada = 0;
         this.disponibles= new HashSet<Position>();
+
+        reglasCasillasDisponibles();
     }
 
     /**
@@ -107,6 +109,8 @@ public class Partida {
         this.tablero = t;
         this.finalizada = 0;
         this.disponibles= new HashSet<Position>();
+
+        reglasCasillasDisponibles();
     }
 
     /**
