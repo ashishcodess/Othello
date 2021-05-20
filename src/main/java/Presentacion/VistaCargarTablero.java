@@ -270,6 +270,16 @@ public class VistaCargarTablero {
         catch (Exception ignored) {}
     }
 
+    private void obtener_info_selector_partida() {
+        String s = Objects.requireNonNull(selector.getSelectedItem()).toString();
+        id_partida_seleccionado = -1;
+        try {
+            if (!s.equals("")) id_partida_seleccionado = Integer.parseInt(s);
+            else limpiar_vista_previa_tablero();
+        }
+        catch (Exception ignored) {}
+    }
+
 
     /**
      * Metodo listener del elemento comboBox "selector_tablero"
@@ -288,6 +298,11 @@ public class VistaCargarTablero {
                 break;
 
             case PARTIDA:
+                obtener_info_selector_partida();
+                //Con toda la info + tablero
+                ArrayList<String> as = iCtrlPresentacion.consultar_info_partida_ID(id_partida_seleccionado);
+                int[][]tabl = iCtrlPresentacion.presentacion_cargar_tablero_partida(id_partida_seleccionado);
+                //tenemos info de toda la partida, ahora hace falta mostrarla
                 break;
         }
 

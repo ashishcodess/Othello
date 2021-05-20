@@ -216,6 +216,24 @@ public class CtrlDominio {
 
     }
 
+    public ArrayList<String> consultar_info_partida_ID(int id) {
+        ArrayList<String> as = new ArrayList<>();
+        try {
+            as = cp.consultar_info_partida_id(id);
+        }
+        catch (Exception ignored) {}
+        return as;
+    }
+
+    public int[][] dominio_cargar_tablero_partida(int idPartida) {
+        int tab [][] = new int[8][8];
+        try {
+            tab = cp.ctrl_cargar_tablero_partida(idPartida);
+        } catch (Exception ignored) {
+
+        }
+        return tab;
+    }
 
     public void domino_crearPartida(ArrayList<Integer> a_int) {
         try {
@@ -255,7 +273,6 @@ public class CtrlDominio {
             cp.ctrl_guardar_partida(as);
         }
         catch (Exception ignored) {}
-
     }
 
 

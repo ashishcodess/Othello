@@ -132,7 +132,8 @@ public class CtrlPresentacion {
                 vistaTablero.hacerVisible(true, VistaTablero.tipoTablero.TABLERO);
                 break;
             case CARGARTABLERO:
-                vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTablero.TABLERO);
+                //vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTablero.TABLERO);
+                vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTablero.PARTIDA);
                 break;
             case BORRARTABLERO:
                 modificar_idTablero_cargar(-2);
@@ -170,6 +171,13 @@ public class CtrlPresentacion {
      * */
     public ArrayList<String> presentacion_buscar_partidas(int id , String nick ) {
         return ctrlDominio.listar_partidas_disponibles(id , nick);
+    }
+    public ArrayList<String> consultar_info_partida_ID(int id) {
+        return ctrlDominio.consultar_info_partida_ID(id);
+    }
+
+    public int[][] presentacion_cargar_tablero_partida(int idPartida) {
+        return ctrlDominio.dominio_cargar_tablero_partida(idPartida);
     }
 
     public int consultar_id_j1() {return ctrlDominio.consultar_id_j1();}

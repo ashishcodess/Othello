@@ -258,6 +258,13 @@ public class CtrlPersitencia {
 
        return s;
     }
+
+
+    public ArrayList<String> consultar_info_partida_id(int idPartida) throws IOException {
+        String pathF = dir_partidas + idPartida + ".txt";
+        ArrayList<String> as = io.leerFichero(pathF);
+        return as;
+    }
     /**
      * Operacion ctrl_guardar_partida
      * @param as es ArrayList con los parametros necesarios para guardar la partida (utilizando funcion toArrayList() de Partida)
