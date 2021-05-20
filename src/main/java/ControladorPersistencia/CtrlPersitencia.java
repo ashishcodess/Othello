@@ -279,6 +279,10 @@ public class CtrlPersitencia {
 
         //borrar fichero de partida
         b = io.borrarFichero(pathF);
+        //recalcular id maximo
+        this.idMax_partida = io.calcularID_Ficheros(dir_partidas,tipoFichero.PARTIDA);
+
+
         return b;
     }
 
@@ -318,11 +322,16 @@ public class CtrlPersitencia {
      * @return devuelve TRUE en caso que se haya borrado con exito, caso contrario devuelve excepcion
      */
     public boolean ctrl_borrar_tablero(int idTablero) {
+        boolean b = false;
         if (idTablero > 0) {
             String pathF = dir_tablero + idTablero + ".txt";
-            return io.borrarFichero(pathF);
+
+            b = io.borrarFichero(pathF);
+
+            //recalcular id maximo
+            this.idMax_tablero = io.calcularID_Ficheros(dir_tablero,tipoFichero.TABLERO);
         }
-        else return false;
+        return b;
     }
 
     /**
@@ -566,7 +575,10 @@ public class CtrlPersitencia {
      */
     public boolean ctrl_borrar_usuario(int idJugador,String nicknameJugador) {
         String pathF = dir_usuarios + idJugador + "_" + nicknameJugador;
-        return io.borrarFichero(pathF);
+        boolean b = io.borrarFichero(pathF);
+        //recalcular id maximo
+        this.idMax_usuario = io.calcularID_Ficheros(dir_usuarios,tipoFichero.USUARIO);
+        return b;
     }
 
     /**
