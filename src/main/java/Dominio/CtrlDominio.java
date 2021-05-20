@@ -381,7 +381,14 @@ public class CtrlDominio {
 
     //para imprimir tablero hacia la capa de presentacion
     public int[][] getTableroPartida() {
-        return partida_activa.getTableroPartida().toMatrix();
+        if (partida_activa != null) return partida_activa.getTableroPartida().toMatrix();
+        else {
+            int tab[][] = new int[8][8];
+            for (int i = 0; i < 8; ++i) {
+                for (int j = 0; j < 8; ++j) tab[i][j] = 0;
+            }
+            return tab;
+        }
     }
 
     public Set<Position> getCasillasDisponibles(){

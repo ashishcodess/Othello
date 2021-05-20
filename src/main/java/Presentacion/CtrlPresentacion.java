@@ -116,6 +116,7 @@ public class CtrlPresentacion {
                 vistaCreditos.hacerVisible(true);
                 break;
             case TABLERO:
+                vistaTablero.recargar_tablero();
                 vistaTablero.hacerVisible(true);
                 break;
             case CONFIGPARTIDA:

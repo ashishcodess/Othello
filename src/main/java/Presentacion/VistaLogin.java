@@ -41,7 +41,7 @@ public class VistaLogin {
     private final JMenuBar menubarVista = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
     private final JMenuItem menuitemLogin = new JMenuItem("Login Usuario");
-    private final JMenuItem menuitemQuit = new JMenuItem("Salir");
+    private final JMenuItem menuitemQuit = new JMenuItem("Salir del Juego");
 
 
     /**
