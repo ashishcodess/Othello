@@ -142,7 +142,7 @@ public class VistaMenu {
         buttonCrearTablero.setToolTipText("Entra en el menu de config. de una Tablero");
         panelMenuTablero.add(buttonBorrarTablero);
         buttonBorrarTablero.setToolTipText("Entra en el menu para Borrar un tablero guardado en el sistema");
-        panelMenuTablero.setBorder((new LineBorder(Color.BLACK)));
+        //panelMenuTablero.setBorder((new LineBorder(Color.BLACK)));
 
         //PANEL MENU RANKING
         panelMenuRanking.setLayout(new BoxLayout(panelMenuRanking,BoxLayout.PAGE_AXIS));

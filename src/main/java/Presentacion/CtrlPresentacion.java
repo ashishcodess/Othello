@@ -290,8 +290,8 @@ public class CtrlPresentacion {
     public int[][] presentacionGetTableroInt() {
         return ctrlDominio.dominioGetTableroInt();
     }
-    public void presentacionActualizarTablero() {
+    /*public void presentacionActualizarTablero() {
         ctrlDominio.dominioActualizarTablero();
-    }
+    }*/
 
 }
