@@ -241,5 +241,8 @@ public class VistaMenu {
         menuItem_CargarBorrarPartida.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.LOGINPARTIDA));
 
+        buttonCargarBorrarPartida.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARPARTIDA));//
+
     }
 }

@@ -5,6 +5,7 @@ import Dominio.Partida.Tablero;
 import MyException.MyException;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class DriverTablero {
@@ -228,7 +229,8 @@ public class DriverTablero {
             System.out.println(sbuff);
         }
         System.out.println();
-
+        int x = T.getNumCasillasBlancas();
+        System.out.println(x);
         T.actualizarTablero(1 ,1 , turno);
         System.out.println("Imprimir tablero actualizado");
         for (int i = 0; i < 8; ++i) {
@@ -239,6 +241,15 @@ public class DriverTablero {
             System.out.println(sbuff);
         }
         System.out.println();
+
+          }
+      public static void print_blancas(){
+        Tablero T = new Tablero();
+
+        System.out.println();
+        int x = T.getNumCasillasBlancas();
+        System.out.println(x);
+
     }
     /**
      * funcion main (para poder realizar las pruebas)
@@ -253,6 +264,7 @@ public class DriverTablero {
             System.out.println("1 - Print tablero");
             System.out.println("2 - Print set disponibles ");
             System.out.println("3 - Print modificadas ");
+            System.out.println("4 - Print blancas ");
             System.out.println();
             System.out.print("Introducir opcion:");
             int i_entrada = Integer.parseInt(scan.next());
@@ -270,6 +282,8 @@ public class DriverTablero {
                 case 3:
                     print_modificadas();
                     break;
+                case 4:
+                    print_blancas();
                 default:
                     System.out.println("Introducir una opcion correcta");
             }

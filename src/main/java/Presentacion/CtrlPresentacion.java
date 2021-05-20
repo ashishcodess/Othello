@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 //agregar en funcion de las necesidades
-enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA, CARGARTABLERO, BORRARTABLERO ,LOGINPARTIDA}
+enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA, CARGARTABLERO, BORRARTABLERO ,LOGINPARTIDA , CARGARPARTIDA}
 
 
 public class CtrlPresentacion {
@@ -30,8 +30,8 @@ public class CtrlPresentacion {
     private final VistaConfigPartida vistaConfigPartida;
     private final VistaPartida vistaPartida;
     private final VistaCargarTablero vistaCargarTablero;
-    private final VistaLoginPartida vistaLoginPartida;
 
+    private final VistaCargarPartida vistaCargarPartida;
     /**
      * Creadora por defecto de CtrlPresentacion
      * */
@@ -45,7 +45,7 @@ public class CtrlPresentacion {
         vistaCreditos = new VistaCreditos(this);
         vistaTablero  = new VistaTablero(this);
         vistaCargarTablero = new VistaCargarTablero(this);
-        vistaLoginPartida = new VistaLoginPartida(this);
+        vistaCargarPartida = new VistaCargarPartida(this);
     }
 
     /**
@@ -92,7 +92,7 @@ public class CtrlPresentacion {
         vistaTablero.hacerVisible(false);
         vistaConfigPartida.hacerVisible(false);
         vistaCargarTablero.hacerVisible(false);
-        vistaLoginPartida.hacerVisible(false);
+        vistaCargarPartida.hacerVisible(false);
     }
 
     /**
@@ -131,8 +131,8 @@ public class CtrlPresentacion {
                 modificar_idTablero_cargar(-2);
                 vistaCargarTablero.hacerVisible(true);
                 break;
-            case LOGINPARTIDA:
-                vistaLoginPartida.hacerVisible(true);
+            case CARGARPARTIDA:
+                vistaCargarPartida.hacerVisible(true);
         }
     }
 
