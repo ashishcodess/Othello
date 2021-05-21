@@ -158,7 +158,7 @@ public class VistaTablero {
     /**
      * Metodo recargar tablero (actualiza la pantalla con la informacion del tablero actualizado)*/
     public void recargar_tablero() {
-        int[][] tab = iCtrlPresentacion.presentacionObtenerTablero();
+        int[][] tab = iCtrlPresentacion.presentacion_consultar_Tablero();
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 cambiar_imagen_casilla(i,j,tab[i][j]);
@@ -169,10 +169,10 @@ public class VistaTablero {
     private void listener_guardar_partida() {
         switch (tipoActual) {
             case PARTIDA:
-                iCtrlPresentacion.guardar_partida();
+                iCtrlPresentacion.presentacion_guardar_partida();
                 break;
             case TABLERO:
-                iCtrlPresentacion.guardar_tablero();
+                iCtrlPresentacion.presentacion_guardar_tablero();
                 break;
         }
         iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU);
@@ -188,7 +188,7 @@ public class VistaTablero {
                 if (event.getSource() == jButton) {
                     x = x-1;
                     y = y-1;
-                    System.out.println("posicion "+ x + ", " + y);
+                    //System.out.println("posicion "+ x + ", " + y);
                     iCtrlPresentacion.presentacionRondaPartida(x, y);
 
                 }
