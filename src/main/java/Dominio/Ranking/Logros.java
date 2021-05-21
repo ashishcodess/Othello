@@ -123,8 +123,7 @@ public class Logros {
                 this.id1_fichas = id1;
                 this.nick2_fichas = nick2;
                 this.id2_fichas = id2;
-                int t = calcular_diferencia_fichas(t1,t2);
-                this.fichas_diff = t;
+                this.fichas_diff = calcular_diferencia_fichas(t1,t2);
                 this.fichas_j1 = t1;
                 this.fichas_j2 = t2;
                 break;

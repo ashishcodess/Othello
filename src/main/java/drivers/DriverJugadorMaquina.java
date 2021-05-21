@@ -15,7 +15,7 @@ public class DriverJugadorMaquina {
      * @param  args (argumentos)
      @throws MyException heredado de el resto de funciones
       * */
-    public static void main(String[] args) throws MyException {
+    public static void main(String[] args) throws Exception {
         boolean b = true;
         while (b) {
             System.out.println("DriverJugador (OPCIONES):");
@@ -71,7 +71,7 @@ public class DriverJugadorMaquina {
      * @param idMaquina es el identificador de la Maquina a crear
      * @throws MyException en caso de fallo con identificadores (id pertenece a Persona)
      * */
-    public static void test_crear_jugadorMaquina(int idMaquina) throws MyException {
+    public static void test_crear_jugadorMaquina(int idMaquina) throws Exception{
         JugadorMaquina res = new JugadorMaquina(idMaquina);
         System.out.println("Maquina creada con ID:" + idMaquina);
         System.out.println("Prueba get_MaquinaID : " + res.get_MaquinaID());

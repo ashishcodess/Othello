@@ -113,17 +113,6 @@ public class VistaRanking {
      * Metodo para inicializar frame
      * */
     private void inicializar_frameVista() {
-        /*frameVista.setMinimumSize(new Dimension(700,750));
-        frameVista.setPreferredSize(frameVista.getMinimumSize());
-        frameVista.setResizable(false);
-        frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frameVista.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent evt) {
-                iCtrlPresentacion.salir_del_juego();
-            }
-        });*/
-
         frameVista = iCtrlPresentacion.configuracion_frame(700,750,"Ranking");
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
@@ -349,7 +338,8 @@ public class VistaRanking {
                 orden = 6;
                 break;
         }
-        if (iCtrlPresentacion.presentacion_ordenar_ranking(orden)) actionPerformed_buttonCargarRanking(event);
+        iCtrlPresentacion.presentacion_ordenar_ranking(orden);
+        actionPerformed_buttonCargarRanking(event);
     }
 
     /**

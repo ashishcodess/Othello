@@ -3,7 +3,6 @@ package ControladorPersistencia;
 import Dominio.Partida.Partida;
 import Dominio.Partida.Tablero;
 import Dominio.Ranking.*;
-import MyException.MyException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -88,7 +87,7 @@ public class CtrlPersitencia {
      * @param t es el tipo de imagen a cargar [vacia, disponible, blanca, negra]
      * @return devuelve la direccion del icono seleccionado
      * */
-    public String consultar_dir_IMG(tipoIMG t) {
+    public String consultar_dir_imagenes(tipoIMG t) {
         String s = dirImagenes;
         switch (t) {
             case IMG_VACIA:
@@ -157,27 +156,11 @@ public class CtrlPersitencia {
     //Controlador de Partidas (cPartidas)
 
     /**
-     * (PARA DRIVER DOMINIO)
-     * Operacion ctrl_leer_modo_partida
-     * @param idPartida es el ID de partida a cargar
-     * @return devuelve el modo de la partida con igual a idPartida, caso contrario (no existe partida) devuelve -1
-     */
-    public int ctrl_leer_modo_partida(int idPartida) throws IOException {
-        int modo = -1;
-        String s_fichero = dir_partidas +idPartida + ".txt";
-        ArrayList<String> as = io.leerFichero(s_fichero);
-        if (as.size() > 3) {
-            modo = Integer.parseInt(as.get(2));
-        }
-        return modo;
-    }
-
-    /**
      * Operacion ctrl_cargar_partida
      * @param idPartida es el ID de partida a cargar
      * @return devuelve Partida con id igual a idPartida, caso contrario devuelve null
      */
-    public Partida ctrl_cargar_partida(int idPartida) throws IOException, MyException{
+    public Partida ctrl_cargar_partida(int idPartida) throws Exception {
         String pathF = dir_partidas + idPartida + ".txt";
         ArrayList<String> as = io.leerFichero(pathF);
         int id1, id2, modo, turno;
@@ -222,7 +205,7 @@ public class CtrlPersitencia {
 
     }
 
-    public int[][] ctrl_cargar_tablero_partida(int idPartida) throws IOException {
+    public int[][] ctrl_cargar_tableroPartida(int idPartida) throws IOException {
         String pathF = dir_partidas + idPartida + ".txt";
         ArrayList<String> as = io.leerFichero(pathF);
         String s1;
@@ -234,30 +217,6 @@ public class CtrlPersitencia {
             }
         }
         return map;
-    }
-
-    public ArrayList<String> ctrl_info_partida(int idPartida) throws IOException {
-        String pathF = dir_partidas + idPartida + ".txt";
-        ArrayList<String> as = io.leerFichero(pathF);
-        String id1, id2;
-        String nick1 = "";
-        String nick2 = "";
-
-        String s1 = as.get(0);
-        String[] s2 = s1.split(" ");
-        id1 = s2[0];
-        if (s2.length != 1) nick1 = s2[1];
-
-        s1 = as.get(1);
-        s2 = s1.split(" ");
-        id2 = s2[0];
-        if (s2.length != 1) nick2 = s2[1];
-
-        ArrayList<String> s = new ArrayList<>();
-        s.add("J1 - (ID:" + id1 + " , nickname: " + nick1 + ") ");
-        s.add("J2 - (ID:" + id2 + " , nickname: " + nick2 + ") ");
-
-       return s;
     }
 
 
@@ -380,7 +339,7 @@ public class CtrlPersitencia {
     /**
      * Operacion ctrl_cargar_tablero
      * @param idTablero es el ID de tablero a cargar
-     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero vacio
+     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero inicial
      */
     public int[][] ctrl_cargar_tablero(int idTablero) throws IOException {
         int[][] map = new int[8][8];
@@ -388,8 +347,8 @@ public class CtrlPersitencia {
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 map[i][j] = 0;
-                //if ((i == 3 && j==3) || (i == 4 && j==4)) map[i][j] = 3;
-                //else if ((i == 3 && j==4) || (i == 4 && j==3)) map[i][j] = 2;
+                if ((i == 3 && j==3) || (i == 4 && j==4)) map[i][j] = 3;
+                else if ((i == 3 && j==4) || (i == 4 && j==3)) map[i][j] = 2;
             }
         }
         String pathF = dir_tablero + idTablero + ".txt";
@@ -444,7 +403,7 @@ public class CtrlPersitencia {
      * (PARA DRIVER DOMINIO) Operacion ctrl_print_tableros_disponibles
      * muestra por salida estandar los tableros disponibles
      */
-    public void ctrl_print_tableros_disponibles() {
+    public void ctrl_print_tableros() {
         System.out.println("Tableros disponibles");
         ArrayList<String> as= io.listarFicherosDeDirectorio(dir_tablero);
         if (as != null) {
@@ -466,7 +425,7 @@ public class CtrlPersitencia {
      * Operacion ctrl_importar_ranking
      * @return devuelve el Ranking ubicado en el fichero apuntado por s,caso de no existir devuelve excepcion
      */
-    public Ranking ctrl_importar_ranking(String s) throws MyException, IOException {
+    public Ranking ctrl_importar_ranking(String s) throws Exception {
         String pathF = dir_ranking + s;
         ArrayList<String> as = io.leerFichero(pathF);
         Ranking rank = new Ranking();
@@ -512,14 +471,13 @@ public class CtrlPersitencia {
                             t = Integer.parseInt(s2[2]);
                             id2 = Integer.parseInt(s2[3]);
                             nick2 = s2[4];
-                            t2 = Integer.parseInt(s2[5]);
                         }
                         else {
                             nick1 = s2[2];
                             t = Integer.parseInt(s2[3]);
                             id2 = Integer.parseInt(s2[4]);
-                            t2 = Integer.parseInt(s2[5]);
                         }
+                        t2 = Integer.parseInt(s2[5]);
                         rank.cambiar_logro_partida(Logros.tipoLogro.FICHAS_DIFF,nick1,id1,nick2,id2,t,t2);
                     }
                     break;

@@ -71,10 +71,10 @@ public class CtrlDominio {
     }
 
     /**
-     * metodo Get info usuario activo
+     * Metodo consultar info usuario activo
      * @return devuelve la informacion que esta logueado dentro del juego
      * */
-    public String get_info_usuario_activo() {
+    public String consultar_info_usuario_activo() {
         return "Usuarios activos:         J1 - (ID:" + id_1 + " , nickname: " + nickname + ")            " + "J2 - (ID2:" + id_2 + " , nickname2: " + nick_2 + ")";
     }
 
@@ -100,10 +100,11 @@ public class CtrlDominio {
     }
 
     public String dominio_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG t) {
-        return cp.consultar_dir_IMG(t);
+        return cp.consultar_dir_imagenes(t);
     }
 
     //FUNCIONES DE RANKING
+
     /**
     * Metodo exportar ranking (desde Dominio)
     * */
@@ -141,7 +142,6 @@ public class CtrlDominio {
         as.add(s);
 
         sAux = (ranking.consultar_logro(Logros.tipoLogro.FICHAS_DIFF)).split(" ");
-        //if (sAux.length == 7) s = ("Diferencia: " + sAux[0] + " , J1[fichas:" + sAux[3] + " ," + sAux[1] + " , " + sAux[2] + "] - J2[fichas:" + sAux[6] +" ," + sAux[4] + " , " + sAux[5] + "]");
         if (sAux.length == 7) s = ("Diferencia: " + sAux[0] + " , J1[" + sAux[1] + " , " + sAux[2] + " , fichas:" + sAux[3] + "] - J2[" + sAux[4] + " , " + sAux[5] + " , fichas:" + sAux[6] +"]");
         as.add(s);
 
@@ -179,10 +179,9 @@ public class CtrlDominio {
     /**
      * Metodo ordenar ranking
      * @param orden [0 (Ganadas), 1 (ID mayor a menor) , 2 (NICKNAME), 3 (ID menor a mayor), 4 (Perdidas), 5 (empatadas),6 (Totales)]
-     * @return devuelve true en caso de que se haya efectuado una ordenacion, caso contrario devuelve falso
      * */
-    public boolean ordenar_ranking(int orden) {
-        return ranking.ordenar_ranking(orden);
+    public void ordenar_ranking(int orden) {
+       ranking.ordenar_ranking(orden);
     }
 
     /**
@@ -190,8 +189,6 @@ public class CtrlDominio {
      * @return devuelve el size del ranking
      * */
     public int consultar_tam_ranking() {return ranking.consultar_tam_ranking();}
-
-
 
     /**
      * Metodo actualizar_ranking
@@ -230,12 +227,13 @@ public class CtrlDominio {
     }
 
 
+
     //FUNCIONES DE TABLERO
 
     public int[][] dominio_cargar_tablero_partida(int idPartida) {
         int[][] tab = new int[8][8];
         try {
-            tab = cp.ctrl_cargar_tablero_partida(idPartida);
+            tab = cp.ctrl_cargar_tableroPartida(idPartida);
         } catch (Exception ignored) {
 
         }
@@ -264,13 +262,15 @@ public class CtrlDominio {
     /**
      * Operacion Guardar Tablero (desde Dominio)
      */
-    public void dominio_guardar_tablero(){
+    public boolean dominio_guardar_tablero(){
         try {
             int[][] tab = consultar_TableroPartida();
             int turno = partida_activa.getTurnoPartida();
             cp.ctrl_guardar_tablero(tab,turno);
+            return true;
         }
         catch (Exception ignored) {}
+        return false;
     }
 
     public int[][] consultar_TableroPartida() {
@@ -288,7 +288,7 @@ public class CtrlDominio {
     /**
      * Operacion Cargar Tablero (desde Dominio)
      * @param idTablero es el ID de tablero a cargar
-     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero vacio
+     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero inicial
      */
     public int [][] dominio_cargar_tablero(int idTablero) throws IOException {
         return cp.ctrl_cargar_tablero(idTablero);
@@ -363,12 +363,14 @@ public class CtrlDominio {
     }
 
 
-    public void dominio_guardar_partida() {
+    public boolean dominio_guardar_partida() {
         try {
             ArrayList<String> as = partida_activa.toArrayList();
             cp.ctrl_guardar_partida(as);
+            return true;
         }
         catch (Exception ignored) {}
+        return false;
     }
 
 

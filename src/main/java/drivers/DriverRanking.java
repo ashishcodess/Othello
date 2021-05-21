@@ -13,7 +13,7 @@ public class DriverRanking {
 
     /** test operaciones ranking (crear, incrementar partidas, imprimir ranking dependiendo del orden)
      * @throws MyException en caso de fallo con ElementosRanking*/
-    public static void test_crear_ranking() throws MyException {
+    public static void test_crear_ranking() throws Exception {
         Ranking rank= new Ranking();
         ElementoRanking e = new ElementoRanking(6,"aaa");
         rank.add_al_ranking(e);

@@ -1,7 +1,5 @@
 package MyException;
 
-
-
 public class MyException extends Exception
 {
     public enum tipoExcepcion {ID_NEGATIVO, ID_MAQUINA, ID_PERSONA, MODO_INCORRECTO}
@@ -11,7 +9,7 @@ public class MyException extends Exception
         super(message);
     }
 
-    public MyException(tipoExcepcion a, int t) {
+    public MyException(tipoExcepcion a, int t) throws Exception {
         String message = "";
         switch (a) {
             case ID_NEGATIVO:
@@ -30,7 +28,7 @@ public class MyException extends Exception
                 message = ("El modo:" + t + " es incorrecto, seleccionar [0: maquina vs maquina, 1: Persona vs maquina, 2:Persona vs Persona]");
                 break;
         }
-        new MyException(message);
+        throw new Exception(message);
     }
 }
 

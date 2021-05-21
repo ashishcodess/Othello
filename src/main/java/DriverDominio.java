@@ -300,7 +300,7 @@ public class DriverDominio {
         System.out.println();
         int idTab = -1;
         if(in.equalsIgnoreCase("si")){
-            cp.ctrl_print_tableros_disponibles();
+            cp.ctrl_print_tableros();
             System.out.print("Seleccionar tablero:");
             int id_aux = scan.nextInt();
             if (id_aux > 0) idTab = id_aux;
@@ -626,7 +626,7 @@ public class DriverDominio {
                     break;
                 case 1:
                     System.out.println("Opcion borrar tablero personalizado");
-                    cp.ctrl_print_tableros_disponibles();
+                    cp.ctrl_print_tableros();
                     System.out.print("Seleccionar tablero a realizar la accion:");
                     idTab = scan.nextInt();
                     System.out.println();
@@ -635,7 +635,7 @@ public class DriverDominio {
                     break;
                 case 2:
                     System.out.println("Opcion mostrar tablero personalizado");
-                    cp.ctrl_print_tableros_disponibles();
+                    cp.ctrl_print_tableros();
                     System.out.print("Seleccionar tablero a realizar la accion:");
                     idTab = scan.nextInt();
                     System.out.println();

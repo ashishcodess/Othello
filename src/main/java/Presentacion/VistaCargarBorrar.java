@@ -134,7 +134,6 @@ public class VistaCargarBorrar {
                 tablero.add(botonesMatriz[i][j]);
             }
         }
-
         JPanel panelAux = new JPanel();
         panelAux.setLayout(new BorderLayout());
         panelBotones.setLayout(new FlowLayout());
@@ -301,22 +300,17 @@ public class VistaCargarBorrar {
      * */
     private void listener_selector_tablero() {
         obtener_info_selector();
+        int[][] tab = new int[8][8];
         switch (tipoActual) {
             case TABLERO:
-                //limpiar_vista_previa_tablero();
-                int[][] tab = iCtrlPresentacion.presentacion_cargarTablero(id_tablero_seleccionado);
-                for (int i = 0; i < botonesMatriz.length; ++i) {
-                    for (int j = 0; j < 8; ++j) {
-                        cambiar_imagen_casilla(i,j,tab[i][j]);
-                    }
-                }
+                tab = iCtrlPresentacion.presentacion_cargarTablero(id_tablero_seleccionado);
                 break;
 
             case PARTIDA:
                 obtener_info_selector();
                 if (id_partida_seleccionado >= 0) {
                     ArrayList<String> as = iCtrlPresentacion.consultar_info_partida_ID(id_partida_seleccionado);
-                    int[][]tabl = iCtrlPresentacion.presentacion_cargar_tablero_partida(id_partida_seleccionado);
+                    tab = iCtrlPresentacion.presentacion_cargar_tablero_partida(id_partida_seleccionado);
                     //tenemos info de toda la partida, ahora hace falta mostrarla
                     infoJ1.setText("J1: " + as.get(0));
                     infoJ2.setText("J2: " + as.get(1));
@@ -336,13 +330,14 @@ public class VistaCargarBorrar {
                             break;
                     }
                     infoModoJuego.setText(s);
-                    for (int i = 0; i < botonesMatriz.length; ++i) {
-                        for (int j = 0; j < 8; ++j) {
-                            cambiar_imagen_casilla(i,j,tabl[i][j]);
-                        }
-                    }
+
                 }
                 break;
+        }
+        for (int i = 0; i < botonesMatriz.length; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                cambiar_imagen_casilla(i,j,tab[i][j]);
+            }
         }
 
     }

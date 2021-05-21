@@ -179,7 +179,7 @@ public class CtrlPresentacion {
      * metodo Get info usuario activo (desde Capa Presentacion)
      * @return devuelve la informacion que esta logueado dentro del juego
      * */
-    public String get_info_usuario_activo() {return ctrlDominio.get_info_usuario_activo();}
+    public String consultar_info_usuario_activo() {return ctrlDominio.consultar_info_usuario_activo();}
 
 
     public void presentacion_crearPartida(ArrayList<Integer> a_int) {
@@ -245,10 +245,9 @@ public class CtrlPresentacion {
     /**
      * Metodo ordenar ranking (desde Capa Presentacion)
      * @param orden [0 (Ganadas), 1 (ID mayor a menor) , 2 (NICKNAME), 3 (ID menor a mayor)]
-     * @return devuelve true en caso de que se haya efectuado una ordenacion, caso contrario devuelve falso
      * */
-    public boolean presentacion_ordenar_ranking(int orden) {
-        return ctrlDominio.ordenar_ranking(orden);
+    public void presentacion_ordenar_ranking(int orden) {
+        ctrlDominio.ordenar_ranking(orden);
     }
 
     /**
@@ -272,7 +271,9 @@ public class CtrlPresentacion {
 
     public int consultar_idTablero_cargar() {return ctrlDominio.consultar_idTablero_cargar();}
 
-    public void presentacion_guardar_tablero() { ctrlDominio.dominio_guardar_tablero();}
+    public boolean presentacion_guardar_tablero() {
+        return ctrlDominio.dominio_guardar_tablero();
+    }
 
     public boolean presentacion_borrar_tablero(int id) {return ctrlDominio.dominio_borrar_tablero(id);}
 
@@ -290,7 +291,7 @@ public class CtrlPresentacion {
 
     //FUNCIONES DE PARTIDA
 
-    public void presentacion_guardar_partida() { ctrlDominio.dominio_guardar_partida();}
+    public boolean presentacion_guardar_partida() { return ctrlDominio.dominio_guardar_partida();}
 
     public void presentacion_cargarPartida(int id) {
         if (id >= 0) {
@@ -305,7 +306,6 @@ public class CtrlPresentacion {
         }
         return b;
     }
-
 
 
     /**

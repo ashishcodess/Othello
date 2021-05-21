@@ -9,7 +9,7 @@ public abstract class Jugador {
     /*Atributos*/
 
     /**identificador de Jugador*/
-    private int id;
+    private final int id;
 
     /**
      * Constructora por defecto de jugador
@@ -22,21 +22,11 @@ public abstract class Jugador {
      * Constructora de Jugador
      * @param idJugador (id igual a idJugador)
      */
-    public Jugador (int idJugador) throws MyException {
+    public Jugador (int idJugador) throws Exception{
         if (idJugador < 0) throw new MyException(MyException.tipoExcepcion.ID_NEGATIVO,idJugador);
         this.id = idJugador;
     }
 
-
-
-    /*Sets y Gets*/
-    /**
-     * Operacion set del atributo ID
-     * @param nuevoID indica el valor que tomara el atributo id
-     */
-    public void modificar_id(int nuevoID) {
-        this.id = nuevoID;
-    }
 
     /*Sets y Gets*/
     /**

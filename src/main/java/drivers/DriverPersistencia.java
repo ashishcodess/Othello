@@ -19,7 +19,7 @@ public class DriverPersistencia {
     /** test_IOPartidas
      * @param id es el identificador de la partida para realizar las pruebas
      * */
-    public static void test_IOPartidas(int id) throws IOException, MyException {
+    public static void test_IOPartidas(int id) throws Exception {
         System.out.println("Probar metodos: Cargar/Guardar partida, toArrayList, listar_partidas_disponibles, borrar_partida");
         System.out.println();
         Partida p = cp.ctrl_cargar_partida(id);
@@ -54,7 +54,7 @@ public class DriverPersistencia {
      * @param rk es el nombre del fichero (sin .txt) del ranking a realizar las pruebas
      * @throws MyException fallo con sizes de ranking
      * */
-    public static void test_IORanking(String rk) throws MyException, IOException {
+    public static void test_IORanking(String rk) throws Exception {
         Ranking rank= cp.ctrl_importar_ranking(rk);
         System.out.println("Ranking importado correctamente");
         rank.print_ranking();

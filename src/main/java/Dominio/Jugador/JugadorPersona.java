@@ -22,7 +22,7 @@ public class JugadorPersona extends Jugador {
      * @param idJugador (id de Jugador = idJugador)
      * @throws MyException en caso de idJugador menor a 6 (pertenece a ID de maquina)
      * */
-    public JugadorPersona (int idJugador) throws MyException {
+    public JugadorPersona (int idJugador) throws Exception {
         super(idJugador);
         if (idJugador < 6 && idJugador >= 0) throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idJugador);
     }
@@ -33,7 +33,7 @@ public class JugadorPersona extends Jugador {
      * @param nicknameJugador (nickname de Persona = nicknameJugador)
      * @throws MyException en caso de idJugador menor a 6 (pertenece a ID de maquina)
      * */
-    public JugadorPersona (int idJugador,String nicknameJugador) throws MyException {
+    public JugadorPersona (int idJugador,String nicknameJugador) throws Exception {
         super(idJugador);
         if (idJugador < 6 && idJugador >= 0) throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idJugador);
         this.nickname = nicknameJugador;
@@ -54,7 +54,7 @@ public class JugadorPersona extends Jugador {
      * Operacion get del atributo ID
      * @return  devuelve el ID de JugadorPersona
      */
-    public int get_PersonaID() {
+    public int consultar_PersonaID() {
         return super.getID();
     }
 

@@ -25,7 +25,7 @@ public class JugadorMaquina extends Jugador {
      * Constructora JugadorMaquina (si tener en cuenta la profundidad del arbol de MinMax)
      * @param idMaquina (id de Jugador = idMaquina)
      * */
-    public JugadorMaquina (int idMaquina) throws MyException{
+    public JugadorMaquina (int idMaquina) throws Exception{
         super(idMaquina);
         if (idMaquina > 5)throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idMaquina);
         this.profundidad_MinMax = (idMaquina+1)*2;

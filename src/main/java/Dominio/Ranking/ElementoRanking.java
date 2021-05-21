@@ -22,7 +22,7 @@ public class ElementoRanking {
      * @param nick nickname de Usuario
      * @throws MyException en caso de fallo con el identificador [pertenece a un ID de maquina: id menor a 6]
      * */
-    public ElementoRanking (int id, String nick) throws MyException {
+    public ElementoRanking (int id, String nick) throws Exception {
         if (id < 0) throw new MyException(MyException.tipoExcepcion.ID_NEGATIVO,id);
         else if (id < 6) throw new MyException(MyException.tipoExcepcion.ID_MAQUINA,id);
         else {
@@ -45,7 +45,7 @@ public class ElementoRanking {
      * @param empatadas contador de Partidas empatadas
      * @throws MyException en caso de fallo con el identificador [pertenece a un ID de maquina: id menor 6]
      * */
-    public ElementoRanking (int id, String nick,  int ganadas, int perdidas, int empatadas) throws MyException {
+    public ElementoRanking (int id, String nick,  int ganadas, int perdidas, int empatadas) throws Exception {
         if (id < 0) throw new MyException(MyException.tipoExcepcion.ID_NEGATIVO,id);
         else if (id < 6) throw new MyException(MyException.tipoExcepcion.ID_MAQUINA,id);
         else {

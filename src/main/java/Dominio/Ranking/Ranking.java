@@ -1,7 +1,5 @@
 package Dominio.Ranking;
 
-import MyException.MyException;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -59,17 +57,6 @@ public class Ranking {
     }
 
     /**
-     * Este metodo inserta en la ultima posicion "i" el ElementoRanking "e"
-     * @param id identificador de Persona a borrar
-     * @param nick nickname de Persona a borrar */
-    public void eliminar_elemento_ranking(int id, String nick) {
-        int ires = existe_en_ranking(id,nick);
-        if (ires != -1) {
-            this.ranking.remove(ires);
-        }
-    }
-
-    /**
      * Operacion existe_en_ranking
      * @param id identificador de Persona a consultar si existe
      * @param nick nickname de Persona a consultar si existe
@@ -119,7 +106,7 @@ public class Ranking {
      * @param nick2 nickname del Jugador2 (en caso de que tenga nickname)
      * @param ganador incrementar contador en funcion del tipoGanador de ganador
      * */
-    public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, tipoGanador ganador) throws MyException {
+    public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, tipoGanador ganador) throws Exception {
         switch (ganador) {
             case EMPATE:
                 if (id1 > 5) incrementar_partida(id1,nick1,tipoGanador.EMPATE);
@@ -146,7 +133,7 @@ public class Ranking {
      * @param nick nickname del Jugador2 (en caso de que tenga nickname)
      * @param ganador incrementar contador en funcion del tipo de ganador
      * */
-    public void incrementar_partida(int id, String nick, tipoGanador ganador) throws MyException {
+    public void incrementar_partida(int id, String nick, tipoGanador ganador) throws Exception {
         int i = existe_en_ranking(id,nick);
         if (i == -1) {
             ElementoRanking e = new ElementoRanking(id,nick);
@@ -172,11 +159,9 @@ public class Ranking {
     /**
      * Operacion ordenar_ranking(orden) en funcion de un orden concreto
      * @param orden [0 (Ganadas), 1 (ID mayor a menor) , 2 (NICKNAME), 3 (ID menor a mayor), 4 (Perdidas), 5 (empatadas),6 (Totales)]
-     * @return devuelve true en caso de que se haya efectuado una ordenacion, caso contrario devuelve falso
      * */
-    public Boolean ordenar_ranking(int orden) {
-        if (orden > 6 || orden < 0) return false;
-        else {
+    public void ordenar_ranking(int orden) {
+        if (orden >= 0 && orden < 7) {
             switch(orden) {
                 case 0:
                     this.ranking.sort(new SortbyGanadas());
@@ -200,7 +185,6 @@ public class Ranking {
                     this.ranking.sort(new SortbyTotales());
                     break;
             }
-            return true;
         }
     }
 

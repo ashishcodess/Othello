@@ -25,7 +25,7 @@ public class DriverPartida {
      * @param idj2 es el ID del jugador2 de la Partida
      * @throws MyException caso de fallar con el modo de juego
      * */
-    public static Partida test_crear_partida_mostrar(int id, int modoJuego, int[] r, int idj1, int idj2) throws MyException {
+    public static Partida test_crear_partida_mostrar(int id, int modoJuego, int[] r, int idj1, int idj2) throws Exception {
         Partida res = new Partida(id,modoJuego,r,idj1,"",idj2,"");
         System.out.println("Partida creada con ID:" + id);
         System.out.println("Jugador1 con ID:" + idj1);
@@ -48,13 +48,13 @@ public class DriverPartida {
      * @param idj2 es el ID del jugador2 de la Partida
      * @throws MyException caso de fallar con el modo de juego
      * */
-    public static Partida test_crear_partida(int id, int modoJuego, int[] r, int idj1, int idj2) throws MyException {
+    public static Partida test_crear_partida(int id, int modoJuego, int[] r, int idj1, int idj2) throws Exception {
         Partida res = new Partida(id,modoJuego,r,idj1,"",idj2,"");
         return res;
     }
 
 
-    public static void main(String[] args) throws IOException, MyException {
+    public static void main(String[] args) throws Exception {
         boolean b = true;
         while (b) {
             System.out.println("DriverPartida (OPCIONES):");

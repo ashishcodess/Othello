@@ -159,8 +159,7 @@ public class InputOutput {
     /**
      * Metodo Borrar EN Fichero (Borrar la informacion de un fichero)
      * @param pathF directorio + nombre de fichero a realizar la accion
-     * @param s informacion que queramos borrar de el fichero
-     * @return devuelve TRUE en caso de borrar correctamente la string "s" dentro de el fichero, caso contrario devuelve FALSE */
+     * @param s informacion que queramos borrar de el fichero*/
     public void borrar_de_fichero(String pathF, String s) throws IOException {
         if (existe_en_fichero(pathF,s)) {
             ArrayList<String> as = leerFichero(pathF);
@@ -170,7 +169,7 @@ public class InputOutput {
                 b = (as.get(i)).equals(s);
                 if (b) as.remove(i);
             }
-            //volver a escribir fichero con el elemento ya borrado
+            //volver a escribir fichero con el elemento ya borrado (si existia)
             PrintWriter pw = new PrintWriter(pathF);
             for (i = 0; i < as.size(); ++i) pw.println(as.get(i));
             pw.flush();
