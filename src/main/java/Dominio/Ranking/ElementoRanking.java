@@ -2,13 +2,22 @@ package Dominio.Ranking;
 
 import MyException.MyException;
 
+/** Clase para representar toda la informacion para el Ranking referente a un Jugador*/
 public class ElementoRanking {
-    /*Atributos*/
 
+    /** Identificador del Jugador*/
     private final int idJugador;
+
+    /** Nickname del Jugador*/
     private final String nickJugador;
+
+    /** Numero de partidas ganadas por el Jugador*/
     private int partidasGanadas;
+
+    /** Numero de partidas perdidas por el Jugador*/
     private int partidasPerdidas;
+
+    /** Numero de partidas empatadas por el Jugador*/
     private int partidasEmpatadas;
 
     /** total de partidas jugadas por el jugador: Ganadas+Perdidas+Empatadas*/

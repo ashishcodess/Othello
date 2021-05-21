@@ -10,27 +10,43 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
-//agregar en funcion de las necesidades
+/**Todos las vistas disponibles que se pueden visualizar*/
 enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,CREARTABLERO,CARGARTABLERO, BORRARTABLERO , CARGARPARTIDA}
-
-
 
 
 public class CtrlPresentacion {
 
 
+    /**enumeración utilizada en la Vista Cargar/Borrar para diferenciar que tipo de Vista estamos tratando*/
     public enum tipoTablero {PARTIDA,TABLERO}
+
+    /**enumeración utilizada en la Vista Login para diferenciar a que usuario va destinado el login*/
     public enum tipoJugador {JUGADOR1,JUGADOR2}
 
+    /**Controlador de Dominio*/
     private final CtrlDominio ctrlDominio;
 
-    private final VistaRanking vistaRanking;
+    /**Vista de Login de un Jugador*/
     private final VistaLogin vistaLogin;
+
+    /**Vista de Menu Principal del Juego*/
     private final VistaMenu vistaMenu;
-    private final VistaCreditos vistaCreditos;
-    private final VistaTablero vistaTablero;
-    private final VistaConfigPartida vistaConfigPartida;
+
+    /**Vista del Ranking*/
+    private final VistaRanking vistaRanking;
+
+    /**Vista de Cargar/Borrar (sirve para Partidas o para Tableros)*/
     private final VistaCargarBorrar vistaCargarBorrar;
+
+    /**Vista de los creditos*/
+    private final VistaCreditos vistaCreditos;
+
+    /**Vista de tablero (partida en juego)*/
+    private final VistaTablero vistaTablero;
+
+    /**Vista de Configuracion de Partida*/
+    private final VistaConfigPartida vistaConfigPartida;
+
 
     /**
      * Creadora por defecto de CtrlPresentacion

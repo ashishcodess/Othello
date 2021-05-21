@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 
-
+/**Ranking de Jugadores y coleccion de logros*/
 public class Ranking {
 
+    /**tipo de Ganador: Empatado, Perdido, Ganado, Gana Jugador1 o Gana Jugador2*/
     public enum tipoGanador {EMPATE, PIERDE, GANA, GANA_J1, GANA_J2}
 
     /**ArrayList de elementos tipo ElementoRanking*/
