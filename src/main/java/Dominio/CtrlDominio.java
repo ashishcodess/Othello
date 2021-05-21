@@ -10,24 +10,32 @@ import MyException.MyException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**Controlador de la capa de Dominio*/
 public class CtrlDominio {
 
+    /**Controlador de Persistencia*/
     private static CtrlPersitencia cp;
+
+    /**Ranking*/
     private static Ranking ranking;
 
-    private static int id_1; //ID jugador1
-    private static String nickname; //nickname jugador1
+    /**Identificador del Jugador 1*/
+    private static int id_1;
 
-    private static int id_2; //ID jugador2
-    private static String nick_2; //nickname jugador2
+    /**Nickname del Jugador 1*/
+    private static String nickname;
+
+    /**Identificador del Jugador 2*/
+    private static int id_2;
+
+    /**Nickname del Jugador 2*/
+    private static String nick_2;
 
     /**Es la partida que ejecutaremos siempre desde la capa de Dominio*/
     private static Partida partida_activa;
 
     /**Es identificador de tablero a cargar (se modifica si queremos cargar un tablero personalizado)*/
     private static int idTablero_cargar;
-
 
 
     /**

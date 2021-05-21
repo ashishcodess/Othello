@@ -1,14 +1,22 @@
 package MyException;
 
+/**Clase para generar Excepciones personalizadas*/
 public class MyException extends Exception
 {
+    /**Tipos de excepcion a generar: ID negativo, ID pertenece a maquina, ID Pertenece a Persona, Modo de juego incorrecto*/
     public enum tipoExcepcion {ID_NEGATIVO, ID_MAQUINA, ID_PERSONA, MODO_INCORRECTO}
 
+    /**Creadora de la clase MyException
+     * @param message es el mensaje a informar sobre la excepcion ocurrida*/
     public MyException(String message)
     {
         super(message);
     }
 
+    /**Creadora de la clase MyException
+     * @param a es el tipo de Excepcion a generar
+     * @param t es el numero entero para generar el mensaje (puede ser un ID o el modo de juego)
+     * @throws Exception excepcion personalizada a partir del tipoExcepcion*/
     public MyException(tipoExcepcion a, int t) throws Exception {
         String message = "";
         switch (a) {

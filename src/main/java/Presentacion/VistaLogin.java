@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**Vista de Login (tanto Jugador1 como Jugador2)*/
 public class VistaLogin {
 
     // Controlador de presentacion

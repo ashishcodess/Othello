@@ -4,8 +4,10 @@ package ControladorPersistencia;
 import java.io.*;
 import java.util.ArrayList;
 
+/**Tipos de ficheros: Usuario, Partida, Tablero o Ranking*/
 enum tipoFichero {USUARIO, PARTIDA,TABLERO, RANKING}
 
+/**Sirve para leer/escribir ficheros referentes a la capa de Persistencia*/
 public class InputOutput {
 
     /**

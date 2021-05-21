@@ -5,12 +5,11 @@ import MyException.MyException;
 
 import java.util.*;
 
-
+/**Driver de JugadorPersona*/
 public class DriverJugadorPersona {
 
+    /**Scanner (leer desde entrada)*/
     static Scanner scan = new Scanner(System.in);
-
-
 
     /** test_crear_jugadorPersona (clase hijo)
      * @param idPersona es el identificador de la Persona a crear

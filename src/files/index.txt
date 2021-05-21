@@ -7,4 +7,7 @@
 - users: Directorio donde se almacenan los ficheros de los Usuarios generadas por el Controlador \
 de Persistencia (lo que lo hemos denominado a los usuarios registrados)
 
+- tableros: Directorio donde se almacenan los ficheros de los tableros generados por el Controlador de Persistencia
+
+
 

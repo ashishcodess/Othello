@@ -9,11 +9,13 @@ import MyException.MyException;
 import java.io.IOException;
 import java.util.*;
 
-
+/**Driver de la capa de Persistencia*/
 public class DriverPersistencia {
 
+    /**Controlador de Persistencia*/
     static CtrlPersitencia cp;
 
+    /**Scanner (leer desde entrada)*/
     static Scanner scan = new Scanner(System.in);
 
     /** test_IOPartidas
@@ -197,9 +199,7 @@ public class DriverPersistencia {
                 System.out.println();
             }
         }
-        catch (Exception e) {
-            //System.out.println("Error en main de DriverPersitencia");
-        }
+        catch (Exception ignored) {}
     }
 
 

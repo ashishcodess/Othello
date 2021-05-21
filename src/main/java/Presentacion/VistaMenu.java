@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-
+/**Vista del Menu Principal del juego*/
 public class VistaMenu {
     // Controlador de presentacion
     private final CtrlPresentacion iCtrlPresentacion;

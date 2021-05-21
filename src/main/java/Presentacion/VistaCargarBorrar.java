@@ -42,7 +42,6 @@ public class VistaCargarBorrar {
     private final JLabel infoReglas = new JLabel("Reglas: 1 1 1");
     private final JLabel infoTurno = new JLabel("Turno: 0");
 
-
     private final JMenuBar menubarVista = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
     private final JMenuItem menuitemMenu = new JMenuItem("Volver al Menu Principal");

@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 
+/**Vista del Ranking, Estadisticas de un Jugador y Logros*/
 public class VistaRanking {
 
     // Controlador de presentacion

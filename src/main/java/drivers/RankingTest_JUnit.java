@@ -3,13 +3,12 @@ package drivers;
 import Dominio.Ranking.ElementoRanking;
 import Dominio.Ranking.Logros;
 import Dominio.Ranking.Ranking;
-import MyException.MyException;
 
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-
+/** Test Unitario utilizando JUnit de la clase de Ranking*/
 public class RankingTest_JUnit {
 
     public RankingTest_JUnit() {}

@@ -3,6 +3,9 @@ package Presentacion;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Vista simple con los nombres de los integrantes de este proyecto
+ * */
 public class VistaCreditos {
 
     private final CtrlPresentacion iCtrlPresentacion;

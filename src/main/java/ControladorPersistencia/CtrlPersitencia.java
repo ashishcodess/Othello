@@ -10,23 +10,40 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**Controlador de la capa de Persistencia*/
 public class CtrlPersitencia {
 
+    /**Clase InputOutput (para leer/escribir ficheros)*/
     private final InputOutput io = new InputOutput();
 
+    /**Directorio inicial de persistencia*/
     private final String dirIni;
+
+    /**Directorio que contiene todos los usuarios registrados*/
     private final String dir_usuarios;
+
+    /**Directorio que contiene todos las partidas almacenadas*/
     private final String dir_partidas;
+
+    /**Directorio que contiene la informacion del ranking*/
     private final String dir_ranking;
+
+    /**Directorio que contiene todos los tableros almacenados*/
     private final String dir_tablero;
 
+    /**Identificador de usuario maximo creado (para control de creacion de usuarios y asignacion de ID's)*/
     private int idMax_usuario;
+
+    /**Identificador de partida maximo creado (para control de creacion de partidas y asignacion de ID's)*/
     private int idMax_partida;
+
+    /**Identificador de tablero maximo creado (para control de creacion de tableros y asignacion de ID's)*/
     private int idMax_tablero;
 
-    //imagenes
+    /**Tipos de imagenes de las fichas: Vacia, Disponible, Negra o Blanca*/
     public enum tipoIMG {IMG_VACIA,IMG_DISPONIBLE,IMG_NEGRA,IMG_BLANCA}
+
+    /**Directorio que contiene todos las imagenes referentes al juego (imagenes de las fichas)*/
     private final String dirImagenes;
 
     /**
@@ -367,12 +384,10 @@ public class CtrlPersitencia {
      */
     public int[][] ctrl_cargar_tablero(int idTablero) throws IOException {
         int[][] map = new int[8][8];
-        //crear tablero inicial
+        //crear tablero vacio
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 map[i][j] = 0;
-                //if ((i == 3 && j==3) || (i == 4 && j==4)) map[i][j] = 3;
-                //else if ((i == 3 && j==4) || (i == 4 && j==3)) map[i][j] = 2;
             }
         }
         String pathF = dir_tablero + idTablero + ".txt";

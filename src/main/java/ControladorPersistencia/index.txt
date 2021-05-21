@@ -1,4 +1,3 @@
-- CtrlPersistencia: Clase del Controlador De Persistencia (donde se utilizan las funciones
-de las clases: IOPartidas,IORanking e IOUsuario) es lo unico visible por la capa de Dominio
+- CtrlPersistencia: Clase del Controlador De Persistencia, es lo unico visible por la capa de Dominio
 
 - InputOutput: Clase para leer/escribir/borrar ficheros y directorios
