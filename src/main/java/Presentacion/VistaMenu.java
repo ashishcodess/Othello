@@ -205,11 +205,11 @@ public class VistaMenu {
                     System.exit(0);
                 });
 
-        menuitemQuit.addActionListener
-                (event -> iCtrlPresentacion.salir_del_juego());
-
         buttonCrearPartida.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA));
+
+        buttonCargarBorrarPartida.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARPARTIDA));
 
         buttonCrearTablero.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CREARTABLERO));
@@ -217,6 +217,13 @@ public class VistaMenu {
         buttonBorrarTablero.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARTABLERO));
 
+        buttonConsultarRanking.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.RANKING));
+
+
+        //BARRA SUPERIOR DE MENU
+        menuitemQuit.addActionListener
+                (event -> iCtrlPresentacion.salir_del_juego());
 
         menuitemLogin.addActionListener
                 (this::actionPerformed_buttonLogin);
@@ -227,10 +234,16 @@ public class VistaMenu {
         menuItem_consultar_ranking.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.RANKING));
 
-        buttonConsultarRanking.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.RANKING));
+        menuItem_crearPartida.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA));
 
-        buttonCargarBorrarPartida.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARPARTIDA));//
+        menuItem_CargarBorrarPartida.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARPARTIDA));
+
+        menuItem_crearTablero.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CREARTABLERO));
+
+        menuItem_BorrarTablero.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARTABLERO));
     }
 }

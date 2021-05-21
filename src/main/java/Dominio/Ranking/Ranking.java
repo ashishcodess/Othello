@@ -75,6 +75,16 @@ public class Ranking {
         return (i-1);
     }
 
+    /**
+     * Este metodo inserta en la ultima posicion "i" el ElementoRanking "e"
+     * @param id identificador de Persona a borrar
+     * @param nick nickname de Persona a borrar */
+    public void eliminar_elemento_ranking(int id, String nick) {
+        int ires = existe_en_ranking(id,nick);
+        if (ires != -1) {
+            this.ranking.remove(ires);
+        }
+    }
 
     /**
      * Operacion consultar_info_elemento_i(i)

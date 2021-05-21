@@ -22,16 +22,12 @@ public class CtrlDominio {
     private static int id_2; //ID jugador2
     private static String nick_2; //nickname jugador2
 
+    /**Es la partida que ejecutaremos siempre desde la capa de Dominio*/
     private static Partida partida_activa;
+
+    /**Es identificador de tablero a cargar (se modifica si queremos cargar un tablero personalizado)*/
     private static int idTablero_cargar;
 
-
-
-    public void modificar_idTablero_cargar(int id) {
-        idTablero_cargar = id;
-    }
-
-    public int consultar_idTablero_cargar() {return idTablero_cargar;}
 
 
     /**
@@ -78,8 +74,17 @@ public class CtrlDominio {
         return "Usuarios activos:         J1 - (ID:" + id_1 + " , nickname: " + nickname + ")            " + "J2 - (ID2:" + id_2 + " , nickname2: " + nick_2 + ")";
     }
 
+    /**
+     * Metodo consultar Identificador J1
+     * @return devuelve el identificador del jugador 1
+     * */
     public int consultar_id_j1() {return id_1;}
 
+
+    /**
+     * Metodo consultar nickname J1
+     * @return devuelve el nickname del jugador 1
+     * */
     public String consultar_nickname_j1() {return nickname;}
 
     /**
@@ -230,15 +235,21 @@ public class CtrlDominio {
 
     //FUNCIONES DE TABLERO
 
-    public int[][] dominio_cargar_tablero_partida(int idPartida) {
-        int[][] tab = new int[8][8];
-        try {
-            tab = cp.ctrl_cargar_tableroPartida(idPartida);
-        } catch (Exception ignored) {
-
-        }
-        return tab;
+    /**
+     * Metodo modificar idTablero_cargar
+     * @param id identificador de tablero personalizado a modificar
+     * */
+    public void modificar_idTablero_cargar(int id) {
+        idTablero_cargar = id;
     }
+
+
+    /**
+     * Metodo consultar idTablero_cargar
+     * @return devuelve el identificador del tablero a cargar
+     * */
+    public int consultar_idTablero_cargar() {return idTablero_cargar;}
+
 
     /**
      * Metodo listar tableros disponibles
@@ -248,6 +259,10 @@ public class CtrlDominio {
         return cp.ctrl_tableros_disponibles();
     }
 
+
+    /**
+     * Metodo crear tablero (desde dominio): crea una partida ficticia para modificar el tablero personalizado
+     * */
     public void dominio_crear_tablero() {
         try {
             Tablero t = new Tablero(dominio_cargar_tablero(0));
@@ -260,8 +275,9 @@ public class CtrlDominio {
     }
 
     /**
-     * Operacion Guardar Tablero (desde Dominio)
-     */
+     * Metodo consultar tablero partida (partida_activa)
+     * @return True en caso haberse guardado con exito el tablero, caso contrario devuelve falso
+     * */
     public boolean dominio_guardar_tablero(){
         try {
             int[][] tab = consultar_TableroPartida();
@@ -273,6 +289,11 @@ public class CtrlDominio {
         return false;
     }
 
+
+    /**
+     * Metodo consultar tablero partida (partida_activa)
+     * @return devuelve el tablero de la partida, en caso de ser "null" devuelve un tablero vacio
+     * */
     public int[][] consultar_TableroPartida() {
         if (partida_activa != null) return partida_activa.getTableroPartida().toMatrix();
         else {
@@ -284,21 +305,32 @@ public class CtrlDominio {
         }
     }
 
+    /**
+     * Metodo cargar tablero de una partida
+     * @param idPartida identificador de partida a cargar el tablero
+     * @return devuelve el tablero de la partida
+     * */
+    public int[][] dominio_cargar_tablero_partida(int idPartida) {
+        int[][] tab = new int[8][8];
+        try {
+            tab = cp.ctrl_cargar_tableroPartida(idPartida);
+        } catch (Exception ignored) {}
+        return tab;
+    }
+
 
     /**
-     * Operacion Cargar Tablero (desde Dominio)
+     * Metodo Cargar Tablero (desde Dominio)
      * @param idTablero es el ID de tablero a cargar
-     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero inicial
-     */
+     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero vacio */
     public int [][] dominio_cargar_tablero(int idTablero) throws IOException {
         return cp.ctrl_cargar_tablero(idTablero);
     }
 
 
-    /** Operacion borrar_tablero (desde Dominio)
+    /** Metodo borrar_tablero (desde Dominio)
      * @param idTablero el identificador de tablero a borrar
-     * @return devuelve TRUE en caso que se haya borrado con exito
-     */
+     * @return devuelve TRUE en caso que se haya borrado con exito */
     public boolean dominio_borrar_tablero(int idTablero) {
         return cp.ctrl_borrar_tablero(idTablero);
     }
@@ -313,16 +345,19 @@ public class CtrlDominio {
      * @return devuelve un Arraylist de strings con las posibles partidas donde se encuentra el Jugador
      * */
     public ArrayList<String> listar_partidas_disponibles(int id, String nick){
-        //enviara al Controlador de Presentacion (para mostrar que partidas puede cargar/borrar el jugador)
+        ArrayList<String> as = new ArrayList<>();
         try {
-            return cp.ctrl_listar_partidas_disponibles(id,nick);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+            as =  cp.ctrl_listar_partidas_disponibles(id,nick);
+        } catch (Exception ignored) {}
+        return as;
 
     }
 
+    /**
+     * Metodo consultar info de partida a partir de un id (desde domino)
+     * @param id es el identificador de partida a consultar la informacion
+     * @return devuelve un Arraylist de Strings con toda la informacion del fichero de partida identificado por su id
+     * */
     public ArrayList<String> consultar_info_partida_ID(int id) {
         ArrayList<String> as = new ArrayList<>();
         try {
@@ -333,6 +368,10 @@ public class CtrlDominio {
     }
 
 
+    /**
+     * Metodo crear Partida (desde domino)
+     * @param a_int es la informacion recogida de la vista de Configuracin de Partida
+     * */
     public void domino_crearPartida(ArrayList<Integer> a_int) {
         try {
             int[] reglas = new int[3];
@@ -362,7 +401,10 @@ public class CtrlDominio {
         catch (Exception ignored) {}
     }
 
-
+    /**
+     * Metodo guardar partida (desde domino)
+     * guarda la informacion de partida_activa en un fichero
+     * @return devuelve cierto en caso de haberse guardado con exito, caso contrario devuelve falso */
     public boolean dominio_guardar_partida() {
         try {
             ArrayList<String> as = partida_activa.toArrayList();
@@ -375,7 +417,7 @@ public class CtrlDominio {
 
 
     /**
-     * Metodo cargar Partida (desde domino
+     * Metodo cargar Partida (desde domino)
      * Carga una partida a partir de un fichero guardado previamente y se actualiza "partida_activa"
      * @param idPartida id de partida a cargar
      * */
@@ -387,7 +429,7 @@ public class CtrlDominio {
 
     }
 
-    /** Operacion Borrar Partida (desde Dominio)
+    /** Metodo Borrar Partida (desde Dominio)
      * @param idPartida es el identificador de partida a borrar
      * @return devuelve TRUE en caso que se haya borrado con exito
      */

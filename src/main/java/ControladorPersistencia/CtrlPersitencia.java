@@ -65,6 +65,7 @@ public class CtrlPersitencia {
         this.idMax_usuario = io.calcularID_Ficheros(dir_usuarios,tipoFichero.USUARIO);
         this.idMax_partida = io.calcularID_Ficheros(dir_partidas,tipoFichero.PARTIDA);
         this.idMax_tablero = io.calcularID_Ficheros(dir_tablero,tipoFichero.TABLERO);
+
     }
 
 
@@ -205,6 +206,12 @@ public class CtrlPersitencia {
 
     }
 
+    /**
+     * Metodo cargar tablero de Partida
+     * @param idPartida identificador de partida a leer el tablero para cargar
+     * @return devuelve el tablero de la partida que se identifique con idPartida
+     * @throws IOException en caso de no existir dicho fichero de Partida
+     * */
     public int[][] ctrl_cargar_tableroPartida(int idPartida) throws IOException {
         String pathF = dir_partidas + idPartida + ".txt";
         ArrayList<String> as = io.leerFichero(pathF);
@@ -219,11 +226,18 @@ public class CtrlPersitencia {
         return map;
     }
 
-
+    /**
+     * Metodo Consunltar info de partida (a partir de un ID de partida)
+     * @param idPartida identificador de partida a leer
+     * @return devuelve toda la informacion de la partida
+     * @throws IOException en caso de no existir dicho fichero de Partida
+     * */
     public ArrayList<String> consultar_info_partida_id(int idPartida) throws IOException {
         String pathF = dir_partidas + idPartida + ".txt";
         return io.leerFichero(pathF);
     }
+
+
     /**
      * Operacion ctrl_guardar_partida
      * @param as es ArrayList con los parametros necesarios para guardar la partida (utilizando funcion toArrayList() de Partida)
@@ -240,15 +254,19 @@ public class CtrlPersitencia {
             String[] s2 = s1.split(" ");
             id1 = Integer.parseInt(s2[0]);
             if (s2.length != 1) nick1 = s2[1];
-            s1 = as.get(3);
+            s1 = as.get(2);
             s2 = s1.split(" ");
             id2 = Integer.parseInt(s2[0]);
             if (s2.length != 1) nick2 = s2[1];
             if (id1 > 5) {
-                if (ctrl_no_existe_partida_usuario(id1,nick1,id_partida)) ctrl_agregar_partida_usuario(id1,nick1,id_partida);
+                if (ctrl_no_existe_partida_usuario(id1,nick1,id_partida)) {
+                    ctrl_agregar_partida_usuario(id1,nick1,id_partida);
+                }
             }
             if (id2 > 5) {
-                if (ctrl_no_existe_partida_usuario(id2,nick2,id_partida)) ctrl_agregar_partida_usuario(id2,nick2,id_partida);
+                if (ctrl_no_existe_partida_usuario(id2,nick2,id_partida)) {
+                    ctrl_agregar_partida_usuario(id2,nick2,id_partida);
+                }
             }
     }
 
@@ -339,7 +357,7 @@ public class CtrlPersitencia {
     /**
      * Operacion ctrl_cargar_tablero
      * @param idTablero es el ID de tablero a cargar
-     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero inicial
+     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero vacio
      */
     public int[][] ctrl_cargar_tablero(int idTablero) throws IOException {
         int[][] map = new int[8][8];
@@ -347,8 +365,8 @@ public class CtrlPersitencia {
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 map[i][j] = 0;
-                if ((i == 3 && j==3) || (i == 4 && j==4)) map[i][j] = 3;
-                else if ((i == 3 && j==4) || (i == 4 && j==3)) map[i][j] = 2;
+                //if ((i == 3 && j==3) || (i == 4 && j==4)) map[i][j] = 3;
+                //else if ((i == 3 && j==4) || (i == 4 && j==3)) map[i][j] = 2;
             }
         }
         String pathF = dir_tablero + idTablero + ".txt";

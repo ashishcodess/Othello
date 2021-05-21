@@ -73,7 +73,6 @@ public class VistaCargarBorrar {
         if (b) {
             tipoActual = t;
             cambiar_info_labels_botones(tipoActual);
-            //FALTA COMBOBOX PARA PARTIDAS + DIFERENCIAR LISTENERS
             switch (tipoActual) {
                 case TABLERO:
                     buttonCargar.setEnabled(iCtrlPresentacion.consultar_idTablero_cargar() == -1);
@@ -206,8 +205,10 @@ public class VistaCargarBorrar {
                     selector.removeItemAt(i);
                 }
                 ArrayList<String> tableros_disponibles = iCtrlPresentacion.obtener_lista_tableros_disponibles();
-                for (String tableros_disponible : tableros_disponibles) {
-                    selector.addItem(tableros_disponible);
+                if (tableros_disponibles.size() != 0) {
+                    for (String tableros_disponible : tableros_disponibles) {
+                        selector.addItem(tableros_disponible);
+                    }
                 }
                 selector.setSelectedIndex(0);
                 id_tablero_seleccionado = -1;
@@ -222,8 +223,10 @@ public class VistaCargarBorrar {
                 int idAux = iCtrlPresentacion.consultar_id_j1();
                 String nickAux = iCtrlPresentacion.consultar_nickname_j1();
                 ArrayList<String> partidas_guardadas = iCtrlPresentacion.presentacion_buscar_partidas(idAux,nickAux);
-                for (String p : partidas_guardadas) {
-                    selector.addItem(p);
+                if (partidas_guardadas.size() != 0) {
+                    for (String p : partidas_guardadas) {
+                        selector.addItem(p);
+                    }
                 }
                 selector.setSelectedIndex(0);
                 break;
@@ -296,7 +299,7 @@ public class VistaCargarBorrar {
 
 
     /**
-     * Metodo listener del elemento comboBox "selector_tablero"
+     * Metodo listener del elemento comboBox "selector"
      * */
     private void listener_selector_tablero() {
         obtener_info_selector();
@@ -339,8 +342,8 @@ public class VistaCargarBorrar {
                 cambiar_imagen_casilla(i,j,tab[i][j]);
             }
         }
-
     }
+
 
     /**
      * Metodo listener del elemento boton "Borrar"
