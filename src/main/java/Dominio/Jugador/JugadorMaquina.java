@@ -14,17 +14,11 @@ public class JugadorMaquina extends Jugador {
     /** atributo profundidad (para IA) */
     private int profundidad_MinMax;
 
-    /**atributo estados succesores para la implementación del algoritmo de la IA*/
-    private final Set<Tablero> succesores;
-
-
-
     /**
      * Constructora por defecto (vacia) de JugadorMaquina
      * */
     public JugadorMaquina () {
         super();
-        this.succesores = new HashSet<>();
     }
 
     /**
@@ -34,7 +28,6 @@ public class JugadorMaquina extends Jugador {
     public JugadorMaquina (int idMaquina) throws MyException{
         super(idMaquina);
         if (idMaquina > 5)throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idMaquina);
-        this.succesores = new HashSet<>();
         this.profundidad_MinMax = (idMaquina+1)*2;
     }
 
@@ -74,12 +67,13 @@ public class JugadorMaquina extends Jugador {
         mejorHijo.setDisponiblesAnterior(t.getDisponiblesAnterior());
         Set<Tablero> estados_hijos = this.genera_estados(t, turno, reglas);
         int evaluacion;
+        int mineval = 1000;
+        int maxeval = -1000;
 
         for(Tablero aux : estados_hijos){
-            aux = valorMaxNegras(aux,turno+1,alpha, beta, this.get_profundidadMaquina()-1, reglas);
-            evaluacion = aux.getHeuristicValueNegras();
+            Tablero it = new Tablero(valorMaxNegras(aux,turno+1,alpha, beta, depth-1, reglas).getTablero());
+            evaluacion = it.getHeuristicValueNegras();
             if(turno%2 == 0){
-                int maxeval = -1000;
                 if(maxeval < evaluacion){
                     maxeval = evaluacion;
                     mejorHijo = new Tablero(aux.getTablero());
@@ -87,7 +81,6 @@ public class JugadorMaquina extends Jugador {
                 }
             }
             else {
-                int mineval = 1000;
                 if(mineval > evaluacion){
                     mineval = evaluacion;
                     mejorHijo = new Tablero(aux.getTablero());
@@ -120,12 +113,13 @@ public class JugadorMaquina extends Jugador {
 
         Set<Tablero> estados_hijos = this.genera_estados(t, turno, reglas);
         int evaluacion;
+        int maxeval = -1000;
+        int mineval = 1000;
 
         for(Tablero aux : estados_hijos){
-            aux = valorMaxBlancas(aux,turno+1,alpha, beta, this.get_profundidadMaquina()-1, reglas);
-             evaluacion = aux.getHeuristicValueBlancas();
+            Tablero it = new Tablero(valorMaxNegras(aux,turno+1,alpha, beta, depth-1, reglas).getTablero());
+            evaluacion = it.getHeuristicValueBlancas();
             if(turno%2 != 0){
-                int maxeval = -1000;
                 if(maxeval < evaluacion){
                     maxeval = evaluacion;
                     mejorHijo = new Tablero(aux.getTablero());
@@ -133,7 +127,6 @@ public class JugadorMaquina extends Jugador {
                 }
             }
             else{
-                int mineval = 1000;
                 if(mineval > evaluacion){
                     mineval = evaluacion;
                     mejorHijo = new Tablero(aux.getTablero());
@@ -188,6 +181,7 @@ public class JugadorMaquina extends Jugador {
     public Set<Tablero> genera_estados(Tablero t, int turno, int[] reglas){
 
         Tablero aux;
+        Set<Tablero> succesores = new HashSet<>();
 
         Set<Position> disponibles = t.getCasillasDisponibles();
 
@@ -198,9 +192,9 @@ public class JugadorMaquina extends Jugador {
             aux.printTablero();
 
             aux.actualizarTablero(pos.getX(), pos.getY(), turno);
-            if(reglas[0] == 1)aux.calcularCasillasDisponiblesVertical(turno);
-            if(reglas[1] == 1)aux.calcularCasillasDisponiblesHorizontal(turno);
-            if(reglas[2] == 1)aux.calcularCasillasDisponiblesDiagonales(turno);
+            if(reglas[0] == 1)aux.calcularCasillasDisponiblesVertical(turno+1);
+            if(reglas[1] == 1)aux.calcularCasillasDisponiblesHorizontal(turno+1);
+            if(reglas[2] == 1)aux.calcularCasillasDisponiblesDiagonales(turno+1);
 
             aux.printTablero();
             succesores.add(aux);
