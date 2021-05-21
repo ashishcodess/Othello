@@ -57,6 +57,7 @@ public class VistaConfigPartida {
 
     /**
      * Constructora de VistaConfigPartida
+     * @param pCtrlPresentacion controlador de presentacion a asignarle a dicha vista
      * */
     public VistaConfigPartida(CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;

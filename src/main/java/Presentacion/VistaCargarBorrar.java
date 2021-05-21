@@ -50,6 +50,7 @@ public class VistaCargarBorrar {
 
     /**
      * Constructora de Vista Cargar/Borrar Tablero
+     * @param pCtrlPresentacion controlador de presentacion a asignarle a dicha vista
      * */
     public VistaCargarBorrar(CtrlPresentacion pCtrlPresentacion)  {
         iCtrlPresentacion = pCtrlPresentacion;
@@ -65,6 +66,7 @@ public class VistaCargarBorrar {
     /**
      *Metodo hacerVisible
      * @param b si TRUE entonces el frame sera visible, caso contrario estara desactivado
+     * @param t tipoTablero a asignar y modificar (para visualizacion de JLabels)
      * */
     public void hacerVisible(boolean b, CtrlPresentacion.tipoTablero t) {
         frameVista.pack();

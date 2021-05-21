@@ -18,6 +18,7 @@ public class DriverPersistencia {
 
     /** test_IOPartidas
      * @param id es el identificador de la partida para realizar las pruebas
+     * @throws Exception heredado de otras clases
      * */
     public static void test_IOPartidas(int id) throws Exception {
         System.out.println("Probar metodos: Cargar/Guardar partida, toArrayList, listar_partidas_disponibles, borrar_partida");
@@ -72,6 +73,7 @@ public class DriverPersistencia {
     /** test_IOUsuario
      * @param id es el identificador de usuario a realizar las pruebas
      * @param nick es el nickname de usuario a realizar las pruebas
+     * @throws IOException heredado de otras clases
      * */
     public static void test_IOUsuario(int id, String nick) throws IOException{
         System.out.println("Introducir datos usuario a crear para hacer las pruebas");

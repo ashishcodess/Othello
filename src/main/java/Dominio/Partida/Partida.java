@@ -513,7 +513,9 @@ public class Partida {
     }
 
     /**
+     * (PARA DRIVER DOMINIO)
      * Operacion que imprime por salida estandar las casillas disponibles a colocar una pieza de la partida en ese momento
+     * @param disponibles Set de casillas disponibles a mostrar en pantalla
      */
     public void print_casillas_disponibles(Set<Position> disponibles) {
         //Set<Position> disponibles = this.tablero.getCasillasDisponibles();

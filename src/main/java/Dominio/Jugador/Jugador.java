@@ -21,6 +21,7 @@ public abstract class Jugador {
     /**
      * Constructora de Jugador
      * @param idJugador (id igual a idJugador)
+     * @throws Exception lanza excepcion en caso de ID de jugador negativo
      */
     public Jugador (int idJugador) throws Exception{
         if (idJugador < 0) throw new MyException(MyException.tipoExcepcion.ID_NEGATIVO,idJugador);

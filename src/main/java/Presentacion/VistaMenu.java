@@ -58,6 +58,7 @@ public class VistaMenu {
 
     /**
      * Constructora de VistaMenu
+     * @param pCtrlPresentacion controlador de presentacion a asignarle a dicha vista
      * */
     public VistaMenu(CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
@@ -182,6 +183,7 @@ public class VistaMenu {
 
     /**
      * Metodo actionPerfomed del boton de Login (Para cargar otro usuario diferente al actual)
+     * @param event evento del boton de Login
      * */
     public void actionPerformed_buttonLogin (ActionEvent event) {
         iCtrlPresentacion.hacerVisibleVista(vistaActiva.LOGIN);

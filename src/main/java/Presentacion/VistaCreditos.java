@@ -19,6 +19,7 @@ public class VistaCreditos {
 
     /**
      * Constructora de VistaCreditos (inicializa panel y botones)
+     * @param pCtrlPresentacion controlador de presentacion a asignarle a dicha vista
      * */
     public VistaCreditos(CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;

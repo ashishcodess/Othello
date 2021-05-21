@@ -115,6 +115,7 @@ public class Ranking {
      * @param id2 identificador del Jugador2
      * @param nick2 nickname del Jugador2 (en caso de que tenga nickname)
      * @param ganador incrementar contador en funcion del tipoGanador de ganador
+     * @throws Exception lanza excepcion en casod fallar con el elementoRanking a incrementar las partidas
      * */
     public void incrementar_ganadas_perdidas(int id1, String nick1,int id2, String nick2, tipoGanador ganador) throws Exception {
         switch (ganador) {
@@ -142,6 +143,7 @@ public class Ranking {
      * @param id identificador del Jugador2
      * @param nick nickname del Jugador2 (en caso de que tenga nickname)
      * @param ganador incrementar contador en funcion del tipo de ganador
+     * @throws Exception lanza excepcion en casod fallar con el elementoRanking a incrementar las partidas
      * */
     public void incrementar_partida(int id, String nick, tipoGanador ganador) throws Exception {
         int i = existe_en_ranking(id,nick);
@@ -277,6 +279,8 @@ public class Ranking {
     /**
      * Comprobar logro jugadores
      * @param tipo tipo de Logro de jugadores a comprobar (PARTIDAS_TOTALES, PARTIDAS_GANADAS, PARTIDAS_PERDIDAS)
+     * @param nick1 nickname del jugador a asignarle el logro
+     * @param id1 identificador del jugador a asignarle el logro
      * @param t entero a comprobar la condicion
      * */
     public void cambiar_logro_jugador(Logros.tipoLogro tipo, String nick1, int id1, int t) {

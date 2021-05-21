@@ -24,6 +24,7 @@ public class DriverPartida {
      * @param idj1 es el ID del jugador1 de la Partida
      * @param idj2 es el ID del jugador2 de la Partida
      * @throws MyException caso de fallar con el modo de juego
+     * @return devuelve la partida creada
      * */
     public static Partida test_crear_partida_mostrar(int id, int modoJuego, int[] r, int idj1, int idj2) throws Exception {
         Partida res = new Partida(id,modoJuego,r,idj1,"",idj2,"");
@@ -47,6 +48,7 @@ public class DriverPartida {
      * @param idj1 es el ID del jugador1 de la Partida
      * @param idj2 es el ID del jugador2 de la Partida
      * @throws MyException caso de fallar con el modo de juego
+     * @return devuelve la partida creada con este test
      * */
     public static Partida test_crear_partida(int id, int modoJuego, int[] r, int idj1, int idj2) throws Exception {
         Partida res = new Partida(id,modoJuego,r,idj1,"",idj2,"");

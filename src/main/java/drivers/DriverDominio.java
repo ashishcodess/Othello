@@ -1,3 +1,5 @@
+package drivers;
+
 import ControladorPersistencia.CtrlPersitencia;
 
 import Dominio.Ranking.Logros;
@@ -89,6 +91,7 @@ public class DriverDominio {
      * Metodo actualizar_ranking
      * @param p partida de la cual se necesita informacion de los jugadores y del ganador
      * @param ganador incrementar contador de partidas en funcion de [2: empate, 1:gana jugador2, 0:gana jugador1]
+     * @param f direccion del fichero de ranking a almacenar la informacion del ranking actualizado
      * */
     private static void actualizar_ranking(Partida p, int ganador, String f){
         int id1, id2;
@@ -312,6 +315,7 @@ public class DriverDominio {
      * Metodo cargar_Tablero
      * @param idTablero es el identificador de tablero a cargar
      * @return devuelve el tablero personalizado con id igual a idTablero, caso contrario devuele tablero inicial
+     * @throws IOException en caso de no existir el fichero con idTablero
      * */
     private static Tablero cargar_Tablero(int idTablero) throws IOException {
         int[][]tab = cp.ctrl_cargar_tablero(idTablero);
@@ -322,6 +326,7 @@ public class DriverDominio {
      * Metodo cargar_turno_Tablero
      * @param idTablero es el identificador de tablero a cargar
      * @return devuelve el turno del tablero personalizado con id igual a idTablero
+     * @throws IOException en caso de no existir el fichero con idTablero
      * */
     private static int cargar_turno_Tablero(int idTablero) throws IOException {
         return cp.ctrl_cargar_turno_tablero(idTablero);

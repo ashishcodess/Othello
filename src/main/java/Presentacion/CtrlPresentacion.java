@@ -140,6 +140,7 @@ public class CtrlPresentacion {
      * Metodo login (desde Capa Presentacion)
      * @param id identificador de usuario a hacer login
      * @param nick nickname de usuario a hacer login
+     * @param a tipoJugador a hacer el login (JUGADOR1 o JUGADOR2)
      * @return devuelve 1 en caso de login correcto, 0 caso contrario
      * */
     public boolean presentacion_login(int id, String nick, tipoJugador a) {
@@ -157,12 +158,14 @@ public class CtrlPresentacion {
 
     /**
      * Metodo login (desde Capa Presentacion)
-     * @param id identificador de usuario que quiere cargar partida
-     * @return devuelve 1 en caso de login correcto, 0 caso contrario
+     * @param id identificador de usuario a mostrar las partidas disponibles de dicho Jugador
+     * @param nick nickname de usuario a mostrar las partidas disponibles de dicho Jugador
+     * @return devuelve un ArrayList de Strings con las partidas disponibles de este Jugador
      * */
     public ArrayList<String> presentacion_buscar_partidas(int id , String nick ) {
         return ctrlDominio.listar_partidas_disponibles(id , nick);
     }
+
     public ArrayList<String> consultar_info_partida_ID(int id) {
         return ctrlDominio.consultar_info_partida_ID(id);
     }

@@ -322,7 +322,8 @@ public class CtrlDominio {
     /**
      * Metodo Cargar Tablero (desde Dominio)
      * @param idTablero es el ID de tablero a cargar
-     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero vacio */
+     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero vacio
+     * @throws IOException en caso de no existir el fichero con idTablero*/
     public int [][] dominio_cargar_tablero(int idTablero) throws IOException {
         return cp.ctrl_cargar_tablero(idTablero);
     }
