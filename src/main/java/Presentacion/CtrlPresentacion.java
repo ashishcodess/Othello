@@ -2,25 +2,24 @@ package Presentacion;
 
 import ControladorPersistencia.CtrlPersitencia;
 import Dominio.CtrlDominio;
-import MyException.MyException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
 //agregar en funcion de las necesidades
-enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,PARTIDA,CREARTABLERO,CARGARTABLERO, BORRARTABLERO ,LOGINPARTIDA , CARGARPARTIDA}
+enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,CREARTABLERO,CARGARTABLERO, BORRARTABLERO , CARGARPARTIDA}
+
+
 
 
 public class CtrlPresentacion {
 
 
-
-
+    public enum tipoTablero {PARTIDA,TABLERO}
     public enum tipoJugador {JUGADOR1,JUGADOR2}
 
     private final CtrlDominio ctrlDominio;
@@ -32,7 +31,7 @@ public class CtrlPresentacion {
     private final VistaTablero vistaTablero;
     private final VistaConfigPartida vistaConfigPartida;
     private final VistaPartida vistaPartida;
-    private final VistaCargarTablero vistaCargarTablero;
+    private final VistaCargarBorrar vistaCargarBorrar;
 
     private final VistaCargarPartida vistaCargarPartida;
     /**
@@ -47,7 +46,7 @@ public class CtrlPresentacion {
         vistaPartida = new VistaPartida(this);
         vistaCreditos = new VistaCreditos(this);
         vistaTablero  = new VistaTablero(this);
-        vistaCargarTablero = new VistaCargarTablero(this);
+        vistaCargarBorrar = new VistaCargarBorrar(this);
         vistaCargarPartida = new VistaCargarPartida(this);
     }
 
@@ -89,12 +88,12 @@ public class CtrlPresentacion {
         vistaLogin.hacerVisible(false,tipoJugador.JUGADOR1);
         vistaMenu.hacerVisible(false);
         vistaConfigPartida.hacerVisible(false);
-        vistaPartida.hacerVisible(false, VistaTablero.tipoTablero.PARTIDA);
+        //vistaPartida.hacerVisible(false, tipoTablero.PARTIDA);
         vistaRanking.hacerVisible(false);
         vistaCreditos.hacerVisible(false);
-        vistaTablero.hacerVisible(false, VistaTablero.tipoTablero.PARTIDA);
+        vistaTablero.hacerVisible(false, tipoTablero.PARTIDA);
         vistaConfigPartida.hacerVisible(false);
-        vistaCargarTablero.hacerVisible(false, VistaCargarTablero.tipoTab.PARTIDA);
+        vistaCargarBorrar.hacerVisible(false, tipoTablero.PARTIDA);
         vistaCargarPartida.hacerVisible(false);
     }
 
@@ -122,24 +121,24 @@ public class CtrlPresentacion {
                 break;
             case TABLERO:
                 vistaTablero.recargar_tablero();
-                vistaTablero.hacerVisible(true, VistaTablero.tipoTablero.PARTIDA);
+                vistaTablero.hacerVisible(true, tipoTablero.PARTIDA);
                 break;
             case CONFIGPARTIDA:
                 vistaConfigPartida.hacerVisible(true);
                 break;
             case CREARTABLERO:
                 crearTablero();
-                vistaTablero.hacerVisible(true, VistaTablero.tipoTablero.TABLERO);
+                vistaTablero.hacerVisible(true, tipoTablero.TABLERO);
                 break;
             case CARGARTABLERO:
-                vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTab.TABLERO);
+                vistaCargarBorrar.hacerVisible(true, tipoTablero.TABLERO);
                 break;
             case BORRARTABLERO:
                 modificar_idTablero_cargar(-2);
-                vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTab.TABLERO);
+                vistaCargarBorrar.hacerVisible(true, tipoTablero.TABLERO);
                 break;
             case CARGARPARTIDA:
-                vistaCargarTablero.hacerVisible(true, VistaCargarTablero.tipoTab.PARTIDA);
+                vistaCargarBorrar.hacerVisible(true, tipoTablero.PARTIDA);
         }
     }
 
@@ -186,7 +185,7 @@ public class CtrlPresentacion {
      * metodo Get info usuario activo (desde Capa Presentacion)
      * @return devuelve la informacion que esta logueado dentro del juego
      * */
-    public String presentacion_get_info_usuario_activo() {return ctrlDominio.get_info_usuario_activo();}
+    public String get_info_usuario_activo() {return ctrlDominio.get_info_usuario_activo();}
 
 
     public int presentacion_get_id_usuario(){
@@ -276,10 +275,6 @@ public class CtrlPresentacion {
         ctrlDominio.dominio_crear_tablero();
     }
 
-    public void guardarTablero() {
-        ctrlDominio.dominio_guardar_tablero();
-    }
-
     public int[][] cargarTablero(int id) {
         int [][]tab = new int[8][8];
         try{
@@ -322,7 +317,7 @@ public class CtrlPresentacion {
 
     public int consultar_idTablero_cargar() {return ctrlDominio.consultar_idTablero_cargar();}
 
-    public void presentacion_guardar_tablero() { ctrlDominio.dominio_guardar_tablero();}
+    public void guardar_tablero() { ctrlDominio.dominio_guardar_tablero();}
 
     public boolean borrar_tablero(int id) {return ctrlDominio.dominio_borrar_tablero(id);}
 
@@ -341,7 +336,7 @@ public class CtrlPresentacion {
         return ctrlDominio.getCasillasDisponibles();
     }*/
 
-    public void presentacion_guardar_partida() { ctrlDominio.dominio_guardar_partida();}
+    public void guardar_partida() { ctrlDominio.dominio_guardar_partida();}
 
     public void presentacionRondaPartida(int x, int y) {
         ctrlDominio.dominioRondaPartida(x, y);

@@ -10,9 +10,7 @@ import java.awt.event.ActionEvent;
 
 public class VistaTablero {
 
-    public enum tipoTablero {PARTIDA, TABLERO}
-
-    private tipoTablero tipoActual;
+    private CtrlPresentacion.tipoTablero tipoActual;
 
     private final CtrlPresentacion iCtrlPresentacion;
     private JFrame frameVista = new JFrame("Vista Tablero");
@@ -38,7 +36,7 @@ public class VistaTablero {
     private final JMenuItem menuitemGuardar= new JMenuItem("Guardar Partida");
     private final JMenuItem menuitemFinalizar = new JMenuItem("Finalizar Partida (Volver al menu Principal)");
 
-    private void cambiar_info_labels_botones(tipoTablero t) {
+    private void cambiar_info_labels_botones(CtrlPresentacion.tipoTablero t) {
         menuitemFinalizar.setText("Finalizar (Volver al menu Principal)");
         switch (t) {
             case PARTIDA:
@@ -59,7 +57,7 @@ public class VistaTablero {
 
     public VistaTablero(CtrlPresentacion pCtrlPresentacion)  {
         iCtrlPresentacion = pCtrlPresentacion;
-        tipoActual = tipoTablero.PARTIDA;
+        tipoActual = CtrlPresentacion.tipoTablero.PARTIDA;
         frameVista.setLayout(new BorderLayout()); // 5 zonas (North, South, East, West, Center)
         inicializar_frameVista();
         obtener_dir_imagenes();
@@ -89,7 +87,7 @@ public class VistaTablero {
         imagen_negra = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_NEGRA);
     }
 
-    public void hacerVisible(boolean b,tipoTablero t) {
+    public void hacerVisible(boolean b,CtrlPresentacion.tipoTablero t) {
         frameVista.pack();
         frameVista.setVisible(b);
         frameVista.setEnabled(b);
@@ -171,10 +169,10 @@ public class VistaTablero {
     private void listener_guardar_partida() {
         switch (tipoActual) {
             case PARTIDA:
-                iCtrlPresentacion.presentacion_guardar_partida();
+                iCtrlPresentacion.guardar_partida();
                 break;
             case TABLERO:
-                iCtrlPresentacion.presentacion_guardar_tablero();
+                iCtrlPresentacion.guardar_tablero();
                 break;
         }
         iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU);

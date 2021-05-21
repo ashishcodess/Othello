@@ -72,7 +72,7 @@ public class VistaMenu {
      * */
     public void hacerVisible(boolean b) {
         if (b) {
-            textoInfoUsuario.setText(iCtrlPresentacion.presentacion_get_info_usuario_activo());
+            textoInfoUsuario.setText(iCtrlPresentacion.get_info_usuario_activo());
             textoInfoUsuario.setEditable(false);
         }
         frameVista.pack();

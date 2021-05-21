@@ -8,10 +8,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class VistaCargarTablero {
+public class VistaCargarBorrar {
 
-    public enum tipoTab {TABLERO, PARTIDA}
-    private tipoTab  tipoActual;
+    private CtrlPresentacion.tipoTablero tipoActual;
 
     private String imagen_vacia = "";
     private String imagen_disponible = "";
@@ -49,9 +48,9 @@ public class VistaCargarTablero {
     /**
      * Constructora de Vista Cargar/Borrar Tablero
      * */
-    public VistaCargarTablero(CtrlPresentacion pCtrlPresentacion)  {
+    public VistaCargarBorrar(CtrlPresentacion pCtrlPresentacion)  {
         iCtrlPresentacion = pCtrlPresentacion;
-        tipoActual = tipoTab.TABLERO;
+        tipoActual = CtrlPresentacion.tipoTablero.TABLERO;
         frameVista.setLayout(new BorderLayout()); // 5 zonas (North, South, East, West, Center)
         inicializar_frameVista();
         obtener_dir_imagenes();
@@ -64,7 +63,7 @@ public class VistaCargarTablero {
      *Metodo hacerVisible
      * @param b si TRUE entonces el frame sera visible, caso contrario estara desactivado
      * */
-    public void hacerVisible(boolean b, tipoTab t) {
+    public void hacerVisible(boolean b, CtrlPresentacion.tipoTablero t) {
         frameVista.pack();
         frameVista.setVisible(b);
         frameVista.setEnabled(b);
@@ -86,25 +85,28 @@ public class VistaCargarTablero {
         }
     }
 
-    private void cambiar_info_labels_botones(VistaCargarTablero.tipoTab t) {
+
+
+    private void cambiar_info_labels_botones(CtrlPresentacion.tipoTablero t) {
+        infoJ1.setText(" ");
+        infoJ2.setText(" ");
+        infoModoJuego.setText(" ");
+        infoReglas.setText(" ");
+        infoTurno.setText(" ");
         switch (t) {
             case PARTIDA:
                 buttonCargar.setText("Cargar Partida");
                 buttonBorrar.setText("Borrar Partida");
-                infoJ1.setText("J1:");
-                infoJ2.setText("J2:");
-                infoModoJuego.setText("Modo de juego: ");
-                infoReglas.setText("Reglas: ");
-                infoTurno.setText("Turno: ");
+
                 break;
             case TABLERO:
                 buttonCargar.setText("Cargar Tablero");
                 buttonBorrar.setText("Borrar Tablero");
-                infoJ1.setText(" ");
+                /*infoJ1.setText(" ");
                 infoJ2.setText(" ");
                 infoModoJuego.setText(" ");
                 infoReglas.setText(" ");
-                infoTurno.setText(" ");
+                infoTurno.setText(" ");*/
                 break;
         }
     }
@@ -318,9 +320,17 @@ public class VistaCargarTablero {
                     infoTurno.setText("Turno: " + as.get(4));
                     String sAux = as.get(2); //modo juego
                     String s = "";
-                    if (sAux.equals("0")) s = "IA vs IA";
-                    else if (sAux.equals("1")) s = "Persona vs IA";
-                    else if (sAux.equals("2")) s = "Persona vs Persona";
+                    switch (sAux) {
+                        case "0":
+                            s = "IA vs IA";
+                            break;
+                        case "1":
+                            s = "Persona vs IA";
+                            break;
+                        case "2":
+                            s = "Persona vs Persona";
+                            break;
+                    }
                     infoModoJuego.setText(s);
                     for (int i = 0; i < botonesMatriz.length; ++i) {
                         for (int j = 0; j < 8; ++j) {
