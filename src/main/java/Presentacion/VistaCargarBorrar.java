@@ -42,7 +42,6 @@ public class VistaCargarBorrar {
     private final JLabel infoReglas = new JLabel("Reglas: 1 1 1");
     private final JLabel infoTurno = new JLabel("Turno: 0");
 
-
     private final JMenuBar menubarVista = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
     private final JMenuItem menuitemMenu = new JMenuItem("Volver al Menu Principal");
@@ -50,6 +49,7 @@ public class VistaCargarBorrar {
 
     /**
      * Constructora de Vista Cargar/Borrar Tablero
+     * @param pCtrlPresentacion controlador de presentacion a asignarle a dicha vista
      * */
     public VistaCargarBorrar(CtrlPresentacion pCtrlPresentacion)  {
         iCtrlPresentacion = pCtrlPresentacion;
@@ -65,6 +65,7 @@ public class VistaCargarBorrar {
     /**
      *Metodo hacerVisible
      * @param b si TRUE entonces el frame sera visible, caso contrario estara desactivado
+     * @param t tipoTablero a asignar y modificar (para visualizacion de JLabels)
      * */
     public void hacerVisible(boolean b, CtrlPresentacion.tipoTablero t) {
         frameVista.pack();
@@ -73,7 +74,6 @@ public class VistaCargarBorrar {
         if (b) {
             tipoActual = t;
             cambiar_info_labels_botones(tipoActual);
-            //FALTA COMBOBOX PARA PARTIDAS + DIFERENCIAR LISTENERS
             switch (tipoActual) {
                 case TABLERO:
                     buttonCargar.setEnabled(iCtrlPresentacion.consultar_idTablero_cargar() == -1);
@@ -134,7 +134,6 @@ public class VistaCargarBorrar {
                 tablero.add(botonesMatriz[i][j]);
             }
         }
-
         JPanel panelAux = new JPanel();
         panelAux.setLayout(new BorderLayout());
         panelBotones.setLayout(new FlowLayout());
@@ -207,8 +206,10 @@ public class VistaCargarBorrar {
                     selector.removeItemAt(i);
                 }
                 ArrayList<String> tableros_disponibles = iCtrlPresentacion.obtener_lista_tableros_disponibles();
-                for (String tableros_disponible : tableros_disponibles) {
-                    selector.addItem(tableros_disponible);
+                if (tableros_disponibles.size() != 0) {
+                    for (String tableros_disponible : tableros_disponibles) {
+                        selector.addItem(tableros_disponible);
+                    }
                 }
                 selector.setSelectedIndex(0);
                 id_tablero_seleccionado = -1;
@@ -223,8 +224,10 @@ public class VistaCargarBorrar {
                 int idAux = iCtrlPresentacion.consultar_id_j1();
                 String nickAux = iCtrlPresentacion.consultar_nickname_j1();
                 ArrayList<String> partidas_guardadas = iCtrlPresentacion.presentacion_buscar_partidas(idAux,nickAux);
-                for (String p : partidas_guardadas) {
-                    selector.addItem(p);
+                if (partidas_guardadas.size() != 0) {
+                    for (String p : partidas_guardadas) {
+                        selector.addItem(p);
+                    }
                 }
                 selector.setSelectedIndex(0);
                 break;
@@ -297,26 +300,21 @@ public class VistaCargarBorrar {
 
 
     /**
-     * Metodo listener del elemento comboBox "selector_tablero"
+     * Metodo listener del elemento comboBox "selector"
      * */
     private void listener_selector_tablero() {
         obtener_info_selector();
+        int[][] tab = new int[8][8];
         switch (tipoActual) {
             case TABLERO:
-                //limpiar_vista_previa_tablero();
-                int[][] tab = iCtrlPresentacion.presentacion_cargarTablero(id_tablero_seleccionado);
-                for (int i = 0; i < botonesMatriz.length; ++i) {
-                    for (int j = 0; j < 8; ++j) {
-                        cambiar_imagen_casilla(i,j,tab[i][j]);
-                    }
-                }
+                tab = iCtrlPresentacion.presentacion_cargarTablero(id_tablero_seleccionado);
                 break;
 
             case PARTIDA:
                 obtener_info_selector();
                 if (id_partida_seleccionado >= 0) {
                     ArrayList<String> as = iCtrlPresentacion.consultar_info_partida_ID(id_partida_seleccionado);
-                    int[][]tabl = iCtrlPresentacion.presentacion_cargar_tablero_partida(id_partida_seleccionado);
+                    tab = iCtrlPresentacion.presentacion_cargar_tablero_partida(id_partida_seleccionado);
                     //tenemos info de toda la partida, ahora hace falta mostrarla
                     infoJ1.setText("J1: " + as.get(0));
                     infoJ2.setText("J2: " + as.get(1));
@@ -336,16 +334,17 @@ public class VistaCargarBorrar {
                             break;
                     }
                     infoModoJuego.setText(s);
-                    for (int i = 0; i < botonesMatriz.length; ++i) {
-                        for (int j = 0; j < 8; ++j) {
-                            cambiar_imagen_casilla(i,j,tabl[i][j]);
-                        }
-                    }
+
                 }
                 break;
         }
-
+        for (int i = 0; i < botonesMatriz.length; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                cambiar_imagen_casilla(i,j,tab[i][j]);
+            }
+        }
     }
+
 
     /**
      * Metodo listener del elemento boton "Borrar"

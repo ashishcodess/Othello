@@ -4,16 +4,17 @@ import MyException.MyException;
 import Dominio.Ranking.Ranking;
 import Dominio.Ranking.ElementoRanking;
 
-
 import java.util.Scanner;
 
+/**miniDriver de clase Ranking*/
 public class DriverRanking {
 
+    /**Scanner (leer desde entrada)*/
     static Scanner scan = new Scanner(System.in);
 
     /** test operaciones ranking (crear, incrementar partidas, imprimir ranking dependiendo del orden)
      * @throws MyException en caso de fallo con ElementosRanking*/
-    public static void test_crear_ranking() throws MyException {
+    public static void test_crear_ranking() throws Exception {
         Ranking rank= new Ranking();
         ElementoRanking e = new ElementoRanking(6,"aaa");
         rank.add_al_ranking(e);

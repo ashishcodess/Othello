@@ -3,7 +3,6 @@ package ControladorPersistencia;
 import Dominio.Partida.Partida;
 import Dominio.Partida.Tablero;
 import Dominio.Ranking.*;
-import MyException.MyException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,23 +10,40 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**Controlador de la capa de Persistencia*/
 public class CtrlPersitencia {
 
+    /**Clase InputOutput (para leer/escribir ficheros)*/
     private final InputOutput io = new InputOutput();
 
+    /**Directorio inicial de persistencia*/
     private final String dirIni;
+
+    /**Directorio que contiene todos los usuarios registrados*/
     private final String dir_usuarios;
+
+    /**Directorio que contiene todos las partidas almacenadas*/
     private final String dir_partidas;
+
+    /**Directorio que contiene la informacion del ranking*/
     private final String dir_ranking;
+
+    /**Directorio que contiene todos los tableros almacenados*/
     private final String dir_tablero;
 
+    /**Identificador de usuario maximo creado (para control de creacion de usuarios y asignacion de ID's)*/
     private int idMax_usuario;
+
+    /**Identificador de partida maximo creado (para control de creacion de partidas y asignacion de ID's)*/
     private int idMax_partida;
+
+    /**Identificador de tablero maximo creado (para control de creacion de tableros y asignacion de ID's)*/
     private int idMax_tablero;
 
-    //imagenes
+    /**Tipos de imagenes de las fichas: Vacia, Disponible, Negra o Blanca*/
     public enum tipoIMG {IMG_VACIA,IMG_DISPONIBLE,IMG_NEGRA,IMG_BLANCA}
+
+    /**Directorio que contiene todos las imagenes referentes al juego (imagenes de las fichas)*/
     private final String dirImagenes;
 
     /**
@@ -66,6 +82,7 @@ public class CtrlPersitencia {
         this.idMax_usuario = io.calcularID_Ficheros(dir_usuarios,tipoFichero.USUARIO);
         this.idMax_partida = io.calcularID_Ficheros(dir_partidas,tipoFichero.PARTIDA);
         this.idMax_tablero = io.calcularID_Ficheros(dir_tablero,tipoFichero.TABLERO);
+
     }
 
 
@@ -88,7 +105,7 @@ public class CtrlPersitencia {
      * @param t es el tipo de imagen a cargar [vacia, disponible, blanca, negra]
      * @return devuelve la direccion del icono seleccionado
      * */
-    public String consultar_dir_IMG(tipoIMG t) {
+    public String consultar_dir_imagenes(tipoIMG t) {
         String s = dirImagenes;
         switch (t) {
             case IMG_VACIA:
@@ -157,27 +174,12 @@ public class CtrlPersitencia {
     //Controlador de Partidas (cPartidas)
 
     /**
-     * (PARA DRIVER DOMINIO)
-     * Operacion ctrl_leer_modo_partida
-     * @param idPartida es el ID de partida a cargar
-     * @return devuelve el modo de la partida con igual a idPartida, caso contrario (no existe partida) devuelve -1
-     */
-    public int ctrl_leer_modo_partida(int idPartida) throws IOException {
-        int modo = -1;
-        String s_fichero = dir_partidas +idPartida + ".txt";
-        ArrayList<String> as = io.leerFichero(s_fichero);
-        if (as.size() > 3) {
-            modo = Integer.parseInt(as.get(2));
-        }
-        return modo;
-    }
-
-    /**
      * Operacion ctrl_cargar_partida
      * @param idPartida es el ID de partida a cargar
      * @return devuelve Partida con id igual a idPartida, caso contrario devuelve null
+     * @throws Exception en caso de fallo con fichero de Partida
      */
-    public Partida ctrl_cargar_partida(int idPartida) throws IOException, MyException{
+    public Partida ctrl_cargar_partida(int idPartida) throws Exception {
         String pathF = dir_partidas + idPartida + ".txt";
         ArrayList<String> as = io.leerFichero(pathF);
         int id1, id2, modo, turno;
@@ -222,7 +224,13 @@ public class CtrlPersitencia {
 
     }
 
-    public int[][] ctrl_cargar_tablero_partida(int idPartida) throws IOException {
+    /**
+     * Metodo cargar tablero de Partida
+     * @param idPartida identificador de partida a leer el tablero para cargar
+     * @return devuelve el tablero de la partida que se identifique con idPartida
+     * @throws IOException en caso de no existir dicho fichero de Partida
+     * */
+    public int[][] ctrl_cargar_tableroPartida(int idPartida) throws IOException {
         String pathF = dir_partidas + idPartida + ".txt";
         ArrayList<String> as = io.leerFichero(pathF);
         String s1;
@@ -236,38 +244,22 @@ public class CtrlPersitencia {
         return map;
     }
 
-    public ArrayList<String> ctrl_info_partida(int idPartida) throws IOException {
-        String pathF = dir_partidas + idPartida + ".txt";
-        ArrayList<String> as = io.leerFichero(pathF);
-        String id1, id2;
-        String nick1 = "";
-        String nick2 = "";
-
-        String s1 = as.get(0);
-        String[] s2 = s1.split(" ");
-        id1 = s2[0];
-        if (s2.length != 1) nick1 = s2[1];
-
-        s1 = as.get(1);
-        s2 = s1.split(" ");
-        id2 = s2[0];
-        if (s2.length != 1) nick2 = s2[1];
-
-        ArrayList<String> s = new ArrayList<>();
-        s.add("J1 - (ID:" + id1 + " , nickname: " + nick1 + ") ");
-        s.add("J2 - (ID:" + id2 + " , nickname: " + nick2 + ") ");
-
-       return s;
-    }
-
-
+    /**
+     * Metodo Consunltar info de partida (a partir de un ID de partida)
+     * @param idPartida identificador de partida a leer
+     * @return devuelve toda la informacion de la partida
+     * @throws IOException en caso de no existir dicho fichero de Partida
+     * */
     public ArrayList<String> consultar_info_partida_id(int idPartida) throws IOException {
         String pathF = dir_partidas + idPartida + ".txt";
         return io.leerFichero(pathF);
     }
+
+
     /**
      * Operacion ctrl_guardar_partida
      * @param as es ArrayList con los parametros necesarios para guardar la partida (utilizando funcion toArrayList() de Partida)
+     * @throws IOException en caso de fallo con fichero de Partida
      */
         public void ctrl_guardar_partida(ArrayList<String> as) throws IOException {
             int id_partida  = Integer.parseInt(as.get(0));
@@ -281,21 +273,26 @@ public class CtrlPersitencia {
             String[] s2 = s1.split(" ");
             id1 = Integer.parseInt(s2[0]);
             if (s2.length != 1) nick1 = s2[1];
-            s1 = as.get(3);
+            s1 = as.get(2);
             s2 = s1.split(" ");
             id2 = Integer.parseInt(s2[0]);
             if (s2.length != 1) nick2 = s2[1];
             if (id1 > 5) {
-                if (ctrl_no_existe_partida_usuario(id1,nick1,id_partida)) ctrl_agregar_partida_usuario(id1,nick1,id_partida);
+                if (ctrl_no_existe_partida_usuario(id1,nick1,id_partida)) {
+                    ctrl_agregar_partida_usuario(id1,nick1,id_partida);
+                }
             }
             if (id2 > 5) {
-                if (ctrl_no_existe_partida_usuario(id2,nick2,id_partida)) ctrl_agregar_partida_usuario(id2,nick2,id_partida);
+                if (ctrl_no_existe_partida_usuario(id2,nick2,id_partida)) {
+                    ctrl_agregar_partida_usuario(id2,nick2,id_partida);
+                }
             }
     }
 
     /** Operacion ctrl_borrar_partida
      * @param idPartida es el identificador de partida a borrar
      * @return devuelve TRUE en caso que se haya borrado con exito, caso contrario devuelve excepcion
+     * @throws IOException en caso de fallo con fichero de Partida
      */
     public boolean ctrl_borrar_partida(int idPartida) throws IOException {
         boolean b;
@@ -333,6 +330,8 @@ public class CtrlPersitencia {
     /**
      * Operacion ctrl_guardar_tablero
      * @param tab es ArrayList con los parametros necesarios para guardar el tablero (utilizando funcion toArrayList() de Tablero)
+     * @param turno el el turno del tablero a almacenar
+     * @throws IOException en caso de fallo con fichero de tablero
      */
     public void ctrl_guardar_tablero(int[][] tab, int turno) throws IOException {
         int idTablero = ctrl_get_nuevo_ID_tablero();
@@ -381,15 +380,14 @@ public class CtrlPersitencia {
      * Operacion ctrl_cargar_tablero
      * @param idTablero es el ID de tablero a cargar
      * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero vacio
+     * @throws IOException en caso de error con el fichero de tablero
      */
     public int[][] ctrl_cargar_tablero(int idTablero) throws IOException {
         int[][] map = new int[8][8];
-        //crear tablero inicial
+        //crear tablero vacio
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 map[i][j] = 0;
-                //if ((i == 3 && j==3) || (i == 4 && j==4)) map[i][j] = 3;
-                //else if ((i == 3 && j==4) || (i == 4 && j==3)) map[i][j] = 2;
             }
         }
         String pathF = dir_tablero + idTablero + ".txt";
@@ -411,7 +409,8 @@ public class CtrlPersitencia {
     /**
      * Operacion ctrl_cargar_turno_tablero
      * @param idTablero es el ID de tablero a cargar
-     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve -1 */
+     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve -1
+     * @throws IOException en caso de fallo con el fichero de tablero*/
     public int ctrl_cargar_turno_tablero(int idTablero) throws IOException {
         int turno;
         String pathF = dir_tablero + idTablero + ".txt";
@@ -444,7 +443,7 @@ public class CtrlPersitencia {
      * (PARA DRIVER DOMINIO) Operacion ctrl_print_tableros_disponibles
      * muestra por salida estandar los tableros disponibles
      */
-    public void ctrl_print_tableros_disponibles() {
+    public void ctrl_print_tableros() {
         System.out.println("Tableros disponibles");
         ArrayList<String> as= io.listarFicherosDeDirectorio(dir_tablero);
         if (as != null) {
@@ -464,9 +463,11 @@ public class CtrlPersitencia {
     //Controlador de Ranking (cRanking)
     /**
      * Operacion ctrl_importar_ranking
+     * @param s direcccion del fichero a leer (leer el ranking)
      * @return devuelve el Ranking ubicado en el fichero apuntado por s,caso de no existir devuelve excepcion
+     * @throws Exception en caso de fallo con el fichero de ranking
      */
-    public Ranking ctrl_importar_ranking(String s) throws MyException, IOException {
+    public Ranking ctrl_importar_ranking(String s) throws Exception {
         String pathF = dir_ranking + s;
         ArrayList<String> as = io.leerFichero(pathF);
         Ranking rank = new Ranking();
@@ -512,14 +513,13 @@ public class CtrlPersitencia {
                             t = Integer.parseInt(s2[2]);
                             id2 = Integer.parseInt(s2[3]);
                             nick2 = s2[4];
-                            t2 = Integer.parseInt(s2[5]);
                         }
                         else {
                             nick1 = s2[2];
                             t = Integer.parseInt(s2[3]);
                             id2 = Integer.parseInt(s2[4]);
-                            t2 = Integer.parseInt(s2[5]);
                         }
+                        t2 = Integer.parseInt(s2[5]);
                         rank.cambiar_logro_partida(Logros.tipoLogro.FICHAS_DIFF,nick1,id1,nick2,id2,t,t2);
                     }
                     break;
@@ -575,6 +575,8 @@ public class CtrlPersitencia {
     /**
      * Operacion ctrl_exportar_ranking
      * @param as es ArrayList con los parametros necesarios para guardar la partida (utilizando funcion consultar_all() de cada ElementoRanking)
+     * @param f nombre del fichero a exportar el ranking (escribir dicho fichero)
+     * @throws IOException en caso de no existir el fichero de ranking
      */
     public void ctrl_exportar_ranking(ArrayList<String> as, String f) throws IOException {
         String pathf = dir_ranking + f;
@@ -589,6 +591,7 @@ public class CtrlPersitencia {
      * @param nicknameJugador nickname de Jugador a crear
      * @return devuelve TRUE en caso de haberse creado el fichero Usuario(idJugador,nicknameJugador) con
      * exito, caso contrario (ya existía) devuelve FALSE
+     * @throws IOException en caso error al crear el fichero de jugador
      */
     public boolean ctrl_crear_usuario(int idJugador,String nicknameJugador) throws IOException {
         String pathF = dir_usuarios + idJugador + "_" + nicknameJugador;
@@ -630,6 +633,7 @@ public class CtrlPersitencia {
      * @param idPartida identificador de Partida a consultar si existe el jugador
      * @return devuelve TRUE en caso de existir una partida con id igual a idPartida dentro del fichero Usuario(idJugador,nicknameJugador),
      * caso contrario devuelve FALSE
+     * @throws IOException en caso de no existir el fichero de jugador
      */
     private boolean ctrl_no_existe_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException {
         String pathF = dir_usuarios + idJugador + "_" + nicknameJugador;
@@ -644,6 +648,7 @@ public class CtrlPersitencia {
      * @param idPartida identificador de Partida
      * @return devuelve TRUE en caso de haber agregado correctamente la partida con id igual a idPartida dentro del fichero Usuario(idJugador,nicknameJugador),
      * caso contrario devuelve FALSE
+     * @throws IOException en caso de no existir el fichero de jugador
      */
     public boolean ctrl_agregar_partida_usuario(int idJugador,String nicknameJugador, int idPartida) throws IOException {
         boolean res = false;
@@ -661,6 +666,7 @@ public class CtrlPersitencia {
      * @param idJugador identificador de Jugador a borrar en partida
      * @param nicknameJugador nickname de Jugador a borrar en partida
      * @param idPartida identificador de Partida
+     * @throws IOException en caso de no existir el fichero de jugador
      */
     public void ctrl_borrar_partida_usuario(int idJugador, String nicknameJugador, int idPartida) throws IOException {
         String pathF = dir_usuarios + idJugador + "_" + nicknameJugador;
@@ -673,7 +679,7 @@ public class CtrlPersitencia {
      * @param idJugador identificador de Jugador
      * @param nicknameJugador nickname de Jugador
      * @return devuelve la lista de partidas disponibles (partidas donde se encuentra el Jugador dentro)
-
+     * @throws IOException en caso de no existir el fichero de jugador
      */
     public ArrayList<String> ctrl_listar_partidas_disponibles(int idJugador, String nicknameJugador) throws IOException {
         ArrayList<String> as;
@@ -688,6 +694,7 @@ public class CtrlPersitencia {
      * @param IDjugador identificador de Jugador
      * @param nick nickname de Jugador
      * muestra por salida estandar las partidas disponibles por el Jugador (IDjugador,nick)
+     * @throws IOException en caso de no existir el fichero de jugador
      */
     public void ctrl_print_partidas_disponibles(int IDjugador, String nick) throws IOException {
         System.out.println("Partidas disponibles de ID: "+ IDjugador + " ,nickname: " + nick);

@@ -255,6 +255,7 @@ public class DriverTablero {
      * funcion main (para poder realizar las pruebas)
      * @param args (argumentos)
      * @throws MyException heredado de el resto de funciones
+     * @throws IOException heredado de el resto de funciones
      * */
     public static void main(String[] args) throws IOException, MyException {
         boolean b = true;

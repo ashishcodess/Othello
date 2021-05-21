@@ -3,9 +3,8 @@ package Presentacion;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
+/**Vista de Login (tanto Jugador1 como Jugador2)*/
 public class VistaLogin {
 
     // Controlador de presentacion
@@ -46,6 +45,8 @@ public class VistaLogin {
 
     /**
      * Constructora de VistaLogin
+     * @param pCtrlPresentacion controlador de presentacion a asignarle a dicha vista
+     * @param a tipoJugador a modificar para cambios de labels
      * */
     public VistaLogin(CtrlPresentacion pCtrlPresentacion, CtrlPresentacion.tipoJugador a) {
         iCtrlPresentacion = pCtrlPresentacion;
@@ -57,6 +58,7 @@ public class VistaLogin {
     /**
      *Metodo hacerVisible
      * @param b si TRUE entonces el frame sera visible, caso contrario estara desactivado
+     * @param a tipoJugador a comprobar y asignar para modificacion de labels
      * */
     public void hacerVisible(boolean b, CtrlPresentacion.tipoJugador a) {
         frameVista.pack();
@@ -90,6 +92,7 @@ public class VistaLogin {
 
     /**
      * Metodo para inicializar componentes (menuBar, paneles y frame)
+     * @param a tipo de Jugador (para inicializacion de paneles: JUGADOR1 o JUGADOR2)
      * */
     private void inicializarComponentes(CtrlPresentacion.tipoJugador a) {
         inicializar_frameVista();
@@ -120,6 +123,7 @@ public class VistaLogin {
 
     /**
      * Metodo para inicializar todos los paneles
+     * @param a tipoJuador a comprobar (para modificacion de labels)
      * */
     private void inicializar_paneles(CtrlPresentacion.tipoJugador a) {
         panelLogin.setLayout(new BorderLayout());
@@ -173,6 +177,7 @@ public class VistaLogin {
 
     /**
      * Metodo actionPerfomed del boton de Login
+     * @param event evento del boton de Login
      * */
     public void actionPerformed_buttonLogin (ActionEvent event) {
         int id;
@@ -200,6 +205,7 @@ public class VistaLogin {
 
     /**
      * Metodo actionPerfomed del boton de Limpiar (borrar contenido de los contenedores de texto)
+     * @param event evento del boton de Limpiar los campos de login
      * */
     public void actionPerformed_buttonLimpiarLogin (ActionEvent event) {
         textoID.setText("");
@@ -210,6 +216,7 @@ public class VistaLogin {
 
     /**
      * Metodo actionPerfomed del boton de Registrarse
+     * @param event evento del boton de registro de usuario
      * */
     public void actionPerformed_buttonRegistrarse (ActionEvent event) {
         String nick = textoRegistroNickname.getText();

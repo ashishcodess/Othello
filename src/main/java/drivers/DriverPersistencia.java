@@ -9,17 +9,20 @@ import MyException.MyException;
 import java.io.IOException;
 import java.util.*;
 
-
+/**Driver de la capa de Persistencia*/
 public class DriverPersistencia {
 
+    /**Controlador de Persistencia*/
     static CtrlPersitencia cp;
 
+    /**Scanner (leer desde entrada)*/
     static Scanner scan = new Scanner(System.in);
 
     /** test_IOPartidas
      * @param id es el identificador de la partida para realizar las pruebas
+     * @throws Exception heredado de otras clases
      * */
-    public static void test_IOPartidas(int id) throws IOException, MyException {
+    public static void test_IOPartidas(int id) throws Exception {
         System.out.println("Probar metodos: Cargar/Guardar partida, toArrayList, listar_partidas_disponibles, borrar_partida");
         System.out.println();
         Partida p = cp.ctrl_cargar_partida(id);
@@ -54,7 +57,7 @@ public class DriverPersistencia {
      * @param rk es el nombre del fichero (sin .txt) del ranking a realizar las pruebas
      * @throws MyException fallo con sizes de ranking
      * */
-    public static void test_IORanking(String rk) throws MyException, IOException {
+    public static void test_IORanking(String rk) throws Exception {
         Ranking rank= cp.ctrl_importar_ranking(rk);
         System.out.println("Ranking importado correctamente");
         rank.print_ranking();
@@ -72,6 +75,7 @@ public class DriverPersistencia {
     /** test_IOUsuario
      * @param id es el identificador de usuario a realizar las pruebas
      * @param nick es el nickname de usuario a realizar las pruebas
+     * @throws IOException heredado de otras clases
      * */
     public static void test_IOUsuario(int id, String nick) throws IOException{
         System.out.println("Introducir datos usuario a crear para hacer las pruebas");
@@ -195,9 +199,7 @@ public class DriverPersistencia {
                 System.out.println();
             }
         }
-        catch (Exception e) {
-            //System.out.println("Error en main de DriverPersitencia");
-        }
+        catch (Exception ignored) {}
     }
 
 

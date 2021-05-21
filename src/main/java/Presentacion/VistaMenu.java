@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-
+/**Vista del Menu Principal del juego*/
 public class VistaMenu {
     // Controlador de presentacion
     private final CtrlPresentacion iCtrlPresentacion;
@@ -58,6 +58,7 @@ public class VistaMenu {
 
     /**
      * Constructora de VistaMenu
+     * @param pCtrlPresentacion controlador de presentacion a asignarle a dicha vista
      * */
     public VistaMenu(CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
@@ -71,7 +72,7 @@ public class VistaMenu {
      * */
     public void hacerVisible(boolean b) {
         if (b) {
-            textoInfoUsuario.setText(iCtrlPresentacion.get_info_usuario_activo());
+            textoInfoUsuario.setText(iCtrlPresentacion.consultar_info_usuario_activo());
             textoInfoUsuario.setEditable(false);
         }
         frameVista.pack();
@@ -182,6 +183,7 @@ public class VistaMenu {
 
     /**
      * Metodo actionPerfomed del boton de Login (Para cargar otro usuario diferente al actual)
+     * @param event evento del boton de Login
      * */
     public void actionPerformed_buttonLogin (ActionEvent event) {
         iCtrlPresentacion.hacerVisibleVista(vistaActiva.LOGIN);
@@ -205,11 +207,11 @@ public class VistaMenu {
                     System.exit(0);
                 });
 
-        menuitemQuit.addActionListener
-                (event -> iCtrlPresentacion.salir_del_juego());
-
         buttonCrearPartida.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA));
+
+        buttonCargarBorrarPartida.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARPARTIDA));
 
         buttonCrearTablero.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CREARTABLERO));
@@ -217,6 +219,13 @@ public class VistaMenu {
         buttonBorrarTablero.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARTABLERO));
 
+        buttonConsultarRanking.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.RANKING));
+
+
+        //BARRA SUPERIOR DE MENU
+        menuitemQuit.addActionListener
+                (event -> iCtrlPresentacion.salir_del_juego());
 
         menuitemLogin.addActionListener
                 (this::actionPerformed_buttonLogin);
@@ -227,10 +236,16 @@ public class VistaMenu {
         menuItem_consultar_ranking.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.RANKING));
 
-        buttonConsultarRanking.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.RANKING));
+        menuItem_crearPartida.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA));
 
-        buttonCargarBorrarPartida.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARPARTIDA));//
+        menuItem_CargarBorrarPartida.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARPARTIDA));
+
+        menuItem_crearTablero.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CREARTABLERO));
+
+        menuItem_BorrarTablero.addActionListener
+                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARTABLERO));
     }
 }

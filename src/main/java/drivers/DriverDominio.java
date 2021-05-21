@@ -1,3 +1,5 @@
+package drivers;
+
 import ControladorPersistencia.CtrlPersitencia;
 
 import Dominio.Ranking.Logros;
@@ -9,16 +11,32 @@ import MyException.MyException;
 import java.io.IOException;
 import java.util.*;
 
+/**Driver de la capa de dominio: Sirve tanto para probar a crear una partida y ejecutarla,
+ * como a consultar el Ranking y generar tableros personalizados*/
 public class DriverDominio {
-    static int code;
-    static String nickname;
+
+    /**Identificador del Jugador 1*/
+    static int id_1;
+
+    /**Nickname del Jugador 1*/
+    static String nick_1;
+
+    /**Identificador del Jugador 2*/
     static int id_2;
+
+    /**Nickname del Jugador 2*/
     static String nick_2;
+
+    /**Scanner (leer desde entrada)*/
     static Scanner scan = new Scanner(System.in);
 
+    /**Fichero de ranking*/
     static String f = "ranking.txt"; //nombre del fichero de ranking
 
+    /**Controlador de Persistencia*/
     private static CtrlPersitencia cp;
+
+    /**Ranking*/
     private static Ranking ranking;
 
     /**
@@ -89,6 +107,7 @@ public class DriverDominio {
      * Metodo actualizar_ranking
      * @param p partida de la cual se necesita informacion de los jugadores y del ganador
      * @param ganador incrementar contador de partidas en funcion de [2: empate, 1:gana jugador2, 0:gana jugador1]
+     * @param f direccion del fichero de ranking a almacenar la informacion del ranking actualizado
      * */
     private static void actualizar_ranking(Partida p, int ganador, String f){
         int id1, id2;
@@ -300,7 +319,7 @@ public class DriverDominio {
         System.out.println();
         int idTab = -1;
         if(in.equalsIgnoreCase("si")){
-            cp.ctrl_print_tableros_disponibles();
+            cp.ctrl_print_tableros();
             System.out.print("Seleccionar tablero:");
             int id_aux = scan.nextInt();
             if (id_aux > 0) idTab = id_aux;
@@ -312,6 +331,7 @@ public class DriverDominio {
      * Metodo cargar_Tablero
      * @param idTablero es el identificador de tablero a cargar
      * @return devuelve el tablero personalizado con id igual a idTablero, caso contrario devuele tablero inicial
+     * @throws IOException en caso de no existir el fichero con idTablero
      * */
     private static Tablero cargar_Tablero(int idTablero) throws IOException {
         int[][]tab = cp.ctrl_cargar_tablero(idTablero);
@@ -322,6 +342,7 @@ public class DriverDominio {
      * Metodo cargar_turno_Tablero
      * @param idTablero es el identificador de tablero a cargar
      * @return devuelve el turno del tablero personalizado con id igual a idTablero
+     * @throws IOException en caso de no existir el fichero con idTablero
      * */
     private static int cargar_turno_Tablero(int idTablero) throws IOException {
         return cp.ctrl_cargar_turno_tablero(idTablero);
@@ -441,17 +462,17 @@ public class DriverDominio {
                 if (modo2 == 2) {
                     nick_2 = scan.next();
                     id_2 = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
-                    if ((nick_2.equals(nickname)) || (code == id_2)) throw new MyException("Se ha introducido informacion de usuarios repetida");
+                    if ((nick_2.equals(nick_1)) || (id_1 == id_2)) throw new MyException("Se ha introducido informacion de usuarios repetida");
                     else {
                         System.out.println("Creado usuario " + nick_2 + " con ID " + id_2);
                         cp.ctrl_crear_usuario(id_2,nick_2);
                     }
                 }
                 else {
-                    nickname = scan.next();
-                    code = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
-                    System.out.println("Creado usuario " + nickname + " con ID " + code);
-                    cp.ctrl_crear_usuario(code,nickname);
+                    nick_1 = scan.next();
+                    id_1 = cp.ctrl_get_nuevo_ID_user(); //este metodo devuelve el Nuevo ID assignado a este usuario
+                    System.out.println("Creado usuario " + nick_1 + " con ID " + id_1);
+                    cp.ctrl_crear_usuario(id_1,nick_1);
                 }
             }
             else if(in.equalsIgnoreCase("si")){
@@ -460,17 +481,17 @@ public class DriverDominio {
                     id_2 = scan.nextInt();
                     System.out.println("Entra tu nombre de usuario");
                     nick_2 = scan.next();
-                    if ((nick_2.equals(nickname)) || (code == id_2)) throw new MyException("Se ha introducido informacion de usuarios repetida");
+                    if ((nick_2.equals(nick_1)) || (id_1 == id_2)) throw new MyException("Se ha introducido informacion de usuarios repetida");
                     else {
                         if (cp.ctrl_existe_usuario(id_2,nick_2)) System.out.println("Login Correcto");
                         else throw new MyException("No existe usuario registrado con esa informacion");
                     }
                 }
                 else {
-                    code = scan.nextInt();
+                    id_1 = scan.nextInt();
                     System.out.println("Entra tu nombre de usuario");
-                    nickname = scan.next();
-                    if (cp.ctrl_existe_usuario(code,nickname)) System.out.println("Login Correcto");
+                    nick_1 = scan.next();
+                    if (cp.ctrl_existe_usuario(id_1,nick_1)) System.out.println("Login Correcto");
                     else throw new MyException("No existe usuario registrado con esa informacion");
                 }
             }
@@ -501,9 +522,9 @@ public class DriverDominio {
             System.out.println();
             int[] reglas = seleccionar_reglas();
 
-            int id1 = code; //por defecto anfitrion como J1
+            int id1 = id_1; //por defecto anfitrion como J1
             int id2 = -1;
-            String nick1 = nickname; //por defecto anfitrion como J1
+            String nick1 = nick_1; //por defecto anfitrion como J1
             String nick2 = "";
             int idTablero = -1;
             int turnoPartida = 0;
@@ -518,12 +539,12 @@ public class DriverDominio {
                     primero = false;
                 }
                 if (bando == 1) {
-                    id1 = code;
-                    nick1 = nickname;
+                    id1 = id_1;
+                    nick1 = nick_1;
                 }
                 else { //ha selecionado bando 2
-                    id2 = code;
-                    nick2 = nickname;
+                    id2 = id_1;
+                    nick2 = nick_1;
                 }
             }
             //Seleccionar informacion del contrincante
@@ -621,12 +642,12 @@ public class DriverDominio {
                     int idPartida = cp.ctrl_get_nuevo_ID_Partida();
                     Tablero t = new Tablero();
                     int[]reg = {1,1,1};
-                    Partida p = new Partida (idPartida, 2,reg,0,code,nickname,code,nickname,t);
+                    Partida p = new Partida (idPartida, 2,reg,0,id_1,nick_1,id_1,nick_1,t);
                     ejecutarPartidaTablero(p);
                     break;
                 case 1:
                     System.out.println("Opcion borrar tablero personalizado");
-                    cp.ctrl_print_tableros_disponibles();
+                    cp.ctrl_print_tableros();
                     System.out.print("Seleccionar tablero a realizar la accion:");
                     idTab = scan.nextInt();
                     System.out.println();
@@ -635,7 +656,7 @@ public class DriverDominio {
                     break;
                 case 2:
                     System.out.println("Opcion mostrar tablero personalizado");
-                    cp.ctrl_print_tableros_disponibles();
+                    cp.ctrl_print_tableros();
                     System.out.print("Seleccionar tablero a realizar la accion:");
                     idTab = scan.nextInt();
                     System.out.println();
@@ -734,7 +755,7 @@ public class DriverDominio {
                         ejecutarPartida(p); //Ejecutando la partida
                         break;
                     case 2:
-                        listar_partidas_disponibles(code,nickname);
+                        listar_partidas_disponibles(id_1,nick_1);
                         break;
                     case 3:
                         TableroPersonalizado();

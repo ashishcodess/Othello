@@ -4,8 +4,10 @@ package ControladorPersistencia;
 import java.io.*;
 import java.util.ArrayList;
 
+/**Tipos de ficheros: Usuario, Partida, Tablero o Ranking*/
 enum tipoFichero {USUARIO, PARTIDA,TABLERO, RANKING}
 
+/**Sirve para leer/escribir ficheros referentes a la capa de Persistencia*/
 public class InputOutput {
 
     /**
@@ -40,7 +42,8 @@ public class InputOutput {
     /**
      * Metodo crearFichero
      * @param pathF directorio + nombre de fichero a crear
-     * @return devuelve TRUE en caso de haberse creado correctamente, caso contrario devuelve FALSE */
+     * @return devuelve TRUE en caso de haberse creado correctamente, caso contrario devuelve FALSE
+     * @throws IOException en caso de no poder crear el fichero*/
     public boolean crearFichero (String pathF) throws IOException {
         boolean res = false;
         File f = new File(pathF);
@@ -54,7 +57,8 @@ public class InputOutput {
      * Metodo Guardar Info Fichero
      * @param pathF directorio + nombre de fichero a guardar informacion
      * @param as informacion que queremos guardar
-     * @param a tipo de fichero a guardar informacion*/
+     * @param a tipo de fichero a guardar informacion
+     * @throws IOException en caso de no existir el fichero a realizar la accion*/
     public void guardarInfoFichero(String pathF, ArrayList<String> as, tipoFichero a) throws IOException {
         File f = new File(pathF);
         if (f.exists()) f.delete();
@@ -82,7 +86,8 @@ public class InputOutput {
     /**
      * Metodo leer Fichero
      * @param pathF directorio + nombre de fichero a leer
-     * @return devuelve un ArrayList de Strings con toda la informacion que contiene dicho fichero*/
+     * @return devuelve un ArrayList de Strings con toda la informacion que contiene dicho fichero
+     * @throws IOException en caso de no existir el fichero a realizar la accion*/
     public ArrayList<String> leerFichero(String pathF) throws IOException {
         ArrayList<String> as = new ArrayList<>();
         File f = new File(pathF);
@@ -122,7 +127,8 @@ public class InputOutput {
      * Metodo Existe EN Fichero (buscar si una string esta contenida dentro del fichero)
      * @param pathF directorio + nombre de fichero a comprobar si existe
      * @param s informacion que queremos comprobar que exista
-     * @return devuelve TRUE en caso de existir la string "s" dentro de el fichero, caso contrario devuelve FALSE */
+     * @return devuelve TRUE en caso de existir la string "s" dentro de el fichero, caso contrario devuelve FALSE
+     * @throws IOException en caso de no existir el fichero a realizar la accion*/
     public boolean existe_en_fichero (String pathF, String s) throws IOException {
         boolean res = false;
         File f = new File(pathF);
@@ -141,7 +147,8 @@ public class InputOutput {
      * Metodo Agregar EN Fichero (agrega la informacion al fichero)
      * @param pathF directorio + nombre de fichero a realizar la accion
      * @param s informacion que queremos agregar al fichero
-     * @return devuelve TRUE en caso de agregar correctamente la string "s" dentro de el fichero, caso contrario devuelve FALSE */
+     * @return devuelve TRUE en caso de agregar correctamente la string "s" dentro de el fichero, caso contrario devuelve FALSE
+     * @throws IOException en caso de no existir el fichero a realizar la accion*/
     public boolean agregar_a_fichero(String pathF, String s) throws IOException {
         boolean res = false;
         File f = new File(pathF);
@@ -160,7 +167,7 @@ public class InputOutput {
      * Metodo Borrar EN Fichero (Borrar la informacion de un fichero)
      * @param pathF directorio + nombre de fichero a realizar la accion
      * @param s informacion que queramos borrar de el fichero
-     * @return devuelve TRUE en caso de borrar correctamente la string "s" dentro de el fichero, caso contrario devuelve FALSE */
+     * @throws IOException en caso de no existir el fichero a realizar la accion*/
     public void borrar_de_fichero(String pathF, String s) throws IOException {
         if (existe_en_fichero(pathF,s)) {
             ArrayList<String> as = leerFichero(pathF);
@@ -170,7 +177,7 @@ public class InputOutput {
                 b = (as.get(i)).equals(s);
                 if (b) as.remove(i);
             }
-            //volver a escribir fichero con el elemento ya borrado
+            //volver a escribir fichero con el elemento ya borrado (si existia)
             PrintWriter pw = new PrintWriter(pathF);
             for (i = 0; i < as.size(); ++i) pw.println(as.get(i));
             pw.flush();

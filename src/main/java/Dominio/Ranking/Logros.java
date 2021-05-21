@@ -1,33 +1,62 @@
 package Dominio.Ranking;
 
+/**Coleccion de Logros*/
 public class Logros {
 
+    /**Tipo de Logro [Partida mas corta, Mayor diferencia de fichas, Jugador con mas partidas jugadas,
+     * Jugador con mas partidas ganadas, Jugador con mas partidas perdidas]*/
     public enum tipoLogro{PARTIDA_CORTA, FICHAS_DIFF, PARTIDAS_TOTALES, PARTIDAS_GANADAS, PARTIDAS_PERDIDAS}
 
     //partida mas corta (en tema de turnos)
-    private String nick1_logro, nick2_logro;
-    private int id1_logro, id2_logro;
+    /**Nickname del jugador 1 (con logro de Partida mas corta)*/
+    private String nick1_logro;
+    /**Nickname del jugador 2 (con logro de Partida mas corta)*/
+    private String nick2_logro;
+    /**Identificador del jugador 1 (con logro de Partida mas corta)*/
+    private int id1_logro;
+    /**Identificador del jugador 2 (con logro de Partida mas corta)*/
+    private int id2_logro;
+    /**Total de turno de la partida mas corta*/
     private int turnos_logro;
 
     //Maximas capturas posibles
-    private String nick1_fichas, nick2_fichas;
-    private int id1_fichas, id2_fichas;
-    private int fichas_diff, fichas_j1, fichas_j2;
-
+    /**Nickname del jugador 1 (con logro de Partida con mas diferencia de fichas)*/
+    private String nick1_fichas;
+    /**Nickname del jugador 2 (con logro de Partida con mas diferencia de fichas)*/
+    private String nick2_fichas;
+    /**Identificador del jugador 1 (con logro de Partida con mas diferencia de fichas)*/
+    private int id1_fichas;
+    /**Identificador del jugador 2 (con logro de Partida con mas diferencia de fichas)*/
+    private int id2_fichas;
+    /**Diferencia de fichas*/
+    private int fichas_diff;
+    /**Fichas del Jugador 1*/
+    private int fichas_j1;
+    /**Fichas del Jugador 2*/
+    private int fichas_j2;
 
     //Jugador que mas ha jugado
+    /**Nickname del jugador con mayor partidas totales*/
     String j_total;
+    /**Identificador del jugador con mayor partidas totales*/
     int id_j_totales;
+    /**Total de partidas jugadas por el jugador con dicho logro*/
     int partidas_totales;
 
     //Jugador que mas partidas ha perdido
+    /**Nickname del jugador con mayor partidas perdidas*/
     String j_perdida;
+    /**Identificador del jugador con mayor partidas perdidas*/
     int id_j_perdida;
+    /**Total de partidas perdidas por el jugador con dicho logro*/
     int partidas_perdidas;
 
     //Jugador que mas partidas ha ganado
+    /**Nickname del jugador con mayor partidas ganadas*/
     String j_ganadas;
+    /**Identificador del jugador con mayor partidas ganadas*/
     int id_j_ganadas;
+    /**Total de partidas ganadas por el jugador con dicho logro*/
     int partidas_ganadas;
 
 
@@ -123,8 +152,7 @@ public class Logros {
                 this.id1_fichas = id1;
                 this.nick2_fichas = nick2;
                 this.id2_fichas = id2;
-                int t = calcular_diferencia_fichas(t1,t2);
-                this.fichas_diff = t;
+                this.fichas_diff = calcular_diferencia_fichas(t1,t2);
                 this.fichas_j1 = t1;
                 this.fichas_j2 = t2;
                 break;

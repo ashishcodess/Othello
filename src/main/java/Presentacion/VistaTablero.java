@@ -167,15 +167,16 @@ public class VistaTablero {
     }
 
     private void listener_guardar_partida() {
+        boolean b = false;
         switch (tipoActual) {
             case PARTIDA:
-                iCtrlPresentacion.presentacion_guardar_partida();
+                b = iCtrlPresentacion.presentacion_guardar_partida();
                 break;
             case TABLERO:
-                iCtrlPresentacion.presentacion_guardar_tablero();
+                b = iCtrlPresentacion.presentacion_guardar_tablero();
                 break;
         }
-        iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU);
+        if (b) iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU);
     }
 
     public void actionPerformed_botones(ActionEvent event) {

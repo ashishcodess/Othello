@@ -2,13 +2,22 @@ package Dominio.Ranking;
 
 import MyException.MyException;
 
+/** Clase para representar toda la informacion para el Ranking referente a un Jugador*/
 public class ElementoRanking {
-    /*Atributos*/
 
+    /** Identificador del Jugador*/
     private final int idJugador;
+
+    /** Nickname del Jugador*/
     private final String nickJugador;
+
+    /** Numero de partidas ganadas por el Jugador*/
     private int partidasGanadas;
+
+    /** Numero de partidas perdidas por el Jugador*/
     private int partidasPerdidas;
+
+    /** Numero de partidas empatadas por el Jugador*/
     private int partidasEmpatadas;
 
     /** total de partidas jugadas por el jugador: Ganadas+Perdidas+Empatadas*/
@@ -22,7 +31,7 @@ public class ElementoRanking {
      * @param nick nickname de Usuario
      * @throws MyException en caso de fallo con el identificador [pertenece a un ID de maquina: id menor a 6]
      * */
-    public ElementoRanking (int id, String nick) throws MyException {
+    public ElementoRanking (int id, String nick) throws Exception {
         if (id < 0) throw new MyException(MyException.tipoExcepcion.ID_NEGATIVO,id);
         else if (id < 6) throw new MyException(MyException.tipoExcepcion.ID_MAQUINA,id);
         else {
@@ -45,7 +54,7 @@ public class ElementoRanking {
      * @param empatadas contador de Partidas empatadas
      * @throws MyException en caso de fallo con el identificador [pertenece a un ID de maquina: id menor 6]
      * */
-    public ElementoRanking (int id, String nick,  int ganadas, int perdidas, int empatadas) throws MyException {
+    public ElementoRanking (int id, String nick,  int ganadas, int perdidas, int empatadas) throws Exception {
         if (id < 0) throw new MyException(MyException.tipoExcepcion.ID_NEGATIVO,id);
         else if (id < 6) throw new MyException(MyException.tipoExcepcion.ID_MAQUINA,id);
         else {

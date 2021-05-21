@@ -1,4 +1,4 @@
-Aqui mostramos lo que ha hecho cada uno para esta primera entrega.
+Aqui mostramos lo que ha hecho cada uno para este proyecto:
 
 Sergi Cassanmagnago:
 	- Jugador
@@ -33,8 +33,8 @@ Sergio Aguado:
 	    - InputOutput
 
 	- CtrlPresentacion
-	    - VistaRanking
-	    - VistaMenu
 	    - VistaLogin
+	    - VistaMenu
+	    - VistaRanking
 	    - VistaCreditos
-	    - VistaCargarTablero
+	    - VistaCargarBorrar

@@ -5,22 +5,21 @@ import MyException.MyException;
 
 import java.util.*;
 
-
+/**Driver de JugadorPersona*/
 public class DriverJugadorPersona {
 
+    /**Scanner (leer desde entrada)*/
     static Scanner scan = new Scanner(System.in);
-
-
 
     /** test_crear_jugadorPersona (clase hijo)
      * @param idPersona es el identificador de la Persona a crear
      * @param nick nickname de la Persona a crear
      * @throws MyException en caso de fallo con identificadores (id pertenece a Maquina)
      * */
-    public static void test_crear_jugadorPersona(int idPersona, String nick) throws MyException {
+    public static void test_crear_jugadorPersona(int idPersona, String nick) throws Exception {
         JugadorPersona res = new JugadorPersona(idPersona,nick);
         System.out.println("Maquina creada con ID:" + idPersona);
-        System.out.println("Prueba get_MaquinaID : " + res.get_PersonaID());
+        System.out.println("Prueba get_MaquinaID : " + res.consultar_PersonaID());
         System.out.println("Prueba get_Nickname : " + res.get_Nickname());
     }
 

@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 
+/**Vista del Ranking, Estadisticas de un Jugador y Logros*/
 public class VistaRanking {
 
     // Controlador de presentacion
@@ -79,6 +80,7 @@ public class VistaRanking {
 
     /**
      * Constructora de VistaRanking
+     * @param pCtrlPresentacion controlador de presentacion a asignarle a dicha vista
      * */
     public VistaRanking (CtrlPresentacion pCtrlPresentacion) {
         iCtrlPresentacion = pCtrlPresentacion;
@@ -113,17 +115,6 @@ public class VistaRanking {
      * Metodo para inicializar frame
      * */
     private void inicializar_frameVista() {
-        /*frameVista.setMinimumSize(new Dimension(700,750));
-        frameVista.setPreferredSize(frameVista.getMinimumSize());
-        frameVista.setResizable(false);
-        frameVista.setLocationRelativeTo(null);
-        frameVista.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        frameVista.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent evt) {
-                iCtrlPresentacion.salir_del_juego();
-            }
-        });*/
-
         frameVista = iCtrlPresentacion.configuracion_frame(700,750,"Ranking");
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
@@ -290,6 +281,7 @@ public class VistaRanking {
 
     /**
      * Metodo actionPerfomed del boton de Cargar Ranking
+     * @param event
      * * */
     public void actionPerformed_buttonCargarRanking (ActionEvent event) {
         ArrayList<String> res = iCtrlPresentacion.presentacion_consultar_ranking();
@@ -311,6 +303,7 @@ public class VistaRanking {
 
     /**
      * Metodo actionPerfomed del boton de Limpiar Ranking
+     * @param event
      * * */
     public void actionPerformed_buttonLimpiarRanking (ActionEvent event) {
         panelRanking.remove(tablaRanking);
@@ -322,6 +315,7 @@ public class VistaRanking {
 
     /**
      * Metodo actionPerfomed del boton de Ordenar (Para ordenar el ranking en funcion de ID, ganadas o Nickname)
+     * @param event evento del boton Ordenar
      * */
     public void actionPerformed_buttonOrdenar (ActionEvent event) {
         String s = Objects.requireNonNull(comboBoxOrdenar.getSelectedItem()).toString();
@@ -349,7 +343,8 @@ public class VistaRanking {
                 orden = 6;
                 break;
         }
-        if (iCtrlPresentacion.presentacion_ordenar_ranking(orden)) actionPerformed_buttonCargarRanking(event);
+        iCtrlPresentacion.presentacion_ordenar_ranking(orden);
+        actionPerformed_buttonCargarRanking(event);
     }
 
     /**
@@ -372,6 +367,7 @@ public class VistaRanking {
 
     /**
      * Metodo actionPerfomed del boton de Consultar Estadisticas
+     * @param event
      * * */
     public void actionPerformed_buttonConsultarEstadisticas(ActionEvent event) {
         panelInfo.remove(panelActivo);
@@ -386,6 +382,7 @@ public class VistaRanking {
 
     /**
      * Metodo actionPerfomed del boton de Consultar Logros
+     * @param event
      * * */
     public void actionPerformed_buttonConsultarLogros(ActionEvent event) {
         panelInfo.remove(panelActivo);
@@ -401,6 +398,7 @@ public class VistaRanking {
 
     /**
      * Metodo actionPerfomed del boton de Buscar Estadisticas
+     * @param event
      * * */
     public void actionPerformed_buttonBuscarEstadisticas (ActionEvent event) {
         int id = -1;
@@ -424,6 +422,7 @@ public class VistaRanking {
 
     /**
      * Metodo actionPerfomed del boton de Limpiar Estadisticas
+     * @param event
      * * */
     public void actionPerformed_buttonLimpiarEstadisticas (ActionEvent event) {
         textoID.setText("");

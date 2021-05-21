@@ -41,7 +41,7 @@ public class Partida {
      * @param n2 es el nick del jugador2 de la Partida
      * @throws MyException caso de fallar con el modo de juego
      * */
-    public Partida (int id, int modoJuego, int[] r, int idj1, String n1, int idj2, String n2) throws MyException {
+    public Partida (int id, int modoJuego, int[] r, int idj1, String n1, int idj2, String n2) throws Exception {
         this.id = id;
         this.modoDeJuego = modoJuego;
         this.reglas = r;
@@ -82,7 +82,7 @@ public class Partida {
      * @param t es el tablero de la Partida
      * @throws MyException caso de fallar con el modo de juego
      * */
-    public Partida(int id, int modoJuego, int[] r, int turn, int idj1, String n1, int idj2, String n2, Tablero t) throws MyException{
+    public Partida(int id, int modoJuego, int[] r, int turn, int idj1, String n1, int idj2, String n2, Tablero t) throws Exception{
         this.id = id;
         this.modoDeJuego = modoJuego;
         switch (modoJuego){
@@ -513,7 +513,9 @@ public class Partida {
     }
 
     /**
+     * (PARA DRIVER DOMINIO)
      * Operacion que imprime por salida estandar las casillas disponibles a colocar una pieza de la partida en ese momento
+     * @param disponibles Set de casillas disponibles a mostrar en pantalla
      */
     public void print_casillas_disponibles(Set<Position> disponibles) {
         //Set<Position> disponibles = this.tablero.getCasillasDisponibles();

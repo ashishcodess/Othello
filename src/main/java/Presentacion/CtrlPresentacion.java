@@ -10,27 +10,43 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
-//agregar en funcion de las necesidades
+/**Todos las vistas disponibles que se pueden visualizar*/
 enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,CREARTABLERO,CARGARTABLERO, BORRARTABLERO , CARGARPARTIDA}
-
-
 
 
 public class CtrlPresentacion {
 
 
+    /**enumeración utilizada en la Vista Cargar/Borrar para diferenciar que tipo de Vista estamos tratando*/
     public enum tipoTablero {PARTIDA,TABLERO}
+
+    /**enumeración utilizada en la Vista Login para diferenciar a que usuario va destinado el login*/
     public enum tipoJugador {JUGADOR1,JUGADOR2}
 
+    /**Controlador de Dominio*/
     private final CtrlDominio ctrlDominio;
 
-    private final VistaRanking vistaRanking;
+    /**Vista de Login de un Jugador*/
     private final VistaLogin vistaLogin;
+
+    /**Vista de Menu Principal del Juego*/
     private final VistaMenu vistaMenu;
-    private final VistaCreditos vistaCreditos;
-    private final VistaTablero vistaTablero;
-    private final VistaConfigPartida vistaConfigPartida;
+
+    /**Vista del Ranking*/
+    private final VistaRanking vistaRanking;
+
+    /**Vista de Cargar/Borrar (sirve para Partidas o para Tableros)*/
     private final VistaCargarBorrar vistaCargarBorrar;
+
+    /**Vista de los creditos*/
+    private final VistaCreditos vistaCreditos;
+
+    /**Vista de tablero (partida en juego)*/
+    private final VistaTablero vistaTablero;
+
+    /**Vista de Configuracion de Partida*/
+    private final VistaConfigPartida vistaConfigPartida;
+
 
     /**
      * Creadora por defecto de CtrlPresentacion
@@ -140,6 +156,7 @@ public class CtrlPresentacion {
      * Metodo login (desde Capa Presentacion)
      * @param id identificador de usuario a hacer login
      * @param nick nickname de usuario a hacer login
+     * @param a tipoJugador a hacer el login (JUGADOR1 o JUGADOR2)
      * @return devuelve 1 en caso de login correcto, 0 caso contrario
      * */
     public boolean presentacion_login(int id, String nick, tipoJugador a) {
@@ -157,12 +174,14 @@ public class CtrlPresentacion {
 
     /**
      * Metodo login (desde Capa Presentacion)
-     * @param id identificador de usuario que quiere cargar partida
-     * @return devuelve 1 en caso de login correcto, 0 caso contrario
+     * @param id identificador de usuario a mostrar las partidas disponibles de dicho Jugador
+     * @param nick nickname de usuario a mostrar las partidas disponibles de dicho Jugador
+     * @return devuelve un ArrayList de Strings con las partidas disponibles de este Jugador
      * */
     public ArrayList<String> presentacion_buscar_partidas(int id , String nick ) {
         return ctrlDominio.listar_partidas_disponibles(id , nick);
     }
+
     public ArrayList<String> consultar_info_partida_ID(int id) {
         return ctrlDominio.consultar_info_partida_ID(id);
     }
@@ -179,7 +198,7 @@ public class CtrlPresentacion {
      * metodo Get info usuario activo (desde Capa Presentacion)
      * @return devuelve la informacion que esta logueado dentro del juego
      * */
-    public String get_info_usuario_activo() {return ctrlDominio.get_info_usuario_activo();}
+    public String consultar_info_usuario_activo() {return ctrlDominio.consultar_info_usuario_activo();}
 
 
     public void presentacion_crearPartida(ArrayList<Integer> a_int) {
@@ -245,10 +264,9 @@ public class CtrlPresentacion {
     /**
      * Metodo ordenar ranking (desde Capa Presentacion)
      * @param orden [0 (Ganadas), 1 (ID mayor a menor) , 2 (NICKNAME), 3 (ID menor a mayor)]
-     * @return devuelve true en caso de que se haya efectuado una ordenacion, caso contrario devuelve falso
      * */
-    public boolean presentacion_ordenar_ranking(int orden) {
-        return ctrlDominio.ordenar_ranking(orden);
+    public void presentacion_ordenar_ranking(int orden) {
+        ctrlDominio.ordenar_ranking(orden);
     }
 
     /**
@@ -272,7 +290,9 @@ public class CtrlPresentacion {
 
     public int consultar_idTablero_cargar() {return ctrlDominio.consultar_idTablero_cargar();}
 
-    public void presentacion_guardar_tablero() { ctrlDominio.dominio_guardar_tablero();}
+    public boolean presentacion_guardar_tablero() {
+        return ctrlDominio.dominio_guardar_tablero();
+    }
 
     public boolean presentacion_borrar_tablero(int id) {return ctrlDominio.dominio_borrar_tablero(id);}
 
@@ -290,7 +310,7 @@ public class CtrlPresentacion {
 
     //FUNCIONES DE PARTIDA
 
-    public void presentacion_guardar_partida() { ctrlDominio.dominio_guardar_partida();}
+    public boolean presentacion_guardar_partida() { return ctrlDominio.dominio_guardar_partida();}
 
     public void presentacion_cargarPartida(int id) {
         if (id >= 0) {
@@ -305,7 +325,6 @@ public class CtrlPresentacion {
         }
         return b;
     }
-
 
 
     /**

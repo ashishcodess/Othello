@@ -3,13 +3,12 @@ package drivers;
 import Dominio.Ranking.ElementoRanking;
 import Dominio.Ranking.Logros;
 import Dominio.Ranking.Ranking;
-import MyException.MyException;
 
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-
+/** Test Unitario utilizando JUnit de la clase de Ranking*/
 public class RankingTest_JUnit {
 
     public RankingTest_JUnit() {}
@@ -20,7 +19,7 @@ public class RankingTest_JUnit {
     Ranking rank2;
 
     @Before
-    public void inicializarElementoRanking() throws MyException {
+    public void inicializarElementoRanking() throws Exception {
         e1 = new ElementoRanking(6,"aa",2,2,3);
         e2 = new ElementoRanking(7,"ba");
         rank = new Ranking();
@@ -61,7 +60,7 @@ public class RankingTest_JUnit {
 
 
     @Test
-    public void test_incrementarEmpatadas() throws MyException {
+    public void test_incrementarEmpatadas() throws Exception {
         ElementoRanking e = new ElementoRanking(7,"ba");
         e.incrementar_partida_empatada();
         String s = e.consultar_todo();
@@ -72,7 +71,7 @@ public class RankingTest_JUnit {
     //Tests sobre Ranking
 
     @Test
-    public void test_agregarAlRanking_e_incrementar_partida() throws MyException {
+    public void test_agregarAlRanking_e_incrementar_partida() throws Exception {
         rank.add_al_ranking(e1);
         rank.incrementar_partida(6,"aa", Ranking.tipoGanador.GANA);
         String s = rank.consultar_info_elemento_i(0);
@@ -82,7 +81,7 @@ public class RankingTest_JUnit {
 
 
     @Test
-    public void test_incrementar_ganadas_perdidas() throws MyException {
+    public void test_incrementar_ganadas_perdidas() throws Exception {
         rank.incrementar_ganadas_perdidas(6, "a", 7, "b", Ranking.tipoGanador.GANA_J1);
         String[] resultados = {"6 a 1 0 0 1", "7 b 0 1 0 1"};
         for (int i = 0; i < 2; ++i) {
@@ -92,7 +91,7 @@ public class RankingTest_JUnit {
 
 
     @Test
-    public void test_existeEnRanking() throws MyException {
+    public void test_existeEnRanking() throws Exception {
         rank.add_al_ranking(new ElementoRanking(6, "aa"));
         boolean res = (rank.existe_en_ranking(6, "aa") != -1);
         assertTrue(res);
@@ -101,7 +100,7 @@ public class RankingTest_JUnit {
 
 
     @Test
-    public void test_eliminarDelRanking() throws MyException {
+    public void test_eliminarDelRanking() throws Exception {
         rank.incrementar_ganadas_perdidas(6, "a", 7, "b", Ranking.tipoGanador.GANA_J1);
         rank.add_al_ranking(new ElementoRanking(10, "aa"));
         rank.eliminar_elemento_ranking(6, "a");
@@ -211,7 +210,7 @@ public class RankingTest_JUnit {
     }
 
     @Test
-    public void test_Incrementar_partidas_Y_comprobar_logros_actualizados() throws MyException{
+    public void test_Incrementar_partidas_Y_comprobar_logros_actualizados() throws Exception {
         rank2.incrementar_ganadas_perdidas(6,"a",7,"b", Ranking.tipoGanador.GANA_J2);
         String s = rank2.consultar_logro(Logros.tipoLogro.PARTIDAS_GANADAS);
         assertEquals("3 7 b",s);
