@@ -8,6 +8,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Esta Vista es la encargada de Carga y Borrar tanto los tableros como las partidas
+ * */
 public class VistaCargarBorrar {
 
     private CtrlPresentacion.tipoTablero tipoActual;
@@ -85,31 +88,6 @@ public class VistaCargarBorrar {
         }
     }
 
-
-
-    private void cambiar_info_labels_botones(CtrlPresentacion.tipoTablero t) {
-        infoJ1.setText(" ");
-        infoJ2.setText(" ");
-        infoModoJuego.setText(" ");
-        infoReglas.setText(" ");
-        infoTurno.setText(" ");
-        switch (t) {
-            case PARTIDA:
-                buttonCargar.setText("Cargar Partida");
-                buttonBorrar.setText("Borrar Partida");
-
-                break;
-            case TABLERO:
-                buttonCargar.setText("Cargar Tablero");
-                buttonBorrar.setText("Borrar Tablero");
-                /*infoJ1.setText(" ");
-                infoJ2.setText(" ");
-                infoModoJuego.setText(" ");
-                infoReglas.setText(" ");
-                infoTurno.setText(" ");*/
-                break;
-        }
-    }
 
     /**
      * Metodo para inicializar frame
@@ -194,7 +172,31 @@ public class VistaCargarBorrar {
     }
 
     /**
+     * Este metodo es el encargado de modificar los labels y el nombre de los botones en funcion de tipoTablero
+     * @param t tipo de Tablero [PARTIDA o TABLERO]
+     * */
+    private void cambiar_info_labels_botones(CtrlPresentacion.tipoTablero t) {
+        infoJ1.setText(" ");
+        infoJ2.setText(" ");
+        infoModoJuego.setText(" ");
+        infoReglas.setText(" ");
+        infoTurno.setText(" ");
+        switch (t) {
+            case PARTIDA:
+                buttonCargar.setText("Cargar Partida");
+                buttonBorrar.setText("Borrar Partida");
+
+                break;
+            case TABLERO:
+                buttonCargar.setText("Cargar Tablero");
+                buttonBorrar.setText("Borrar Tablero");
+                break;
+        }
+    }
+
+    /**
      * Metodo recargar combobox tablero: actualiza las opciones disponibles del ComboBox
+     * Se usa tanto para tableros como para las partidas del jugador que ha hecho login
      * */
     private void recargar_comboBox() {
         int size;
@@ -212,7 +214,7 @@ public class VistaCargarBorrar {
                 id_tablero_seleccionado = -1;
                 break;
 
-            case PARTIDA: //AUN FALLA
+            case PARTIDA:
                 id_partida_seleccionado = -1;
                 size = selector.getItemCount();
                 for(int i=size-1; i >= 1;i--){
@@ -227,7 +229,6 @@ public class VistaCargarBorrar {
                 selector.setSelectedIndex(0);
                 break;
         }
-
     }
 
     /**
@@ -268,26 +269,30 @@ public class VistaCargarBorrar {
     }
 
     /**
-     * Metodo Obtener info del elemento seleccionado por el selector_tablero
+     * Metodo Obtener info del elemento seleccionado por el selector (para TABLEROS y PARTIDAS)
      * */
-    private void obtener_info_selector_tablero() {
+    private void obtener_info_selector() {
         String s = Objects.requireNonNull(selector.getSelectedItem()).toString();
-        id_tablero_seleccionado = -1;
-        try {
-            if (!s.equals("")) id_tablero_seleccionado = Integer.parseInt(s);
-            else limpiar_vista_previa_tablero();
-        }
-        catch (Exception ignored) {}
-    }
+        switch (tipoActual) {
+            case TABLERO:
+                id_tablero_seleccionado = -1;
+                try {
+                    if (!s.equals("")) id_tablero_seleccionado = Integer.parseInt(s);
+                    else limpiar_vista_previa_tablero();
+                }
+                catch (Exception ignored) {}
+                break;
 
-    private void obtener_info_selector_partida() {
-        String s = Objects.requireNonNull(selector.getSelectedItem()).toString();
-        id_partida_seleccionado = -1;
-        try {
-            if (!s.equals("")) id_partida_seleccionado = Integer.parseInt(s);
-            else limpiar_vista_previa_tablero();
+            case PARTIDA:
+                id_partida_seleccionado = -1;
+                try {
+                    if (!s.equals("")) id_partida_seleccionado = Integer.parseInt(s);
+                    else limpiar_vista_previa_tablero();
+                }
+                catch (Exception ignored) {}
+                break;
         }
-        catch (Exception ignored) {}
+
     }
 
 
@@ -295,11 +300,11 @@ public class VistaCargarBorrar {
      * Metodo listener del elemento comboBox "selector_tablero"
      * */
     private void listener_selector_tablero() {
+        obtener_info_selector();
         switch (tipoActual) {
             case TABLERO:
-                obtener_info_selector_tablero();
                 //limpiar_vista_previa_tablero();
-                int[][] tab = iCtrlPresentacion.cargarTablero(id_tablero_seleccionado);
+                int[][] tab = iCtrlPresentacion.presentacion_cargarTablero(id_tablero_seleccionado);
                 for (int i = 0; i < botonesMatriz.length; ++i) {
                     for (int j = 0; j < 8; ++j) {
                         cambiar_imagen_casilla(i,j,tab[i][j]);
@@ -308,8 +313,7 @@ public class VistaCargarBorrar {
                 break;
 
             case PARTIDA:
-                obtener_info_selector_partida();
-                //Con toda la info + tablero
+                obtener_info_selector();
                 if (id_partida_seleccionado >= 0) {
                     ArrayList<String> as = iCtrlPresentacion.consultar_info_partida_ID(id_partida_seleccionado);
                     int[][]tabl = iCtrlPresentacion.presentacion_cargar_tablero_partida(id_partida_seleccionado);
@@ -347,11 +351,11 @@ public class VistaCargarBorrar {
      * Metodo listener del elemento boton "Borrar"
      * */
     private void listener_boton_borrar() {
+        obtener_info_selector();
         switch (tipoActual) {
             case TABLERO:
-                obtener_info_selector_tablero();
                 if (id_tablero_seleccionado != -1) {
-                    boolean b = iCtrlPresentacion.borrar_tablero(id_tablero_seleccionado);
+                    boolean b = iCtrlPresentacion.presentacion_borrar_tablero(id_tablero_seleccionado);
                     if (b) {
                         selector.removeItem(selector.getItemAt(id_tablero_seleccionado));
                         recargar_comboBox();
@@ -361,7 +365,6 @@ public class VistaCargarBorrar {
                 break;
 
             case PARTIDA:
-                obtener_info_selector_partida();
                 if (id_partida_seleccionado >= 0) {
                     //borrar partida
                     boolean b = iCtrlPresentacion.presentacion_borrarPartida(id_partida_seleccionado);
@@ -380,15 +383,13 @@ public class VistaCargarBorrar {
      * Metodo listener del elemento boton "Cargar"
      * */
     private void listener_boton_cargar() {
+        obtener_info_selector();
         switch (tipoActual) {
             case TABLERO:
-                obtener_info_selector_tablero();
                 iCtrlPresentacion.modificar_idTablero_cargar(id_tablero_seleccionado);
-                //int[][] mapa_tablero = iCtrlPresentacion.cargarTablero(id_tablero_seleccionado);
                 iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA);
                 break;
             case PARTIDA:
-                obtener_info_selector_partida();
                 if (id_partida_seleccionado >= 0) {
                     iCtrlPresentacion.presentacion_cargarPartida(id_partida_seleccionado);
                     iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);

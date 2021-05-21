@@ -30,10 +30,8 @@ public class CtrlPresentacion {
     private final VistaCreditos vistaCreditos;
     private final VistaTablero vistaTablero;
     private final VistaConfigPartida vistaConfigPartida;
-    private final VistaPartida vistaPartida;
     private final VistaCargarBorrar vistaCargarBorrar;
 
-    private final VistaCargarPartida vistaCargarPartida;
     /**
      * Creadora por defecto de CtrlPresentacion
      * */
@@ -43,11 +41,9 @@ public class CtrlPresentacion {
         vistaLogin = new VistaLogin(this,tipoJugador.JUGADOR1);
         vistaMenu = new VistaMenu(this);
         vistaConfigPartida = new VistaConfigPartida(this);
-        vistaPartida = new VistaPartida(this);
         vistaCreditos = new VistaCreditos(this);
         vistaTablero  = new VistaTablero(this);
         vistaCargarBorrar = new VistaCargarBorrar(this);
-        vistaCargarPartida = new VistaCargarPartida(this);
     }
 
     /**
@@ -88,13 +84,11 @@ public class CtrlPresentacion {
         vistaLogin.hacerVisible(false,tipoJugador.JUGADOR1);
         vistaMenu.hacerVisible(false);
         vistaConfigPartida.hacerVisible(false);
-        //vistaPartida.hacerVisible(false, tipoTablero.PARTIDA);
         vistaRanking.hacerVisible(false);
         vistaCreditos.hacerVisible(false);
         vistaTablero.hacerVisible(false, tipoTablero.PARTIDA);
         vistaConfigPartida.hacerVisible(false);
         vistaCargarBorrar.hacerVisible(false, tipoTablero.PARTIDA);
-        vistaCargarPartida.hacerVisible(false);
     }
 
     /**
@@ -188,12 +182,6 @@ public class CtrlPresentacion {
     public String get_info_usuario_activo() {return ctrlDominio.get_info_usuario_activo();}
 
 
-    public int presentacion_get_id_usuario(){
-        return ctrlDominio.get_id_usuario();
-    }
-    public String presentacion_get_nickname_usuario(){
-        return ctrlDominio.get_nickname_usuario();
-    }
     public void presentacion_crearPartida(ArrayList<Integer> a_int) {
         ctrlDominio.domino_crearPartida(a_int);
     }
@@ -213,6 +201,7 @@ public class CtrlPresentacion {
         return ctrlDominio.dominio_registro_usuario(nick);
     }
 
+    //FUNCIONES DE RANKING
     /**
      * Metodo exportar ranking (desde Capa Presentacion)
      * */
@@ -269,13 +258,25 @@ public class CtrlPresentacion {
     public int presentacion_consultar_tam_ranking() {return ctrlDominio.consultar_tam_ranking();}
 
 
+    //FUNCIONES DE TABLERO
+
     public ArrayList<String> obtener_lista_tableros_disponibles() {return ctrlDominio.listar_tableros_disponibles();}
 
     public void crearTablero() {
         ctrlDominio.dominio_crear_tablero();
     }
 
-    public int[][] cargarTablero(int id) {
+    public void modificar_idTablero_cargar(int id) {
+        ctrlDominio.modificar_idTablero_cargar(id);
+    }
+
+    public int consultar_idTablero_cargar() {return ctrlDominio.consultar_idTablero_cargar();}
+
+    public void presentacion_guardar_tablero() { ctrlDominio.dominio_guardar_tablero();}
+
+    public boolean presentacion_borrar_tablero(int id) {return ctrlDominio.dominio_borrar_tablero(id);}
+
+    public int[][] presentacion_cargarTablero(int id) {
         int [][]tab = new int[8][8];
         try{
             tab = ctrlDominio.dominio_cargar_tablero(id);
@@ -287,15 +288,9 @@ public class CtrlPresentacion {
     }
 
 
-    public ArrayList<String> getInfoPartida(int id){
-        ArrayList<String> info = new ArrayList<>();
-        try {
-            info= ctrlDominio.dominio_info_partida(id);
-        } catch (Exception ignored) {
+    //FUNCIONES DE PARTIDA
 
-        }
-        return info;
-    }
+    public void presentacion_guardar_partida() { ctrlDominio.dominio_guardar_partida();}
 
     public void presentacion_cargarPartida(int id) {
         if (id >= 0) {
@@ -311,32 +306,13 @@ public class CtrlPresentacion {
         return b;
     }
 
-    public void modificar_idTablero_cargar(int id) {
-        ctrlDominio.modificar_idTablero_cargar(id);
-    }
-
-    public int consultar_idTablero_cargar() {return ctrlDominio.consultar_idTablero_cargar();}
-
-    public void guardar_tablero() { ctrlDominio.dominio_guardar_tablero();}
-
-    public boolean borrar_tablero(int id) {return ctrlDominio.dominio_borrar_tablero(id);}
 
 
     /**
      * Metodo obtener tablero
      * @return devuelve el tablero de la partida como una matriz de enteros (desde la Capa de Dominio)
      * */
-    public int[][] presentacionObtenerTablero() {return ctrlDominio.getTableroPartida();}
-
-    /**
-     * Metodo consultar casillas disponibles (desde capa Presentacion)
-     * @return casillas disponibles
-     * */
-    /*public Set<Position> presentacionObternerCasillasDisponibles(){
-        return ctrlDominio.getCasillasDisponibles();
-    }*/
-
-    public void guardar_partida() { ctrlDominio.dominio_guardar_partida();}
+    public int[][] presentacion_consultar_Tablero() {return ctrlDominio.consultar_TableroPartida();}
 
     public void presentacionRondaPartida(int x, int y) {
         ctrlDominio.dominioRondaPartida(x, y);

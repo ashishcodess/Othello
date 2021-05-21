@@ -157,6 +157,7 @@ public class CtrlPersitencia {
     //Controlador de Partidas (cPartidas)
 
     /**
+     * (PARA DRIVER DOMINIO)
      * Operacion ctrl_leer_modo_partida
      * @param idPartida es el ID de partida a cargar
      * @return devuelve el modo de la partida con igual a idPartida, caso contrario (no existe partida) devuelve -1
@@ -221,7 +222,7 @@ public class CtrlPersitencia {
 
     }
 
-    public int[][] ctrl_cargar_tablero_partida(int idPartida) throws IOException, MyException {
+    public int[][] ctrl_cargar_tablero_partida(int idPartida) throws IOException {
         String pathF = dir_partidas + idPartida + ".txt";
         ArrayList<String> as = io.leerFichero(pathF);
         String s1;
@@ -235,7 +236,7 @@ public class CtrlPersitencia {
         return map;
     }
 
-    public ArrayList<String> ctrl_info_partida(int idPartida) throws IOException , MyException{
+    public ArrayList<String> ctrl_info_partida(int idPartida) throws IOException {
         String pathF = dir_partidas + idPartida + ".txt";
         ArrayList<String> as = io.leerFichero(pathF);
         String id1, id2;
@@ -262,8 +263,7 @@ public class CtrlPersitencia {
 
     public ArrayList<String> consultar_info_partida_id(int idPartida) throws IOException {
         String pathF = dir_partidas + idPartida + ".txt";
-        ArrayList<String> as = io.leerFichero(pathF);
-        return as;
+        return io.leerFichero(pathF);
     }
     /**
      * Operacion ctrl_guardar_partida
@@ -434,14 +434,14 @@ public class CtrlPersitencia {
         }
         for (int i = 0; i < as.size(); ++i) { //borrar parte de .txt
             s = as.get(i);
-            String sAux[] = s.split(".txt");
+            String[] sAux = s.split(".txt");
             as.set(i, sAux[0]);
         }
         return as;
     }
 
     /**
-     * Operacion ctrl_print_tableros_disponibles
+     * (PARA DRIVER DOMINIO) Operacion ctrl_print_tableros_disponibles
      * muestra por salida estandar los tableros disponibles
      */
     public void ctrl_print_tableros_disponibles() {
@@ -496,7 +496,7 @@ public class CtrlPersitencia {
                     break;
 
                 case 1: //Diferencia de fichas mas grande
-                    int t2 = 0;
+                    int t2;
                     if (s2.length == 7) {
                         id1 = Integer.parseInt(s2[1]);
                         nick1 = s2[2];
@@ -593,7 +593,6 @@ public class CtrlPersitencia {
     public boolean ctrl_crear_usuario(int idJugador,String nicknameJugador) throws IOException {
         String pathF = dir_usuarios + idJugador + "_" + nicknameJugador;
         boolean b = io.crearFichero(pathF);
-        System.out.println("Creado: "+ b);
         if (b) ctrl_incr_nuevo_ID_user();
         return b;
     }
@@ -684,6 +683,7 @@ public class CtrlPersitencia {
     }
 
     /**
+     * (PARA DRIVER DOMINIO)
      * Operacion ctrl_print_partidas_disponibles
      * @param IDjugador identificador de Jugador
      * @param nick nickname de Jugador
