@@ -356,6 +356,18 @@ public class CtrlPresentacion {
         }
     }
 
+     public int presentacion_get_negras() {
+        return ctrlDominio.dominio_get_negras();
+     }
+
+     public int presentacion_get_blancas() {
+        return ctrlDominio.dominio_get_blancas();
+     }
+
+     public int presentacion_get_turno() {
+        return ctrlDominio.dominio_get_turno();
+     }
+
     /** Metodo Borrar Partida (desde Presentacion)
      * @param id es el identificador de partida a borrar
      * @return devuelve TRUE en caso que se haya borrado con exito */

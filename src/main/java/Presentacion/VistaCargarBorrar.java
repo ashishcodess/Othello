@@ -35,6 +35,8 @@ public class VistaCargarBorrar {
     private final JButton buttonMenu = new JButton("Menu Principal");
     private final JComboBox<String> selector = new JComboBox<>();
 
+
+
     //Info de partida
     private final JLabel infoJ1 = new JLabel("Info J1: ");
     private final JLabel infoJ2 = new JLabel("Info J2: ");
@@ -137,6 +139,7 @@ public class VistaCargarBorrar {
         JPanel panelAux = new JPanel();
         panelAux.setLayout(new BorderLayout());
         panelBotones.setLayout(new FlowLayout());
+
         selector.insertItemAt("", 0);
         recargar_comboBox();
 
@@ -165,9 +168,11 @@ public class VistaCargarBorrar {
         panelBotones.add(panelAux4);
         panelPrincipal.add(panelBotones);
 
+
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.add(tablero,BorderLayout.CENTER);
         panelPrincipal.add(panelBotones,BorderLayout.EAST);
+
     }
 
     /**
@@ -336,6 +341,7 @@ public class VistaCargarBorrar {
                     infoModoJuego.setText(s);
 
                 }
+
                 break;
         }
         for (int i = 0; i < botonesMatriz.length; ++i) {

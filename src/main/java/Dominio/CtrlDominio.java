@@ -507,6 +507,31 @@ public class CtrlDominio {
         }
         return res;
     }
+    /**
+     * Metodo consultar total numero de las fichas negras
+     * @return devuelve el numero de fichas negras
+     * */
+     public int dominio_get_negras() {
+         if (partida_activa != null) return partida_activa.getNumNegras();
+         else return 2;
+     }
+
+    /**
+     * Metodo consultar total numero de las fichas blancas
+     * @return devuelve el numero de fichas blancas
+     * */
+     public int dominio_get_blancas() {
+       if (partida_activa != null) return partida_activa.getNumBlancas();
+        else return 2;
+     }
+    /**
+     * Metodo consultar el turno de juego
+     * @return devuelve la ronda de la partida
+     * */
+    public int dominio_get_turno() {
+        if (partida_activa != null) return partida_activa.getTurnoPartida();
+        else return 2;
+    }
 
     /*public static boolean dominioPartidaFinalizada() {
         return partida_activa.getTableroPartida().finalizada();

@@ -134,6 +134,21 @@ public class Partida {
     }
 
     /**
+     * Operacion get del para saber numero de fichas blancas
+     * @return retorna un int con el numero de fichas blancas
+     */
+    public int getNumBlancas() {
+        return this.tablero.getNumCasillasBlancas();
+    }
+
+    /**
+     * Operacion get del para saber numero de fichas negras
+     * @return retorna un int con el numero de fichas negras
+     */
+    public int getNumNegras() {
+        return this.tablero.getNumCasillasNegras();
+    }
+    /**
      * Operacion get del atributo turno de Partida
      * @return retorna un int con el turno de la Partida
      */

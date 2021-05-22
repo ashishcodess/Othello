@@ -245,7 +245,7 @@ public class CtrlPersitencia {
     }
 
     /**
-     * Metodo Consunltar info de partida (a partir de un ID de partida)
+     * Metodo Consultar info de partida (a partir de un ID de partida)
      * @param idPartida identificador de partida a leer
      * @return devuelve toda la informacion de la partida
      * @throws IOException en caso de no existir dicho fichero de Partida

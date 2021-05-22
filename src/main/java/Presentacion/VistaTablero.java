@@ -30,6 +30,15 @@ public class VistaTablero {
     private final JButton bottonGuardar = new JButton("Guardar Partida");
     private final JButton bottonFinalizar = new JButton("Finalizar Partida");
 
+    //Info de fichas
+    JPanel panelFichas = new JPanel();
+    private final JLabel labelNegras = new JLabel("Negras: ");
+    private final JTextField textoNumNegras = new JTextField(2);
+    private final JLabel labelBlancas = new JLabel("Blancas: ");
+    private final JTextField textoNumBlancas = new JTextField(2);
+    private final JLabel infoTurnoJugador = new JLabel("Turno: ");
+    private final JTextField textoTurno = new JTextField(8);
+
 
     private final JMenuBar menubarVista = new JMenuBar();
     private final JMenu menuFile = new JMenu("File");
@@ -67,9 +76,25 @@ public class VistaTablero {
         inicializar_Componentes();
         asignar_listenersComponentes();
         inicializar_menubarVista();
+
         pasar_turno = false;
     }
 
+    private void inicializar_panelFicha(){
+        int blancas = iCtrlPresentacion.presentacion_get_blancas();
+        int negras = iCtrlPresentacion.presentacion_get_negras();
+        int turno = iCtrlPresentacion.presentacion_get_turno();
+        String t = "";
+        if (turno%2 == 0) t = "Negra";
+        else t = "Blanca";
+        String s1=String.valueOf(blancas);
+        String s2=String.valueOf(negras);
+        textoNumNegras.setText(s1);
+        textoNumBlancas.setText(s2);
+        textoTurno.setText(t);
+
+
+    }
     private void inicializar_menubarVista() {
         menuFile.add(menuitemGuardar);
         menuFile.add(menuitemFinalizar);
@@ -126,9 +151,28 @@ public class VistaTablero {
         panelBotones.add(labelOpciones);
         panelBotones.add(bottonGuardar);
         panelBotones.add(bottonFinalizar);
+
+        panelFichas.setLayout(new BorderLayout());
+        JPanel panelAux1 = new JPanel();
+        panelAux1.setLayout(new FlowLayout());
+        panelAux1.add(labelNegras);
+        panelAux1.add(textoNumNegras);
+        textoNumNegras.setEditable(false);
+        panelAux1.add(labelBlancas);
+        panelAux1.add(textoNumBlancas);
+        textoNumBlancas.setEditable(false);
+        panelFichas.add(panelAux1 , BorderLayout.NORTH );
+        JPanel panelAux2 = new JPanel();
+        panelAux2.setLayout(new FlowLayout());
+        panelAux2.add(infoTurnoJugador);
+        panelAux2.add(textoTurno);
+        textoTurno.setEditable(false);
+        panelFichas.add(panelAux2 , BorderLayout.CENTER);
+
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.add(tablero,BorderLayout.CENTER);
         panelPrincipal.add(panelBotones,BorderLayout.EAST);
+        panelPrincipal.add(panelFichas, BorderLayout.NORTH);
         recargar_tablero();
     }
 
@@ -172,6 +216,7 @@ public class VistaTablero {
         }
         pasar_turno = (ct_casillas_disponibles == 0); //no hay casillas disponibles activar boton de pasar turno
         bottonPasarTurno.setEnabled(pasar_turno);
+        inicializar_panelFicha();
     }
 
     private void listener_guardar_partida() {
@@ -203,6 +248,7 @@ public class VistaTablero {
                 }
             }
         }
+        //inicializar_panelFicha();
         recargar_tablero();
         switch (ganador) {
             case 0:
