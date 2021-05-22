@@ -89,8 +89,8 @@ public class VistaTablero {
         else t = "Blanca";
         String s1=String.valueOf(blancas);
         String s2=String.valueOf(negras);
-        textoNumNegras.setText(s1);
-        textoNumBlancas.setText(s2);
+        textoNumNegras.setText(s2);
+        textoNumBlancas.setText(s1);
         textoTurno.setText(t);
 
 
