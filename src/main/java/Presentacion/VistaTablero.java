@@ -37,6 +37,8 @@ public class VistaTablero {
     private final JMenuItem menuitemGuardar= new JMenuItem("Guardar Partida");
     private final JMenuItem menuitemFinalizar = new JMenuItem("Finalizar Partida (Volver al menu Principal)");
 
+    private boolean pasar_turno;
+
     private void cambiar_info_labels_botones(CtrlPresentacion.tipoTablero t) {
         menuitemFinalizar.setText("Finalizar (Volver al menu Principal)");
         switch (t) {
@@ -65,6 +67,7 @@ public class VistaTablero {
         inicializar_Componentes();
         asignar_listenersComponentes();
         inicializar_menubarVista();
+        pasar_turno = false;
     }
 
     private void inicializar_menubarVista() {
@@ -160,11 +163,15 @@ public class VistaTablero {
      * Metodo recargar tablero (actualiza la pantalla con la informacion del tablero actualizado)*/
     public void recargar_tablero() {
         int[][] tab = iCtrlPresentacion.presentacion_consultar_Tablero();
+        int ct_casillas_disponibles = 0;
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 cambiar_imagen_casilla(i,j,tab[i][j]);
+                if (tab[i][j] == 1) ++ct_casillas_disponibles;
             }
         }
+        pasar_turno = (ct_casillas_disponibles == 0); //no hay casillas disponibles activar boton de pasar turno
+        bottonPasarTurno.setEnabled(pasar_turno);
     }
 
     private void listener_guardar_partida() {
@@ -210,6 +217,11 @@ public class VistaTablero {
         }
     }
 
+
+    public void listener_botonPasarTurno() {
+        //habra que hacer algo aqui
+    }
+
     public void asignar_listenersComponentes() {
         //TABLERO
         for (int i = 0; i < 8; ++i) {
@@ -226,6 +238,9 @@ public class VistaTablero {
 
         bottonFinalizar.addActionListener
                 (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+
+        bottonPasarTurno.addActionListener
+                (event -> listener_botonPasarTurno());
 
         menuitemGuardar.addActionListener
                 (event -> listener_guardar_partida());
