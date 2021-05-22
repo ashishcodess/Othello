@@ -236,6 +236,9 @@ public class Partida {
                         case "colocar":
                             int x = Integer.parseInt(accion[1]);
                             int y = Integer.parseInt(accion[2]);
+                            if (!tablero.es_possible(x, y)){
+                                return this.ganador;
+                            }
                             if (this.turno % 2 == 0) {
                                 j1.colocar_ficha_en_partida(turno, x, y, tablero);
                             }
@@ -352,30 +355,48 @@ public class Partida {
      * @param y indica la posición i del tablero en la que el jugador quiere realizar un movimiento
      * @return retorna un int con el ganador de la partida o -1 si la partida no ha acabado todavia
      */
-    public void rondaPartidaPvP(int x, int y) {
-        reglasCasillasDisponibles();
-        this.disponibles = this.tablero.getCasillasDisponibles();
-        if (this.turno == 0) {
-            print_casillas_disponibles(disponibles);
-            print_Tablero();
+    public int rondaPartidaPvP(int x, int y) {
+        if (finalizada == 2 || tablero.finalizada()) {
+            comprobarPartidaFinalizada();
+            return this.ganador;
         }
-        int disp = disponibles.size();
-        if (this.turno % 2 == 0) {
-            j1.colocar_ficha_en_partida(turno, x, y, tablero);
-        }
-        else if (this.turno % 2 != 0) {
-            j2.colocar_ficha_en_partida(turno, x, y, tablero);
-        }
-        //tablero.actualizarTablero(turno, x, y);
-        incrementarTurnoPartida();
-        if (turno > 0) {
+        else {
             reglasCasillasDisponibles();
-            disponibles = this.tablero.getCasillasDisponibles();
-            print_casillas_disponibles(disponibles);
-            print_Tablero();
+            this.disponibles = this.tablero.getCasillasDisponibles();
+            if (this.turno == 0) {
+                print_casillas_disponibles(disponibles);
+                print_Tablero();
+            }
+            int disp = disponibles.size();
+            if (disp == 0) {
+                this.finalizada++;
+                incrementarTurnoPartida();
+                return this.ganador;
+            }
+            if (!tablero.es_possible(x, y)){
+                return this.ganador;
+            }
+            if (this.turno % 2 == 0) {
+                j1.colocar_ficha_en_partida(turno, x, y, tablero);
+            } else if (this.turno % 2 != 0) {
+                j2.colocar_ficha_en_partida(turno, x, y, tablero);
+            }
+            incrementarTurnoPartida();
+            if (turno > 0) {
+                reglasCasillasDisponibles();
+                disponibles = this.tablero.getCasillasDisponibles();
+                print_casillas_disponibles(disponibles);
+                print_Tablero();
+            }
+            if (disp == 0) this.finalizada++;
+            else this.finalizada = 0;
+            if (finalizada == 2 || tablero.finalizada()) {
+                comprobarPartidaFinalizada();
+                return this.ganador;
+            }
         }
-        this.finalizada = 0;
-
+        return this.ganador;
+    }
 
 
 
@@ -450,8 +471,8 @@ public class Partida {
                 }
                 break;
 
-        }*/
-    }
+        }
+    }*/
 
 
 
@@ -475,7 +496,7 @@ public class Partida {
      * Operacion que comprueba si la Partida ha finalizado y genera el ganador
      */
     public void comprobarPartidaFinalizada() {
-        if (this.tablero.getNumCasillasBlancas() > this.tablero.getNumCasillasNegras() || this.tablero.getNumCasillasNegras() == 0) {
+        if ((this.tablero.getNumCasillasBlancas() > this.tablero.getNumCasillasNegras()) || this.tablero.getNumCasillasNegras() == 0) {
             setGanador(1);
         } else if ((this.tablero.getNumCasillasBlancas() < this.tablero.getNumCasillasNegras()) || this.tablero.getNumCasillasBlancas() == 0) {
             setGanador(0);

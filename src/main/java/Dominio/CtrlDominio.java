@@ -515,8 +515,8 @@ public class CtrlDominio {
         catch (Exception ignored) { }
     }
 
-    public void dominioRondaPartida(int x, int y) {
-        partida_activa.rondaPartidaPvP(x, y);
+    public int dominioRondaPartida(int x, int y) {
+        return partida_activa.rondaPartidaPvP(x, y);
     }
 
     /*public static boolean dominioPartidaFinalizada() {

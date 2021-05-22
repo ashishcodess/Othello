@@ -13,7 +13,8 @@ import java.util.*;
 
 /**Driver de la capa de dominio: Sirve tanto para probar a crear una partida y ejecutarla,
  * como a consultar el Ranking y generar tableros personalizados*/
-public class DriverDominio {
+public class
+DriverDominio {
 
     /**Identificador del Jugador 1*/
     static int id_1;

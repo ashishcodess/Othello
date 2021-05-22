@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import javax.swing.JOptionPane;
 
 
 public class VistaTablero {
@@ -181,6 +182,7 @@ public class VistaTablero {
 
     public void actionPerformed_botones(ActionEvent event) {
         int x = 0;
+        int ganador = -1;
         for (JButton[] jButtons : botonesMatriz) {
             x+=1;
             int y = 0;
@@ -190,12 +192,23 @@ public class VistaTablero {
                     x = x-1;
                     y = y-1;
                     //System.out.println("posicion "+ x + ", " + y);
-                    iCtrlPresentacion.presentacionRondaPartida(x, y);
+                    ganador = iCtrlPresentacion.presentacionRondaPartida(x, y);
 
                 }
             }
         }
         recargar_tablero();
+        switch (ganador) {
+            case 0:
+                JOptionPane.showMessageDialog(null, "El ganador de la partida es J1!");
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(null, "El ganador de la partida es J2!");
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(null, "La partida termina en empate!");
+                break;
+        }
     }
 
     public void asignar_listenersComponentes() {

@@ -333,8 +333,8 @@ public class CtrlPresentacion {
      * */
     public int[][] presentacion_consultar_Tablero() {return ctrlDominio.consultar_TableroPartida();}
 
-    public void presentacionRondaPartida(int x, int y) {
-        ctrlDominio.dominioRondaPartida(x, y);
+    public int presentacionRondaPartida(int x, int y) {
+        return ctrlDominio.dominioRondaPartida(x, y);
     }
 
     /*public void presentacionActualizarTablero() {
