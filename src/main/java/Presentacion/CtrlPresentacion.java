@@ -312,11 +312,13 @@ public class CtrlPresentacion {
 
     public boolean presentacion_guardar_partida() { return ctrlDominio.dominio_guardar_partida();}
 
+
     public void presentacion_cargarPartida(int id) {
         if (id >= 0) {
             ctrlDominio.dominio_cargar_partida(id);
         }
     }
+
 
     public boolean presentacion_borrarPartida(int id) {
         boolean b = false;
@@ -329,8 +331,7 @@ public class CtrlPresentacion {
 
     /**
      * Metodo obtener tablero
-     * @return devuelve el tablero de la partida como una matriz de enteros (desde la Capa de Dominio)
-     * */
+     * @return devuelve el tablero de la partida como una matriz de enteros (desde la Capa de Dominio)*/
     public int[][] presentacion_consultar_Tablero() {return ctrlDominio.consultar_TableroPartida();}
 
     public int presentacionRondaPartida(int x, int y) {

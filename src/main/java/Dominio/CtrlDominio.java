@@ -203,14 +203,27 @@ public class CtrlDominio {
      * */
     public int consultar_tam_ranking() {return ranking.consultar_tam_ranking();}
 
+
     /**
      * Metodo actualizar_ranking (a partir de partida_activa)
-     * @param ganador incrementar contador de partidas en funcion de [2: empate, 1:gana jugador2, 0:gana jugador1]
+     * @param res incrementar contador de partidas en funcion de [2: empate, 1:gana jugador2, 0:gana jugador1]
      * */
-    private static void actualizar_ranking(Ranking.tipoGanador ganador){
+    private static void actualizar_ranking(int res){
         try {
             int modo = partida_activa.getModoDeJuegoPartida();
             if (modo != 0) {
+                Ranking.tipoGanador ganador = Ranking.tipoGanador.GANA_J1;
+                switch (res) {
+                    case 0:
+                        ganador = Ranking.tipoGanador.GANA_J1;
+                        break;
+                    case 1:
+                        ganador = Ranking.tipoGanador.GANA_J2;
+                        break;
+                    case 2:
+                        ganador = Ranking.tipoGanador.EMPATE;
+                        break;
+                }
                 int id1, id2;
                 String nick1, nick2;
                 id1 = partida_activa.getID_J1();
@@ -483,26 +496,14 @@ public class CtrlDominio {
     public int dominioRondaPartida(int x, int y) {
         int res = partida_activa.rondaPartidaPvP(x, y);
         if (res >= 0 && res < 3) { //tenemos un ganador
-            gestionar_resultado_partida(res);
+            actualizar_ranking(res);
         }
         return res;
-    }
-
-    public void gestionar_resultado_partida(int res) {
-        switch (res) {
-            case 0:
-                actualizar_ranking(Ranking.tipoGanador.GANA_J1);
-                break;
-            case 1:
-                actualizar_ranking(Ranking.tipoGanador.GANA_J2);
-                break;
-            case 2:
-                actualizar_ranking(Ranking.tipoGanador.EMPATE);
-                break;
-        }
     }
 
     /*public static boolean dominioPartidaFinalizada() {
         return partida_activa.getTableroPartida().finalizada();
     }*/
+
 }
+
