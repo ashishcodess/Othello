@@ -193,7 +193,6 @@ public class VistaTablero {
                     y = y-1;
                     //System.out.println("posicion "+ x + ", " + y);
                     ganador = iCtrlPresentacion.presentacionRondaPartida(x, y);
-
                 }
             }
         }

@@ -204,33 +204,30 @@ public class CtrlDominio {
     public int consultar_tam_ranking() {return ranking.consultar_tam_ranking();}
 
     /**
-     * Metodo actualizar_ranking
-     * @param p partida de la cual se necesita informacion de los jugadores y del ganador
+     * Metodo actualizar_ranking (a partir de partida_activa)
      * @param ganador incrementar contador de partidas en funcion de [2: empate, 1:gana jugador2, 0:gana jugador1]
      * */
-    private static void actualizar_ranking(Partida p, Ranking.tipoGanador ganador){
+    private static void actualizar_ranking(Ranking.tipoGanador ganador){
         try {
-            int modo = p.getModoDeJuegoPartida();
+            int modo = partida_activa.getModoDeJuegoPartida();
             if (modo != 0) {
                 int id1, id2;
                 String nick1, nick2;
-                id1 = p.getID_J1();
-                nick1 = p.getNickJugador1();
-                id2 = p.getID_J2();
-                nick2 = p.getNickJugador2();
-
+                id1 = partida_activa.getID_J1();
+                nick1 = partida_activa.getNickJugador1();
+                id2 = partida_activa.getID_J2();
+                nick2 = partida_activa.getNickJugador2();
                 //logros
-                int turnos = p.getTurnoPartida();
+                int turnos = partida_activa.getTurnoPartida();
                 boolean b = ranking.comprobar_logro(Logros.tipoLogro.PARTIDA_CORTA,turnos);
                 if (b) ranking.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,nick1,id1,nick2,id2,turnos,0);
                 int fichas_j1, fichas_j2, fichas_diff;
-                fichas_j1 = p.getTableroPartida().getNumCasillasNegras();
-                fichas_j2 = p.getTableroPartida().getNumCasillasBlancas();
+                fichas_j1 = partida_activa.getTableroPartida().getNumCasillasNegras();
+                fichas_j2 = partida_activa.getTableroPartida().getNumCasillasBlancas();
                 if (fichas_j1 > fichas_j2) fichas_diff = fichas_j1 - fichas_j2;
                 else fichas_diff = fichas_j2 - fichas_j1;
                 b = ranking.comprobar_logro(Logros.tipoLogro.FICHAS_DIFF,fichas_diff);
                 if (b) ranking.cambiar_logro_partida(Logros.tipoLogro.FICHAS_DIFF,nick1,id1,nick2,id2,fichas_j1,fichas_j2);
-
                 //ACTUALIZAR RANKING
                 ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,ganador);
                 cp.ctrl_exportar_ranking(ranking.toArrayList(), "ranking.txt");
@@ -238,7 +235,6 @@ public class CtrlDominio {
         }
         catch (Exception ignored) {}
     }
-
 
 
     //FUNCIONES DE TABLERO
@@ -451,37 +447,6 @@ public class CtrlDominio {
         return b;
     }
 
-    //SERGIO: NO UTILIZADA PERO UTIL PARA SABER COMO FINALIZAR LA PARTIDA Y ACTUALIZAR
-    private static int ejecutarRondaPartida(Partida p, ArrayList<String> argum) {
-        /*ejecutar 1 ronda de la partida:*/
-        int res = -1;
-        try {
-            //accion a realizar esta dentro de argum
-            String[] accion = argum.toArray(new String[0]);
-            res = p.rondaPartida(accion);
-            //modificar estadoPartida
-            if (res == 2) cp.ctrl_guardar_partida(p.toArrayList());
-            else if (res != 3) {
-                //0 (gana nick1), 1 (gana nick2), 2 (empate), 3 (guardar partida), 4 (finalizar)
-                switch (res) {
-                    case 0:
-                        actualizar_ranking(p, Ranking.tipoGanador.GANA_J1);
-                        break;
-                    case 1:
-                        actualizar_ranking(p, Ranking.tipoGanador.GANA_J2);
-                        break;
-                    case 2:
-                        actualizar_ranking(p, Ranking.tipoGanador.EMPATE);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-        catch (Exception ignored) {}
-        return res;
-    }
-
     public void iniciarPartida(int modo, int[] r, int idj1, int idj2, String nickj1, String nickj2) {
         try {
             int idPartida = cp.ctrl_get_nuevo_ID_Partida();
@@ -516,7 +481,25 @@ public class CtrlDominio {
     }
 
     public int dominioRondaPartida(int x, int y) {
-        return partida_activa.rondaPartidaPvP(x, y);
+        int res = partida_activa.rondaPartidaPvP(x, y);
+        if (res >= 0 && res < 3) { //tenemos un ganador
+            gestionar_resultado_partida(res);
+        }
+        return res;
+    }
+
+    public void gestionar_resultado_partida(int res) {
+        switch (res) {
+            case 0:
+                actualizar_ranking(Ranking.tipoGanador.GANA_J1);
+                break;
+            case 1:
+                actualizar_ranking(Ranking.tipoGanador.GANA_J2);
+                break;
+            case 2:
+                actualizar_ranking(Ranking.tipoGanador.EMPATE);
+                break;
+        }
     }
 
     /*public static boolean dominioPartidaFinalizada() {
