@@ -182,16 +182,32 @@ public class CtrlPresentacion {
         return ctrlDominio.listar_partidas_disponibles(id , nick);
     }
 
+    /**
+     * Metodo consultar info de partida a partir de un id (desde Presentacion)
+     * @param id es el identificador de partida a consultar la informacion
+     * @return devuelve un Arraylist de Strings con toda la informacion del fichero de partida identificado por su id
+     * */
     public ArrayList<String> consultar_info_partida_ID(int id) {
         return ctrlDominio.consultar_info_partida_ID(id);
     }
 
+    /**
+     * Metodo cargar tablero de una partida (desde Presentacion)
+     * @param idPartida identificador de partida a cargar el tablero
+     * @return devuelve el tablero de la partida
+     * */
     public int[][] presentacion_cargar_tablero_partida(int idPartida) {
         return ctrlDominio.dominio_cargar_tablero_partida(idPartida);
     }
 
+    /**
+     * Metodo consultar Identificador J1 (desde Presentacion)
+     * @return devuelve el identificador del jugador 1*/
     public int consultar_id_j1() {return ctrlDominio.consultar_id_j1();}
 
+    /**
+     * Metodo consultar nickname J1 (desde Presentacion)
+     * @return devuelve el nickname del jugador 1 */
     public String consultar_nickname_j1() {return ctrlDominio.consultar_nickname_j1();}
 
     /**
@@ -201,11 +217,16 @@ public class CtrlPresentacion {
     public String consultar_info_usuario_activo() {return ctrlDominio.consultar_info_usuario_activo();}
 
 
+    /**
+     * Metodo crear Partida (desde Presentacion)
+     * @param a_int es la informacion recogida de la vista de Configuracin de Partida */
     public void presentacion_crearPartida(ArrayList<Integer> a_int) {
         ctrlDominio.domino_crearPartida(a_int);
     }
 
-
+    /** Metodo consultar direccion imagen (desde Presentacion)
+     * @param t es el tipo de imagen a cargar [vacia, disponible, blanca, negra]
+     * @return devuelve la direccion del icono seleccionado*/
     public String presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG t) {
         return ctrlDominio.dominio_consultar_dir_imagen_fichas(t);
     }
@@ -249,8 +270,7 @@ public class CtrlPresentacion {
 
     /**
      * Metodo consultar ranking (desde Capa Presentacion)
-     * @return devuelve en un ArrayList de String la informacion el ranking al completo
-     * */
+     * @return devuelve en un ArrayList de String la informacion el ranking al completo*/
     public ArrayList<String> presentacion_consultar_ranking() {
         ArrayList<String> as = ctrlDominio.consultar_ranking();
         ArrayList<String> res = new ArrayList<>();
@@ -263,63 +283,82 @@ public class CtrlPresentacion {
 
     /**
      * Metodo ordenar ranking (desde Capa Presentacion)
-     * @param orden [0 (Ganadas), 1 (ID mayor a menor) , 2 (NICKNAME), 3 (ID menor a mayor)]
-     * */
+     * @param orden [0 (Ganadas), 1 (ID mayor a menor) , 2 (NICKNAME), 3 (ID menor a mayor)]*/
     public void presentacion_ordenar_ranking(int orden) {
         ctrlDominio.ordenar_ranking(orden);
     }
 
     /**
      * Metodo consultar size del ranking (desde capa Presentacion)
-     * @return devuelve el size del ranking
-     * */
+     * @return devuelve el size del ranking*/
     public int presentacion_consultar_tam_ranking() {return ctrlDominio.consultar_tam_ranking();}
 
 
     //FUNCIONES DE TABLERO
 
+    /**
+     * Metodo listar tableros disponibles (desde Presentacion)
+     * @return devuelve un Arraylist de strings con todos los tableros almacenados en el sistema
+     * */
     public ArrayList<String> obtener_lista_tableros_disponibles() {return ctrlDominio.listar_tableros_disponibles();}
 
+    /**
+     * Metodo crear tablero (desde Presentacion):
+     * Crea una partida ficticia para modificar el tablero personalizado
+     * */
     public void crearTablero() {
         ctrlDominio.dominio_crear_tablero();
     }
 
+    /** Metodo modificar idTablero_cargar
+     * @param id identificador de tablero personalizado a modificar*/
     public void modificar_idTablero_cargar(int id) {
         ctrlDominio.modificar_idTablero_cargar(id);
     }
 
+    /**Metodo consultar idTablero_cargar (desde presentacion)
+     * @return devuelve el identificador del tablero a cargar*/
     public int consultar_idTablero_cargar() {return ctrlDominio.consultar_idTablero_cargar();}
 
+    /** Metodo consultar tablero partida (partida_activa)
+     * @return True en caso haberse guardado con exito el tablero, caso contrario devuelve falso*/
     public boolean presentacion_guardar_tablero() {
         return ctrlDominio.dominio_guardar_tablero();
     }
 
+    /** Metodo borrar_tablero (desde Presentacion)
+     * @param id el identificador de tablero a borrar
+     * @return devuelve TRUE en caso que se haya borrado con exito */
     public boolean presentacion_borrar_tablero(int id) {return ctrlDominio.dominio_borrar_tablero(id);}
 
+    /**
+     * Metodo Cargar Tablero (desde Presentacion)
+     * @param id es el ID de tablero a cargar
+     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero vacio*/
     public int[][] presentacion_cargarTablero(int id) {
-        int [][]tab = new int[8][8];
-        try{
-            tab = ctrlDominio.dominio_cargar_tablero(id);
-        }
-        catch (Exception ignored) {
-
-        }
-        return tab;
+        return ctrlDominio.dominio_cargar_tablero(id);
     }
 
 
     //FUNCIONES DE PARTIDA
 
+    /** Metodo guardar partida (desde presentacion)
+     * guarda la informacion de partida_activa en un fichero
+     * @return devuelve cierto en caso de haberse guardado con exito, caso contrario devuelve falso */
     public boolean presentacion_guardar_partida() { return ctrlDominio.dominio_guardar_partida();}
 
-
+    /** Metodo cargar Partida (desde presentacion)
+     * Carga una partida a partir de un fichero guardado previamente y se actualiza "partida_activa"
+     * @param id id de partida a cargar*/
     public void presentacion_cargarPartida(int id) {
         if (id >= 0) {
             ctrlDominio.dominio_cargar_partida(id);
         }
     }
 
-
+    /** Metodo Borrar Partida (desde Presentacion)
+     * @param id es el identificador de partida a borrar
+     * @return devuelve TRUE en caso que se haya borrado con exito */
     public boolean presentacion_borrarPartida(int id) {
         boolean b = false;
         if (id >= 0) {
@@ -333,6 +372,8 @@ public class CtrlPresentacion {
      * Metodo obtener tablero
      * @return devuelve el tablero de la partida como una matriz de enteros (desde la Capa de Dominio)*/
     public int[][] presentacion_consultar_Tablero() {return ctrlDominio.consultar_TableroPartida();}
+
+
 
     public int presentacionRondaPartida(int x, int y) {
         return ctrlDominio.dominioRondaPartida(x, y);

@@ -112,6 +112,9 @@ public class CtrlDominio {
         return idRes;
     }
 
+    /** Metodo consultar direccion imagen (desde Dominio)
+     * @param t es el tipo de imagen a cargar [vacia, disponible, blanca, negra]
+     * @return devuelve la direccion del icono seleccionado*/
     public String dominio_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG t) {
         return cp.consultar_dir_imagenes(t);
     }
@@ -339,10 +342,14 @@ public class CtrlDominio {
     /**
      * Metodo Cargar Tablero (desde Dominio)
      * @param idTablero es el ID de tablero a cargar
-     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero vacio
-     * @throws IOException en caso de no existir el fichero con idTablero*/
-    public int [][] dominio_cargar_tablero(int idTablero) throws IOException {
-        return cp.ctrl_cargar_tablero(idTablero);
+     * @return devuelve la matriz de enteros de un tablero con id igual a idTablero, caso contrario devuelve tablero vacio*/
+    public int [][] dominio_cargar_tablero(int idTablero){
+        int [][]tab = new int[8][8];
+        try {
+            tab = cp.ctrl_cargar_tablero(idTablero);
+        }
+        catch (Exception ignored) {}
+        return tab;
     }
 
 
