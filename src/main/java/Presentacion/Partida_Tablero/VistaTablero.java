@@ -251,7 +251,8 @@ public class VistaTablero {
         }
         //inicializar_panelFicha();
         recargar_tablero();
-        switch (ganador) {
+        if (ganador >= 0 && ganador < 3) iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.GANADOR);
+        /*switch (ganador) {
             case 0:
                 JOptionPane.showMessageDialog(null, "El ganador de la partida es J1!");
                 break;
@@ -261,7 +262,7 @@ public class VistaTablero {
             case 2:
                 JOptionPane.showMessageDialog(null, "La partida termina en empate!");
                 break;
-        }
+        }*/
     }
 
 

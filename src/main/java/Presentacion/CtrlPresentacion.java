@@ -19,7 +19,7 @@ import java.util.Collections;
 public class CtrlPresentacion {
 
     /**Todos las vistas disponibles que se pueden visualizar*/
-    public enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,CREARTABLERO,CARGARTABLERO, BORRARTABLERO , CARGARPARTIDA}
+    public enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,CREARTABLERO,CARGARTABLERO, BORRARTABLERO , CARGARPARTIDA, GANADOR}
 
     /**enumeración utilizada en la Vista Cargar/Borrar para diferenciar que tipo de Vista estamos tratando*/
     public enum tipoTablero {PARTIDA,TABLERO}
@@ -51,6 +51,9 @@ public class CtrlPresentacion {
     /**Vista de Configuracion de Partida*/
     private final VistaConfigPartida vistaConfigPartida;
 
+    /**Vista de Ganador de partida*/
+    private final VistaGanador vistaGanador;
+
 
     /**
      * Creadora por defecto de CtrlPresentacion
@@ -64,6 +67,7 @@ public class CtrlPresentacion {
         vistaCreditos = new VistaCreditos(this);
         vistaTablero  = new VistaTablero(this);
         vistaCargarBorrar = new VistaCargarBorrar(this);
+        vistaGanador = new VistaGanador(this);
     }
 
     /**
@@ -109,6 +113,7 @@ public class CtrlPresentacion {
         vistaTablero.hacerVisible(false, tipoTablero.PARTIDA);
         vistaConfigPartida.hacerVisible(false);
         vistaCargarBorrar.hacerVisible(false, tipoTablero.PARTIDA);
+        vistaGanador.hacerVisible(false);
     }
 
     /**
@@ -153,6 +158,10 @@ public class CtrlPresentacion {
                 break;
             case CARGARPARTIDA:
                 vistaCargarBorrar.hacerVisible(true, tipoTablero.PARTIDA);
+                break;
+            case GANADOR:
+                vistaGanador.hacerVisible(true);
+                break;
         }
     }
 

@@ -79,8 +79,9 @@ public class CtrlDominio {
      * @return devuelve la informacion que esta logueado dentro del juego
      * */
     public String consultar_info_usuario_activo() {
-        return "Usuarios activos:         J1 - (ID:" + id_1 + " , nickname: " + nickname + ")            " + "J2 - (ID2:" + id_2 + " , nickname2: " + nick_2 + ")";
+        return "J1 - (ID:" + id_1 + " , nickname: " + nickname + ")       " + "J2 - (ID2:" + id_2 + " , nickname2: " + nick_2 + ")";
     }
+
 
     /**
      * Metodo consultar Identificador J1
@@ -233,10 +234,14 @@ public class CtrlDominio {
                 nick1 = partida_activa.getNickJugador1();
                 id2 = partida_activa.getID_J2();
                 nick2 = partida_activa.getNickJugador2();
+
+                System.out.println(id1 + " " + nick1 + " ; " + id2 + " " + nick2);
                 //logros
                 int turnos = partida_activa.getTurnoPartida();
                 boolean b = ranking.comprobar_logro(Logros.tipoLogro.PARTIDA_CORTA,turnos);
                 if (b) ranking.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,nick1,id1,nick2,id2,turnos,0);
+
+
                 int fichas_j1, fichas_j2, fichas_diff;
                 fichas_j1 = partida_activa.getTableroPartida().getNumCasillasNegras();
                 fichas_j2 = partida_activa.getTableroPartida().getNumCasillasBlancas();

@@ -74,7 +74,8 @@ public class VistaMenu {
      * */
     public void hacerVisible(boolean b) {
         if (b) {
-            textoInfoUsuario.setText(iCtrlPresentacion.consultar_info_usuario_activo());
+            String s = "Usuarios activos:         " + iCtrlPresentacion.consultar_info_usuario_activo();
+            textoInfoUsuario.setText(s);
             textoInfoUsuario.setEditable(false);
         }
         frameVista.pack();
