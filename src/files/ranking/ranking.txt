@@ -1,11 +1,11 @@
-62 10 sbr 6 as
-32 8 aaaa 48 6 as 16
-11 8 aaaa
-6 8 aaaa
-5 8 aaaa
+4 10 sbr 6 
+63 10 sbr 63 6 as 0
+13 6 as
+8 10 sbr
+8 6 as
 ***
 8 aaaa 10 7 0 17
 9 dd 5 1 2 8
 7 as2 1 1 0 2
-10 sbr 4 0 0 4
-6 as 2 4 0 6
+10 sbr 8 0 3 11
+6 as 2 8 3 13

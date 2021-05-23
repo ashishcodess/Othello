@@ -28,7 +28,11 @@ public class Partida {
     /**Ganador de la Partida*/
     private int ganador; //indica una vez finalizada la partida quien es el ganador (para despues hacer modificacion de ranking)
     //ganador -> -1 (partida sigue en curso),0 (gana nick1), 1 (gana nick2), 2 (empate), 3 (guardar partida), 4 (finalizar)
+
+    /**Indica si la Partida esta finalizada*/
     private int finalizada;
+    /**Turno maximo de la Partida*/
+    private int turnoMax;
 
     /**
      * Creadora - Configuración de los parámetros de una partida nueva
@@ -65,6 +69,7 @@ public class Partida {
         }
         this.tablero = new Tablero();
         this.finalizada = 0;
+        this.turnoMax = 59;
         this.disponibles= new HashSet<Position>();
         reglasCasillasDisponibles();
     }
@@ -107,6 +112,7 @@ public class Partida {
         this.ganador = -1;
         this.tablero = t;
         this.finalizada = 0;
+        this.turnoMax = 59;
         this.disponibles= new HashSet<Position>();
         reglasCasillasDisponibles();
     }
@@ -255,10 +261,10 @@ public class Partida {
                                 return this.ganador;
                             }
                             if (this.turno % 2 == 0) {
-                                j1.colocar_ficha_en_partida(turno, x, y, tablero);
+                                j1.colocar_ficha_en_partida(turno, x, y, tablero, reglas);
                             }
                             else if (this.turno % 2 != 0) {
-                                j2.colocar_ficha_en_partida(turno, x, y, tablero);
+                                j2.colocar_ficha_en_partida(turno, x, y, tablero, reglas);
                             }
                             //tablero.actualizarTablero(turno, x, y);
                             incrementarTurnoPartida();
@@ -290,7 +296,7 @@ public class Partida {
                                 //this.tablero.actualizarTablero(x, y, this.turno);
                                 int x = Integer.parseInt(accion[1]);
                                 int y = Integer.parseInt(accion[2]);
-                                j1.colocar_ficha_en_partida(turno, x, y, tablero);
+                                j1.colocar_ficha_en_partida(turno, x, y, tablero, reglas);
                                 //actualizarTablero();
                                 incrementarTurnoPartida();
                                 if (turno > 0) {
@@ -366,11 +372,11 @@ public class Partida {
      * @return retorna un int con el ganador de la partida o -1 si la partida no ha acabado todavia
      */
     public int rondaPartidaPvP(int x, int y) {
-        if (finalizada == 2 || tablero.finalizada()) {
+        /*if (finalizada == 2 || tablero.finalizada() || this.turno == turnoMax) {
             comprobarPartidaFinalizada();
             return this.ganador;
         }
-        else {
+        else {*/
             reglasCasillasDisponibles();
             this.disponibles = this.tablero.getCasillasDisponibles();
             if (this.turno == 0) {
@@ -379,6 +385,7 @@ public class Partida {
             }
             int disp = disponibles.size();
             if (disp == 0) {
+                this.turnoMax++;
                 this.finalizada++;
                 incrementarTurnoPartida();
                 return this.ganador;
@@ -387,9 +394,9 @@ public class Partida {
                 return this.ganador;
             }
             if (this.turno % 2 == 0) {
-                j1.colocar_ficha_en_partida(turno, x, y, tablero);
+                j1.colocar_ficha_en_partida(turno, x, y, tablero, reglas);
             } else if (this.turno % 2 != 0) {
-                j2.colocar_ficha_en_partida(turno, x, y, tablero);
+                j2.colocar_ficha_en_partida(turno, x, y, tablero, reglas);
             }
             incrementarTurnoPartida();
             if (turno > 0) {
@@ -400,11 +407,11 @@ public class Partida {
             }
             if (disp == 0) this.finalizada++;
             else this.finalizada = 0;
-            if (finalizada == 2 || tablero.finalizada()) {
+            if (finalizada == 2 || tablero.finalizada() || this.turno == turnoMax) {
                 comprobarPartidaFinalizada();
                 return this.ganador;
             }
-        }
+        //}
         return this.ganador;
     }
 
