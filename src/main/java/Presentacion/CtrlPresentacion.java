@@ -18,6 +18,8 @@ import java.util.Collections;
 
 public class CtrlPresentacion {
 
+
+
     /**Todos las vistas disponibles que se pueden visualizar*/
     public enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,CREARTABLERO,CARGARTABLERO, BORRARTABLERO , CARGARPARTIDA, GANADOR}
 
@@ -398,10 +400,17 @@ public class CtrlPresentacion {
      * @return devuelve el tablero de la partida como una matriz de enteros (desde la Capa de Dominio)*/
     public int[][] presentacion_consultar_Tablero() {return ctrlDominio.consultar_TableroPartida();}
 
+    public int presentacionObtenerModoDeJuegoPartida() {
+        return ctrlDominio.dominioObtenerModoDeJuegoPartida();
+    }
 
 
-    public int presentacionRondaPartida(int x, int y) {
-        return ctrlDominio.dominioRondaPartida(x, y);
+    public int presentacionRondaPartidaPvP(int x, int y) {
+        return ctrlDominio.dominioRondaPartidaPvP(x, y);
+    }
+
+    public int presentacionRondaPartidaPvIA(int x, int y) {
+        return ctrlDominio.dominioRondaPartidaPvIA(x, y);
     }
 
     /*public void presentacionActualizarTablero() {

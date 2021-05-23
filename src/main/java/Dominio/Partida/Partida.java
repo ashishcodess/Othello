@@ -1,5 +1,6 @@
 package Dominio.Partida;
 
+import Dominio.Jugador.Alphabeta;
 import Dominio.Jugador.Jugador;
 import Dominio.Jugador.JugadorMaquina;
 import Dominio.Jugador.JugadorPersona;
@@ -414,6 +415,55 @@ public class Partida {
         //}
         return this.ganador;
     }
+
+    public int rondaPartidaPvIA(int x, int y) {
+        /*if (finalizada == 2 || tablero.finalizada() || this.turno == turnoMax) {
+            comprobarPartidaFinalizada();
+            return this.ganador;
+        }
+        else {*/
+        reglasCasillasDisponibles();
+        this.disponibles = this.tablero.getCasillasDisponibles();
+        if (this.turno == 0) {
+            print_casillas_disponibles(disponibles);
+            print_Tablero();
+        }
+        int disp = disponibles.size();
+        if (disp == 0) {
+            this.turnoMax++;
+            this.finalizada++;
+            tablero.setDisponiblesAnterior(false);
+            incrementarTurnoPartida();
+            return this.ganador;
+        }
+        if (!tablero.es_possible(x, y)){
+            return this.ganador;
+        }
+        if (this.turno % 2 == 0) {
+            j1.colocar_ficha_en_partida(turno, x, y, tablero, reglas);
+        } else if (this.turno % 2 != 0) {
+            tablero = j2.posicionMaquina(tablero, turno, reglas);
+        }
+        incrementarTurnoPartida();
+        if (turno > 0) {
+            reglasCasillasDisponibles();
+            disponibles = this.tablero.getCasillasDisponibles();
+            print_casillas_disponibles(disponibles);
+            print_Tablero();
+        }
+        if (disp == 0) this.finalizada++;
+        else {
+            this.finalizada = 0;
+            tablero.setDisponiblesAnterior(true);
+        }
+        if (finalizada == 2 || tablero.finalizada() || this.turno == turnoMax) {
+            comprobarPartidaFinalizada();
+            return this.ganador;
+        }
+        //}
+        return this.ganador;
+    }
+
 
 
 

@@ -503,12 +503,24 @@ public class CtrlDominio {
         catch (Exception ignored) { }
     }
 
-    public int dominioRondaPartida(int x, int y) {
+    public int dominioRondaPartidaPvP(int x, int y) {
         int res = partida_activa.rondaPartidaPvP(x, y);
         if (res >= 0 && res < 3) { //tenemos un ganador
             actualizar_ranking(res);
         }
         return res;
+    }
+
+    public int dominioRondaPartidaPvIA(int x, int y) {
+        int res = partida_activa.rondaPartidaPvIA(x, y);
+        if (res >= 0 && res < 3) { //tenemos un ganador
+            actualizar_ranking(res);
+        }
+        return res;
+    }
+
+    public int dominioObtenerModoDeJuegoPartida() {
+        return partida_activa.getModoDeJuegoPartida();
     }
     /**
      * Metodo consultar total numero de las fichas negras
