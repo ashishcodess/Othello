@@ -1,4 +1,6 @@
-package Presentacion;
+package Presentacion.Partida_Tablero;
+
+import Presentacion.CtrlPresentacion;
 
 import javax.swing.*;
 import java.awt.*;
@@ -246,7 +248,7 @@ public class VistaConfigPartida {
             else {
                 primera_vez = false;
                 iCtrlPresentacion.modificar_idTablero_cargar(-1);
-                iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARTABLERO);
+                iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.CARGARTABLERO);
             }
         }
         else { //CREAR PARTIDA CON LA CONFIGURACION
@@ -258,7 +260,7 @@ public class VistaConfigPartida {
         ArrayList<Integer> as_int = recoger_info_modo_juego();
         primera_vez = true;
         iCtrlPresentacion.presentacion_crearPartida(as_int);
-        iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);
+        iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.TABLERO);
     }
 
     private void gestion_ComboBox_uno_ON(int i) {
@@ -304,10 +306,10 @@ public class VistaConfigPartida {
                 (event -> gestionar_inicio_de_juego());
 
         menuButton.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.MENU));
 
         buttonLoginUser2.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.LOGIN_USER2));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.LOGIN_USER2));
 
         IAVsIARadioButton.addActionListener
                 (event -> gestion_ComboBox_uno_ON(0));
@@ -319,7 +321,7 @@ public class VistaConfigPartida {
                 (event -> gestion_ComboBox_uno_ON(2));
 
         menuitemMenuPrincipal.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.MENU));
 
         menuitemQuit.addActionListener
                 (event -> iCtrlPresentacion.salir_del_juego());

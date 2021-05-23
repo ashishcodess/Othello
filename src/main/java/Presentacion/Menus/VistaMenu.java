@@ -1,4 +1,6 @@
-package Presentacion;
+package Presentacion.Menus;
+
+import Presentacion.CtrlPresentacion;
 
 import javax.swing.*;
 import java.awt.*;
@@ -186,7 +188,7 @@ public class VistaMenu {
      * @param event evento del boton de Login
      * */
     public void actionPerformed_buttonLogin (ActionEvent event) {
-        iCtrlPresentacion.hacerVisibleVista(vistaActiva.LOGIN);
+        iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.LOGIN);
     }
 
 
@@ -198,7 +200,7 @@ public class VistaMenu {
                 (this::actionPerformed_buttonLogin);
 
         buttonCreditos.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CREDITOS));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.CREDITOS));
 
 
         buttonSalir.addActionListener
@@ -208,19 +210,19 @@ public class VistaMenu {
                 });
 
         buttonCrearPartida.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.CONFIGPARTIDA));
 
         buttonCargarBorrarPartida.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARPARTIDA));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.CARGARPARTIDA));
 
         buttonCrearTablero.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CREARTABLERO));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.CREARTABLERO));
 
         buttonBorrarTablero.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARTABLERO));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.CARGARTABLERO));
 
         buttonConsultarRanking.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.RANKING));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.RANKING));
 
 
         //BARRA SUPERIOR DE MENU
@@ -231,21 +233,21 @@ public class VistaMenu {
                 (this::actionPerformed_buttonLogin);
 
         menuitemCreditos.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CREDITOS));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.CREDITOS));
 
         menuItem_consultar_ranking.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.RANKING));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.RANKING));
 
         menuItem_crearPartida.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.CONFIGPARTIDA));
 
         menuItem_CargarBorrarPartida.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARPARTIDA));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.CARGARPARTIDA));
 
         menuItem_crearTablero.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CREARTABLERO));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.CREARTABLERO));
 
         menuItem_BorrarTablero.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARTABLERO));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.CARGARTABLERO));
     }
 }

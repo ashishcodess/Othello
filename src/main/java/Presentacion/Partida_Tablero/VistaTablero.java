@@ -1,6 +1,7 @@
-package Presentacion;
+package Presentacion.Partida_Tablero;
 
 import ControladorPersistencia.CtrlPersitencia;
+import Presentacion.CtrlPresentacion;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -229,7 +230,7 @@ public class VistaTablero {
                 b = iCtrlPresentacion.presentacion_guardar_tablero();
                 break;
         }
-        if (b) iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU);
+        if (b) iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.MENU);
     }
 
     public void actionPerformed_botones(ActionEvent event) {
@@ -283,7 +284,7 @@ public class VistaTablero {
                 (event -> listener_guardar_partida());
 
         bottonFinalizar.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.MENU));
 
         bottonPasarTurno.addActionListener
                 (event -> listener_botonPasarTurno());
@@ -292,7 +293,7 @@ public class VistaTablero {
                 (event -> listener_guardar_partida());
 
         menuitemFinalizar.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.MENU));
 
         menuitemQuit.addActionListener
                 (event -> iCtrlPresentacion.salir_del_juego());

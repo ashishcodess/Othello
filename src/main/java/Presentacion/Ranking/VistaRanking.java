@@ -1,4 +1,6 @@
-package Presentacion;
+package Presentacion.Ranking;
+
+import Presentacion.CtrlPresentacion;
 
 import javax.swing.*;
 
@@ -469,7 +471,7 @@ public class VistaRanking {
                 (this::actionPerformed_buttonCargarRanking);
 
         menuitemVolverMenu.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.MENU));
 
         menuitemQuit.addActionListener
                 (event -> iCtrlPresentacion.salir_del_juego());
@@ -498,7 +500,7 @@ public class VistaRanking {
         menuItem_consultar_logros.addActionListener
                 (this::actionPerformed_buttonConsultarLogros);
 
-        buttonVolverMenu.addActionListener (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+        buttonVolverMenu.addActionListener (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.MENU));
 
         buttonOrdenar.addActionListener
                 (this::actionPerformed_buttonOrdenar);
