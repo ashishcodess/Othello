@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class VistaGanador {
 
-    private CtrlPresentacion iCtrlPresentacion;
+    private final CtrlPresentacion iCtrlPresentacion;
 
 
     private final JFrame frameVista;
@@ -19,9 +19,7 @@ public class VistaGanador {
     //Info de fichas
     JPanel panelInfo = new JPanel();
     private final JTextField textoInfoUsuario = new JTextField(10);
-    private final JLabel labelFichasNegras = new JLabel("(J1) Fichas Negras: ");
     private final JTextField textoNegras = new JTextField(2);
-    private final JLabel labelFichasBlancas = new JLabel("(J2) Blancas: ");
     private final JTextField textoBlancas = new JTextField(2);
 
     private final JLabel labelINFOGANADOR = new JLabel("");
@@ -46,7 +44,7 @@ public class VistaGanador {
         else if (fichas_negras < fichas_blancas) {
             labelINFOGANADOR.setText("El ganador de la partida es J1!");
         }
-        else if (fichas_negras == fichas_blancas) labelINFOGANADOR.setText("La partida termina en empate!");
+        else labelINFOGANADOR.setText("La partida termina en empate!");
     }
 
     /**
@@ -65,11 +63,13 @@ public class VistaGanador {
         panelInfo.add(textoInfoUsuario);
         JPanel aux = new JPanel();
         aux.setLayout(new FlowLayout());
+        JLabel labelFichasNegras = new JLabel("(J1) Fichas Negras: ");
         aux.add(labelFichasNegras);
         aux.add(textoNegras);
 
         JPanel aux2 = new JPanel();
         aux2.setLayout(new FlowLayout());
+        JLabel labelFichasBlancas = new JLabel("(J2) Blancas: ");
         aux2.add(labelFichasBlancas);
         aux2.add(textoBlancas);
 

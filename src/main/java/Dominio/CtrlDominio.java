@@ -235,12 +235,10 @@ public class CtrlDominio {
                 id2 = partida_activa.getID_J2();
                 nick2 = partida_activa.getNickJugador2();
 
-                System.out.println(id1 + " " + nick1 + " ; " + id2 + " " + nick2);
                 //logros
                 int turnos = partida_activa.getTurnoPartida();
                 boolean b = ranking.comprobar_logro(Logros.tipoLogro.PARTIDA_CORTA,turnos);
                 if (b) ranking.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,nick1,id1,nick2,id2,turnos,0);
-
 
                 int fichas_j1, fichas_j2, fichas_diff;
                 fichas_j1 = partida_activa.getTableroPartida().getNumCasillasNegras();
