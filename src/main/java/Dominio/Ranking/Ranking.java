@@ -274,8 +274,6 @@ public class Ranking {
      * @param t2 es el numero de fichas de del jugador 2
      * */
     public void cambiar_logro_partida(Logros.tipoLogro tipo, String nick1, int id1, String nick2, int id2, int t1, int t2) {
-        //System.out.println("entra en cambiar logro para " + tipo);
-        //System.out.println(tipo +" " +nick1 + " " + id1 + " "+ nick2 + " " + id2 + " " + t1 + " " +t2);
         log.cambiar_logro_partida(tipo,nick1,id1,nick2,id2,t1,t2);
     }
 

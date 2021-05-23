@@ -160,7 +160,8 @@ public class CtrlDominio {
         as.add(s);
 
         sAux = (ranking.consultar_logro(Logros.tipoLogro.FICHAS_DIFF)).split(" ");
-        s = ("Diferencia: " + sAux[0] + " , J1[" + sAux[1] + " , " + sAux[2] + " , fichas:" + sAux[3] + "] - J2[" + sAux[4] + " , " + sAux[5] + " , fichas:" + sAux[6] +"]");
+        if (sAux.length ==7) s = ("Diferencia: " + sAux[0] + " , J1[" + sAux[1] + " , " + sAux[2] + " , fichas:" + sAux[3] + "] - J2[" + sAux[4] + " , " + sAux[5] + " , fichas:" + sAux[6] +"]");
+        else s = ("Diferencia: " + sAux[0] + " , J1[" + sAux[1] + " , " + sAux[2] + " , fichas:" + sAux[3] + "] - J2[" + sAux[4] + " , fichas:" + sAux[5] +"]");
         as.add(s);
 
         sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDAS_TOTALES)).split(" ");
@@ -232,9 +233,11 @@ public class CtrlDominio {
                 int id1, id2;
                 String nick1, nick2;
                 id1 = partida_activa.getID_J1();
-                nick1 = partida_activa.getNickJugador1();
+                if (id1 < 6) nick1 = "**";
+                else nick1 = partida_activa.getNickJugador1();
                 id2 = partida_activa.getID_J2();
-                nick2 = partida_activa.getNickJugador2();
+                if (id2 < 6) nick2 = "**";
+                else nick2 = partida_activa.getNickJugador2();
 
                 //logros
                 int turnos = partida_activa.getTurnoPartida();
