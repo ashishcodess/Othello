@@ -759,9 +759,9 @@ public class Tablero {
         Position[] arr =  new Position[disponibles.size()];
         disponibles.toArray(arr);
         disponibles.clear();
-        modificarCasillasHorizontal(x , y , turno);
-        modificarCasillasVertical(x , y , turno);
-        modificarCasillasDiagonales(x , y , turno);
+        if(reglas[1] == 1)modificarCasillasHorizontal(x , y , turno);
+        if(reglas[0] == 1)modificarCasillasVertical(x , y , turno);
+        if(reglas[2] == 1)modificarCasillasDiagonales(x , y , turno);
 
         int a, b;
 
@@ -807,14 +807,24 @@ public class Tablero {
         return blancas;
     }
 
+    /**
+     * @return retorna cierto si la partida ha finalizado
+     */
     public boolean finalizada(){
 
         return (this.num_vacia == 0 || this.blancas.size() == 0 ||
                 this.negras.size() == 0 || (this.disponibles.size() == 0 && !this.disponibles_anterior));
     }
 
+    /**
+     * @return retorna el booleano disponibles_anterior
+     */
     public boolean getDisponiblesAnterior(){return this.disponibles_anterior;}
 
+    /**
+     * Asigna el valor del parametro al booleano disponibles_anterior
+     * @param b valor que asignamos
+     */
     public void setDisponiblesAnterior(boolean b){
         this.disponibles_anterior = b;
     }
