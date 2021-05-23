@@ -274,6 +274,7 @@ public class VistaConfigPartida {
                 primera_vez = false;
                 iCtrlPresentacion.modificar_idTablero_cargar(0);
                 cargar_label_info_tablero();
+                tableroCheckBox.setSelected(false);
                 tableroCheckBox.setEnabled(false);
                 IAVsIARadioButton.setSelected(true);
                 selectorIA_0.setVisible(true);
