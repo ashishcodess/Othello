@@ -405,6 +405,10 @@ public class CtrlPresentacion {
     }
 
 
+    public int presentacionRondaPartida(int x, int y) {
+        return ctrlDominio.dominioRondaPartida(x, y);
+    }
+
     public int presentacionRondaPartidaPvP(int x, int y) {
         return ctrlDominio.dominioRondaPartidaPvP(x, y);
     }

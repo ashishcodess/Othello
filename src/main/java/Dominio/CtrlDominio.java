@@ -507,6 +507,28 @@ public class CtrlDominio {
         catch (Exception ignored) { }
     }
 
+    public int dominioRondaPartida(int x, int y) {
+        int modo = partida_activa.getModoDeJuegoPartida();
+        int res = -1;
+        switch (modo) {
+            case 0: //IA vs IA
+                break;
+
+            case 1: //Persona vs IA
+                res = partida_activa.rondaPartidaPvIA(x, y);
+                res = partida_activa.rondaPartidaPvIA(x, y);
+                break;
+
+            case 2: //Persona vs Persona
+                res = partida_activa.rondaPartidaPvP(x, y);
+                break;
+        }
+        if (res >= 0 && res < 3) { //tenemos un ganador
+            actualizar_ranking(res);
+        }
+        return res;
+    }
+
     public int dominioRondaPartidaPvP(int x, int y) {
         int res = partida_activa.rondaPartidaPvP(x, y);
         if (res >= 0 && res < 3) { //tenemos un ganador

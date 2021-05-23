@@ -7,7 +7,6 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import javax.swing.JOptionPane;
 
 
 public class VistaTablero {
@@ -85,7 +84,7 @@ public class VistaTablero {
         int blancas = iCtrlPresentacion.presentacion_get_blancas();
         int negras = iCtrlPresentacion.presentacion_get_negras();
         int turno = iCtrlPresentacion.presentacion_get_turno();
-        String t = "";
+        String t;
         if (turno%2 == 0) t = "Negra";
         else t = "Blanca";
         String s1=String.valueOf(blancas);
@@ -245,31 +244,21 @@ public class VistaTablero {
                     x = x-1;
                     y = y-1;
                     //System.out.println("posicion "+ x + ", " + y);
-                    int modoDeJuego = iCtrlPresentacion.presentacionObtenerModoDeJuegoPartida();
+
+                    ganador = iCtrlPresentacion.presentacionRondaPartida(x, y);
+
+                    /*int modoDeJuego = iCtrlPresentacion.presentacionObtenerModoDeJuegoPartida();
                     if (modoDeJuego == 2) ganador = iCtrlPresentacion.presentacionRondaPartidaPvP(x, y);
                     if (modoDeJuego == 1) {
                         ganador = iCtrlPresentacion.presentacionRondaPartidaPvIA(x, y);
                         ganador = iCtrlPresentacion.presentacionRondaPartidaPvIA(x, y);
-
-                    }
+                    }*/
                 }
                 recargar_tablero();
             }
         }
-        //inicializar_panelFicha();
         recargar_tablero();
         if (ganador >= 0 && ganador < 3) iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.GANADOR);
-        /*switch (ganador) {
-            case 0:
-                JOptionPane.showMessageDialog(null, "El ganador de la partida es J1!");
-                break;
-            case 1:
-                JOptionPane.showMessageDialog(null, "El ganador de la partida es J2!");
-                break;
-            case 2:
-                JOptionPane.showMessageDialog(null, "La partida termina en empate!");
-                break;
-        }*/
     }
 
 
