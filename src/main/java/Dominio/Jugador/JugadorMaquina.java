@@ -28,7 +28,7 @@ public class JugadorMaquina extends Jugador {
     public JugadorMaquina (int idMaquina) throws Exception{
         super(idMaquina);
         if (idMaquina > 5)throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idMaquina);
-        this.profundidad_MinMax = (idMaquina+1)*2;
+        this.profundidad_MinMax = (idMaquina+1)*2-1;
     }
 
     @Override
@@ -75,7 +75,8 @@ public class JugadorMaquina extends Jugador {
         for(Tablero aux : estados_hijos){
             Tablero it = new Tablero(valorMaxNegras(aux,turno+1, alpha, beta, depth-1, reglas).getTablero());
             evaluacion = it.getHeuristicValueNegras();
-            if(turno%2 == 0){
+
+            if(turno%2 == 0){   //Jugador Negro
                 if(maxeval < evaluacion){
                     maxeval = evaluacion;
                     mejorHijo = new Tablero(aux.getTablero());
@@ -83,12 +84,16 @@ public class JugadorMaquina extends Jugador {
                     if(alpha < evaluacion)alpha = evaluacion;
                 }
             }
-            else {
+            else {      //Jugador Blanco
                 if(mineval > evaluacion){
                     mineval = evaluacion;
                     mejorHijo = new Tablero(aux.getTablero());
                     mejorHijo.setDisponiblesAnterior(aux.getDisponiblesAnterior());
                     if(beta > evaluacion)beta = evaluacion;
+                    mejorHijo.printTablero();
+                    System.out.println("Valor heurístico "+mejorHijo.getHeuristicValueNegras());
+                    System.out.println("turno: "+turno+" maxeval(turno par): "+maxeval+" mineval(turno impar): "+mineval);
+                    System.out.println("");
                 }
             }
 

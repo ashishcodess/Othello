@@ -807,14 +807,24 @@ public class Tablero {
         return blancas;
     }
 
+    /**
+     * @return retorna cierto si la partida ha finalizado
+     */
     public boolean finalizada(){
 
         return (this.num_vacia == 0 || this.blancas.size() == 0 ||
                 this.negras.size() == 0 || (this.disponibles.size() == 0 && !this.disponibles_anterior));
     }
 
+    /**
+     * @return retorna el booleano disponibles_anterior
+     */
     public boolean getDisponiblesAnterior(){return this.disponibles_anterior;}
 
+    /**
+     * Asigna el valor del parametro al booleano disponibles_anterior
+     * @param b valor que asignamos
+     */
     public void setDisponiblesAnterior(boolean b){
         this.disponibles_anterior = b;
     }
