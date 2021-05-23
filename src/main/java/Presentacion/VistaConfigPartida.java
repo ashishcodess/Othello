@@ -273,6 +273,7 @@ public class VistaConfigPartida {
             case 0:
                 primera_vez = false;
                 iCtrlPresentacion.modificar_idTablero_cargar(0);
+                cargar_label_info_tablero();
                 tableroCheckBox.setEnabled(false);
                 IAVsIARadioButton.setSelected(true);
                 selectorIA_0.setVisible(true);
@@ -280,12 +281,16 @@ public class VistaConfigPartida {
                 break;
             case 1:
                 primera_vez = true;
+                iCtrlPresentacion.modificar_idTablero_cargar(0);
+                cargar_label_info_tablero();
                 tableroCheckBox.setEnabled(true);
                 personaVsIARadioButton.setSelected(true);
                 selectorIA_2.setVisible(true);
                 break;
             case 2:
                 primera_vez = true;
+                iCtrlPresentacion.modificar_idTablero_cargar(0);
+                cargar_label_info_tablero();
                 tableroCheckBox.setEnabled(true);
                 personaVsPersonaRadioButton.setSelected(true);
                 buttonLoginUser2.setVisible(true);
