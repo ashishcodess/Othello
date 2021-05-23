@@ -1,4 +1,4 @@
-3 10 sbr 0 
+60 6 as 7 as2
 50 8 aaaa 7 6 as 57
 19 8 aaaa
 12 8 aaaa
