@@ -1,6 +1,7 @@
-package Presentacion;
+package Presentacion.Partida_Tablero;
 
 import ControladorPersistencia.CtrlPersitencia;
+import Presentacion.CtrlPresentacion;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -392,12 +393,12 @@ public class VistaCargarBorrar {
         switch (tipoActual) {
             case TABLERO:
                 iCtrlPresentacion.modificar_idTablero_cargar(id_tablero_seleccionado);
-                iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA);
+                iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.CONFIGPARTIDA);
                 break;
             case PARTIDA:
                 if (id_partida_seleccionado >= 0) {
                     iCtrlPresentacion.presentacion_cargarPartida(id_partida_seleccionado);
-                    iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);
+                    iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.TABLERO);
                 }
                 break;
         }
@@ -420,10 +421,10 @@ public class VistaCargarBorrar {
                 (event -> listener_boton_borrar());
 
         buttonMenu.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.MENU));
 
         menuitemMenu.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.MENU));
 
         menuitemQuit.addActionListener
                 (event -> iCtrlPresentacion.salir_del_juego());

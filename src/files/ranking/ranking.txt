@@ -4,7 +4,7 @@
 6 8 aaaa
 5 8 aaaa
 ***
-8 aaaa 6 5 0 11
+8 aaaa 10 7 0 17
 9 dd 5 1 2 8
 7 as2 1 1 0 2
 10 sbr 4 0 0 4

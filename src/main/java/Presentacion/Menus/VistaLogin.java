@@ -1,4 +1,6 @@
-package Presentacion;
+package Presentacion.Menus;
+
+import Presentacion.CtrlPresentacion;
 
 import javax.swing.*;
 import java.awt.*;
@@ -189,10 +191,10 @@ public class VistaLogin {
                 textoLoginFinal.setText("");
                 switch (tJugador) {
                     case JUGADOR1:
-                        iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU);
+                        iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.MENU);
                         break;
                     case JUGADOR2:
-                        iCtrlPresentacion.hacerVisibleVista(vistaActiva.CONFIGPARTIDA);
+                        iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.CONFIGPARTIDA);
                         break;
                 }
             }

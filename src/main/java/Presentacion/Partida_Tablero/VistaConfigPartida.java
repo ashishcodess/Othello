@@ -1,5 +1,6 @@
-package Presentacion;
+package Presentacion.Partida_Tablero;
 
+import Presentacion.CtrlPresentacion;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,9 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
-
-/*SERGIO: FALTA SELECTOR DE IA, BOTON PARA ACCEDER A UN MENU DONDE SE MUESTRAN LOS TABLEROS PERSONALIZADOS Y OPCION
-* PARA CARGAR ESTE MISMO. IGUAL SE PUEDE AÑADIR ALGO MAS */
 
 public class VistaConfigPartida {
 
@@ -250,7 +248,7 @@ public class VistaConfigPartida {
             else {
                 primera_vez = false;
                 iCtrlPresentacion.modificar_idTablero_cargar(-1);
-                iCtrlPresentacion.hacerVisibleVista(vistaActiva.CARGARTABLERO);
+                iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.CARGARTABLERO);
             }
         }
         else { //CREAR PARTIDA CON LA CONFIGURACION
@@ -258,14 +256,11 @@ public class VistaConfigPartida {
         }
     }
 
-    //AQUI LLAMA A CREAR PARTIDA...
     private void recoger_info_partida() {
         ArrayList<Integer> as_int = recoger_info_modo_juego();
-        //for (Integer a : as_int) System.out.println(a);
         primera_vez = true;
         iCtrlPresentacion.presentacion_crearPartida(as_int);
-        //iCtrlPresentacion.presentacionActualizarTablero();
-        iCtrlPresentacion.hacerVisibleVista(vistaActiva.TABLERO);
+        iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.TABLERO);
     }
 
     private void gestion_ComboBox_uno_ON(int i) {
@@ -278,15 +273,28 @@ public class VistaConfigPartida {
         selectorIA_2.setVisible(false);
         switch (i) {
             case 0:
+                primera_vez = false;
+                iCtrlPresentacion.modificar_idTablero_cargar(0);
+                cargar_label_info_tablero();
+                tableroCheckBox.setSelected(false);
+                tableroCheckBox.setEnabled(false);
                 IAVsIARadioButton.setSelected(true);
                 selectorIA_0.setVisible(true);
                 selectorIA_1.setVisible(true);
                 break;
             case 1:
+                primera_vez = true;
+                iCtrlPresentacion.modificar_idTablero_cargar(0);
+                cargar_label_info_tablero();
+                tableroCheckBox.setEnabled(true);
                 personaVsIARadioButton.setSelected(true);
                 selectorIA_2.setVisible(true);
                 break;
             case 2:
+                primera_vez = true;
+                iCtrlPresentacion.modificar_idTablero_cargar(0);
+                cargar_label_info_tablero();
+                tableroCheckBox.setEnabled(true);
                 personaVsPersonaRadioButton.setSelected(true);
                 buttonLoginUser2.setVisible(true);
                 break;
@@ -298,10 +306,10 @@ public class VistaConfigPartida {
                 (event -> gestionar_inicio_de_juego());
 
         menuButton.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.MENU));
 
         buttonLoginUser2.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.LOGIN_USER2));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.LOGIN_USER2));
 
         IAVsIARadioButton.addActionListener
                 (event -> gestion_ComboBox_uno_ON(0));
@@ -313,7 +321,7 @@ public class VistaConfigPartida {
                 (event -> gestion_ComboBox_uno_ON(2));
 
         menuitemMenuPrincipal.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.MENU));
 
         menuitemQuit.addActionListener
                 (event -> iCtrlPresentacion.salir_del_juego());

@@ -1,4 +1,6 @@
-package Presentacion;
+package Presentacion.Menus;
+
+import Presentacion.CtrlPresentacion;
 
 import javax.swing.*;
 import java.awt.*;
@@ -66,10 +68,10 @@ public class VistaCreditos {
      * */
     private void asignar_listenersComponentes() {
         buttonOK.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.MENU));
 
         menuitemVolver.addActionListener
-                (event -> iCtrlPresentacion.hacerVisibleVista(vistaActiva.MENU));
+                (event -> iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.MENU));
 
         menuitemQuit.addActionListener
                 (event -> iCtrlPresentacion.salir_del_juego());
