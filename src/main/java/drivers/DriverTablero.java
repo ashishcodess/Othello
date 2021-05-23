@@ -96,8 +96,8 @@ public class DriverTablero {
             System.out.println(sbuff);
         }
         System.out.println();
-
-        T.actualizarTablero(2 ,3 , turno);
+        int[] reglas = new int[1];
+        T.actualizarTablero(2 ,3 , turno, reglas);
 
         System.out.println("Imprimir tablero actualizado");
         for (int i = 0; i < 8; ++i) {
@@ -131,7 +131,7 @@ public class DriverTablero {
         }
         System.out.println();
 
-        T.actualizarTablero(2 ,2 , 1);
+        T.actualizarTablero(2 ,2 , 1, reglas);
 
         System.out.println("Imprimir tablero actualizado");
         for (int i = 0; i < 8; ++i) {
@@ -165,7 +165,7 @@ public class DriverTablero {
         }
         System.out.println();
 
-        T.actualizarTablero(3 ,2 , turno);
+        T.actualizarTablero(3 ,2 , turno, reglas);
         System.out.println("Imprimir tablero actualizado");
         for (int i = 0; i < 8; ++i) {
             String sbuff = new String();
@@ -197,7 +197,7 @@ public class DriverTablero {
         }
         System.out.println();
 
-        T.actualizarTablero(4 ,2 , 1);
+        T.actualizarTablero(4 ,2 , 1,reglas);
         System.out.println("Imprimir tablero actualizado");
         for (int i = 0; i < 8; ++i) {
             String sbuff = new String();
@@ -231,7 +231,7 @@ public class DriverTablero {
         System.out.println();
         int x = T.getNumCasillasBlancas();
         System.out.println(x);
-        T.actualizarTablero(1 ,1 , turno);
+        T.actualizarTablero(1 ,1 , turno, reglas);
         System.out.println("Imprimir tablero actualizado");
         for (int i = 0; i < 8; ++i) {
             String sbuff = new String();

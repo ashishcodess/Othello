@@ -755,7 +755,7 @@ public class Tablero {
      * @param x la fila del tablero de donde queremos colocar la ficha
      * @param y la columna del tablero de donde queremos colocar la ficha
      */
-    public void actualizarTablero(int x , int y , int turno){
+    public void actualizarTablero(int x , int y , int turno, int[] reglas){
         Position[] arr =  new Position[disponibles.size()];
         disponibles.toArray(arr);
         disponibles.clear();

@@ -47,9 +47,9 @@ public abstract class Jugador {
      * @param y posicionY valor entre 0 y 8
      * @param t Tablero donde se realiza la accion de colocar la ficha
      */
-    public void colocar_ficha_en_partida(int turno, int x, int y, Tablero t) {
+    public void colocar_ficha_en_partida(int turno, int x, int y, Tablero t, int[] reglas) {
         if (t.es_possible(x, y)) {
-            t.actualizarTablero(x,y,turno);
+            t.actualizarTablero(x,y,turno, reglas);
         }
     }
 

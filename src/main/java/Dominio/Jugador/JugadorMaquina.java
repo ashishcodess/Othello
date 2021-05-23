@@ -205,7 +205,7 @@ public class JugadorMaquina extends Jugador {
             aux = new Tablero(t.getTablero());
             aux.setDisponiblesAnterior(t.getDisponiblesAnterior());
 
-            aux.actualizarTablero(pos.getX(), pos.getY(), turno);
+            aux.actualizarTablero(pos.getX(), pos.getY(), turno, reglas);
             if(reglas[0] == 1)aux.calcularCasillasDisponiblesVertical(turno+1);
             if(reglas[1] == 1)aux.calcularCasillasDisponiblesHorizontal(turno+1);
             if(reglas[2] == 1)aux.calcularCasillasDisponiblesDiagonales(turno+1);
