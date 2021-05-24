@@ -304,6 +304,7 @@ public class VistaTablero {
             iCtrlPresentacion.presentacionPasarTurnoPartida();
         }
         recargar_tablero();
+        if (ganador >= 0 && ganador < 3)iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.GANADOR);
         /*if (tipoActual.equals(CtrlPresentacion.tipoTablero.PARTIDA)) {
             iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.GANADOR);
         }*/
