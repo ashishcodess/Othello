@@ -511,6 +511,7 @@ public class CtrlDominio {
         int res = -1;
         switch (modo) {
             case 0: //IA vs IA
+                res = partida_activa.rondaPartidaIAvIA();
                 break;
 
             case 1: //Persona vs IA
@@ -529,6 +530,7 @@ public class CtrlDominio {
         return res;
     }
 
+    /*
     public int dominioRondaPartidaPvP(int x, int y) {
         int res = partida_activa.rondaPartidaPvP(x, y);
         if (res >= 0 && res < 3) { //tenemos un ganador
@@ -546,6 +548,7 @@ public class CtrlDominio {
         }
         return res;
     }
+    */
 
     public int dominioRondaPartidaIAvIA() {
         int res = partida_activa.rondaPartidaIAvIA();
@@ -584,14 +587,13 @@ public class CtrlDominio {
         if (partida_activa != null) return partida_activa.getTurnoPartida();
         else return 2;
     }
-
+    /**
+     * Metodo para pasar el turno de juego en una Partida
+     * */
     public void dominioPasarTurnoPartida() {
         partida_activa.pasarTurnoPartida();
     }
 
-    /*public static boolean dominioPartidaFinalizada() {
-        return partida_activa.getTableroPartida().finalizada();
-    }*/
-
+    public int dominioObtenerTurnoPartida() { return partida_activa.getTurnoPartida(); }
 }
 

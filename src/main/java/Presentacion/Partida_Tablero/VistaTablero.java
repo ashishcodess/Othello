@@ -215,14 +215,28 @@ public class VistaTablero {
             }
         }
         int modoDeJuego = iCtrlPresentacion.presentacionObtenerModoDeJuegoPartida();
-        if (modoDeJuego == 1 || modoDeJuego == 2) {
+        if (modoDeJuego == 2) {
             pasar_turno = (ct_casillas_disponibles == 0); //no hay casillas disponibles activar boton de pasar turno
             bottonPasarTurno.setEnabled(pasar_turno);
             bottonPasarTurno.setText("Pasar turno");
         }
         else {
-            bottonPasarTurno.setEnabled(true);
-            bottonPasarTurno.setText("Siguiente turno");
+            if (modoDeJuego == 1){
+                int turno = iCtrlPresentacion.presentacionObtenerTurnoPartida();
+                if (turno%2 != 0){
+                    bottonPasarTurno.setEnabled(true);
+                    bottonPasarTurno.setText("Siguiente turno");
+                }
+                else {
+                    bottonPasarTurno.setEnabled(pasar_turno);
+                    bottonPasarTurno.setText("Pasar turno");
+                }
+            }
+            else {
+                bottonPasarTurno.setEnabled(true);
+                bottonPasarTurno.setText("Siguiente turno");
+            }
+
         }
         inicializar_panelFicha();
     }
@@ -253,16 +267,16 @@ public class VistaTablero {
                     y = y-1;
                     //System.out.println("posicion "+ x + ", " + y);
 
-                    //ganador = iCtrlPresentacion.presentacionRondaPartida(x, y);
+                    ganador = iCtrlPresentacion.presentacionRondaPartida(x, y);
 
-                    int modoDeJuego = iCtrlPresentacion.presentacionObtenerModoDeJuegoPartida();
+                    /*int modoDeJuego = iCtrlPresentacion.presentacionObtenerModoDeJuegoPartida();
                     if (modoDeJuego == 2) ganador = iCtrlPresentacion.presentacionRondaPartidaPvP(x, y);
                     if (modoDeJuego == 1) {
                         ganador = iCtrlPresentacion.presentacionRondaPartidaPvIA(x, y);
                         ganador = iCtrlPresentacion.presentacionRondaPartidaPvIA(x, y);
-                    }
+                    }*/
                 }
-                recargar_tablero();
+                //recargar_tablero();
             }
         }
         recargar_tablero();
@@ -274,7 +288,14 @@ public class VistaTablero {
         //habra que hacer algo aqui
         int ganador = -1;
         int modoDeJuego = iCtrlPresentacion.presentacionObtenerModoDeJuegoPartida();
+        int turno = iCtrlPresentacion.presentacionObtenerTurnoPartida();
         if (modoDeJuego == 0) ganador = iCtrlPresentacion.presentacionRondaPartidaIAvIA();
+        else if (modoDeJuego == 1){
+            if (turno%2 != 0) {
+                ganador = iCtrlPresentacion.presentacionRondaPartidaIAvIA();
+            }
+            else iCtrlPresentacion.presentacionPasarTurnoPartida();
+        }
         else{
             iCtrlPresentacion.presentacionPasarTurnoPartida();
         }
