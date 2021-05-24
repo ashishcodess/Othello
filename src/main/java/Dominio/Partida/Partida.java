@@ -716,6 +716,12 @@ public class Partida {
     }
 
     public void pasarTurnoPartida() {
+        incrementarTurnoPartida();
+        reglasCasillasDisponibles();
+        disponibles = this.tablero.getCasillasDisponibles();
+        print_casillas_disponibles(disponibles);
+        print_Tablero();
+        turnoMax++;
     }
 }
 
