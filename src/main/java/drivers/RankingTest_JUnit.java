@@ -196,7 +196,7 @@ public class RankingTest_JUnit {
 
 
         rank2.cambiar_logro_partida(Logros.tipoLogro.PARTIDA_CORTA,"a",6,"b",7,45,0);
-        b1 = rank2.comprobar_logro(Logros.tipoLogro.PARTIDA_CORTA,16); //deberia dar cierto (16 < 45)
+        b1 = rank2.comprobar_logro(Logros.tipoLogro.PARTIDA_CORTA,23); //deberia dar cierto (23 < 45)
         b2 = rank2.comprobar_logro(Logros.tipoLogro.PARTIDA_CORTA,45); //deberia dar falso (53 > 45)
         res = b1 && !b2;
         assertTrue(res);
