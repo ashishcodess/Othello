@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ControladorPersistencia.InputOutput</OriginalElement>
+  <nodes>
+    <node x="0.0" y="0.0">ControladorPersistencia.InputOutput</node>
+    <node x="8.5" y="324.0">ControladorPersistencia.CtrlPersitencia</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ControladorPersistencia.CtrlPersitencia" target="ControladorPersistencia.InputOutput">
+      <point x="-90.75" y="-456.5" />
+      <point x="99.25" y="299.0" />
+      <point x="95.0" y="299.0" />
+      <point x="-95.0" y="137.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.92497320471597" x="394.0" y="446.5" />
+  <SelectedNodes>
+    <node>ControladorPersistencia.InputOutput</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

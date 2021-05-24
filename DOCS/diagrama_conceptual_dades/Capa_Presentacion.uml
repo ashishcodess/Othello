@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Presentacion.CtrlPresentacion</OriginalElement>
+  <nodes>
+    <node x="0.0" y="264.0">Presentacion.Partida_Tablero.VistaConfigPartida</node>
+    <node x="1237.0" y="341.0">Presentacion.Menus.VistaLogin</node>
+    <node x="922.0" y="264.0">Presentacion.Partida_Tablero.VistaTablero</node>
+    <node x="343.0" y="275.0">Presentacion.Partida_Tablero.VistaCargarBorrar</node>
+    <node x="2012.0" y="572.0">Presentacion.Partida_Tablero.VistaGanador</node>
+    <node x="658.0" y="627.0">Presentacion.Menus.VistaCreditos</node>
+    <node x="1604.0" y="0.0">Presentacion.Ranking.VistaRanking</node>
+    <node x="874.0" y="1633.0">Presentacion.CtrlPresentacion</node>
+    <node x="916.0" y="2794.0">Presentacion.Menus.VistaMenu</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Presentacion.CtrlPresentacion" target="Presentacion.Menus.VistaCreditos">
+      <point x="-76.80357142857156" y="-555.5" />
+      <point x="992.6964285714284" y="1533.0" />
+      <point x="688.5" y="1533.0" />
+      <point x="-91.5" y="104.5" />
+    </edge>
+    <edge source="Presentacion.Menus.VistaMenu" target="Presentacion.CtrlPresentacion">
+      <point x="-115.125" y="-478.5" />
+      <point x="954.375" y="2769.0" />
+      <point x="922.875" y="2769.0" />
+      <point x="-146.625" y="555.5" />
+    </edge>
+    <edge source="Presentacion.Partida_Tablero.VistaConfigPartida" target="Presentacion.CtrlPresentacion">
+      <point x="40.375" y="467.5" />
+      <point x="201.875" y="1593.0" />
+      <point x="908.9107142857142" y="1593.0" />
+      <point x="-160.58928571428578" y="-555.5" />
+    </edge>
+    <edge source="Presentacion.Partida_Tablero.VistaCargarBorrar" target="Presentacion.CtrlPresentacion">
+      <point x="36.875" y="456.5" />
+      <point x="527.375" y="1553.0" />
+      <point x="964.7678571428571" y="1553.0" />
+      <point x="-104.73214285714289" y="-555.5" />
+    </edge>
+    <edge source="Presentacion.Menus.VistaCreditos" target="Presentacion.CtrlPresentacion">
+      <point x="30.5" y="104.5" />
+      <point x="810.5" y="1513.0" />
+      <point x="1020.625" y="1513.0" />
+      <point x="-48.875" y="-555.5" />
+    </edge>
+    <edge source="Presentacion.CtrlPresentacion" target="Presentacion.Menus.VistaMenu">
+      <point x="48.875" y="555.5" />
+      <point x="1118.375" y="2769.0" />
+      <point x="1107.875" y="2769.0" />
+      <point x="38.375" y="-478.5" />
+    </edge>
+    <edge source="Presentacion.Partida_Tablero.VistaGanador" target="Presentacion.CtrlPresentacion">
+      <point x="30.5" y="159.5" />
+      <point x="2164.5" y="1603.0" />
+      <point x="1244.0535714285713" y="1603.0" />
+      <point x="174.55357142857133" y="-555.5" />
+    </edge>
+    <edge source="Presentacion.CtrlPresentacion" target="Presentacion.Partida_Tablero.VistaConfigPartida">
+      <point x="-188.51785714285722" y="-555.5" />
+      <point x="880.9821428571427" y="1613.0" />
+      <point x="40.375" y="1613.0" />
+      <point x="-121.125" y="467.5" />
+    </edge>
+    <edge source="Presentacion.CtrlPresentacion" target="Presentacion.Partida_Tablero.VistaCargarBorrar">
+      <point x="-132.66071428571422" y="-555.5" />
+      <point x="936.8392857142858" y="1573.0" />
+      <point x="379.875" y="1573.0" />
+      <point x="-110.625" y="456.5" />
+    </edge>
+    <edge source="Presentacion.Partida_Tablero.VistaTablero" target="Presentacion.CtrlPresentacion">
+      <point x="36.875" y="467.5" />
+      <point x="1106.375" y="1483.0" />
+      <point x="1076.482142857143" y="1483.0" />
+      <point x="6.98214285714289" y="-555.5" />
+    </edge>
+    <edge source="Presentacion.CtrlPresentacion" target="Presentacion.Partida_Tablero.VistaGanador">
+      <point x="146.625" y="-555.5" />
+      <point x="1216.125" y="1583.0" />
+      <point x="2042.5" y="1583.0" />
+      <point x="-91.5" y="159.5" />
+    </edge>
+    <edge source="Presentacion.Menus.VistaLogin" target="Presentacion.CtrlPresentacion">
+      <point x="43.375" y="390.5" />
+      <point x="1453.875" y="1523.0" />
+      <point x="1132.3392857142858" y="1523.0" />
+      <point x="62.83928571428578" y="-555.5" />
+    </edge>
+    <edge source="Presentacion.CtrlPresentacion" target="Presentacion.Ranking.VistaRanking">
+      <point x="90.76785714285711" y="-555.5" />
+      <point x="1160.267857142857" y="1543.0" />
+      <point x="1652.5" y="1543.0" />
+      <point x="-145.5" y="731.5" />
+    </edge>
+    <edge source="Presentacion.CtrlPresentacion" target="Presentacion.Partida_Tablero.VistaTablero">
+      <point x="-20.94642857142867" y="-555.5" />
+      <point x="1048.5535714285713" y="1493.0" />
+      <point x="958.875" y="1493.0" />
+      <point x="-110.625" y="467.5" />
+    </edge>
+    <edge source="Presentacion.CtrlPresentacion" target="Presentacion.Menus.VistaLogin">
+      <point x="34.91071428571422" y="-555.5" />
+      <point x="1104.4107142857142" y="1503.0" />
+      <point x="1280.375" y="1503.0" />
+      <point x="-130.125" y="390.5" />
+    </edge>
+    <edge source="Presentacion.Ranking.VistaRanking" target="Presentacion.CtrlPresentacion">
+      <point x="48.5" y="731.5" />
+      <point x="1846.5" y="1563.0" />
+      <point x="1188.1964285714287" y="1563.0" />
+      <point x="118.69642857142867" y="-555.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.3737548722390645" x="1112.0" y="1134.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
