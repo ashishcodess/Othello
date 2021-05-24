@@ -398,10 +398,26 @@ public class CtrlPresentacion {
      * @return devuelve el tablero de la partida como una matriz de enteros (desde la Capa de Dominio)*/
     public int[][] presentacion_consultar_Tablero() {return ctrlDominio.consultar_TableroPartida();}
 
+    public int presentacionObtenerModoDeJuegoPartida() {
+        return ctrlDominio.dominioObtenerModoDeJuegoPartida();
+    }
 
 
     public int presentacionRondaPartida(int x, int y) {
         return ctrlDominio.dominioRondaPartida(x, y);
+    }
+
+    public int presentacionRondaPartidaPvP(int x, int y) {
+        return ctrlDominio.dominioRondaPartidaPvP(x, y);
+    }
+
+    public int presentacionRondaPartidaPvIA(int x, int y) {
+        return ctrlDominio.dominioRondaPartidaPvIA(x, y);
+    }
+
+    public int presentacionRondaPartidaIAvIA() { return ctrlDominio.dominioRondaPartidaIAvIA(); }
+
+    public void presentacionPasarTurnoPartida() { ctrlDominio.dominioPasarTurnoPartida();
     }
 
     /*public void presentacionActualizarTablero() {

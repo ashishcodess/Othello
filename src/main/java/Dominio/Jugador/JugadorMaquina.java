@@ -165,6 +165,7 @@ public class JugadorMaquina extends Jugador {
      * @param reglas reglas del juego
      * @return devuelve el tablero con la ficha colocada por la IA
      * */
+    @Override
     public Tablero posicionMaquina(Tablero t, int turno, int[] reglas){
 
         //Comentad esta parte y descomentad lo otro para poder ejecutar con maquina

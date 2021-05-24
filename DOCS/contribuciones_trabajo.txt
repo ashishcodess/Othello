@@ -38,3 +38,4 @@ Sergio Aguado:
 	    - VistaRanking
 	    - VistaCreditos
 	    - VistaCargarBorrar
+	    - VistaGanador

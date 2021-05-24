@@ -50,6 +50,8 @@ public class JugadorPersona extends Jugador {
         return this.nickname;
     }
 
+    @Override
+    public Tablero posicionMaquina(Tablero t, int turno, int[] reglas){return null;}
     /**
      * Operacion get del atributo ID
      * @return  devuelve el ID de JugadorPersona

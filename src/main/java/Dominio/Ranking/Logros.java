@@ -100,7 +100,7 @@ public class Logros {
      * @return devuelve TRUE en caso de que se de que turno pasado como parametro sea inferior al del logro
      * */
     public boolean comprueba_logro_partida(int turno) {
-        return (turno < turnos_logro);
+        return ((turno < turnos_logro) && (turno > 20));
     }
 
 
@@ -181,7 +181,6 @@ public class Logros {
                 break;
         }
         return b;
-
     }
 
     /**
@@ -218,8 +217,6 @@ public class Logros {
      * @return devuelve la informacion del logro de Partida mas corta
      * */
     public String consultar_partida_corta() {
-        System.out.println("entrando en consultar partida corta");
-        System.out.println(turnos_logro + " " + id1_logro + " " + nick1_logro + " " + id2_logro + " " + nick2_logro);
         return (turnos_logro + " " + id1_logro + " " + nick1_logro + " " + id2_logro + " " + nick2_logro);
     }
     /**

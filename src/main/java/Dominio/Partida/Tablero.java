@@ -759,9 +759,9 @@ public class Tablero {
         Position[] arr =  new Position[disponibles.size()];
         disponibles.toArray(arr);
         disponibles.clear();
-        modificarCasillasHorizontal(x , y , turno);
-        modificarCasillasVertical(x , y , turno);
-        modificarCasillasDiagonales(x , y , turno);
+        if(reglas[1] == 1)modificarCasillasHorizontal(x , y , turno);
+        if(reglas[0] == 1)modificarCasillasVertical(x , y , turno);
+        if(reglas[2] == 1)modificarCasillasDiagonales(x , y , turno);
 
         int a, b;
 

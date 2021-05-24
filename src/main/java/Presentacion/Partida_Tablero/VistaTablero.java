@@ -7,7 +7,6 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import javax.swing.JOptionPane;
 
 
 public class VistaTablero {
@@ -85,7 +84,7 @@ public class VistaTablero {
         int blancas = iCtrlPresentacion.presentacion_get_blancas();
         int negras = iCtrlPresentacion.presentacion_get_negras();
         int turno = iCtrlPresentacion.presentacion_get_turno();
-        String t = "";
+        String t;
         if (turno%2 == 0) t = "Negra";
         else t = "Blanca";
         String s1=String.valueOf(blancas);
@@ -174,7 +173,7 @@ public class VistaTablero {
         panelPrincipal.add(tablero,BorderLayout.CENTER);
         panelPrincipal.add(panelBotones,BorderLayout.EAST);
         panelPrincipal.add(panelFichas, BorderLayout.NORTH);
-        recargar_tablero();
+        //recargar_tablero();
     }
 
 
@@ -215,8 +214,16 @@ public class VistaTablero {
                 if (tab[i][j] == 1) ++ct_casillas_disponibles;
             }
         }
-        pasar_turno = (ct_casillas_disponibles == 0); //no hay casillas disponibles activar boton de pasar turno
-        bottonPasarTurno.setEnabled(pasar_turno);
+        int modoDeJuego = iCtrlPresentacion.presentacionObtenerModoDeJuegoPartida();
+        if (modoDeJuego == 1 || modoDeJuego == 2) {
+            pasar_turno = (ct_casillas_disponibles == 0); //no hay casillas disponibles activar boton de pasar turno
+            bottonPasarTurno.setEnabled(pasar_turno);
+            bottonPasarTurno.setText("Pasar turno");
+        }
+        else {
+            bottonPasarTurno.setEnabled(true);
+            bottonPasarTurno.setText("Siguiente turno");
+        }
         inicializar_panelFicha();
     }
 
@@ -245,29 +252,34 @@ public class VistaTablero {
                     x = x-1;
                     y = y-1;
                     //System.out.println("posicion "+ x + ", " + y);
-                    ganador = iCtrlPresentacion.presentacionRondaPartida(x, y);
+
+                    //ganador = iCtrlPresentacion.presentacionRondaPartida(x, y);
+
+                    int modoDeJuego = iCtrlPresentacion.presentacionObtenerModoDeJuegoPartida();
+                    if (modoDeJuego == 2) ganador = iCtrlPresentacion.presentacionRondaPartidaPvP(x, y);
+                    if (modoDeJuego == 1) {
+                        ganador = iCtrlPresentacion.presentacionRondaPartidaPvIA(x, y);
+                        ganador = iCtrlPresentacion.presentacionRondaPartidaPvIA(x, y);
+                    }
                 }
+                recargar_tablero();
             }
         }
-        //inicializar_panelFicha();
         recargar_tablero();
         if (ganador >= 0 && ganador < 3) iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.GANADOR);
-        /*switch (ganador) {
-            case 0:
-                JOptionPane.showMessageDialog(null, "El ganador de la partida es J1!");
-                break;
-            case 1:
-                JOptionPane.showMessageDialog(null, "El ganador de la partida es J2!");
-                break;
-            case 2:
-                JOptionPane.showMessageDialog(null, "La partida termina en empate!");
-                break;
-        }*/
     }
 
 
     public void listener_botonPasarTurno() {
         //habra que hacer algo aqui
+        int ganador = -1;
+        int modoDeJuego = iCtrlPresentacion.presentacionObtenerModoDeJuegoPartida();
+        if (modoDeJuego == 0) ganador = iCtrlPresentacion.presentacionRondaPartidaIAvIA();
+        else{
+            iCtrlPresentacion.presentacionPasarTurnoPartida();
+        }
+        recargar_tablero();
+        if (ganador >= 0 && ganador < 3) iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.GANADOR);
     }
 
     public void asignar_listenersComponentes() {

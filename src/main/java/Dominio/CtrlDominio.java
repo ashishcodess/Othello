@@ -156,22 +156,24 @@ public class CtrlDominio {
         String[] sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDA_CORTA)).split(" ");
         String s = "";
         if (sAux.length == 5) s = ("Turnos: " + sAux[0] + " , logrado con jugadores J1[" + sAux[1] + " , " + sAux[2] + "] - J2[" + sAux[3] + " , " + sAux[4] + "]");
+        else s = ("Turnos: " + sAux[0] + " , logrado con jugadores J1[" + sAux[1] + " , " + sAux[2] + "] - J2[ " + sAux[3] + " ]");
         as.add(s);
 
         sAux = (ranking.consultar_logro(Logros.tipoLogro.FICHAS_DIFF)).split(" ");
-        if (sAux.length == 7) s = ("Diferencia: " + sAux[0] + " , J1[" + sAux[1] + " , " + sAux[2] + " , fichas:" + sAux[3] + "] - J2[" + sAux[4] + " , " + sAux[5] + " , fichas:" + sAux[6] +"]");
+        if (sAux.length ==7) s = ("Diferencia: " + sAux[0] + " , J1[" + sAux[1] + " , " + sAux[2] + " , fichas:" + sAux[3] + "] - J2[" + sAux[4] + " , " + sAux[5] + " , fichas:" + sAux[6] +"]");
+        else s = ("Diferencia: " + sAux[0] + " , J1[" + sAux[1] + " , " + sAux[2] + " , fichas:" + sAux[3] + "] - J2[" + sAux[4] + " , fichas:" + sAux[5] +"]");
         as.add(s);
 
         sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDAS_TOTALES)).split(" ");
-        if (sAux.length == 3) s = ("Partidas totales: " + sAux[0] + " , jugador [" + sAux[1] + " , " + sAux[2] + "]");
+        s = ("Partidas totales: " + sAux[0] + " , jugador [" + sAux[1] + " , " + sAux[2] + "]");
         as.add(s);
 
         sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDAS_GANADAS)).split(" ");
-        if (sAux.length == 3) s = ("Partidas Ganadas: " + sAux[0] + " , jugador [" + sAux[1] + " , " + sAux[2] + "]");
+        s = ("Partidas Ganadas: " + sAux[0] + " , jugador [" + sAux[1] + " , " + sAux[2] + "]");
         as.add(s);
 
         sAux = (ranking.consultar_logro(Logros.tipoLogro.PARTIDAS_PERDIDAS)).split(" ");
-        if (sAux.length == 3) s = ("Partidas Perdidas: " + sAux[0] + " , jugador [" + sAux[1] + " , " + sAux[2] + "]");
+        s = ("Partidas Perdidas: " + sAux[0] + " , jugador [" + sAux[1] + " , " + sAux[2] + "]");
         as.add(s);
 
         return as;
@@ -231,9 +233,11 @@ public class CtrlDominio {
                 int id1, id2;
                 String nick1, nick2;
                 id1 = partida_activa.getID_J1();
-                nick1 = partida_activa.getNickJugador1();
+                if (id1 < 6) nick1 = "**";
+                else nick1 = partida_activa.getNickJugador1();
                 id2 = partida_activa.getID_J2();
-                nick2 = partida_activa.getNickJugador2();
+                if (id2 < 6) nick2 = "**";
+                else nick2 = partida_activa.getNickJugador2();
 
                 //logros
                 int turnos = partida_activa.getTurnoPartida();
@@ -504,11 +508,53 @@ public class CtrlDominio {
     }
 
     public int dominioRondaPartida(int x, int y) {
+        int modo = partida_activa.getModoDeJuegoPartida();
+        int res = -1;
+        switch (modo) {
+            case 0: //IA vs IA
+                break;
+
+            case 1: //Persona vs IA
+                res = partida_activa.rondaPartidaPvIA(x, y);
+                res = partida_activa.rondaPartidaPvIA(x, y);
+                break;
+
+            case 2: //Persona vs Persona
+                res = partida_activa.rondaPartidaPvP(x, y);
+                break;
+        }
+        if (res >= 0 && res < 3) { //tenemos un ganador
+            actualizar_ranking(res);
+        }
+        return res;
+    }
+
+    public int dominioRondaPartidaPvP(int x, int y) {
         int res = partida_activa.rondaPartidaPvP(x, y);
         if (res >= 0 && res < 3) { //tenemos un ganador
             actualizar_ranking(res);
         }
         return res;
+    }
+
+    public int dominioRondaPartidaPvIA(int x, int y) {
+        int res = partida_activa.rondaPartidaPvIA(x, y);
+        if (res >= 0 && res < 3) { //tenemos un ganador
+            actualizar_ranking(res);
+        }
+        return res;
+    }
+
+    public int dominioRondaPartidaIAvIA() {
+        int res = partida_activa.rondaPartidaIAvIA();
+        if (res >= 0 && res < 3) { //tenemos un ganador
+            actualizar_ranking(res);
+        }
+        return res;
+    }
+
+    public int dominioObtenerModoDeJuegoPartida() {
+        return partida_activa.getModoDeJuegoPartida();
     }
     /**
      * Metodo consultar total numero de las fichas negras
@@ -534,6 +580,10 @@ public class CtrlDominio {
     public int dominio_get_turno() {
         if (partida_activa != null) return partida_activa.getTurnoPartida();
         else return 2;
+    }
+
+    public void dominioPasarTurnoPartida() {
+        partida_activa.pasarTurnoPartida();
     }
 
     /*public static boolean dominioPartidaFinalizada() {
