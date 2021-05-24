@@ -265,7 +265,6 @@ public class VistaTablero {
                 if (event.getSource() == jButton) {
                     x = x-1;
                     y = y-1;
-                    //System.out.println("posicion "+ x + ", " + y);
 
                     ganador = iCtrlPresentacion.presentacionRondaPartida(x, y);
 
@@ -289,7 +288,6 @@ public class VistaTablero {
 
 
     public void listener_botonPasarTurno() {
-        //habra que hacer algo aqui
         int ganador = -1;
         int modoDeJuego = iCtrlPresentacion.presentacionObtenerModoDeJuegoPartida();
         int turno = iCtrlPresentacion.presentacionObtenerTurnoPartida();
@@ -304,10 +302,12 @@ public class VistaTablero {
             iCtrlPresentacion.presentacionPasarTurnoPartida();
         }
         recargar_tablero();
-        if (ganador >= 0 && ganador < 3)iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.GANADOR);
-        /*if (tipoActual.equals(CtrlPresentacion.tipoTablero.PARTIDA)) {
-            iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.GANADOR);
-        }*/
+        if (ganador >= 0 && ganador < 3) {
+            if (tipoActual.equals(CtrlPresentacion.tipoTablero.PARTIDA)) {
+                iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.GANADOR);
+             }
+        }
+
     }
 
     public void asignar_listenersComponentes() {

@@ -90,19 +90,19 @@ public class JugadorMaquina extends Jugador {
                     mejorHijo = new Tablero(aux.getTablero());
                     mejorHijo.setDisponiblesAnterior(aux.getDisponiblesAnterior());
                     if(beta > evaluacion)beta = evaluacion;
-                    mejorHijo.printTablero();
-                    System.out.println("Valor heurístico "+mejorHijo.getHeuristicValueNegras());
-                    System.out.println("turno: "+turno+" maxeval(turno par): "+maxeval+" mineval(turno impar): "+mineval);
-                    System.out.println("");
+                    //mejorHijo.printTablero();
+                    //System.out.println("Valor heurístico "+mejorHijo.getHeuristicValueNegras());
+                    //System.out.println("turno: "+turno+" maxeval(turno par): "+maxeval+" mineval(turno impar): "+mineval);
+                    //System.out.println("");
                 }
             }
 
             if(beta<=alpha)break;
         }
-        mejorHijo.printTablero();
-        System.out.println("Valor heurístico "+mejorHijo.getHeuristicValueNegras());
-        System.out.println("turno: "+turno+" maxeval(turno par): "+maxeval+" mineval(turno impar): "+mineval);
-        System.out.println("");
+        //mejorHijo.printTablero();
+        //System.out.println("Valor heurístico "+mejorHijo.getHeuristicValueNegras());
+        //System.out.println("turno: "+turno+" maxeval(turno par): "+maxeval+" mineval(turno impar): "+mineval);
+        //System.out.println("");
         return mejorHijo;
     }
 

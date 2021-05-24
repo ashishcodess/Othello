@@ -235,6 +235,7 @@ public class Partida {
 
 
     /**
+     * (PARA DRIVER DOMINIO)
      * Operacion que gestiona toda una ronda de la Partida
      * @param accion indica la acción que el jugador quiere realizar en su turno:
      * @return retorna un int con el ganador de la partida o -1 si la partida no ha acabado todavia
@@ -380,10 +381,10 @@ public class Partida {
         else {*/
             reglasCasillasDisponibles();
             this.disponibles = this.tablero.getCasillasDisponibles();
-            if (this.turno == 0) {
+            /*if (this.turno == 0) {
                 print_casillas_disponibles(disponibles);
                 print_Tablero();
-            }
+            }*/
             int disp = disponibles.size();
             if (disp == 0) {
                 this.turnoMax++;
@@ -403,8 +404,8 @@ public class Partida {
             if (turno > 0) {
                 reglasCasillasDisponibles();
                 disponibles = this.tablero.getCasillasDisponibles();
-                print_casillas_disponibles(disponibles);
-                print_Tablero();
+                //print_casillas_disponibles(disponibles);
+                //print_Tablero();
             }
             if (disp == 0) this.finalizada++;
             else this.finalizada = 0;
@@ -429,10 +430,10 @@ public class Partida {
         else {*/
         reglasCasillasDisponibles();
         this.disponibles = this.tablero.getCasillasDisponibles();
-        if (this.turno == 0) {
+        /*if (this.turno == 0) {
             print_casillas_disponibles(disponibles);
             print_Tablero();
-        }
+        }*/
         int disp = disponibles.size();
         if (disp == 0) {
             this.turnoMax++;
@@ -453,8 +454,8 @@ public class Partida {
         if (turno > 0) {
             reglasCasillasDisponibles();
             disponibles = this.tablero.getCasillasDisponibles();
-            print_casillas_disponibles(disponibles);
-            print_Tablero();
+            //print_casillas_disponibles(disponibles);
+            //print_Tablero();
         }
         if (disp == 0) this.finalizada++;
         else {
@@ -480,10 +481,10 @@ public class Partida {
         else {*/
         reglasCasillasDisponibles();
         this.disponibles = this.tablero.getCasillasDisponibles();
-        if (this.turno == 0) {
+        /*if (this.turno == 0) {
             print_casillas_disponibles(disponibles);
             print_Tablero();
-        }
+        }*/
         int disp = disponibles.size();
         if (disp == 0) {
             this.turnoMax++;
@@ -501,8 +502,8 @@ public class Partida {
         if (turno > 0) {
             reglasCasillasDisponibles();
             disponibles = this.tablero.getCasillasDisponibles();
-            print_casillas_disponibles(disponibles);
-            print_Tablero();
+            //print_casillas_disponibles(disponibles);
+            //print_Tablero();
         }
         if (disp == 0) this.finalizada++;
         else {
@@ -516,85 +517,6 @@ public class Partida {
         //}
         return this.ganador;
     }
-
-
-
-
-        /*case 1: //Persona vs Maquina
-                if (this.turno % 2 == 0) {
-                    switch (accion[0]) {
-                        case "colocar":
-                            //this.tablero.actualizarTablero(x, y, this.turno);
-                            int x = Integer.parseInt(accion[1]);
-                            int y = Integer.parseInt(accion[2]);
-                            j1.colocar_ficha_en_partida(turno, x, y, tablero);
-                            //actualizarTablero();
-                            incrementarTurnoPartida();
-                            if (turno > 0) {
-                                reglasCasillasDisponibles();
-                                disponibles = this.tablero.getCasillasDisponibles();
-                                print_casillas_disponibles(disponibles);
-                                print_Tablero();
-                            }
-                            this.finalizada = 0;
-                            //Esto habría que hacerlo una vez llegado al ultimo turno/final de la partida
-                            /*
-                            else { this.ganador = -1;}
-                            break;
-                        case "info": //info partida
-                            this.get_info_partida();
-                            break;
-                        case "guardar": //guardarPartida
-                            return 4;
-                        case "finalizar": //finalizarPartida
-                            return 5;
-                        case "paso":
-                            if (disp == 0) ++this.finalizada;
-                            incrementarTurnoPartida();
-                            break;
-                    }
-                }
-                else{
-                    this.tablero = j2.posicion(tablero, turno);
-                    incrementarTurnoPartida();
-                    if (turno > 0) {
-                        reglasCasillasDisponibles();
-                        disponibles = this.tablero.getCasillasDisponibles();
-                        print_casillas_disponibles(disponibles);
-                        print_Tablero();
-                    }
-                }
-                break;
-
-            case 0: //Maquina vs Maquina
-                if (this.turno % 2 == 0) {
-                    this.tablero = j1.posicion(tablero, turno);
-                }
-                else{
-                    this.tablero = j2.posicion(tablero, turno);
-                }
-                incrementarTurnoPartida();
-                if (turno > 0) {
-                    reglasCasillasDisponibles();
-                    disponibles = this.tablero.getCasillasDisponibles();
-                    print_casillas_disponibles(disponibles);
-                    print_Tablero();
-                    System.out.print("Siguiente turno? (pulsar Enter para pasar):");
-                    Scanner scanner = new Scanner(System.in);
-                    String entrada  ="";
-                    do{
-                        entrada  = scanner.nextLine();
-                        System.out.println(entrada);
-                    }
-                    while(!entrada.equals(""));
-                    System.out.println("SE PRESIONÓ LA TECLA ENTER");;
-                }
-                break;
-
-        }
-    }*/
-
-
 
 
     /**
