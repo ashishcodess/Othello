@@ -367,7 +367,7 @@ public class Partida {
 
 
     /**
-     * Operacion que gestiona toda una ronda de la Partida en la capa de Presentacion
+     * Operacion que gestiona toda una ronda de la Partida de Persona vs Persona en la capa de Presentacion
      * @param x indica la posición i del tablero en la que el jugador quiere realizar un movimiento
      * @param y indica la posición i del tablero en la que el jugador quiere realizar un movimiento
      * @return retorna un int con el ganador de la partida o -1 si la partida no ha acabado todavia
@@ -415,7 +415,12 @@ public class Partida {
         //}
         return this.ganador;
     }
-
+    /**
+     * Operacion que gestiona toda una ronda de la Partida de Persona vs IA en la capa de Presentacion
+     * @param x indica la posición i del tablero en la que el jugador quiere realizar un movimiento
+     * @param y indica la posición i del tablero en la que el jugador quiere realizar un movimiento
+     * @return retorna un int con el ganador de la partida o -1 si la partida no ha acabado todavia
+     */
     public int rondaPartidaPvIA(int x, int y) {
         /*if (finalizada == 2 || tablero.finalizada() || this.turno == turnoMax) {
             comprobarPartidaFinalizada();
@@ -441,6 +446,54 @@ public class Partida {
         }
         if (this.turno % 2 == 0) {
             j1.colocar_ficha_en_partida(turno, x, y, tablero, reglas);
+        } else if (this.turno % 2 != 0) {
+            tablero = j2.posicionMaquina(tablero, turno, reglas);
+        }
+        incrementarTurnoPartida();
+        if (turno > 0) {
+            reglasCasillasDisponibles();
+            disponibles = this.tablero.getCasillasDisponibles();
+            print_casillas_disponibles(disponibles);
+            print_Tablero();
+        }
+        if (disp == 0) this.finalizada++;
+        else {
+            this.finalizada = 0;
+            tablero.setDisponiblesAnterior(true);
+        }
+        if (finalizada == 2 || tablero.finalizada() || this.turno == turnoMax) {
+            comprobarPartidaFinalizada();
+            return this.ganador;
+        }
+        //}
+        return this.ganador;
+    }
+    /**
+     * Operacion que gestiona toda una ronda de la Partida de IA vs IA en la capa de Presentacion
+     * @return retorna un int con el ganador de la partida o -1 si la partida no ha acabado todavia
+     */
+    public int rondaPartidaIAvIA() {
+        /*if (finalizada == 2 || tablero.finalizada() || this.turno == turnoMax) {
+            comprobarPartidaFinalizada();
+            return this.ganador;
+        }
+        else {*/
+        reglasCasillasDisponibles();
+        this.disponibles = this.tablero.getCasillasDisponibles();
+        if (this.turno == 0) {
+            print_casillas_disponibles(disponibles);
+            print_Tablero();
+        }
+        int disp = disponibles.size();
+        if (disp == 0) {
+            this.turnoMax++;
+            this.finalizada++;
+            tablero.setDisponiblesAnterior(false);
+            incrementarTurnoPartida();
+            return this.ganador;
+        }
+        if (this.turno % 2 == 0) {
+            tablero = j1.posicionMaquina(tablero, turno, reglas);
         } else if (this.turno % 2 != 0) {
             tablero = j2.posicionMaquina(tablero, turno, reglas);
         }
@@ -660,6 +713,9 @@ public class Partida {
             as.add(sbuff);
         }
         return as;
+    }
+
+    public void pasarTurnoPartida() {
     }
 }
 

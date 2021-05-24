@@ -545,6 +545,14 @@ public class CtrlDominio {
         return res;
     }
 
+    public int dominioRondaPartidaIAvIA() {
+        int res = partida_activa.rondaPartidaIAvIA();
+        if (res >= 0 && res < 3) { //tenemos un ganador
+            actualizar_ranking(res);
+        }
+        return res;
+    }
+
     public int dominioObtenerModoDeJuegoPartida() {
         return partida_activa.getModoDeJuegoPartida();
     }
@@ -572,6 +580,10 @@ public class CtrlDominio {
     public int dominio_get_turno() {
         if (partida_activa != null) return partida_activa.getTurnoPartida();
         else return 2;
+    }
+
+    public void dominioPasarTurnoPartida() {
+        partida_activa.pasarTurnoPartida();
     }
 
     /*public static boolean dominioPartidaFinalizada() {

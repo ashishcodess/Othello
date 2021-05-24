@@ -18,8 +18,6 @@ import java.util.Collections;
 
 public class CtrlPresentacion {
 
-
-
     /**Todos las vistas disponibles que se pueden visualizar*/
     public enum vistaActiva{LOGIN, LOGIN_USER2, MENU, RANKING, CREDITOS, TABLERO, CONFIGPARTIDA,CREARTABLERO,CARGARTABLERO, BORRARTABLERO , CARGARPARTIDA, GANADOR}
 
@@ -415,6 +413,11 @@ public class CtrlPresentacion {
 
     public int presentacionRondaPartidaPvIA(int x, int y) {
         return ctrlDominio.dominioRondaPartidaPvIA(x, y);
+    }
+
+    public int presentacionRondaPartidaIAvIA() { return ctrlDominio.dominioRondaPartidaIAvIA(); }
+
+    public void presentacionPasarTurnoPartida() { ctrlDominio.dominioPasarTurnoPartida();
     }
 
     /*public void presentacionActualizarTablero() {

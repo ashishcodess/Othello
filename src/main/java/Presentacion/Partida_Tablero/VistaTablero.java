@@ -173,7 +173,7 @@ public class VistaTablero {
         panelPrincipal.add(tablero,BorderLayout.CENTER);
         panelPrincipal.add(panelBotones,BorderLayout.EAST);
         panelPrincipal.add(panelFichas, BorderLayout.NORTH);
-        recargar_tablero();
+        //recargar_tablero();
     }
 
 
@@ -214,8 +214,16 @@ public class VistaTablero {
                 if (tab[i][j] == 1) ++ct_casillas_disponibles;
             }
         }
-        pasar_turno = (ct_casillas_disponibles == 0); //no hay casillas disponibles activar boton de pasar turno
-        bottonPasarTurno.setEnabled(pasar_turno);
+        int modoDeJuego = iCtrlPresentacion.presentacionObtenerModoDeJuegoPartida();
+        if (modoDeJuego == 1 || modoDeJuego == 2) {
+            pasar_turno = (ct_casillas_disponibles == 0); //no hay casillas disponibles activar boton de pasar turno
+            bottonPasarTurno.setEnabled(pasar_turno);
+            bottonPasarTurno.setText("Pasar turno");
+        }
+        else {
+            bottonPasarTurno.setEnabled(true);
+            bottonPasarTurno.setText("Siguiente turno");
+        }
         inicializar_panelFicha();
     }
 
@@ -264,6 +272,14 @@ public class VistaTablero {
 
     public void listener_botonPasarTurno() {
         //habra que hacer algo aqui
+        int ganador = -1;
+        int modoDeJuego = iCtrlPresentacion.presentacionObtenerModoDeJuegoPartida();
+        if (modoDeJuego == 0) ganador = iCtrlPresentacion.presentacionRondaPartidaIAvIA();
+        else{
+            iCtrlPresentacion.presentacionPasarTurnoPartida();
+        }
+        recargar_tablero();
+        if (ganador >= 0 && ganador < 3) iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.GANADOR);
     }
 
     public void asignar_listenersComponentes() {
