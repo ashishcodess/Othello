@@ -294,9 +294,8 @@ public class CtrlDominio {
         try {
             Tablero t = new Tablero(dominio_cargar_tablero(0));
             int[] reglas = {1,1,1};
-            int id = cp.ctrl_get_nuevo_ID_Partida();
             //Crear partida ficticia
-            partida_activa = new Partida(id,2, reglas,0,id_1,nickname,id_1,nickname,t);
+            partida_activa = new Partida(-1,2, reglas,0,id_1,nickname,id_1,nickname,t);
         }
         catch (Exception ignored) {}
     }
@@ -524,7 +523,8 @@ public class CtrlDominio {
                 break;
         }
         if (res >= 0 && res < 3) { //tenemos un ganador
-            actualizar_ranking(res);
+            int idPartida = partida_activa.getIdPartida();
+            if (idPartida > 0) actualizar_ranking(res);
         }
         return res;
     }
@@ -532,7 +532,8 @@ public class CtrlDominio {
     public int dominioRondaPartidaPvP(int x, int y) {
         int res = partida_activa.rondaPartidaPvP(x, y);
         if (res >= 0 && res < 3) { //tenemos un ganador
-            actualizar_ranking(res);
+            int idPartida = partida_activa.getIdPartida();
+            if (idPartida > 0) actualizar_ranking(res);
         }
         return res;
     }
@@ -540,7 +541,8 @@ public class CtrlDominio {
     public int dominioRondaPartidaPvIA(int x, int y) {
         int res = partida_activa.rondaPartidaPvIA(x, y);
         if (res >= 0 && res < 3) { //tenemos un ganador
-            actualizar_ranking(res);
+            int idPartida = partida_activa.getIdPartida();
+            if (idPartida > 0) actualizar_ranking(res);
         }
         return res;
     }
@@ -548,7 +550,8 @@ public class CtrlDominio {
     public int dominioRondaPartidaIAvIA() {
         int res = partida_activa.rondaPartidaIAvIA();
         if (res >= 0 && res < 3) { //tenemos un ganador
-            actualizar_ranking(res);
+            int idPartida = partida_activa.getIdPartida();
+            if (idPartida > 0) actualizar_ranking(res);
         }
         return res;
     }
