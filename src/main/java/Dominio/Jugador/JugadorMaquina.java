@@ -170,7 +170,8 @@ public class JugadorMaquina extends Jugador {
 
         //Comentad esta parte y descomentad lo otro para poder ejecutar con maquina
 
-        if(turno%2 == 0)t = valorMaxBlancas(t,turno,-100, 100, this.get_profundidadMaquina(), reglas);
+        Alphabeta ab = new Alphabeta();
+        if(turno%2 == 0)t = valorMaxBlancas(t,turno, ab.getAlpha(), ab.getBeta(), this.get_profundidadMaquina(), reglas);
         else t = valorMaxNegras(t,turno,-100, 100, this.get_profundidadMaquina(), reglas);
         return t;
 
