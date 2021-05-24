@@ -304,9 +304,9 @@ public class VistaTablero {
             iCtrlPresentacion.presentacionPasarTurnoPartida();
         }
         recargar_tablero();
-        if (tipoActual.equals(CtrlPresentacion.tipoTablero.PARTIDA)) {
+        /*if (tipoActual.equals(CtrlPresentacion.tipoTablero.PARTIDA)) {
             iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.GANADOR);
-        }
+        }*/
     }
 
     public void asignar_listenersComponentes() {
