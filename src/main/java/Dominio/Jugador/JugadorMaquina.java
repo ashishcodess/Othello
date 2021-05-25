@@ -190,15 +190,15 @@ public class JugadorMaquina extends Jugador {
     }
 
     /**
-     * Función que genera los estados succesores del tablero que recibe como parámetro
-     * @param t es el tablero a partir del cual generamos su lista de estados succesores
+     * Función que genera los estados sucesores del tablero que recibe como parámetro
+     * @param t es el tablero a partir del cual generamos su lista de estados sucesores
      * @param turno es el turno del tablero t
-     * @return retorna la lista de estados succesores de ese tablero, resultantes de cada uno de los posibles movimientos de este
+     * @return retorna la lista de estados sucesores de ese tablero, resultantes de cada uno de los posibles movimientos de este
      */
     public Set<Tablero> genera_estados(Tablero t, int turno, int[] reglas){
 
         Tablero aux;
-        Set<Tablero> succesores = new HashSet<>();
+        Set<Tablero> sucesores = new HashSet<>();
 
         Set<Position> disponibles = t.getCasillasDisponibles();
 
@@ -212,9 +212,9 @@ public class JugadorMaquina extends Jugador {
             if(reglas[1] == 1)aux.calcularCasillasDisponiblesHorizontal(turno+1);
             if(reglas[2] == 1)aux.calcularCasillasDisponiblesDiagonales(turno+1);
 
-            succesores.add(aux);
+            sucesores.add(aux);
         }
 
-        return succesores;
+        return sucesores;
     }
 }

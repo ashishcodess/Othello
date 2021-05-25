@@ -23,8 +23,6 @@ en vez de por valor.
 
 - Ranking: Clase utilizada para guardar el conjunto (en este caso un ArrayList) de elementos de tipo ElementoRanking
 
-- SuccessorFunction:
-
 -Tablero: Una clase donde podemos saber en que posicíon están las fichas negras , blancas etc. \
     También podemos saber cuales son los casillas permitidas(disponibles) para colocar las fichas.\
     Una vez que el jugador en una partida dice colocar la ficha en uno de los posiciones disponibles\
