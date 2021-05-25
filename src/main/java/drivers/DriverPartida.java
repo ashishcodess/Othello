@@ -124,6 +124,7 @@ public class DriverPartida {
         System.out.println("    - colocar x y (enteros x,y entre [0...8])");
         System.out.println("    - paso (pasar el turno)");
         System.out.println("    - info (get info partida)");
+        System.out.println("    - finalizar (finalizar la prueba)");
         System.out.println();
         System.out.print("Introducir accion a realizar:");
         String s_aux;

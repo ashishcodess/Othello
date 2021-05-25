@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 
-public class VistaTablero {
+public class VistaPartida {
 
     private CtrlPresentacion.tipoTablero tipoActual;
 
@@ -47,7 +47,9 @@ public class VistaTablero {
     private final JMenuItem menuitemFinalizar = new JMenuItem("Finalizar Partida (Volver al menu Principal)");
 
     private boolean pasar_turno;
-
+    /**
+     * Metodo para cambiar los labels de los botones
+     * */
     private void cambiar_info_labels_botones(CtrlPresentacion.tipoTablero t) {
         menuitemFinalizar.setText("Finalizar (Volver al menu Principal)");
         switch (t) {
@@ -67,19 +69,25 @@ public class VistaTablero {
         }
     }
 
-    public VistaTablero(CtrlPresentacion pCtrlPresentacion)  {
+    /**
+     * Constructora de VistaPartida
+     * @param pCtrlPresentacion controlador de presentacion a asignarle a dicha vista
+     * */
+    public VistaPartida(CtrlPresentacion pCtrlPresentacion)  {
         iCtrlPresentacion = pCtrlPresentacion;
         tipoActual = CtrlPresentacion.tipoTablero.PARTIDA;
         frameVista.setLayout(new BorderLayout()); // 5 zonas (North, South, East, West, Center)
         inicializar_frameVista();
         obtener_dir_imagenes();
         inicializar_Componentes();
-        asignar_listenersComponentes();
+        asignarListenersComponentes();
         inicializar_menubarVista();
 
         pasar_turno = false;
     }
-
+    /**
+     * Metodo para inicializar el panel del turno y las fichas en Partida
+     * */
     private void inicializar_panelFicha(){
         int blancas = iCtrlPresentacion.presentacion_get_blancas();
         int negras = iCtrlPresentacion.presentacion_get_negras();
@@ -92,9 +100,10 @@ public class VistaTablero {
         textoNumNegras.setText(s2);
         textoNumBlancas.setText(s1);
         textoTurno.setText(t);
-
-
     }
+    /**
+     * Metodo para inicializar menuBar (barra de menu superior)
+     * */
     private void inicializar_menubarVista() {
         menuFile.add(menuitemGuardar);
         menuFile.add(menuitemFinalizar);
@@ -102,20 +111,27 @@ public class VistaTablero {
         menubarVista.add(menuFile);
         frameVista.setJMenuBar(menubarVista);
     }
-
+    /**
+     * Metodo para inicializar frame
+     * */
     private void inicializar_frameVista() {
         frameVista = iCtrlPresentacion.configuracion_frame(950,850,"Tablero");
         JPanel contentPane = (JPanel) frameVista.getContentPane();
         contentPane.add(panelPrincipal);
     }
-
+    /**
+     * Metodo para obtener la ruta de las imagenes de las fichas
+     * */
     private void obtener_dir_imagenes() {
         imagen_vacia = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_VACIA);
         imagen_disponible = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_DISPONIBLE);
         imagen_blanca = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_BLANCA);
         imagen_negra = iCtrlPresentacion.presentacion_consultar_dir_imagen_fichas(CtrlPersitencia.tipoIMG.IMG_NEGRA);
     }
-
+    /**
+     *Metodo hacerVisible
+     * @param b si TRUE entonces el frame sera visible, caso contrario estara desactivado
+     * */
     public void hacerVisible(boolean b,CtrlPresentacion.tipoTablero t) {
         frameVista.pack();
         frameVista.setVisible(b);
@@ -126,9 +142,9 @@ public class VistaTablero {
             recargar_tablero();
         }
     }
-
-
-
+    /**
+     * Metodo para inicializar componentes
+     * */
     private void inicializar_Componentes() {
         JPanel tablero = new JPanel(new GridLayout(0, 8));
         tablero.setBorder((new LineBorder(Color.BLACK)));
@@ -240,7 +256,8 @@ public class VistaTablero {
         }
         inicializar_panelFicha();
     }
-
+    /**
+     * Metodo listener para guardar una Partida*/
     private void listener_guardar_partida() {
         boolean b = false;
         switch (tipoActual) {
@@ -253,7 +270,8 @@ public class VistaTablero {
         }
         if (b) iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.MENU);
     }
-
+    /**
+     * Metodo listener para colocar las fichas en el tablero en una Partida*/
     public void actionPerformed_botones(ActionEvent event) {
         int x = 0;
         int ganador = -1;
@@ -286,7 +304,8 @@ public class VistaTablero {
         }
     }
 
-
+    /**
+     * Metodo listener para pasar turno en una Partida*/
     public void listener_botonPasarTurno() {
         int ganador = -1;
         int modoDeJuego = iCtrlPresentacion.presentacionObtenerModoDeJuegoPartida();
@@ -309,8 +328,9 @@ public class VistaTablero {
         }
 
     }
-
-    public void asignar_listenersComponentes() {
+    /**
+     * Metodo que define los listeners en una Partida*/
+    public void asignarListenersComponentes() {
         //TABLERO
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
@@ -318,8 +338,6 @@ public class VistaTablero {
                         (this::actionPerformed_botones);
             }
         }
-
-
         //LISTENERS DE BOTONES Y BARRA DE MENU SUPERIOS
         bottonGuardar.addActionListener
                 (event -> listener_guardar_partida());

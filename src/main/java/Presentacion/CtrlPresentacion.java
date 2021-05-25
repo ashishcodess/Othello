@@ -46,7 +46,7 @@ public class CtrlPresentacion {
     private final VistaCreditos vistaCreditos;
 
     /**Vista de tablero (partida en juego)*/
-    private final VistaTablero vistaTablero;
+    private final VistaPartida vistaPartida;
 
     /**Vista de Configuracion de Partida*/
     private final VistaConfigPartida vistaConfigPartida;
@@ -65,7 +65,7 @@ public class CtrlPresentacion {
         vistaMenu = new VistaMenu(this);
         vistaConfigPartida = new VistaConfigPartida(this);
         vistaCreditos = new VistaCreditos(this);
-        vistaTablero  = new VistaTablero(this);
+        vistaPartida = new VistaPartida(this);
         vistaCargarBorrar = new VistaCargarBorrar(this);
         vistaGanador = new VistaGanador(this);
     }
@@ -110,7 +110,7 @@ public class CtrlPresentacion {
         vistaConfigPartida.hacerVisible(false);
         vistaRanking.hacerVisible(false);
         vistaCreditos.hacerVisible(false);
-        vistaTablero.hacerVisible(false, tipoTablero.PARTIDA);
+        vistaPartida.hacerVisible(false, tipoTablero.PARTIDA);
         vistaConfigPartida.hacerVisible(false);
         vistaCargarBorrar.hacerVisible(false, tipoTablero.PARTIDA);
         vistaGanador.hacerVisible(false);
@@ -139,15 +139,15 @@ public class CtrlPresentacion {
                 vistaCreditos.hacerVisible(true);
                 break;
             case TABLERO:
-                vistaTablero.recargar_tablero();
-                vistaTablero.hacerVisible(true, tipoTablero.PARTIDA);
+                vistaPartida.recargar_tablero();
+                vistaPartida.hacerVisible(true, tipoTablero.PARTIDA);
                 break;
             case CONFIGPARTIDA:
                 vistaConfigPartida.hacerVisible(true);
                 break;
             case CREARTABLERO:
                 crearTablero();
-                vistaTablero.hacerVisible(true, tipoTablero.TABLERO);
+                vistaPartida.hacerVisible(true, tipoTablero.TABLERO);
                 break;
             case CARGARTABLERO:
                 vistaCargarBorrar.hacerVisible(true, tipoTablero.TABLERO);

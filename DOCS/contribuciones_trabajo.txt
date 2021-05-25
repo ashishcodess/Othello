@@ -14,7 +14,7 @@ Sergi Bosquet:
 
 	- CtrlPresentacion
 	    - VistaConfigPartida
-	    - VistaTablero
+	    - VistaPartida
 
 Ashish Kshetri:
 	- Tablero

@@ -73,14 +73,14 @@ public class VistaConfigPartida {
         frameVista.setEnabled(b);
         cargar_label_info_tablero();
     }
-
+    /**
+     * Metodo para cargar la informacion de un tablero
+     * */
     private void cargar_label_info_tablero() {
         int id = iCtrlPresentacion.consultar_idTablero_cargar();
         if (id == 0) labelInfoTablero.setText("tablero: inicial");
         else labelInfoTablero.setText("tablero: "+ id);
     }
-
-    /////////// INICIALIZACION DE COMPONENTES
 
     /**
      * Metodo para inicializar componentes (menuBar, paneles y frame)
@@ -110,7 +110,9 @@ public class VistaConfigPartida {
         menubarVista.add(menuFile);
         frameVista.setJMenuBar(menubarVista);
     }
-
+    /**
+     * Metodo para inicializar el comboBox
+     * */
     private JComboBox<String> inicializar_comboBox() {
         JComboBox<String> combo= new JComboBox<>();
         for (String s : Arrays.asList("facil_1", "facil_2", "normal_1", "normal_2", "dificil_1","dificil_2")) {
@@ -184,7 +186,8 @@ public class VistaConfigPartida {
         gestion_ComboBox_uno_ON(1); //poner modo por defecto
     }
 
-
+    /**
+     * Metodo que obtiene la informacion de los comboBox al configurar una Partida*/
     private int consultar_info_comboBox(JComboBox<String> e) {
         String s = Objects.requireNonNull(e.getSelectedItem()).toString();
         int id = -1;
@@ -211,7 +214,8 @@ public class VistaConfigPartida {
         return id;
     }
 
-
+    /**
+     * Metodo para recoger la informacion seleccionada para crear una Partida*/
     private ArrayList<Integer> recoger_info_modo_juego() {
         ArrayList<Integer> cosas = new ArrayList<>();
         cosas.add(((verticalCheckBox.isSelected()) ? 1 : 0));
@@ -236,7 +240,8 @@ public class VistaConfigPartida {
         return cosas;
     }
 
-
+    /**
+     * Metodo que gestiona el inicio de una Partida*/
     private void gestionar_inicio_de_juego() {
         if (tableroCheckBox.isSelected()) {
             //SALTAR AL MENU DE CARGA DE TABLERO Y LUEGO CREAR PARTIDA CON LA CONFIGURACION NECESARIA
@@ -255,7 +260,8 @@ public class VistaConfigPartida {
         }
     }
 
-
+    /**
+     * Metodo para recoger la informacion de una Partida*/
     private void recoger_info_partida() {
         if (IAVsIARadioButton.isSelected()) {
             int i1 = consultar_info_comboBox(selectorIA_0);
@@ -274,7 +280,8 @@ public class VistaConfigPartida {
             iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.TABLERO);
         }
     }
-
+    /**
+     * Metodo que gestiona los comboBox al configurar una Partida*/
     private void gestion_ComboBox_uno_ON(int i) {
         IAVsIARadioButton.setSelected(false);
         personaVsIARadioButton.setSelected(false);
@@ -312,7 +319,8 @@ public class VistaConfigPartida {
                 break;
         }
     }
-
+    /**
+     * Metodo que define los listeners en la configuracion de una Partida*/
     private void asignarListeners() {
         comenzarPartidaButton.addActionListener
                 (event -> gestionar_inicio_de_juego());
