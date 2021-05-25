@@ -224,6 +224,11 @@ public class CtrlPresentacion {
     public String consultar_nickname_j1() {return ctrlDominio.consultar_nickname_j1();}
 
     /**
+     * Metodo consultar Identificador J1 (desde Presentacion)
+     * @return devuelve el identificador del jugador 1*/
+    public int consultar_id_j2() {return ctrlDominio.consultar_id_j2();}
+
+    /**
      * metodo Get info usuario activo (desde Capa Presentacion)
      * @return devuelve la informacion que esta logueado dentro del juego
      * */

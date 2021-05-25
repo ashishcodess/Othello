@@ -256,7 +256,14 @@ public class VistaConfigPartida {
             }
         }
         else { //CREAR PARTIDA CON LA CONFIGURACION
-            recoger_info_partida(); //llama a la funcion que crea la partida
+            if (personaVsPersonaRadioButton.isSelected()) {
+                int idj2 = iCtrlPresentacion.consultar_id_j2();
+                if (idj2 < 6) {
+                    JOptionPane.showMessageDialog(null, "Primero inicia sesión con el J2");
+                }
+                else recoger_info_partida(); //llama a la funcion que crea la partida
+            }
+            else recoger_info_partida(); //llama a la funcion que crea la partida
         }
     }
 

@@ -96,6 +96,12 @@ public class CtrlDominio {
     public String consultar_nickname_j1() {return nickname;}
 
     /**
+     * Metodo consultar Identificador J1
+     * @return devuelve el identificador del jugador 1
+     * */
+    public int consultar_id_j2() {return id_2;}
+
+    /**
      * Metodo registro usuario
      * @param nick nickname de usuario a registrar
      * @return devuelve el identificador de usuario asignado a este jugador en caso de registro correcto \
@@ -471,7 +477,7 @@ public class CtrlDominio {
         catch (Exception ignored) {}
         return b;
     }
-
+    /*
     public void iniciarPartida(int modo, int[] r, int idj1, int idj2, String nickj1, String nickj2) {
         try {
             int idPartida = cp.ctrl_get_nuevo_ID_Partida();
@@ -503,7 +509,7 @@ public class CtrlDominio {
             partida_activa = new Partida(idPartida,modo,r,turnoPartida,id1,nick1,id2,nick2,t);
         }
         catch (Exception ignored) { }
-    }
+    }*/
 
     public int dominioRondaPartida(int x, int y) {
         int modo = partida_activa.getModoDeJuegoPartida();
@@ -525,6 +531,8 @@ public class CtrlDominio {
         if (res >= 0 && res < 3) { //tenemos un ganador
             int idPartida = partida_activa.getIdPartida();
             if (idPartida > 0) actualizar_ranking(res);
+            id_2 = -1;
+            nick_2 = "";
         }
         return res;
     }
