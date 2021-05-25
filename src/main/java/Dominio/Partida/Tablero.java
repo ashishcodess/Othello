@@ -64,7 +64,7 @@ public class Tablero {
         for(int i = 0 ; i < 8 ; ++i){
             for(int j = 0 ; j < 8 ; ++j){
                 tablero[i][j] = new Casilla(tab[i][j]);  
-                if(tab[i][j] == 2 ) {   /
+                if(tab[i][j] == 2 ) {
                     num_vacia --;
                     negras.add(new Position(i , j));
                 }
