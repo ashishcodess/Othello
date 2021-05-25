@@ -7,7 +7,6 @@ import Dominio.Ranking.Logros;
 import Dominio.Ranking.Ranking;
 import MyException.MyException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**Controlador de la capa de Dominio*/

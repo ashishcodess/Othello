@@ -237,7 +237,6 @@ public class VistaConfigPartida {
     }
 
 
-
     private void gestionar_inicio_de_juego() {
         if (tableroCheckBox.isSelected()) {
             //SALTAR AL MENU DE CARGA DE TABLERO Y LUEGO CREAR PARTIDA CON LA CONFIGURACION NECESARIA
@@ -256,11 +255,24 @@ public class VistaConfigPartida {
         }
     }
 
+
     private void recoger_info_partida() {
-        ArrayList<Integer> as_int = recoger_info_modo_juego();
-        primera_vez = true;
-        iCtrlPresentacion.presentacion_crearPartida(as_int);
-        iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.TABLERO);
+        if (IAVsIARadioButton.isSelected()) {
+            int i1 = consultar_info_comboBox(selectorIA_0);
+            int i2 = consultar_info_comboBox(selectorIA_1);
+            if ((i1 != i2)) {
+                ArrayList<Integer> as_int = recoger_info_modo_juego();
+                primera_vez = true;
+                iCtrlPresentacion.presentacion_crearPartida(as_int);
+                iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.TABLERO);
+            }
+        }
+        else {
+            ArrayList<Integer> as_int = recoger_info_modo_juego();
+            primera_vez = true;
+            iCtrlPresentacion.presentacion_crearPartida(as_int);
+            iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.TABLERO);
+        }
     }
 
     private void gestion_ComboBox_uno_ON(int i) {
