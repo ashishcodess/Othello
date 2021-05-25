@@ -2,7 +2,8 @@ Directorio del conjunto de Drivers para las pruebas del proyecto
 
 - DriverJugadorPersona: Driver de la clase JugadorPersona(Permite probar atributos unicos de la subclase)
 
-- DriverJugadorMaquina: Driver de la clase JugadorMaquina(Permite probar atributos unicos de la subclase)
+- DriverJugadorMaquina: Driver de la clase JugadorMaquina(Permite probar atributos unicos de la subclase
+ junto con el algoritmo de la IA(Descomentar el paragrafo de la linea 102 para poder ver los tableros que se devuelven))
 
 - DriverPersistencia: Driver del Controlador de Persitencia (se incluyen pruebas de los 3 tipos de ficheros que \
 generamos: usuarios, ranking y partidas)
