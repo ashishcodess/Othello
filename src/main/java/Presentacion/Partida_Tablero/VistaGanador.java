@@ -31,18 +31,18 @@ public class VistaGanador {
 
         int fichas_negras = iCtrlPresentacion.presentacion_get_negras();
         int fichas_blancas = iCtrlPresentacion.presentacion_get_blancas();
-        textoNegras.setText(String.valueOf(fichas_blancas));
+        textoNegras.setText(String.valueOf(fichas_negras));
         textoNegras.setEditable(false);
-        textoBlancas.setText(String.valueOf(fichas_negras));
+        textoBlancas.setText(String.valueOf(fichas_blancas));
         textoBlancas.setEditable(false);
 
         //falta calculo de labelINFOGANADOR
         labelINFOGANADOR.setText("");
         if (fichas_negras > fichas_blancas) {
-            labelINFOGANADOR.setText("El ganador de la partida es J2!");
+            labelINFOGANADOR.setText("El ganador de la partida es J1!");
         }
         else if (fichas_negras < fichas_blancas) {
-            labelINFOGANADOR.setText("El ganador de la partida es J1!");
+            labelINFOGANADOR.setText("El ganador de la partida es J2!");
         }
         else labelINFOGANADOR.setText("La partida termina en empate!");
     }
@@ -69,7 +69,7 @@ public class VistaGanador {
 
         JPanel aux2 = new JPanel();
         aux2.setLayout(new FlowLayout());
-        JLabel labelFichasBlancas = new JLabel("(J2) Blancas: ");
+        JLabel labelFichasBlancas = new JLabel("(J2) Fichas Blancas: ");
         aux2.add(labelFichasBlancas);
         aux2.add(textoBlancas);
 
