@@ -11,3 +11,5 @@ conceptual de datos
 - JAVADOC: Directorio donde se ubica toda la informacion respecto a la documentación de las clases del proyecto; para \
 este proposito hemos utilizado la herramienta de JAVADOC (acceder desde fichero "index.html")
 
+- Documentacion Estructura de datos.pdf : Es un fichero de texto donde comentamos algunas de las estructuras de datos \
+utilizadas para este proyecto
