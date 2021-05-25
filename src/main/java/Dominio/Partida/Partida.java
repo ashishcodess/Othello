@@ -67,7 +67,7 @@ public class Partida {
         }
         this.tablero = new Tablero();
         this.finalizada = 0;
-        this.turnoMax = 59;
+        this.turnoMax = 60;
         this.disponibles= new HashSet<>();
         reglasCasillasDisponibles();
     }
@@ -110,7 +110,7 @@ public class Partida {
         this.ganador = -1;
         this.tablero = t;
         this.finalizada = 0;
-        this.turnoMax = 59;
+        this.turnoMax = 60;
         this.disponibles= new HashSet<>();
         reglasCasillasDisponibles();
     }
