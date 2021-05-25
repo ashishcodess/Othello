@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"ControladorPersistencia"},{"l":"Dominio"},{"l":"Dominio.Jugador"},{"l":"Dominio.Partida"},{"l":"Dominio.Ranking"},{"l":"drivers"},{"l":"MyException"},{"l":"Presentacion"},{"l":"Presentacion.Menus"},{"l":"Presentacion.Partida_Tablero"},{"l":"Presentacion.Ranking"}]

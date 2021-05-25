@@ -11,7 +11,6 @@ public class Tablero {
     private final Casilla[][] tablero;
     /**matrix para hacer bfs horizontal*/
     private final int[][] graph_h;
-    private int[][] graph;
     /**matrix para hacer bfs vertical*/
     private final int[][] graph_v;
     /**matrix para hacer bfs diagonal right */
@@ -37,7 +36,7 @@ public class Tablero {
         negras = new HashSet<Position>();
         blancas = new HashSet<Position>();
         disponibles= new HashSet<Position>();
-        tablero = new Casilla[8][8];    
+        tablero = new Casilla[8][8];
         inicializeTablero(tablero);
         graph_h = new int[8][8];
         graph_v = new int[8][8];
@@ -60,19 +59,18 @@ public class Tablero {
         graph_dr = new int[8][8];
         graph_dl = new int[8][8];
         num_vacia = 60;
-        Position pos;
         for(int i = 0 ; i < 8 ; ++i){
             for(int j = 0 ; j < 8 ; ++j){
-                tablero[i][j] = new Casilla(tab[i][j]);  
+                tablero[i][j] = new Casilla(tab[i][j]);
                 if(tab[i][j] == 2 ) {
                     num_vacia --;
                     negras.add(new Position(i , j));
                 }
-                else if (tab[i][j] == 3) { 
+                else if (tab[i][j] == 3) {
                     num_vacia --;
                     blancas.add(new Position(i , j));
                 }
-                else{ 
+                else{
                     num_vacia --;
                     disponibles.add(new Position(i , j));
                 }
@@ -93,15 +91,14 @@ public class Tablero {
         graph_dr = new int[8][8];
         graph_dl = new int[8][8];
         num_vacia = 60;
-        Position pos;
         for(int i = 0 ; i < 8 ; ++i){
             for(int j = 0 ; j < 8 ; ++j){
-                tablero[i][j] = new Casilla(tab[i][j].getTipoCasilla());   
-                if(tab[i][j].getTipoCasilla() == 2 ) {  
+                tablero[i][j] = new Casilla(tab[i][j].getTipoCasilla());
+                if(tab[i][j].getTipoCasilla() == 2 ) {
                     num_vacia --;
                     negras.add(new Position(i , j));
                 }
-                else if (tab[i][j].getTipoCasilla() == 3 ) { 
+                else if (tab[i][j].getTipoCasilla() == 3 ) {
                     num_vacia --;
                     blancas.add(new Position(i , j));
                 }
@@ -194,6 +191,9 @@ public class Tablero {
         return negras.size();
     }
 
+    /**
+     * Operacion get que devuelva total numero de fichas que están disponibles
+     */
     public int getNumCasillasDisponibles(){
         return disponibles.size();
     }
@@ -213,7 +213,6 @@ public class Tablero {
      * @param color_opp el color de una ficha contrario(2 = negras , 3 = blancas)
      */
     public void bfsCalcularCasillasDisponiblesVertical(Position pos , int color_own ,int color_opp) {
-        int row = 8, columns = 8;
         Queue<Position> q = new LinkedList<>();
         q.add(pos);
         while (!q.isEmpty()) {
@@ -239,11 +238,11 @@ public class Tablero {
                 }
             }
             graph_v[x][y] = -1;
-           
+
             if(isOk(x+1, y)) {
-                if ((graph_v[x+1][y] == color_own) || (graph_v[x+1][y] == color_opp)) q.add(new Position(x+1 , y)); 
+                if ((graph_v[x+1][y] == color_own) || (graph_v[x+1][y] == color_opp)) q.add(new Position(x+1 , y));
             }
-           
+
             if(isOk(x-1, y)) {
                 if ((graph_v[x-1][y] == color_own) || (graph_v[x-1 ][y] == color_opp)) q.add(new Position(x-1 , y));
             }
@@ -260,7 +259,6 @@ public class Tablero {
      */
 
     public void bfsCalcularCasillasDisponiblesHorizontal(Position pos , int color_own ,int color_opp){
-        int row = 8, columns = 8;
         Queue<Position> q = new LinkedList<>();
         q.add(pos);
         while (!q.isEmpty()) {
@@ -268,30 +266,30 @@ public class Tablero {
             int x = current_pos.getX();
             int y = current_pos.getY();
             q.remove();
-            
+
             if (isOk(x , y+1)) {
                 if (graph_h[x ][y+1] == 0 && graph_h[x][y] == color_opp) {
                     graph_h[x ][y+1] = 1;
                     tablero[x][y+1] = new Casilla(1);
                     disponibles.add(new Position(x , y+1));
-                    graph_h[x][y] = -1 ; 
+                    graph_h[x][y] = -1 ;
                 }
             }
-        
+
             if (isOk(x , y-1)) {
                 if (graph_h[x][y-1] == 0 && graph_h[x][y] == color_opp) {
                     graph_h[x ][y-1] = 1;
                     tablero[x][y-1] = new Casilla(1);
                     disponibles.add(new Position(x, y-1));
-                    graph_h[x][y] = -1 ; 
+                    graph_h[x][y] = -1 ;
                 }
             }
             graph_h[x][y] = -1;
-        
+
             if(isOk(x , y+1)) {
                 if (graph_h[x][y+1] != -1 && (graph_h[x ][y+1] == color_own || graph_h[x ][y+1] == color_opp)) q.add(new Position(x , y+1));
             }
-        
+
             if(isOk(x, y-1)) {
                 if (graph_h[x][y-1] != -1 && (graph_h[x ][y-1] == color_own || graph_h[x ][y-1] == color_opp)) q.add(new Position(x , y-1));
             }
@@ -305,7 +303,6 @@ public class Tablero {
      * @param color_opp el color de una ficha contrario(2 = negras , 3 = blancas)
      */
     public void bfsCalcularCasillasDisponiblesDiagonalesLeft(Position pos , int color_own ,int color_opp){
-        int row = 8, columns = 8;
         Queue<Position> q = new LinkedList<>();
         q.add(pos);
         while (!q.isEmpty()) {
@@ -313,16 +310,16 @@ public class Tablero {
             int x = current_pos.getX();
             int y = current_pos.getY();
             q.remove();
-        
+
             if (isOk(x+1 , y+1)) {
                 if (graph_dl[x+1][y+1] == 0 && graph_dl[x][y] == color_opp) {
                     graph_dl[x+1][y+1] = 1;
                     tablero[x+1][y+1] = new Casilla(1);
                     disponibles.add(new Position(x+1 , y+1));
-                    graph_dl[x][y] = -1 ; 
+                    graph_dl[x][y] = -1 ;
                 }
             }
-        
+
             if (isOk(x-1 , y-1)) {
                 if (graph_dl[x-1][y-1] == 0 && graph_dl[x][y] == color_opp) {
                     graph_dl[x-1][y-1] = 1;
@@ -332,9 +329,9 @@ public class Tablero {
                 }
             }
             graph_dl[x][y] = -1;
-            
+
             if(isOk(x+1 , y+1)) {
-                if (graph_dl[x+1][y+1] != -1 && (graph_dl[x+1][y+1] == color_own || graph_dl[x+1][y+1] == color_opp))q.add(new Position(x+1 , y+1)); 
+                if (graph_dl[x+1][y+1] != -1 && (graph_dl[x+1][y+1] == color_own || graph_dl[x+1][y+1] == color_opp))q.add(new Position(x+1 , y+1));
             }
             if(isOk(x-1 , y-1)) {
                 if (graph_dl[x-1][y-1] != -1 && (graph_dl[x-1][y-1] == color_own || graph_dl[x-1][y-1] == color_opp))q.add(new Position(x-1 , y-1));
@@ -348,7 +345,6 @@ public class Tablero {
      * @param color_opp el color de una ficha contrario(2 = negras , 3 = blancas)
      */
     public void bfsCalcularCasillasDisponiblesDiagonalesRight(Position pos , int color_own ,int color_opp){
-        int row = 8, columns = 8;
         Queue<Position> q = new LinkedList<>();
         q.add(pos);
         while (!q.isEmpty()) {
@@ -356,13 +352,13 @@ public class Tablero {
             int x = current_pos.getX();
             int y = current_pos.getY();
             q.remove();
-   
+
             if (isOk(x+1 , y-1)) {
                 if (graph_dr[x+1][y-1] == 0 && graph_dr[x][y] == color_opp) {
                     graph_dr[x+1][y-1] = 1;
                     tablero[x+1][y-1] = new Casilla(1);
                     disponibles.add(new Position(x+1 , y-1));
-                    graph_dr[x][y] = -1 ; 
+                    graph_dr[x][y] = -1 ;
                 }
             }
             if (isOk(x-1 , y+1)) {
@@ -370,15 +366,15 @@ public class Tablero {
                     graph_dr[x-1][y+1] = 1;
                     tablero[x-1][y+1] = new Casilla(1);
                     disponibles.add(new Position(x-1 , y+1));
-                    graph_dr[x][y] = -1 ; 
+                    graph_dr[x][y] = -1 ;
                 }
             }
             graph_dr[x][y] = -1;
-            
+
             if(isOk(x+1, y-1)) {
                 if (graph_dr[x+1][y-1] != -1 && (graph_dr[x+1][y-1] == color_own || graph_dr[x+1][y-1] == color_opp))q.add(new Position(x+1 , y-1)); // same color
             }
-           
+
             if(isOk(x-1 , y+1)) {
                 if (graph_dr[x-1][y+1] != -1 && (graph_dr[x-1][y+1] == color_own || graph_dr[x-1][y+1] == color_opp))q.add(new Position(x-1 , y+1));
             }
@@ -507,14 +503,14 @@ public class Tablero {
         }
         else { own_color = 3; opp_color = 2;
         }
-        
+
         if (isOk(x - 1, y)) {
             if (tablero[x-1][y].getTipoCasilla() == opp_color) {
                 for (int i = x - 1; i >= 0 && !found1 && !stop1; --i) {
-                    if (tablero[i][y].getTipoCasilla() == own_color) found1 = true;    
+                    if (tablero[i][y].getTipoCasilla() == own_color) found1 = true;
                     else if (tablero[i][y].getTipoCasilla() == 0 || tablero[i][y].getTipoCasilla() == 1)
-                        stop1 = true;   
-                    else {                         
+                        stop1 = true;
+                    else {
                         vec1.addElement(new Position(i, y));
                     }
                 }
@@ -525,18 +521,18 @@ public class Tablero {
                         Position pos = (Position) arr1[i];
                         a = pos.getX();
                         b = pos.getY();
-                        tablero[a][b].cambiar_tipo(own_color);    
+                        tablero[a][b].cambiar_tipo(own_color);
                     }
                 }
             }
         }
-  
+
         if (isOk(x + 1, y)) {
             if (tablero[x+1][y].getTipoCasilla() == opp_color) {
                 for (int i = x + 1; i <= 7 && !found2 && !stop2; ++i) {
-                    if (tablero[i][y].getTipoCasilla() == own_color) found2 = true;    
-                    else if (tablero[i][y].getTipoCasilla() == 0 || tablero[i][y].getTipoCasilla() == 1) stop2 = true;  
-                    else {                          
+                    if (tablero[i][y].getTipoCasilla() == own_color) found2 = true;
+                    else if (tablero[i][y].getTipoCasilla() == 0 || tablero[i][y].getTipoCasilla() == 1) stop2 = true;
+                    else {
                         Position ps = new Position(i, y);
                         vec2.addElement(ps);
                     }
@@ -548,7 +544,7 @@ public class Tablero {
                         Position pos = (Position) arr2[i];
                         a = pos.getX();
                         b = pos.getY();
-                        tablero[a][b].cambiar_tipo(own_color);  
+                        tablero[a][b].cambiar_tipo(own_color);
                     }
                 }
             }
@@ -569,14 +565,14 @@ public class Tablero {
         }
         else { own_color = 3; opp_color = 2;
         }
-    
+
         if (isOk(x, y-1)) {
             if (tablero[x][y-1].getTipoCasilla() == opp_color) {
                 for (int i = y - 1; i >= 0 && !found1 && !stop1 ; --i) {
-                    if (tablero[x][i].getTipoCasilla() == own_color) found1 = true;    
+                    if (tablero[x][i].getTipoCasilla() == own_color) found1 = true;
                     else if (tablero[x][i].getTipoCasilla() == 0 || tablero[x][i].getTipoCasilla() == 1)
-                        stop1 = true;   
-                    else {                         
+                        stop1 = true;
+                    else {
                         vec1.addElement(new Position(x, i));
                     }
                 }
@@ -587,7 +583,7 @@ public class Tablero {
                         Position pos = (Position) arr1[i];
                         a = pos.getX();
                         b = pos.getY();
-                        tablero[a][b].cambiar_tipo(own_color);    
+                        tablero[a][b].cambiar_tipo(own_color);
                     }
                 }
             }
@@ -596,8 +592,8 @@ public class Tablero {
         if (isOk(x , y+1)) {
             if (tablero[x][y+1].getTipoCasilla() == opp_color) {
                 for (int i = y + 1; i <= 7 && !found2 && !stop2; ++i) {
-                    if (tablero[x][i].getTipoCasilla() == own_color) found2 = true;   
-                    else if (tablero[x][i].getTipoCasilla() == 0 || tablero[x][i].getTipoCasilla() == 1) stop2 = true; 
+                    if (tablero[x][i].getTipoCasilla() == own_color) found2 = true;
+                    else if (tablero[x][i].getTipoCasilla() == 0 || tablero[x][i].getTipoCasilla() == 1) stop2 = true;
                     else {
                         Position ps = new Position(x, i);
                         vec2.addElement(ps);
@@ -611,7 +607,7 @@ public class Tablero {
                         Position pos = (Position) arr2[i];
                         a = pos.getX();
                         b = pos.getY();
-                        tablero[a][b].cambiar_tipo(own_color);   
+                        tablero[a][b].cambiar_tipo(own_color);
                     }
                 }
             }
@@ -638,14 +634,14 @@ public class Tablero {
             if (tablero[x-1][y-1].getTipoCasilla() == opp_color) {
                 int i = x-1 , j = y-1 ;
                 while ( i >= 0 && j >= 0 && !found1 && !stop1) {
-                    if (tablero[i][j].getTipoCasilla() == own_color) found1 = true;    
+                    if (tablero[i][j].getTipoCasilla() == own_color) found1 = true;
                     else if (tablero[i][j].getTipoCasilla() == 0 || tablero[i][j].getTipoCasilla() == 1)
-                        stop1 = true;   
-                    else {                         
+                        stop1 = true;
+                    else {
                         vec1.addElement(new Position(i, j));
                     }
                     --i; --j;
-                    if (i<0 || j < 0) stop1 = true; 
+                    if (i<0 || j < 0) stop1 = true;
                 }
                 if (found1) {
                     Object[] arr1 = vec1.toArray();
@@ -654,8 +650,8 @@ public class Tablero {
                         Position pos = (Position) arr1[k];
                         a = pos.getX();
                         b = pos.getY();
-                        tablero[a][b].cambiar_tipo(own_color);   
-                 
+                        tablero[a][b].cambiar_tipo(own_color);
+
                     }
                 }
             }
@@ -664,10 +660,10 @@ public class Tablero {
             if (tablero[x+1][y+1].getTipoCasilla() == opp_color) {
                 int i = x+1 , j = y+1 ;
                 while ( i <= 7 && j <= 7 && !found2 && !stop2) {
-                    if (tablero[i][j].getTipoCasilla() == own_color) found2 = true;    
+                    if (tablero[i][j].getTipoCasilla() == own_color) found2 = true;
                     else if (tablero[i][j].getTipoCasilla() == 0 || tablero[i][j].getTipoCasilla() == 1)
-                        stop2 = true;   
-                    else {                           
+                        stop2 = true;
+                    else {
                         vec2.addElement(new Position(i, j));
                     }
                     ++i; ++j;
@@ -679,20 +675,20 @@ public class Tablero {
                         Position pos = (Position) arr2[k];
                         a = pos.getX();
                         b = pos.getY();
-                        tablero[a][b].cambiar_tipo(own_color);   
+                        tablero[a][b].cambiar_tipo(own_color);
                     }
                 }
             }
         }
-        
+
         if (isOk(x-1, y+1)) {
             if (tablero[x-1][y+1].getTipoCasilla() == opp_color) {
                 int i = x-1 , j = y+1 ;
                 while ( i >= 0 && j <= 7 && !found3 && !stop3) {
-                    if (tablero[i][j].getTipoCasilla() == own_color) found3 = true;   
+                    if (tablero[i][j].getTipoCasilla() == own_color) found3 = true;
                     else if (tablero[i][j].getTipoCasilla() == 0 || tablero[i][j].getTipoCasilla() == 1)
-                        stop3 = true;   
-                    else {                        
+                        stop3 = true;
+                    else {
                         vec3.addElement(new Position(i, j));
                     }
                     --i; ++j;
@@ -704,21 +700,21 @@ public class Tablero {
                         Position pos = (Position) arr3[k];
                         a = pos.getX();
                         b = pos.getY();
-                        tablero[a][b].cambiar_tipo(own_color);    
+                        tablero[a][b].cambiar_tipo(own_color);
                     }
                 }
             }
         }
 
-    
+
         if (isOk(x+1, y-1)) {
             if (tablero[x+1][y-1].getTipoCasilla() == opp_color) {
                 int i = x+1 , j = y-1 ;
                 while ( i <= 7 && j >= 0 && !found4 && !stop4) {
-                    if (tablero[i][j].getTipoCasilla() == own_color) found4 = true;   
+                    if (tablero[i][j].getTipoCasilla() == own_color) found4 = true;
                     else if (tablero[i][j].getTipoCasilla() == 0 || tablero[i][j].getTipoCasilla() == 1)
-                        stop4 = true;   
-                    else {                          
+                        stop4 = true;
+                    else {
                         vec4.addElement(new Position(i, j));
                     }
                     ++i; --j;
@@ -730,7 +726,7 @@ public class Tablero {
                         Position pos = (Position) arr4[k];
                         a = pos.getX();
                         b = pos.getY();
-                        tablero[a][b].cambiar_tipo(own_color);    
+                        tablero[a][b].cambiar_tipo(own_color);
                     }
                 }
             }
@@ -762,7 +758,7 @@ public class Tablero {
         if (turno %2 == 0) {color = 2;  negras.add(new Position(x , y));}
         else { color = 3; blancas.add(new Position(x , y));}
         tablero[x][y].cambiar_tipo(color);
-        arr =  new Position[0];
+        //arr =  new Position[0];
         negras.clear();
         blancas.clear();
         for (int i = 0; i < 8; ++i) {
@@ -776,25 +772,26 @@ public class Tablero {
      * Operaciones get de casillas disponibles
      */
     public Set<Position> getCasillasDisponibles(){
-      
+
         return disponibles;
     }
     /**
      * Operaciones get de casillas Negras
      */
     public Set<Position> getCasillasNegras(){
-        
+
         return negras;
     }
     /**
      * Operaciones get de casillas blancas
      */
     public Set<Position> getCasillasBlancas(){
-       
+
         return blancas;
     }
 
     /**
+     * Operaciones para saber si la partida está finalizada
      * @return retorna cierto si la partida ha finalizado
      */
     public boolean finalizada(){
@@ -804,6 +801,7 @@ public class Tablero {
     }
 
     /**
+     * Que llama IA para saber cuales son los dispobibles de turno anterior
      * @return retorna el booleano disponibles_anterior
      */
     public boolean getDisponiblesAnterior(){return this.disponibles_anterior;}
@@ -816,19 +814,8 @@ public class Tablero {
         this.disponibles_anterior = b;
     }
 
-    public void printTablero(){
-        for(int i = 0; i < 8; i++){
-            String sBuff = new String();
-            for(int j = 0; j < 8; j++){
-                sBuff = sBuff + tablero[i][j].getTipoCasilla();
-            }
-            System.out.println(sBuff);
-        }
-        System.out.println(" ");
-    }
-
     /**
-     * Operacion toMatrix
+     * Operacion toMatrix que cambia tablero de casilla a tablero de int
      * @return devuelve la informacion del tablero en una matriz de enteros
      */
     //Para Controlador de Persitencia
