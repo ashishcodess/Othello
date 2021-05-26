@@ -1,6 +1,5 @@
 package Dominio.Partida;
 
-import Dominio.Jugador.Alphabeta;
 import Dominio.Jugador.Jugador;
 import Dominio.Jugador.JugadorMaquina;
 import Dominio.Jugador.JugadorPersona;
@@ -23,13 +22,11 @@ public class Partida {
     private Jugador j2;
     /**Tablero de la Partida*/
     private Tablero tablero;
-
     /**Casillas disponibles para colocar ficha en Partida*/
     Set<Position> disponibles;
     /**Ganador de la Partida*/
     private int ganador; //indica una vez finalizada la partida quien es el ganador (para despues hacer modificacion de ranking)
-    //ganador -> -1 (partida sigue en curso),0 (gana nick1), 1 (gana nick2), 2 (empate), 3 (guardar partida), 4 (finalizar)
-
+                        //ganador -> -1 (partida sigue en curso),0 (gana nick1), 1 (gana nick2), 2 (empate), 3 (guardar partida), 4 (finalizar)
     /**Indica si la Partida esta finalizada*/
     private int finalizada;
     /**Turno maximo de la Partida*/
@@ -70,8 +67,8 @@ public class Partida {
         }
         this.tablero = new Tablero();
         this.finalizada = 0;
-        this.turnoMax = 59;
-        this.disponibles= new HashSet<Position>();
+        this.turnoMax = 60;
+        this.disponibles= new HashSet<>();
         reglasCasillasDisponibles();
     }
 
@@ -113,8 +110,8 @@ public class Partida {
         this.ganador = -1;
         this.tablero = t;
         this.finalizada = 0;
-        this.turnoMax = 59;
-        this.disponibles= new HashSet<Position>();
+        this.turnoMax = 60;
+        this.disponibles= new HashSet<>();
         reglasCasillasDisponibles();
     }
 
@@ -132,13 +129,6 @@ public class Partida {
         return this.modoDeJuego;
     }
 
-    /**
-     * Operacion get del atributo reglas de Partida
-     * @return retorna un array de int con las reglas de la Partida
-     */
-    public int[] getReglasPartida() {
-        return this.reglas;
-    }
 
     /**
      * Operacion get del para saber numero de fichas blancas
@@ -204,22 +194,10 @@ public class Partida {
     }
 
     /**
-     * Operacion set del atributo tablero de Partida
-     * @param t es el tablero a actualizar en Partida
-     */
-    public void setTableroPartida(Tablero t) { this.tablero = t; }
-
-    /**
      * Operacion get del atributo ganador de Partida
      * @return retorna un int que define el ganador
      */
     public int getGanador() {return this.ganador;}
-
-    /**
-     * Operacion get del atributo finalizada de Partida
-     * @return retorna un int que define si la partida ha finalizado
-     */
-    protected int getFinalizada() { return this.finalizada; }
 
     /**
      * Operacion que incrementa el atributo turno de Partida
@@ -326,7 +304,7 @@ public class Partida {
                         }
                     }
                     else{
-                        this.tablero = j2.posicion(tablero, turno);
+                        this.tablero = j2.posicionMaquina(tablero, turno, reglas);
                         incrementarTurnoPartida();
                         if (turno > 0) {
                             reglasCasillasDisponibles();
@@ -339,10 +317,10 @@ public class Partida {
 
                 case 0: //Maquina vs Maquina
                     if (this.turno % 2 == 0) {
-                        this.tablero = j1.posicion(tablero, turno);
+                        this.tablero = j1.posicionMaquina(tablero, turno, reglas);
                     }
                     else{
-                        this.tablero = j2.posicion(tablero, turno);
+                        this.tablero = j2.posicionMaquina(tablero, turno, reglas);
                     }
                     incrementarTurnoPartida();
                     if (turno > 0) {
@@ -518,7 +496,6 @@ public class Partida {
         return this.ganador;
     }
 
-
     /**
      * Operacion que utiliza las reglas de Partida para generar las casillas disponibles
      */
@@ -546,15 +523,6 @@ public class Partida {
             setGanador(2);
         }
     }
-
-
-    /**
-     * Operacion que actualiza el tablero de la partida
-     */
-    public void actualizarTablero() {
-        this.tablero.getTablero();
-    }
-
 
     /**
      * Operacion que imprime por salida estandar el tablero de la partida
@@ -637,6 +605,9 @@ public class Partida {
         return as;
     }
 
+    /**
+     * Operacion que sirve para pasar turno en la Partida
+     */
     public void pasarTurnoPartida() {
         incrementarTurnoPartida();
         reglasCasillasDisponibles();

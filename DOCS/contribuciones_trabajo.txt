@@ -14,11 +14,16 @@ Sergi Bosquet:
 
 	- CtrlPresentacion
 	    - VistaConfigPartida
-	    - VistaTablero
+	    - VistaPartida
 
 Ashish Kshetri:
 	- Tablero
 	- Casilla
+	- Position
+	- Driver Tablero
+
+	- CtrlPresentacion
+	    -VistaCargarBorrar
 
 Sergio Aguado:
 	- DriverDominio
