@@ -67,7 +67,7 @@ public class JugadorMaquina extends Jugador {
 
         Tablero mejorHijo = new Tablero(t.getTablero());
         mejorHijo.setDisponiblesAnterior(t.getDisponiblesAnterior());
-        Set<Tablero> estados_hijos = this.genera_estados(t, turno, reglas);
+        Set<Tablero> estados_hijos = this.genera_estados(t, turno, reglas, depth-1);
         int evaluacion;
         int mineval = 1000;
         int maxeval = -1000;
@@ -124,7 +124,7 @@ public class JugadorMaquina extends Jugador {
         Tablero mejorHijo = new Tablero(t.getTablero());
         mejorHijo.setDisponiblesAnterior(t.getDisponiblesAnterior());
 
-        Set<Tablero> estados_hijos = this.genera_estados(t, turno, reglas);
+        Set<Tablero> estados_hijos = this.genera_estados(t, turno, reglas, depth-1);
         int evaluacion;
         int maxeval = -1000;
         int mineval = 1000;
@@ -195,7 +195,7 @@ public class JugadorMaquina extends Jugador {
      * @param turno es el turno del tablero t
      * @return retorna la lista de estados sucesores de ese tablero, resultantes de cada uno de los posibles movimientos de este
      */
-    public Set<Tablero> genera_estados(Tablero t, int turno, int[] reglas){
+    public Set<Tablero> genera_estados(Tablero t, int turno, int[] reglas, int depth){
 
         Tablero aux;
         Set<Tablero> sucesores = new HashSet<>();
@@ -208,9 +208,12 @@ public class JugadorMaquina extends Jugador {
             aux.setDisponiblesAnterior(t.getDisponiblesAnterior());
 
             aux.actualizarTablero(pos.getX(), pos.getY(), turno, reglas);
-            if(reglas[0] == 1)aux.calcularCasillasDisponiblesVertical(turno+1);
-            if(reglas[1] == 1)aux.calcularCasillasDisponiblesHorizontal(turno+1);
-            if(reglas[2] == 1)aux.calcularCasillasDisponiblesDiagonales(turno+1);
+
+            if(depth > 0){
+                if(reglas[0] == 1)aux.calcularCasillasDisponiblesVertical(turno+1);
+                if(reglas[1] == 1)aux.calcularCasillasDisponiblesHorizontal(turno+1);
+                if(reglas[2] == 1)aux.calcularCasillasDisponiblesDiagonales(turno+1);
+            }
 
             sucesores.add(aux);
         }
