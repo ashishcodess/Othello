@@ -28,7 +28,7 @@ public class JugadorMaquina extends Jugador {
     public JugadorMaquina (int idMaquina) throws Exception{
         super(idMaquina);
         if (idMaquina > 5)throw new MyException(MyException.tipoExcepcion.ID_PERSONA,idMaquina);
-        this.profundidad_MinMax = (idMaquina+1)*2-1;
+        this.profundidad_MinMax = (idMaquina)*2-1;
     }
 
     @Override
@@ -171,7 +171,7 @@ public class JugadorMaquina extends Jugador {
         //Comentad esta parte y descomentad lo otro para poder ejecutar con maquina
 
         Alphabeta ab = new Alphabeta();
-        if(turno%2 == 0)t = valorMaxBlancas(t,turno, ab.getAlpha(), ab.getBeta(), this.get_profundidadMaquina(), reglas);
+        if(turno%2 == 0)t = valorMaxBlancas(t,turno, -1000, 1000, this.get_profundidadMaquina(), reglas);
         else t = valorMaxNegras(t,turno,-100, 100, this.get_profundidadMaquina(), reglas);
         return t;
 

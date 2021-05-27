@@ -40,8 +40,8 @@ public class DriverJugadorMaquina {
                     test_crear_jugadorMaquina(5);
                     break;
                 case 2:
-                    JugadorMaquina prueba = new JugadorMaquina(1);
-                    Alphabeta ab = new Alphabeta();
+                    JugadorMaquina prueba = new JugadorMaquina(2);
+                    System.out.println(prueba.get_profundidadMaquina());
                     for (int i = 0; i < 8; ++i) {
                         String sbuff = new String();
                         for (int j = 0; j < 8; ++j) {
@@ -51,7 +51,7 @@ public class DriverJugadorMaquina {
                     }
                     int[] reglas = {1,1,1};
                     System.out.println("");
-                    t = prueba.valorMaxNegras(t,0, ab.getAlpha(), ab.getBeta(), prueba.get_profundidadMaquina(), reglas);
+                    t = prueba.valorMaxNegras(t,0, -1000, 1000, prueba.get_profundidadMaquina(), reglas);
                     System.out.println("///////////////////Despues de MINIMAX////////////////////////");
                     System.out.println("");
                     for (int i = 0; i < 8; ++i) {
