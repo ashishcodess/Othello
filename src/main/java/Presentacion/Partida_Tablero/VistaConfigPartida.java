@@ -112,6 +112,7 @@ public class VistaConfigPartida {
     }
     /**
      * Metodo para inicializar el comboBox
+     * @return devuelve el combobox del selector de dificultad de la IA
      * */
     private JComboBox<String> inicializar_comboBox() {
         JComboBox<String> combo= new JComboBox<>();
@@ -187,7 +188,9 @@ public class VistaConfigPartida {
     }
 
     /**
-     * Metodo que obtiene la informacion de los comboBox al configurar una Partida*/
+     * Metodo que obtiene la informacion de los comboBox al configurar una Partida
+     * @param e comboBox a consultar la informacion
+     * @return devuelve el identificador de la maquina*/
     private int consultar_info_comboBox(JComboBox<String> e) {
         String s = Objects.requireNonNull(e.getSelectedItem()).toString();
         int id = -1;
@@ -215,7 +218,8 @@ public class VistaConfigPartida {
     }
 
     /**
-     * Metodo para recoger la informacion seleccionada para crear una Partida*/
+     * Metodo para recoger la informacion seleccionada para crear una Partida
+     * @return devuelve un arraylist de enteros con la informacion respecto al configurador de partidas*/
     private ArrayList<Integer> recoger_info_modo_juego() {
         ArrayList<Integer> cosas = new ArrayList<>();
         cosas.add(((verticalCheckBox.isSelected()) ? 1 : 0));
@@ -288,7 +292,8 @@ public class VistaConfigPartida {
         }
     }
     /**
-     * Metodo que gestiona los comboBox al configurar una Partida*/
+     * Metodo que gestiona los comboBox al configurar una Partida
+     * @param i modo de juego seleccionado en el comboBox*/
     private void gestion_ComboBox_uno_ON(int i) {
         IAVsIARadioButton.setSelected(false);
         personaVsIARadioButton.setSelected(false);

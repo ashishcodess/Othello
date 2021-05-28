@@ -48,6 +48,7 @@ public class Tablero {
 
     /**
      * Constructora Tablero (cargando un tablero pasado por parametro)
+     * @param tab tablero
      * */
     public Tablero(int[][] tab) {
         negras = new HashSet<Position>();
@@ -80,6 +81,7 @@ public class Tablero {
 
     /**
      * Constructora Tablero (para caragar de estado ya guardado )
+     * @param tab tablero
      * */
     public Tablero(Casilla[][] tab) {
         negras = new HashSet<Position>();
@@ -111,6 +113,7 @@ public class Tablero {
     }
     /**
      * Inicializar tablero con dos negras y dos blancas ya colocadas
+     * @param tablero tablero
      * */
     public void inicializeTablero(Casilla[][] tablero){
         for(int i = 0 ; i < 8 ; ++i){
@@ -130,6 +133,7 @@ public class Tablero {
     /*Sets y Gets*/
     /**
      * Operacion get del atributo tablero
+     * @return devuelve el tablero
      */
     public Casilla[][] getTablero() {
         return tablero;
@@ -140,6 +144,7 @@ public class Tablero {
      * Operacion que deveulve la casilla
      * @param x  la fila del tablero
      * @param y la columna del tablero
+     * @return devuelve la casilla apuntada por las posiciones X e Y
      */
     public Casilla getCasilla(int x, int y){
         return tablero[x][y];
@@ -149,6 +154,7 @@ public class Tablero {
      * Operacion que dice si la pos es valido
      * @param x  la fila del tablero
      * @param y la columna del tablero
+     * @return devuelve cierto en caso de ser casilla valida
      */
     public boolean isValido(int x, int y){
         if (tablero[x][y].getTipoCasilla() == 1) return true;
@@ -159,6 +165,7 @@ public class Tablero {
      * Operacion que deveulve el tipo de casilla (0 - vacía, 1 - disponible, 2 - negra, 3 - blanca)
      * @param x  la fila del tablero
      * @param y la columna del tablero
+     * @return devuelve el tipo de casilla
      */
     public int getCasilla_tipo(int x, int y){
         return tablero[x][y].getTipoCasilla();
@@ -179,6 +186,7 @@ public class Tablero {
 
     /**
      * Operacion get que devuelva total numero de fichas blancas en el momento
+     * @return devuelve el numero de casillas negras
      */
     public int getNumCasillasBlancas(){
         return blancas.size();
@@ -186,6 +194,7 @@ public class Tablero {
 
     /**
      * Operacion get que devuelva total numero de fichas negras en el momento
+     * @return devuelve el numero de casillas negras
      */
     public int getNumCasillasNegras(){
         return negras.size();
@@ -193,6 +202,7 @@ public class Tablero {
 
     /**
      * Operacion get que devuelva total numero de fichas que están disponibles
+     * @return devuelve el numero de casillas disponibles
      */
     public int getNumCasillasDisponibles(){
         return disponibles.size();
@@ -201,6 +211,7 @@ public class Tablero {
      * Operacion get que devuelva si la posicion esta dentro de la posicion valida de un matriz
      * @param x  la fila del matriz
      * @param y la columna del matriz
+     * @return devuelve TRUE en caso de estar dentro del rango del tablero, caso contrario devuelve FALSE
      */
     public boolean isOk(int x , int y){
         if (x < 0 || x > 7 || y < 0 || y > 7) return false;
@@ -478,6 +489,7 @@ public class Tablero {
      * Funcion para llamar saber si es posible colocar ficha en posicion x , y.
      * @param x  la fila del tablero
      * @param y la columna del tablero
+     * @return devuelve cierto en caso de ser una casilla valida para colocar la ficha, caso contrario devuelve falso
      */
     public boolean es_possible(int x, int y) {
         if (tablero[x][y].getTipoCasilla() == 1) return true;
@@ -737,6 +749,7 @@ public class Tablero {
      * @param turno es el turno donde estamos (turno par = negras , turno impar = blancas)
      * @param x la fila del tablero de donde queremos colocar la ficha
      * @param y la columna del tablero de donde queremos colocar la ficha
+     * @param reglas reglas de la partida
      */
     public void actualizarTablero(int x , int y , int turno, int[] reglas){
         Position[] arr =  new Position[disponibles.size()];
@@ -770,6 +783,7 @@ public class Tablero {
     }
     /**
      * Operaciones get de casillas disponibles
+     * @return  devuelve las el set de casillas disponibles
      */
     public Set<Position> getCasillasDisponibles(){
 
@@ -777,6 +791,7 @@ public class Tablero {
     }
     /**
      * Operaciones get de casillas Negras
+     * @return  devuelve las el set de casillas negras
      */
     public Set<Position> getCasillasNegras(){
 
@@ -784,6 +799,7 @@ public class Tablero {
     }
     /**
      * Operaciones get de casillas blancas
+     * @return  devuelve las el set de casillas blancas
      */
     public Set<Position> getCasillasBlancas(){
 

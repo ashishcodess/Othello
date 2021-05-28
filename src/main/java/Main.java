@@ -1,4 +1,4 @@
-package Presentacion;
+import Presentacion.CtrlPresentacion;
 
 /**Funcion Main del proyecto Othello*/
 public class Main {
