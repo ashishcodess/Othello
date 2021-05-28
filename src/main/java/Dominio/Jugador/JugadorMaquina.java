@@ -168,25 +168,24 @@ public class JugadorMaquina extends Jugador {
     @Override
     public Tablero posicionMaquina(Tablero t, int turno, int[] reglas){
 
-        //Comentad esta parte y descomentad lo otro para poder ejecutar con maquina
+        if(this.getID()==0){
+            Set<Position> disponibles = t.getCasillasDisponibles();
+            int x = 0;
+            int y = 0;
+            for(Position aux : disponibles){
+                x = aux.getX();
+                y = aux.getY();
+                break;
+            }
+            System.out.println("Máquina mueve a " + x + ", " + y);
+            t.actualizarTablero(x, y, turno, reglas);
+            return t;
+        }
 
-        Alphabeta ab = new Alphabeta();
         if(turno%2 == 0)t = valorMaxBlancas(t,turno, -1000, 1000, this.get_profundidadMaquina(), reglas);
         else t = valorMaxNegras(t,turno,-100, 100, this.get_profundidadMaquina(), reglas);
         return t;
 
-
-        /*Set<Position> disponibles = t.getCasillasDisponibles();
-        int x = 0;
-        int y = 0;
-        for(Position aux : disponibles){
-             x = aux.getX();
-             y = aux.getY();
-             break;
-        }
-        System.out.println("Máquina mueve a " + x + ", " + y);
-        t.actualizarTablero(x, y, turno);
-        return t;*/
     }
 
     /**

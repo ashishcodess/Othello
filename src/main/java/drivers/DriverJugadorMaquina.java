@@ -1,6 +1,5 @@
 package drivers;
 
-import Dominio.Jugador.Alphabeta;
 import Dominio.Jugador.JugadorMaquina;
 import Dominio.Partida.Tablero;
 import MyException.MyException;
@@ -37,7 +36,7 @@ public class DriverJugadorMaquina {
                     b = false;
                     break;
                 case 1:
-                    test_crear_jugadorMaquina(5);
+                    test_crear_jugadorMaquina(0);
                     break;
                 case 2:
                     JugadorMaquina prueba = new JugadorMaquina(2);
