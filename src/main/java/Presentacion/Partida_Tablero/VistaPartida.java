@@ -47,8 +47,10 @@ public class VistaPartida {
     private final JMenuItem menuitemFinalizar = new JMenuItem("Finalizar Partida (Volver al menu Principal)");
 
     private boolean pasar_turno;
+
     /**
      * Metodo para cambiar los labels de los botones
+     * @param t tipo de tablero
      * */
     private void cambiar_info_labels_botones(CtrlPresentacion.tipoTablero t) {
         menuitemFinalizar.setText("Finalizar (Volver al menu Principal)");
@@ -131,6 +133,7 @@ public class VistaPartida {
     /**
      *Metodo hacerVisible
      * @param b si TRUE entonces el frame sera visible, caso contrario estara desactivado
+     * @param t tipo de estado de tablero [PARTIDA o TABLERO]
      * */
     public void hacerVisible(boolean b,CtrlPresentacion.tipoTablero t) {
         frameVista.pack();
@@ -271,7 +274,8 @@ public class VistaPartida {
         if (b) iCtrlPresentacion.hacerVisibleVista(CtrlPresentacion.vistaActiva.MENU);
     }
     /**
-     * Metodo listener para colocar las fichas en el tablero en una Partida*/
+     * Metodo listener para colocar las fichas en el tablero en una Partida
+     * @param event evento al pulsar en el tablero*/
     public void actionPerformed_botones(ActionEvent event) {
         int x = 0;
         int ganador = -1;
