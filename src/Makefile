@@ -9,7 +9,7 @@ C_MAIN=main/java/Main.class
 
 all:
 	javac --release 11 $(DOM) $(PERSISTENCIA) $(PRESENTACION) $(MAIN)
-	jar cmf Othello.jar files/META-INF/MANIFEST.MF $(C_MAIN) $(C_DOM) $(C_PERSISTENCIA) $(C_PRESENTACION) 
+	jar -cvfm Othello.jar files/META-INF/MANIFEST.MF $(C_MAIN) $(C_DOM) $(C_PERSISTENCIA) $(C_PRESENTACION) 
 
 clean:
 	rm -rf main/java/*.class
