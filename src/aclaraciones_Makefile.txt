@@ -8,3 +8,12 @@ Sergio Aguado:
     necesario y finalmente desde la pestaña de Build->Build Artifacts.. lo he generado).
 
     - Para que funcione con los ficheros de Persitencia requiere hacer una copia completa del directorio y ubicarla en /EXE
+
+    El Makefile dispone de 3 opciones:
+
+        - "make all": Compila las clases, genera el .jar y hace una copia completa del directorio de persitencia (files/) y \
+        lo ubica en /EXE
+
+        - "make copy": hace una copia completa del directorio de persitencia (files/) y lo ubica en /EXE
+
+        - "make clean": limpieza de ficheros .class i borra directorio /EXE
