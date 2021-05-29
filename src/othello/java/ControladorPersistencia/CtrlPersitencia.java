@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 /**Controlador de la capa de Persistencia*/
@@ -50,7 +51,7 @@ public class CtrlPersitencia {
      * Constructora por defecto de CtrlPersistencia
      * */
     public CtrlPersitencia() {
-        this.dirIni = "./src/files/";
+        this.dirIni = comprobar_directorio_trabajo();
         this.dir_partidas = this.dirIni + "partidas/";
         this.dir_usuarios = this.dirIni + "users/";
         this.dir_ranking =  this.dirIni + "ranking/";
@@ -61,8 +62,24 @@ public class CtrlPersitencia {
     }
 
     /**
+     * Metodo comprobar directorio trabajo
+     * (dependiendo de si ejecutamos desde el ejecutable(.jar) o no se determina un directorio u otro)
+     * @return devuelve el directorio correcto para cargar los ficheros de persitencia
+     * */
+    private String comprobar_directorio_trabajo() {
+        String res;
+        File f = new File(System.getProperty("user.dir"));
+        if (System.getProperty("user.dir").contains("EXE")) {
+            res = f.getAbsolutePath() + "/files/";
+        }
+        else res = f.getAbsolutePath() + "/src/files/";
+        return res;
+    }
+
+
+    /**
      * Constructora de CtrlPersistencia
-     * @param s_path es el path personalizado a cargar
+     * @param s_path es el directorio personalizado a cargar
      * */
     public CtrlPersitencia(String s_path) {
         this.dirIni = s_path;
@@ -82,7 +99,6 @@ public class CtrlPersitencia {
         this.idMax_usuario = io.calcularID_Ficheros(dir_usuarios,tipoFichero.USUARIO);
         this.idMax_partida = io.calcularID_Ficheros(dir_partidas,tipoFichero.PARTIDA);
         this.idMax_tablero = io.calcularID_Ficheros(dir_tablero,tipoFichero.TABLERO);
-
     }
 
 

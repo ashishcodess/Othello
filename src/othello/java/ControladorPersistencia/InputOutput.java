@@ -28,15 +28,18 @@ public class InputOutput {
         String s2 = "index.txt";
         int maxID = 0;
         String[] res;
-        for (String value : s) {
-            res = value.split(".txt");
-            if (a.equals(tipoFichero.USUARIO)) res = value.split("_");
-            if (!value.equals(s2)) {
-                int i_aux = Integer.parseInt(res[0]);
-                if (maxID < i_aux) maxID = i_aux;
+        if (s != null) {
+            for (String value : s) {
+                res = value.split(".txt");
+                if (a.equals(tipoFichero.USUARIO)) res = value.split("_");
+                if (!value.equals(s2)) {
+                    int i_aux = Integer.parseInt(res[0]);
+                    if (maxID < i_aux) maxID = i_aux;
+                }
             }
+            return (maxID+1);
         }
-        return (maxID+1);
+        return -1;
     }
 
     /**
@@ -203,8 +206,10 @@ public class InputOutput {
         File f = new File(pathDir);
         String[] s = f.list();
         ArrayList<String> res = new ArrayList<>();
-        for (String sAux : s) {
-            if (!sAux.equals("index.txt")) res.add(sAux);
+        if (s != null) {
+            for (String sAux : s) {
+                if (!sAux.equals("index.txt")) res.add(sAux);
+            }
         }
         return res;
     }
