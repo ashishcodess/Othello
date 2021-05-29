@@ -1,3 +1,7 @@
 - files: Directorio de Persitencia (aqui se guardan todos los ficheros generados por el Controlador de Persitencia)
 
-- main: Directorio del proyecto de Java
+- Othello: Directorio del proyecto de Java
+
+- Makefile: Makefile para generar el proyecto
+
+- META-INF: Directorio de informacion para el .jar (contiene manifest.mf)
