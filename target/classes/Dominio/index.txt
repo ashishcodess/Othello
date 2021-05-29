@@ -1,0 +1,29 @@
+Este directorio contiene el conjunto de Clases de toda la capa de Dominio:
+
+- Casilla: Una clase donde definimos los tipos de casillas.
+
+- ElementoRanking: Clase utilizada para guardar la informacion respecto al ranking, en este caso se necesita \
+el ID del Jugador, el nickname del Jugador y seguidamente los contadores de partidas (Ganadas, Perdidas, Empatadas \
+y Totales)
+
+- Jugador: Clase abstracta que representa tanto a Personas como Maquinas, para poder hacer llamadas sin distinguir entre
+ estas en Partida y en el main.
+
+- JugadorMaquina: Subclase de Jugador que representa a la IA en el juego, tiene ID mayor que 0 y menor o igual que 5.
+
+- AlphaBeta: Subclase para almacenar los valores alfa y beta del algoritmo de la IA para asi poder copiarlos por referencia
+en vez de por valor.
+
+- JugadorPersona: Subclase de Jugador que representa a la Persona en el juego, tiene ID entre mayor que 5.
+
+- Partida: Clase utilizada para crear partidas y gestionar los diferentes turnos y movimientos de los jugadores durante toda la partida,
+            además de obtener, al finalizar la partida, el resultado.
+
+- Position: Una clase para definir las cordenadas (x , y).
+
+- Ranking: Clase utilizada para guardar el conjunto (en este caso un ArrayList) de elementos de tipo ElementoRanking
+
+-Tablero: Una clase donde podemos saber en que posicíon están las fichas negras , blancas etc. \
+    También podemos saber cuales son los casillas permitidas(disponibles) para colocar las fichas.\
+    Una vez que el jugador en una partida dice colocar la ficha en uno de los posiciones disponibles\
+    el tablero se actualiza modificando todas las fichas que serìan afectado como consecuencia del colocamiento.
