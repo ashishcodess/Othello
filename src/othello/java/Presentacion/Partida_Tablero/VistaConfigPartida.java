@@ -116,7 +116,7 @@ public class VistaConfigPartida {
      * */
     private JComboBox<String> inicializar_comboBox() {
         JComboBox<String> combo= new JComboBox<>();
-        for (String s : Arrays.asList("facil_1", "facil_2", "normal_1", "normal_2", "dificil_1","dificil_2")) {
+        for (String s : Arrays.asList("facil_1", "facil_2", "normal_1", "normal_2", "dificil")) {
             combo.addItem(s);
         }
         return combo;
@@ -207,11 +207,8 @@ public class VistaConfigPartida {
             case "normal_2":
                 id = 3;
                 break;
-            case "dificil_1":
+            case "dificil":
                 id = 4;
-                break;
-            case "dificil_2":
-                id = 5;
                 break;
         }
         return id;
