@@ -177,13 +177,13 @@ public class JugadorMaquina extends Jugador {
                 y = aux.getY();
                 break;
             }
-            System.out.println("Máquina mueve a " + x + ", " + y);
+            //System.out.println("Máquina mueve a " + x + ", " + y);
             t.actualizarTablero(x, y, turno, reglas);
-            return t;
         }
-
-        if(turno%2 == 0)t = valorMaxBlancas(t,turno, -1000, 1000, this.get_profundidadMaquina(), reglas);
-        else t = valorMaxNegras(t,turno,-100, 100, this.get_profundidadMaquina(), reglas);
+        else{
+            if(turno%2 == 0)t = valorMaxBlancas(t,turno, -1000, 1000, this.get_profundidadMaquina(), reglas);
+            else t = valorMaxNegras(t,turno,-100, 100, this.get_profundidadMaquina(), reglas);
+        }
         return t;
 
     }
