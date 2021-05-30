@@ -1,0 +1,7 @@
+Este directorio contiene el conjunto de Packages de toda la capa de Dominio:
+
+- Menus: Subpackage relacionado con las Vistas de los menus del Juego.
+
+- Ranking: Subpackage relacionado con la vista relacionada con el Ranking.
+
+- Partida_Tablero: Subpackage relacionado con el Tablero, config. de partida y la Partida.

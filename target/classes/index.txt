@@ -1,0 +1,13 @@
+- ControladorPersistencia: Directorio del Package del conjunto de clases de la capa de Persistencia
+
+- Dominio: Directorio del conjunto de Clases de toda la capa de Dominio
+
+- drivers: Directorio del conjunto de Drivers para las pruebas del proyecto
+
+- MyException: Directorio del Package de la clase MyException para generar excepciones de manera personalizada
+
+- Presentacion: Directorio del Package de la capa de Presentacion
+
+- Main: Clase principal (es donde se inicia se ejecuta el juego)
+
+

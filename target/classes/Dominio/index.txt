@@ -1,0 +1,7 @@
+Este directorio contiene el conjunto de Packages de toda la capa de Dominio:
+
+- Jugador: Subpackage relacionado con el "Jugador".
+
+- Ranking: Subpackage relacionado con el "Ranking".
+
+- Partida: Subpackage relacionado con la "Partida".
