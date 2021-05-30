@@ -5,7 +5,6 @@ import Dominio.Partida.Partida;
 import Dominio.Partida.Tablero;
 import Dominio.Ranking.Logros;
 import Dominio.Ranking.Ranking;
-import MyException.MyException;
 
 import java.util.ArrayList;
 
@@ -477,40 +476,12 @@ public class CtrlDominio {
         catch (Exception ignored) {}
         return b;
     }
-    /*
-    public void iniciarPartida(int modo, int[] r, int idj1, int idj2, String nickj1, String nickj2) {
-        try {
-            int idPartida = cp.ctrl_get_nuevo_ID_Partida();
-            if (modo < 0 || modo > 2) throw new MyException("Modo de juego incorrecto");
-            int id1 = id_1; //por defecto anfitrion como J1
-            int id2 = -1;
-            String nick1 = nickname; //por defecto anfitrion como J1
-            String nick2 = "";
-            int turnoPartida = 0;
 
-            //Seleccionar informacion del contrincante
-            switch (modo) {
-                case 0: //Maquina vs Maquina
-                    id1 = idj1; nick1 = "";
-                    id2 = idj2; nick2 = "";
-                    break;
-
-                case 1: //Persona(siempre negras) vs Maquina
-                    id1 = idj1; nick1 = nickj1;
-                    id2 = idj2; nick2 = "";
-                    break;
-
-                case 2: //Persona vs Persona
-                    id1 = idj1; nick1 = nickj1;
-                    id2 = idj2; nick2 = nickj2;
-                    break;
-            }
-            Tablero t = new Tablero();
-            partida_activa = new Partida(idPartida,modo,r,turnoPartida,id1,nick1,id2,nick2,t);
-        }
-        catch (Exception ignored) { }
-    }*/
-
+    /** Metodo Ronda Partida (desde Dominio)
+     * @param x posicion x
+     * @param y posicion y
+     * @return el estado del juego, caso de finalizar la partida devuelve quien es el ganador (mediante un numero entero)
+     */
     public int dominioRondaPartida(int x, int y) {
         int modo = partida_activa.getModoDeJuegoPartida();
         int res = -1;
@@ -537,25 +508,6 @@ public class CtrlDominio {
         return res;
     }
 
-    /*
-    public int dominioRondaPartidaPvP(int x, int y) {
-        int res = partida_activa.rondaPartidaPvP(x, y);
-        if (res >= 0 && res < 3) { //tenemos un ganador
-            int idPartida = partida_activa.getIdPartida();
-            if (idPartida > 0) actualizar_ranking(res);
-        }
-        return res;
-    }
-
-    public int dominioRondaPartidaPvIA(int x, int y) {
-        int res = partida_activa.rondaPartidaPvIA(x, y);
-        if (res >= 0 && res < 3) { //tenemos un ganador
-            int idPartida = partida_activa.getIdPartida();
-            if (idPartida > 0) actualizar_ranking(res);
-        }
-        return res;
-    }
-    */
 
     public int dominioRondaPartidaIAvIA() {
         int res = partida_activa.rondaPartidaIAvIA();
@@ -566,9 +518,14 @@ public class CtrlDominio {
         return res;
     }
 
+    /**
+     * Metodo Obtener modo de juego
+     * @return devuelve el modo de juego de la partida actual (partida activa)
+     * */
     public int dominioObtenerModoDeJuegoPartida() {
         return partida_activa.getModoDeJuegoPartida();
     }
+
     /**
      * Metodo consultar total numero de las fichas negras
      * @return devuelve el numero de fichas negras
@@ -601,6 +558,10 @@ public class CtrlDominio {
         partida_activa.pasarTurnoPartida();
     }
 
+    /**
+     * Metodo Obtener turno partida (partida activa)
+     * @return devuelve el turno de la partida activa
+     * */
     public int dominioObtenerTurnoPartida() { return partida_activa.getTurnoPartida(); }
 }
 
