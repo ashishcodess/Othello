@@ -64,9 +64,7 @@ public class DriverRanking {
                 System.out.println();
             }
         }
-        catch (Exception e) {
-            System.out.println("Fallo en main de DriverRanking");
-        }
+        catch (Exception ignored) {}
     }
 
 }

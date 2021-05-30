@@ -1,0 +1,17 @@
+En este directorio se muestra toda la información sobre los diagramas conceptuales de datos:
+
+- Arquitectura_3_Capas.uml : Diagrama UML donde se verifica el correcto uso de la arquitectura en 3 capas.
+
+- Diagrama_Arquitectura_3_capas.pdf: Documento PDF con el diagrama de la arquitectura en 3 capas.
+
+- Capa_Dominio.uml: Diagrama UML de la capa de Dominio.
+
+- Diagrama_Capa_Dominio.pdf: Documento PDF con el diagrama de la Capa de Dominio.
+
+- Capa_Persistencia.uml: Diagrama UML de la capa de Persistencia
+
+- Diagrama_Capa_Persistencia.pdf: Documento PDF con el diagrama de la Capa de Persistencia
+
+- Capa_Presentacion.uml: Diagrama UML de la capa de Presentación
+
+- Diagrama_Capa_Presentacion.pdf: Documento PDF con el diagrama de la Capa de Presentación

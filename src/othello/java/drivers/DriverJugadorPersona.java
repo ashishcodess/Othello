@@ -51,9 +51,6 @@ public class DriverJugadorPersona {
                 System.out.println();
             }
         }
-        catch (Exception e) {
-            System.out.println("Error en main de DriverJugadorPersona");
-        }
-
+        catch (Exception ignored) { }
     }
 }

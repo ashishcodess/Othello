@@ -1,4 +1,4 @@
-Sergio Aguado:
+Sergio Aguado Cobos:
 
     - No he conseguido hacer que funcione correctamente el linkaje del Manifest.mf y las clases con el .jar (desde el Makefile), \
     al intentar lanzar el comando: "java -jar Othello.jar" con el .jar generado por el Makefile me salta el error que no ha detectado \

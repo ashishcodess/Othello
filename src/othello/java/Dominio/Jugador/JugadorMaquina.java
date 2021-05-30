@@ -24,6 +24,7 @@ public class JugadorMaquina extends Jugador {
     /**
      * Constructora JugadorMaquina (si tener en cuenta la profundidad del arbol de MinMax)
      * @param idMaquina (id de Jugador = idMaquina)
+     * @throws Exception en caso de que idMaquina pertenezca a una Persona (id mayor que 5)
      * */
     public JugadorMaquina (int idMaquina) throws Exception{
         super(idMaquina);
@@ -57,7 +58,8 @@ public class JugadorMaquina extends Jugador {
      * @param alpha parámetro alfa del algoritmo
      * @param beta parámetro beta del algoritmo
      * @param depth profundidad que nos falta por recorrer
-     * devuelve el tablero(estado hijo) resultante de haber ejecutado el turno que nos es más conveniente
+     * @param reglas reglas de la partida
+     * @return devuelve el tablero(estado hijo) resultante de haber ejecutado el turno que nos es más conveniente
      */
     public Tablero valorMaxNegras(Tablero t, int turno, int alpha, int beta, int depth, int[] reglas){
 
@@ -113,7 +115,8 @@ public class JugadorMaquina extends Jugador {
      * @param alpha parámetro alfa del algoritmo
      * @param beta parámetro beta del algoritmo
      * @param depth profundidad que nos falta por recorrer
-     * devuelve el tablero(estado hijo) resultante de haber ejecutado el turno que nos es más conveniente
+     * @param reglas reglas de la partida
+     * @return devuelve el tablero(estado hijo) resultante de haber ejecutado el turno que nos es más conveniente
      */
     public Tablero valorMaxBlancas(Tablero t, int turno, int alpha, int beta, int depth, int[] reglas){
 
@@ -192,6 +195,8 @@ public class JugadorMaquina extends Jugador {
      * Función que genera los estados sucesores del tablero que recibe como parámetro
      * @param t es el tablero a partir del cual generamos su lista de estados sucesores
      * @param turno es el turno del tablero t
+     * @param reglas reglas de la partida
+     * @param depth profundidad de la IA
      * @return retorna la lista de estados sucesores de ese tablero, resultantes de cada uno de los posibles movimientos de este
      */
     public Set<Tablero> genera_estados(Tablero t, int turno, int[] reglas, int depth){

@@ -145,7 +145,7 @@ DriverDominio {
                         ranking.incrementar_ganadas_perdidas(id1,nick1,id2,nick2,Ranking.tipoGanador.EMPATE);
                         break;
                 }
-                cp.ctrl_exportar_ranking(ranking.toArrayList(),"ranking.txt");
+                cp.ctrl_exportar_ranking(ranking.toArrayList(),f);
             }
         }
         catch (Exception e) {
@@ -444,7 +444,6 @@ DriverDominio {
         }
         catch (Exception e) {
             System.out.println("Error al ejecutar partida (crear Tablero)");
-            //System.out.println(e);
         }
     }
 
@@ -599,9 +598,7 @@ DriverDominio {
             }
             return new Partida(idPartida,modo,reglas,turnoPartida,id1,nick1,id2,nick2,t);
         }
-        catch (Exception e) {
-            //System.out.println(e);
-        }
+        catch (Exception ignored) {}
         return null;
     }
 
@@ -777,8 +774,6 @@ DriverDominio {
             }
             cp.ctrl_exportar_ranking(ranking.toArrayList(),"ranking.txt"); //exportar ranking antes de salir del programa
         }
-        catch (Exception e) {
-            //System.out.println(e);
-        }
+        catch (Exception ignored) {}
     }
 }

@@ -8,4 +8,6 @@
 
 - Presentacion: Directorio del Package de la capa de Presentacion
 
+- Main: Clase principal (es donde se inicia se ejecuta el juego)
+
 

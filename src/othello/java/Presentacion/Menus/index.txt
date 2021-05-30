@@ -1,0 +1,7 @@
+En este directorio se ubica lo relacionado con las vistas relacionadas con los menus del juego:
+
+- VistaLogin: Vista donde el usuario tiene la opcion de registrarse como un nuevo usuario o de hacer login.
+
+- VistaMenu: Vista del menu principal del juego.
+
+- VistaCreditos: Vista con la informacion de los integrantes de este proyecto.

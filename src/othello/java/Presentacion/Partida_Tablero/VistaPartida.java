@@ -287,15 +287,7 @@ public class VistaPartida {
                 if (event.getSource() == jButton) {
                     x = x-1;
                     y = y-1;
-
                     ganador = iCtrlPresentacion.presentacionRondaPartida(x, y);
-
-                    /*int modoDeJuego = iCtrlPresentacion.presentacionObtenerModoDeJuegoPartida();
-                    if (modoDeJuego == 2) ganador = iCtrlPresentacion.presentacionRondaPartidaPvP(x, y);
-                    if (modoDeJuego == 1) {
-                        ganador = iCtrlPresentacion.presentacionRondaPartidaPvIA(x, y);
-                        ganador = iCtrlPresentacion.presentacionRondaPartidaPvIA(x, y);
-                    }*/
                 }
                 //recargar_tablero();
             }
