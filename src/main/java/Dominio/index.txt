@@ -11,9 +11,6 @@ y Totales)
 
 - JugadorMaquina: Subclase de Jugador que representa a la IA en el juego, tiene ID mayor que 0 y menor o igual que 5.
 
-- AlphaBeta: Subclase para almacenar los valores alfa y beta del algoritmo de la IA para asi poder copiarlos por referencia
-en vez de por valor.
-
 - JugadorPersona: Subclase de Jugador que representa a la Persona en el juego, tiene ID entre mayor que 5.
 
 - Partida: Clase utilizada para crear partidas y gestionar los diferentes turnos y movimientos de los jugadores durante toda la partida,

@@ -36,8 +36,6 @@ public class JugadorMaquina extends Jugador {
         return "";
     }
 
-    /*Sets y Gets*/
-
     /**
      * Operacion get del atributo ID
      * @return  devuelve el ID de Jugador
@@ -61,9 +59,7 @@ public class JugadorMaquina extends Jugador {
      */
     public Tablero valorMaxNegras(Tablero t, int turno, int alpha, int beta, int depth, int[] reglas){
 
-        if(depth == 0 || t.finalizada()){
-            return t;
-        }
+        if(depth == 0 || t.finalizada())return t;
 
         Tablero mejorHijo = new Tablero(t.getTablero());
         mejorHijo.setDisponiblesAnterior(t.getDisponiblesAnterior());
@@ -90,19 +86,11 @@ public class JugadorMaquina extends Jugador {
                     mejorHijo = new Tablero(aux.getTablero());
                     mejorHijo.setDisponiblesAnterior(aux.getDisponiblesAnterior());
                     if(beta > evaluacion)beta = evaluacion;
-                    //mejorHijo.printTablero();
-                    //System.out.println("Valor heurístico "+mejorHijo.getHeuristicValueNegras());
-                    //System.out.println("turno: "+turno+" maxeval(turno par): "+maxeval+" mineval(turno impar): "+mineval);
-                    //System.out.println("");
                 }
             }
 
             if(beta<=alpha)break;
         }
-        //mejorHijo.printTablero();
-        //System.out.println("Valor heurístico "+mejorHijo.getHeuristicValueNegras());
-        //System.out.println("turno: "+turno+" maxeval(turno par): "+maxeval+" mineval(turno impar): "+mineval);
-        //System.out.println("");
         return mejorHijo;
     }
 
@@ -117,9 +105,7 @@ public class JugadorMaquina extends Jugador {
      */
     public Tablero valorMaxBlancas(Tablero t, int turno, int alpha, int beta, int depth, int[] reglas){
 
-        if(depth == 0 || t.finalizada()){
-            return t;
-        }
+        if(depth == 0 || t.finalizada())return t;
 
         Tablero mejorHijo = new Tablero(t.getTablero());
         mejorHijo.setDisponiblesAnterior(t.getDisponiblesAnterior());
