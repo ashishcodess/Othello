@@ -1,9 +1,0 @@
-Este directorio contiene el conjunto de Clases de el package de "Ranking":
-
-- ElementoRanking: Clase utilizada para guardar la informacion respecto al ranking, en este caso se necesita \
-el ID del Jugador, el nickname del Jugador y seguidamente los contadores de partidas (Ganadas, Perdidas, Empatadas \
-y Totales)
-
-- Ranking: Clase utilizada para guardar el conjunto (en este caso un ArrayList) de elementos de tipo ElementoRanking
-
-- Logros: Clase utilizada para guardar toda la informacion relacionada con los logros del juego.

@@ -1,8 +1,0 @@
-Este directorio contiene el conjunto de Clases de el package de "Jugador":
-
-- Jugador: Clase abstracta que representa tanto a Personas como Maquinas, para poder hacer llamadas sin distinguir entre
- estas en Partida y en el main.
-
-- JugadorMaquina: Subclase de Jugador que representa a la IA en el juego, tiene ID mayor que 0 y menor o igual que 5.
-
-- JugadorPersona: Subclase de Jugador que representa a la Persona en el juego, tiene ID entre mayor que 5.
