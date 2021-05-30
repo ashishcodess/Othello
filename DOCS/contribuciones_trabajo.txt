@@ -36,7 +36,6 @@ Sergio Aguado:
 	- ControladorPersitencia
 	    - CtrlPersitencia + DriverPersitencia
 	    - InputOutput
-
 	- CtrlPresentacion
 	    - VistaLogin
 	    - VistaMenu
@@ -44,3 +43,4 @@ Sergio Aguado:
 	    - VistaCreditos
 	    - VistaCargarBorrar
 	    - VistaGanador
+	- Makefile

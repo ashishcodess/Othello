@@ -1,0 +1,13 @@
+- fichas: Directorio donde se almacena las imagenes para las fichas del Controlador de Presentacion
+
+- partidas: Directorio donde se almacenan los ficheros de Partidas generadas por el Controlador de Persistencia
+
+- ranking: Directorio donde se almacenan los ficheros del Ranking generadas por el Controlador de Persistencia
+
+- users: Directorio donde se almacenan los ficheros de los Usuarios generadas por el Controlador \
+de Persistencia (lo que lo hemos denominado a los usuarios registrados)
+
+- tableros: Directorio donde se almacenan los ficheros de los tableros generados por el Controlador de Persistencia
+
+
+

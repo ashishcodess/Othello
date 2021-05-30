@@ -1,0 +1,19 @@
+Sergio Aguado Cobos:
+
+    - No he conseguido hacer que funcione correctamente el linkaje del Manifest.mf y las clases con el .jar (desde el Makefile), \
+    al intentar lanzar el comando: "java -jar Othello.jar" con el .jar generado por el Makefile me salta el error que no ha detectado \
+    la clase principal (en este caso Main) que es la que esta indicada en el manifest.mf para cargar.
+
+    - Para generar el .jar he utilizado el propi IntelliJ (he configurado en la pestaña de File->Project Structure->Artifacts con lo \
+    necesario y finalmente desde la pestaña de Build->Build Artifacts.. lo he generado).
+
+    - Para que funcione con los ficheros de Persitencia requiere hacer una copia completa del directorio y ubicarla en /EXE
+
+    El Makefile dispone de 3 opciones:
+
+        - "make all": Compila las clases, genera el .jar y hace una copia completa del directorio de persitencia (files/) y \
+        lo ubica en /EXE
+
+        - "make copy": hace una copia completa del directorio de persitencia (files/) y lo ubica en /EXE
+
+        - "make clean": limpieza de ficheros .class i borra directorio /EXE

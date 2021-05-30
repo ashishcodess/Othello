@@ -1,0 +1,4 @@
+En este directorio se ubica lo relacionado con la Vista del "Ranking":
+
+-VistaRanking: Vista con el Ranking y los logros del juego.
+

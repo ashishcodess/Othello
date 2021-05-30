@@ -1,28 +1,49 @@
-DOM=main/java/Dominio/*.java main/java/Dominio/Jugador/*.java main/java/Dominio/Partida/*.java main/java/Dominio/Ranking/*.java
-PERSISTENCIA=main/java/ControladorPersistencia/*.java main/java/MyException/*.java
-PRESENTACION=main/java/Presentacion/*.java main/java/Presentacion/Menus/*.java main/java/Presentacion/Partida_Tablero/*.java main/java/Presentacion/Ranking/*.java
-MAIN=main/java/Main/*.java
-C_DOM=main/java/Dominio/*.class main/java/Dominio/Jugador/*.class main/java/Dominio/Partida/*.class main/java/Dominio/Ranking/*.class
-C_PERSISTENCIA=main/java/ControladorPersistencia/*.class main/java/MyException/*.class
-C_PRESENTACION=main/java/Presentacion/*.class main/java/Presentacion/Menus/*.class main/java/Presentacion/Partida_Tablero/*.class main/java/Presentacion/Ranking/*.class
-C_MAIN=main/java/Main/*.java
-MANIFEST=files/META-INF/MANIFEST.MF
+DOM=othello/java/Dominio/*.java othello/java/Dominio/Jugador/*.java othello/java/Dominio/Partida/*.java othello/java/Dominio/Ranking/*.java
+PERSISTENCIA=othello/java/ControladorPersistencia/*.java othello/java/MyException/*.java
+PRESENTACION=othello/java/Presentacion/*.java othello/java/Presentacion/Menus/*.java othello/java/Presentacion/Partida_Tablero/*.java othello/java/Presentacion/Ranking/*.java
+MAIN=othello/java/Main.java
+C_DOM=othello/java/Dominio/*.class othello/java/Dominio/Jugador/*.class othello/java/Dominio/Partida/*.class othello/java/Dominio/Ranking/*.class
+C_PERSISTENCIA=othello/java/ControladorPersistencia/*.class othello/java/MyException/*.class
+C_PRESENTACION=othello/java/Presentacion/*.class othello/java/Presentacion/Menus/*.class othello/java/Presentacion/Partida_Tablero/*.class othello/java/Presentacion/Ranking/*.class
+C_MAIN=othello/java/Main.class
+MANIFEST=META-INF/MANIFEST.MF
 
 all:
 	javac --release 11 $(DOM) $(PERSISTENCIA) $(PRESENTACION) $(MAIN)
-	jar -cvfm Othello.jar $(MANIFEST) $(C_MAIN) $(C_DOM) $(C_PERSISTENCIA) $(C_PRESENTACION) 
+	jar -cvfm Othello.jar $(MANIFEST) $(C_MAIN) $(C_DOM) $(C_PERSISTENCIA) $(C_PRESENTACION)
+	mkdir -p ../EXE
+	mkdir -p ../EXE/files
+	mkdir -p ../EXE/files/fichas
+	mkdir -p ../EXE/files/partidas
+	mkdir -p ../EXE/files/ranking
+	mkdir -p ../EXE/files/tableros
+	mkdir -p ../EXE/files/users
+	cp -r files/* ../EXE/files/
+	mv Othello.jar ../EXE/
+
+copy:
+	rm -rf ../EXE
+	mkdir -p ../EXE
+	mkdir -p ../EXE/files
+	mkdir -p ../EXE/files/fichas
+	mkdir -p ../EXE/files/partidas
+	mkdir -p ../EXE/files/ranking
+	mkdir -p ../EXE/files/tableros
+	mkdir -p ../EXE/files/users
+	cp -r files/* ../EXE/files/
 
 clean:
-	rm -rf *.jar
-	rm -rf main/java/*.class
-	rm -rf main/java/MyException/*.class
-	rm -rf main/java/ControladorPersistencia/*.class
-	rm -rf main/java/Dominio/*.class
-	rm -rf main/java/Dominio/Jugador/*.class
-	rm -rf main/java/Dominio/Partida/*.class
-	rm -rf main/java/Dominio/Ranking/*.class
-	rm -rf main/java/Presentacion/*.class
-	rm -rf main/java/Presentacion/Menus/*.class
-	rm -rf main/java/Presentacion/Partida_Tablero/*.class
-	rm -rf main/java/Presentacion/Ranking/*.class
+	rm -rf ../EXE
+	rm -rf ../EXE/*.jar
+	rm -rf othello/java/*.class
+	rm -rf othello/java/MyException/*.class
+	rm -rf othello/java/ControladorPersistencia/*.class
+	rm -rf othello/java/Dominio/*.class
+	rm -rf othello/java/Dominio/Jugador/*.class
+	rm -rf othello/java/Dominio/Partida/*.class
+	rm -rf othello/java/Dominio/Ranking/*.class
+	rm -rf othello/java/Presentacion/*.class
+	rm -rf othello/java/Presentacion/Menus/*.class
+	rm -rf othello/java/Presentacion/Partida_Tablero/*.class
+	rm -rf othello/java/Presentacion/Ranking/*.class
 	

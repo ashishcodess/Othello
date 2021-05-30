@@ -3,161 +3,152 @@
   <ID>JAVA</ID>
   <OriginalElement>Dominio.CtrlDominio</OriginalElement>
   <nodes>
-    <node x="408.16666666666663" y="1742.0">Dominio.Jugador.JugadorPersona</node>
-    <node x="1.6666666666666288" y="0.0">Dominio.Partida.Position</node>
-    <node x="728.7240990990992" y="3125.0">Dominio.CtrlDominio</node>
-    <node x="51.16666666666663" y="1230.0">Dominio.Jugador.Alphabeta</node>
-    <node x="1175.9791666666665" y="1621.0">Dominio.Ranking.ElementoRanking</node>
-    <node x="723.3488577863579" y="11.0">Dominio.Partida.Casilla</node>
-    <node x="748.9791666666666" y="1445.0">Dominio.Ranking.Logros</node>
-    <node x="315.703265765766" y="2252.0">Dominio.Partida.Partida</node>
-    <node x="227.66666666666663" y="1230.0">Dominio.Jugador.Jugador</node>
-    <node x="943.0974099099101" y="2395.0">Dominio.Ranking.Ranking</node>
-    <node x="30.42117117117141" y="1698.0">Dominio.Jugador.JugadorMaquina</node>
-    <node x="498.09885778635794" y="181.0">Dominio.Partida.Tablero</node>
+    <node x="58.5" y="925.0">Dominio.Jugador.JugadorPersona</node>
+    <node x="294.9346064814815" y="1746.0">Dominio.CtrlDominio</node>
+    <node x="311.9690779320987" y="0.0">Dominio.Partida.Position</node>
+    <node x="628.5" y="870.0">Dominio.Ranking.ElementoRanking</node>
+    <node x="11.124421296296305" y="11.0">Dominio.Partida.Casilla</node>
+    <node x="450.5" y="705.0">Dominio.Ranking.Logros</node>
+    <node x="152.86329089506165" y="579.0">Dominio.Jugador.Jugador</node>
+    <node x="179.84085648148152" y="1269.0">Dominio.Partida.Partida</node>
+    <node x="518.9107445987654" y="1434.5">Dominio.Ranking.Ranking</node>
+    <node x="239.5" y="903.0">Dominio.Jugador.JugadorMaquina</node>
+    <node x="11.457754629629619" y="136.0">Dominio.Partida.Tablero</node>
   </nodes>
   <notes />
   <edges>
     <edge source="Dominio.CtrlDominio" target="Dominio.Partida.Partida">
-      <point x="-149.1875" y="-511.5" />
-      <point x="750.0365990990992" y="3105.0" />
-      <point x="388.203265765766" y="3105.0" />
-      <point x="-72.5" y="401.5" />
+      <point x="-10.125" y="-104.0" />
+      <point x="365.8096064814815" y="1696.0" />
+      <point x="320.0908564814815" y="1696.0" />
+      <point x="46.74999999999997" y="203.5" />
     </edge>
     <edge source="Dominio.Partida.Partida" target="Dominio.Jugador.Jugador">
-      <point x="-18.125000000000057" y="-401.5" />
-      <point x="442.578265765766" y="2202.0" />
-      <point x="397.66666666666663" y="2202.0" />
-      <point x="0.0" y="82.5" />
-    </edge>
-    <edge source="Dominio.Partida.Partida" target="Dominio.Jugador.JugadorPersona">
-      <point x="18.124999999999943" y="-401.5" />
-      <point x="478.828265765766" y="2202.0" />
-      <point x="547.1666666666666" y="2202.0" />
-      <point x="0.0" y="71.5" />
+      <point x="-11.687500000000028" y="-203.5" />
+      <point x="261.6533564814815" y="1219.0" />
+      <point x="229.0" y="1219.0" />
+      <point x="229.0" y="680.0" />
+      <point x="215.86329089506165" y="680.0" />
+      <point x="0.0" y="38.0" />
     </edge>
     <edge source="Dominio.Ranking.Ranking" target="Dominio.Ranking.ElementoRanking">
-      <point x="35.5" y="-258.5" />
-      <point x="1191.59740990991" y="2232.0" />
-      <point x="1217.1458333333333" y="2232.0" />
-      <point x="-82.33333333333337" y="192.5" />
+      <point x="102.91666666666663" y="-38.0" />
+      <point x="745.3274112654319" y="1249.0" />
+      <point x="773.5" y="1249.0" />
+      <point x="58.0" y="82.0" />
+    </edge>
+    <edge source="Dominio.Partida.Partida" target="Dominio.Jugador.JugadorPersona">
+      <point x="-35.06250000000003" y="-203.5" />
+      <point x="238.27835648148152" y="1229.0" />
+      <point x="138.5" y="1229.0" />
+      <point x="0.0" y="27.0" />
     </edge>
     <edge source="Dominio.CtrlDominio" target="Dominio.Partida.Tablero">
-      <point x="-63.9375" y="-511.5" />
-      <point x="835.2865990990992" y="3085.0" />
-      <point x="738.4791666666666" y="3085.0" />
-      <point x="738.4791666666666" y="1210.0" />
-      <point x="840.5988577863578" y="1210.0" />
-      <point x="136.99999999999991" y="489.5" />
-    </edge>
-    <edge source="Dominio.Jugador.JugadorMaquina" target="Dominio.Jugador.Alphabeta">
-      <point x="-95.71428571428572" y="-115.5" />
-      <point x="102.20688545688569" y="1420.0" />
-      <point x="86.91666666666663" y="1420.0" />
-      <point x="-35.75" y="82.5" />
+      <point x="-70.875" y="-104.0" />
+      <point x="305.0596064814815" y="1726.0" />
+      <point x="15.0" y="1726.0" />
+      <point x="15.0" y="519.0" />
+      <point x="23.068865740740733" y="519.0" />
+      <point x="-92.88888888888889" y="181.5" />
     </edge>
     <edge source="Dominio.Partida.Partida" target="Dominio.Jugador.JugadorMaquina">
-      <point x="-54.37500000000006" y="-401.5" />
-      <point x="406.328265765766" y="2212.0" />
-      <point x="197.9211711711714" y="2212.0" />
-      <point x="0.0" y="115.5" />
+      <point x="11.687499999999972" y="-203.5" />
+      <point x="285.0283564814815" y="1219.0" />
+      <point x="323.5" y="1219.0" />
+      <point x="0.0" y="49.0" />
     </edge>
     <edge source="Dominio.Partida.Tablero" target="Dominio.Partida.Casilla">
-      <point x="34.25" y="-489.5" />
-      <point x="737.8488577863579" y="161.0" />
-      <point x="751.0155244530245" y="161.0" />
-      <point x="-55.33333333333337" y="49.5" />
+      <point x="-17.416666666666686" y="-181.5" />
+      <point x="35.0" y="27.0" />
     </edge>
     <edge source="Dominio.Jugador.Jugador" target="Dominio.Partida.Tablero">
-      <point x="0.0" y="-82.5" />
-      <point x="397.66666666666663" y="1210.0" />
-      <point x="612.2655244530246" y="1210.0" />
-      <point x="-91.33333333333337" y="489.5" />
+      <point x="-2.8421709430404007E-14" y="-38.0" />
+      <point x="215.86329089506162" y="559.0" />
+      <point x="139.17997685185185" y="559.0" />
+      <point x="23.22222222222223" y="181.5" />
     </edge>
     <edge source="Dominio.Partida.Tablero" target="Dominio.Partida.Position">
-      <point x="-171.25" y="-489.5" />
-      <point x="532.3488577863579" y="161.0" />
-      <point x="66.99999999999994" y="161.0" />
-      <point x="9.333333333333329" y="60.5" />
+      <point x="87.08333333333331" y="-181.5" />
+      <point x="203.04108796296293" y="116.0" />
+      <point x="358.63574459876537" y="116.0" />
+      <point x="-9.333333333333336" y="38.0" />
     </edge>
     <edge source="Dominio.CtrlDominio" target="Dominio.Ranking.Logros">
-      <point x="-21.3125" y="-511.5" />
-      <point x="877.9115990990992" y="3075.0" />
-      <point x="792.288046975547" y="3075.0" />
-      <point x="792.288046975547" y="2232.0" />
-      <point x="799.8541666666666" y="2232.0" />
-      <point x="-152.625" y="368.5" />
-    </edge>
-    <edge source="Dominio.Jugador.JugadorPersona" target="Dominio.Jugador.Jugador">
-      <point x="0.0" y="-71.5" />
-      <point x="547.1666666666666" y="1420.0" />
-      <point x="533.6666666666666" y="1420.0" />
-      <point x="136.0" y="82.5" />
+      <point x="10.125" y="-104.0" />
+      <point x="386.0596064814815" y="1696.0" />
+      <point x="467.3408564814815" y="1696.0" />
+      <point x="467.3408564814815" y="1249.0" />
+      <point x="470.25" y="1249.0" />
+      <point x="-59.25" y="247.0" />
     </edge>
     <edge source="Dominio.Jugador.JugadorMaquina" target="Dominio.Jugador.Jugador">
-      <point x="143.57142857142856" y="-115.5" />
-      <point x="341.49259974259996" y="1420.0" />
-      <point x="329.66666666666663" y="1420.0" />
-      <point x="-68.0" y="82.5" />
+      <point x="-33.59999999999998" y="-49.0" />
+      <point x="289.90000000000003" y="680.0" />
+      <point x="266.2632908950617" y="680.0" />
+      <point x="50.400000000000006" y="38.0" />
     </edge>
-    <edge source="Dominio.Jugador.JugadorPersona" target="Dominio.Partida.Tablero">
-      <point x="92.66666666666663" y="-71.5" />
-      <point x="639.8333333333333" y="1420.0" />
-      <point x="631.5349099099101" y="1420.0" />
-      <point x="631.5349099099101" y="1210.0" />
-      <point x="657.9321911196912" y="1210.0" />
-      <point x="-45.66666666666674" y="489.5" />
+    <edge source="Dominio.Jugador.JugadorPersona" target="Dominio.Jugador.Jugador">
+      <point x="53.333333333333314" y="-27.0" />
+      <point x="191.83333333333331" y="680.0" />
+      <point x="190.66329089506166" y="680.0" />
+      <point x="-25.19999999999999" y="38.0" />
     </edge>
     <edge source="Dominio.Ranking.Ranking" target="Dominio.Ranking.Logros">
-      <point x="-177.5" y="-258.5" />
-      <point x="978.5974099099101" y="2232.0" />
-      <point x="901.6041666666666" y="2232.0" />
-      <point x="-50.875" y="368.5" />
+      <point x="-20.58333333333337" y="-38.0" />
+      <point x="621.8274112654319" y="1249.0" />
+      <point x="588.75" y="1249.0" />
+      <point x="59.25" y="247.0" />
+    </edge>
+    <edge source="Dominio.Jugador.JugadorPersona" target="Dominio.Partida.Tablero">
+      <point x="-53.33333333333334" y="-27.0" />
+      <point x="85.16666666666666" y="680.0" />
+      <point x="94.36907793209866" y="680.0" />
+      <point x="94.36907793209866" y="559.0" />
+      <point x="115.95775462962962" y="559.0" />
+      <point x="0.0" y="181.5" />
     </edge>
     <edge source="Dominio.Jugador.JugadorMaquina" target="Dominio.Partida.Tablero">
-      <point x="0.0" y="-115.5" />
-      <point x="197.9211711711714" y="1420.0" />
-      <point x="206.16666666666663" y="1420.0" />
-      <point x="206.16666666666663" y="1190.0" />
-      <point x="520.9321911196913" y="1190.0" />
-      <point x="-182.66666666666663" y="489.5" />
+      <point x="1.4210854715202004E-14" y="-49.0" />
+      <point x="323.5" y="680.0" />
+      <point x="342.9299768518519" y="680.0" />
+      <point x="342.9299768518519" y="549.0" />
+      <point x="162.40219907407408" y="549.0" />
+      <point x="46.44444444444446" y="181.5" />
     </edge>
     <edge source="Dominio.CtrlDominio" target="Dominio.Ranking.Ranking">
-      <point x="21.3125" y="-511.5" />
-      <point x="920.5365990990992" y="3075.0" />
-      <point x="1014.0974099099101" y="3075.0" />
-      <point x="-142.0" y="258.5" />
+      <point x="70.875" y="-104.0" />
+      <point x="446.8096064814815" y="1726.0" />
+      <point x="724.7440779320987" y="1726.0" />
+      <point x="82.33333333333326" y="38.0" />
     </edge>
     <edge source="Dominio.Partida.Partida" target="Dominio.Partida.Tablero">
-      <point x="90.62499999999994" y="-401.5" />
-      <point x="551.328265765766" y="2222.0" />
-      <point x="707.6666666666666" y="2222.0" />
-      <point x="707.6666666666666" y="1190.0" />
-      <point x="749.2655244530246" y="1190.0" />
-      <point x="45.66666666666663" y="489.5" />
+      <point x="35.06249999999997" y="-203.5" />
+      <point x="308.4033564814815" y="1229.0" />
+      <point x="418.0" y="1229.0" />
+      <point x="418.0" y="529.0" />
+      <point x="208.84664351851853" y="529.0" />
+      <point x="92.88888888888891" y="181.5" />
     </edge>
     <edge source="Dominio.Partida.Partida" target="Dominio.Partida.Position">
-      <point x="-126.87500000000006" y="-401.5" />
-      <point x="333.828265765766" y="2232.0" />
-      <point x="8.921171171171409" y="2232.0" />
-      <point x="8.921171171171409" y="161.0" />
-      <point x="11.0" y="161.0" />
-      <point x="-46.66666666666663" y="60.5" />
+      <point x="81.81249999999997" y="-203.5" />
+      <point x="355.1533564814815" y="1249.0" />
+      <point x="440.0" y="1249.0" />
+      <point x="440.0" y="106.0" />
+      <point x="414.63574459876537" y="106.0" />
+      <point x="46.66666666666667" y="38.0" />
     </edge>
     <edge source="Dominio.Jugador.JugadorMaquina" target="Dominio.Partida.Position">
-      <point x="-143.57142857142856" y="-115.5" />
-      <point x="54.349742599742854" y="1420.0" />
-      <point x="40.66666666666663" y="1420.0" />
-      <point x="40.66666666666663" y="161.0" />
-      <point x="48.333333333333314" y="161.0" />
-      <point x="-9.333333333333314" y="60.5" />
+      <point x="67.19999999999999" y="-49.0" />
+      <point x="390.7" y="680.0" />
+      <point x="377.302411265432" y="680.0" />
+      <point x="9.333333333333329" y="38.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.40000000000000013" x="1687.083333333333" y="2536.7499999999995" />
+  <settings layout="Hierarchic Group" zoom="0.4371833839918946" x="401.5" y="977.0000000000001" />
   <SelectedNodes />
   <Categories>
     <Category>Fields</Category>
-    <Category>Methods</Category>
+    <Category>Properties</Category>
   </Categories>
   <SCOPE>All</SCOPE>
   <VISIBILITY>private</VISIBILITY>

@@ -13,3 +13,6 @@ este proposito hemos utilizado la herramienta de JAVADOC (acceder desde fichero 
 
 - Documentacion Estructura de datos.pdf : Es un fichero de texto donde comentamos algunas de las estructuras de datos \
 utilizadas para este proyecto
+
+- Manual Usuario.pdf: Guia de usuario sobre como utilizar la interfaz del juego (con todas las opciones de menus \
+ y con guia paso a paso de todos los apartados)

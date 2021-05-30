@@ -1,0 +1,9 @@
+En este directorio se ubica lo relacionado con las vistas relacionadas con el tablero y la partida:
+
+- VistaCargarBorrar: Vista utilizada a la hora de querer cargar/borrar una partida o un tablero.
+
+- VistaConfigPartida: Vista donde se muestra toda la configuracion de partida a crear.
+
+- VistaGanador: Vista que muestra el resultado final de la partida que ha finalizado.
+
+- VistaPartida: Vista del tablero/partida.

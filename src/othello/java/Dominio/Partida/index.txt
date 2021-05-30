@@ -1,0 +1,13 @@
+Este directorio contiene el conjunto de Clases de el package de "Partida":
+
+- Casilla: Una clase donde definimos los tipos de casillas.
+
+- Partida: Clase utilizada para crear partidas y gestionar los diferentes turnos y movimientos de los jugadores durante toda la partida,
+            además de obtener, al finalizar la partida, el resultado.
+
+- Position: Una clase para definir las cordenadas (x , y).
+
+-Tablero: Una clase donde podemos saber en que posicíon están las fichas negras , blancas etc. \
+    También podemos saber cuales son los casillas permitidas(disponibles) para colocar las fichas.\
+    Una vez que el jugador en una partida dice colocar la ficha en uno de los posiciones disponibles\
+    el tablero se actualiza modificando todas las fichas que serìan afectado como consecuencia del colocamiento.
