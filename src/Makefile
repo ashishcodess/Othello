@@ -2,15 +2,15 @@ DOM=othello/java/Dominio/*.java othello/java/Dominio/Jugador/*.java othello/java
 PERSISTENCIA=othello/java/ControladorPersistencia/*.java othello/java/MyException/*.java
 PRESENTACION=othello/java/Presentacion/*.java othello/java/Presentacion/Menus/*.java othello/java/Presentacion/Partida_Tablero/*.java othello/java/Presentacion/Ranking/*.java
 MAIN=othello/java/Main.java
-C_DOM=othello/java/Dominio/*.class othello/java/Dominio/Jugador/*.class othello/java/Dominio/Partida/*.class othello/java/Dominio/Ranking/*.class
-C_PERSISTENCIA=othello/java/ControladorPersistencia/*.class othello/java/MyException/*.class
-C_PRESENTACION=othello/java/Presentacion/*.class othello/java/Presentacion/Menus/*.class othello/java/Presentacion/Partida_Tablero/*.class othello/java/Presentacion/Ranking/*.class
-C_MAIN=othello/java/Main.class
-MANIFEST=META-INF/MANIFEST.MF
+C_DOM=Dominio/*.class Dominio/Jugador/*.class Dominio/Partida/*.class Dominio/Ranking/*.class
+C_PERSISTENCIA=ControladorPersistencia/*.class MyException/*.class
+C_PRESENTACION=Presentacion/*.class Presentacion/Menus/*.class Presentacion/Partida_Tablero/*.class Presentacion/Ranking/*.class
+C_MAIN=Main.class
+MANIFEST=../../META-INF/MANIFEST.MF
 
 all:
 	javac --release 11 $(DOM) $(PERSISTENCIA) $(PRESENTACION) $(MAIN)
-	jar -cvfm Othello.jar $(MANIFEST) $(C_MAIN) $(C_DOM) $(C_PERSISTENCIA) $(C_PRESENTACION)
+	cd othello/java/ && jar -cvfm Othello.jar $(MANIFEST) $(C_MAIN) $(C_DOM) $(C_PERSISTENCIA) $(C_PRESENTACION)
 	mkdir -p ../EXE
 	mkdir -p ../EXE/files
 	mkdir -p ../EXE/files/fichas
@@ -19,7 +19,8 @@ all:
 	mkdir -p ../EXE/files/tableros
 	mkdir -p ../EXE/files/users
 	cp -r files/* ../EXE/files/
-	mv Othello.jar ../EXE/
+	mv othello/java/Othello.jar ../EXE/
+	cd ../EXE/ && java -jar Othello.jar
 
 copy:
 	rm -rf ../EXE
